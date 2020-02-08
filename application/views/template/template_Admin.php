@@ -186,7 +186,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="#"><i class="fa fa-clone fa-fw mr-3"></i> Data OLT</a></li>
+              <li><a href="<?= site_url('Admin/getOLT') ?>"><i class="fa fa-clone fa-fw mr-3"></i> Data OLT</a></li>
               <li><a href="#"><i class="fa fa-codepen fa-fw mr-3"></i> Data Port Out Splitter</a></li>
             </ul>
           </li>

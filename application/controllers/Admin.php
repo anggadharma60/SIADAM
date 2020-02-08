@@ -20,14 +20,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Admin extends CI_Controller
 {
-    
-  function __construct()
+
+	function __construct()
 	{
 		parent::__construct();
 		check_not_login();
 		//check admin buat fungsi_helper
 		check_admin();
 		$this->load->model('ODP_model');
+		$this->load->model('OLT_model');
 		$this->load->model('Pegawai_model');
 		$this->load->model('Regional_model');
 		$this->load->model('STO_model');
@@ -37,16 +38,16 @@ class Admin extends CI_Controller
 		$this->load->model("Import_ODP_model");
 		$this->load->library('form_validation');
 		$this->load->library("PHPExcel");
-  }
+	}
 
-  // Halaman Awal Admin
-  public function index()
-  {
-    check_not_login();
-    $this->template->load('template/template_Admin', 'dashboard_home');
-  }
+	// Halaman Awal Admin
+	public function index()
+	{
+		check_not_login();
+		$this->template->load('template/template_Admin', 'dashboard_home');
+	}
 
-  // Start Menu Pegawai 
+	// Start Menu Pegawai 
 	public function getPegawai()
 	{
 		$data['row'] = $this->Pegawai_model->getDataPegawai();
@@ -58,12 +59,15 @@ class Admin extends CI_Controller
 		$this->form_validation->set_rules('namaPegawai', 'Nama', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[30]|trim');
 		$this->form_validation->set_rules('username', 'Username', 'required|alpha_numeric|is_unique[pegawai.username]|min_length[5]|max_length[20]|trim');
 		$this->form_validation->set_rules('password', 'Password', 'required|alpha_numeric|min_length[5]|max_length[16]|trim');
-		$this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'required|matches[password]|alpha_numeric|min_length[5]|max_length[16]|trim',
+		$this->form_validation->set_rules(
+			'passconf',
+			'Konfirmasi Password',
+			'required|matches[password]|alpha_numeric|min_length[5]|max_length[16]|trim',
 			array('matches' => '%s tidak sesuai dengan password')
 		);
 		$this->form_validation->set_rules('status', 'Status', 'required|trim');
 
-		
+
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
 		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
@@ -79,10 +83,10 @@ class Admin extends CI_Controller
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->Pegawai_model->addDataPegawai($post);
-			if($this->db->affected_rows() > 0) {
+			if ($this->db->affected_rows() > 0) {
 				echo "<script>alert('Data berhasil disimpan');</script>";
 			}
-			echo "<script>window.location='".site_url('Admin/getPegawai')."';</script>";
+			echo "<script>window.location='" . site_url('Admin/getPegawai') . "';</script>";
 		}
 	}
 
@@ -90,14 +94,20 @@ class Admin extends CI_Controller
 	{
 		$this->form_validation->set_rules('namaPegawai', 'Nama', 'required|regex_match[/^[a-zA-Z ]+$/]|min_length[0]|max_length[30]|trim');
 		$this->form_validation->set_rules('username', 'Username', 'required|alpha_numeric|callback_username_check|min_length[5]|max_length[20]|trim');
-		if($this->input->post('password')) {
+		if ($this->input->post('password')) {
 			$this->form_validation->set_rules('password', 'Password', 'alpha_numeric|min_length[5]|max_length[16]|trim');
-			$this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'matches[password]|alpha_numeric|min_length[5]|max_length[16]|trim',
+			$this->form_validation->set_rules(
+				'passconf',
+				'Konfirmasi Password',
+				'matches[password]|alpha_numeric|min_length[5]|max_length[16]|trim',
 				array('matches' => '%s tidak sesuai dengan password')
 			);
 		}
-		if($this->input->post('passconf')) {
-			$this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'matches[password]|alpha_numeric|min_length[5]|max_length[16]|trim',
+		if ($this->input->post('passconf')) {
+			$this->form_validation->set_rules(
+				'passconf',
+				'Konfirmasi Password',
+				'matches[password]|alpha_numeric|min_length[5]|max_length[16]|trim',
 				array('matches' => '%s tidak sesuai dengan password')
 			);
 		}
@@ -115,27 +125,28 @@ class Admin extends CI_Controller
 
 		if ($this->form_validation->run() == FALSE) {
 			$query = $this->pegawai_model->getDataPegawai($id);
-			if($query->num_rows() > 0) { 
+			if ($query->num_rows() > 0) {
 				$data['row'] = $query->row();
-        $this->template->load('template/template_Admin', 'pegawai/pegawai_form_edit', $data);
+				$this->template->load('template/template_Admin', 'pegawai/pegawai_form_edit', $data);
 			} else {
 				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='".site_url('Admin/getPegawai')."';</script>";
+				echo "window.location='" . site_url('Admin/getPegawai') . "';</script>";
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->Pegawai_model->editDataPegawai($post);
-			if($this->db->affected_rows() > 0) {
+			if ($this->db->affected_rows() > 0) {
 				echo "<script>alert('Data berhasil disimpan');</script>";
 			}
-			echo "<script>window.location='".site_url('Admin/getPegawai')."';</script>";
+			echo "<script>window.location='" . site_url('Admin/getPegawai') . "';</script>";
 		}
 	}
 
-	function username_check() {
+	function username_check()
+	{
 		$post = $this->input->post(null, TRUE);
 		$query = $this->db->query("SELECT * FROM pegawai WHERE username = '$post[username]' AND idPegawai != '$post[idPegawai]'");
-		if($query->num_rows() > 0) {
+		if ($query->num_rows() > 0) {
 			$this->form_validation->set_message('username_check', '{field} ini sudah dipakai, silahkan ganti');
 			return FALSE;
 		} else {
@@ -148,15 +159,15 @@ class Admin extends CI_Controller
 		$id = $this->input->post('idPegawai');
 		$this->Pegawai_model->deleteDataPegawai($id);
 
-		if($this->db->affected_rows() > 0) {
+		if ($this->db->affected_rows() > 0) {
 			echo "<script>alert('Data berhasil dihapus');</script>";
 		}
-		echo "<script>window.location='".site_url('Admin/getPegawai')."';</script>";
-  	}
-  // End Menu Pegawai
-  
-  // Start Menu STO
-  public function getSTO()
+		echo "<script>window.location='" . site_url('Admin/getPegawai') . "';</script>";
+	}
+	// End Menu Pegawai
+
+	// Start Menu STO
+	public function getSTO()
 	{
 		$data['row'] = $this->STO_model->getDataSTO();
 		$this->template->load('template/template_Admin', 'sto/sto_data', $data);
@@ -175,25 +186,25 @@ class Admin extends CI_Controller
 		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
 		$this->form_validation->set_message('regex_match', '{field} tidak sesuai format');
 		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-		
+
 
 		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
 
 		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_Admin', 'sto/sto_form_add',$data);
+			$this->template->load('template/template_Admin', 'sto/sto_form_add', $data);
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->STO_model->addDataSTO($post);
-			if($this->db->affected_rows() > 0) {
+			if ($this->db->affected_rows() > 0) {
 				echo "<script>alert('Data berhasil disimpan');</script>";
 			}
-			echo "<script>window.location='".site_url('Admin/getSTO')."';</script>";
+			echo "<script>window.location='" . site_url('Admin/getSTO') . "';</script>";
 		}
 	}
 
 	public function editSTO($id)
-	{	
+	{
 		$this->form_validation->set_rules('kodeSTO', 'Kode STO', 'required|min_length[3]|max_length[5]|regex_match[/^[A-Za-z]+$/]|callback_sto_check|trim');
 		$this->form_validation->set_rules('namaSTO', 'Nama STO', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[20]|trim');
 		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
@@ -209,32 +220,32 @@ class Admin extends CI_Controller
 
 		if ($this->form_validation->run() == FALSE) {
 			$query = $this->STO_model->getDataSTO($id);
-			if($query->num_rows() > 0) { 
+			if ($query->num_rows() > 0) {
 				$data['row'] = $query->row();
 				$query2 = $this->Datel_model->getDataDatelSelect($data['row']->idDatel);
-				if($query2->num_rows() > 0){
+				if ($query2->num_rows() > 0) {
 					$data['datel'] = $query2;
 				}
 				$this->template->load('template/template_Admin', 'sto/sto_form_edit', $data);
-				
 			} else {
 				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='".site_url('Admin/getSTO')."';</script>";
+				echo "window.location='" . site_url('Admin/getSTO') . "';</script>";
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->STO_model->editDataSTO($post);
-			if($this->db->affected_rows() > 0) {
+			if ($this->db->affected_rows() > 0) {
 				echo "<script>alert('Data berhasil disimpan');</script>";
 			}
-			echo "<script>window.location='".site_url('Admin/getSTO')."';</script>";
+			echo "<script>window.location='" . site_url('Admin/getSTO') . "';</script>";
 		}
 	}
 
-	function sto_check() {
+	function sto_check()
+	{
 		$post = $this->input->post(null, TRUE);
 		$query = $this->db->query("SELECT * FROM sto WHERE kodeSTO = '$post[kodeSTO]' AND idSTO != '$post[idSTO]'");
-		if($query->num_rows() > 0) {
+		if ($query->num_rows() > 0) {
 			$this->form_validation->set_message('sto_check', '{field} ini sudah dipakai, silahkan ganti');
 			return FALSE;
 		} else {
@@ -247,16 +258,16 @@ class Admin extends CI_Controller
 		$id = $this->input->post('idSTO');
 		$this->STO_model->deleteDataSTO($id);
 
-		if($this->db->affected_rows() > 0) {
+		if ($this->db->affected_rows() > 0) {
 			echo "<script>alert('Data berhasil dihapus');</script>";
 		}
-		echo "<script>window.location='".site_url('Admin/getSTO')."';</script>";
-  }
+		echo "<script>window.location='" . site_url('Admin/getSTO') . "';</script>";
+	}
 
-  // End Menu STO
+	// End Menu STO
 
-  // Start Menu Regional
-  public function getRegional()
+	// Start Menu Regional
+	public function getRegional()
 	{
 		$data['row'] = $this->Regional_model->getDataRegional();
 		$this->template->load('template/template_Admin', 'regional/regional_data', $data);
@@ -272,7 +283,7 @@ class Admin extends CI_Controller
 		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
 		$this->form_validation->set_message('regex_match', '{field} berisi karakter dan numerik');
 		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-		
+
 
 		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
@@ -281,10 +292,10 @@ class Admin extends CI_Controller
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->Regional_model->addDataRegional($post);
-			if($this->db->affected_rows() > 0) {
+			if ($this->db->affected_rows() > 0) {
 				echo "<script>alert('Data berhasil disimpan');</script>";
 			}
-			echo "<script>window.location='".site_url('Admin/getRegional')."';</script>";
+			echo "<script>window.location='" . site_url('Admin/getRegional') . "';</script>";
 		}
 	}
 
@@ -304,28 +315,29 @@ class Admin extends CI_Controller
 
 		if ($this->form_validation->run() == FALSE) {
 			$query = $this->Regional_model->getDataRegional($id);
-			
-			if($query->num_rows() > 0) { 
+
+			if ($query->num_rows() > 0) {
 				$data['row'] = $query->row();
-        		$this->template->load('template/template_Admin', 'regional/regional_form_edit', $data);
+				$this->template->load('template/template_Admin', 'regional/regional_form_edit', $data);
 			} else {
 				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='".site_url('Admin/getRegional')."';</script>";
+				echo "window.location='" . site_url('Admin/getRegional') . "';</script>";
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->Regional_model->editDataRegional($post);
-			if($this->db->affected_rows() > 0) {
+			if ($this->db->affected_rows() > 0) {
 				echo "<script>alert('Data berhasil disimpan');</script>";
 			}
-			echo "<script>window.location='".site_url('Admin/getRegional')."';</script>";
+			echo "<script>window.location='" . site_url('Admin/getRegional') . "';</script>";
 		}
 	}
 
-	function regional_check() {
+	function regional_check()
+	{
 		$post = $this->input->post(null, TRUE);
 		$query = $this->db->query("SELECT * FROM regional WHERE namaRegional = '$post[namaRegional]' AND idRegional != '$post[idRegional]'");
-		if($query->num_rows() > 0) {
+		if ($query->num_rows() > 0) {
 			$this->form_validation->set_message('regional_check', '{field} ini sudah dipakai, silahkan ganti');
 			return FALSE;
 		} else {
@@ -338,16 +350,16 @@ class Admin extends CI_Controller
 		$id = $this->input->post('idRegional');
 		$this->Regional_model->deleteDataRegional($id);
 
-		if($this->db->affected_rows() > 0) {
+		if ($this->db->affected_rows() > 0) {
 			echo "<script>alert('Data berhasil dihapus');</script>";
 		}
-		echo "<script>window.location='".site_url('Admin/getRegional')."';</script>";
-  }
-  // End Menu Regional
+		echo "<script>window.location='" . site_url('Admin/getRegional') . "';</script>";
+	}
+	// End Menu Regional
 
-  // Start Menu Datel
+	// Start Menu Datel
 
-  public function getDatel()
+	public function getDatel()
 	{
 		$data['row'] = $this->Datel_model->getDataDatel();
 		$this->template->load('template/template_Admin', 'datel/datel_data', $data);
@@ -373,16 +385,16 @@ class Admin extends CI_Controller
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->Datel_model->addDataDatel($post);
-			if($this->db->affected_rows() > 0) {
+			if ($this->db->affected_rows() > 0) {
 				echo "<script>alert('Data berhasil disimpan');</script>";
 			}
-			echo "<script>window.location='".site_url('Admin/getDatel')."';</script>";
+			echo "<script>window.location='" . site_url('Admin/getDatel') . "';</script>";
 		}
 	}
 
 	public function editDatel($id)
 	{
-	
+
 		$this->form_validation->set_rules('namaDatel', 'Nama Datel', 'required|regex_match[/^[a-zA-Z ]+$/]|callback_datel_check|max_length[20]|trim');
 		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
 		$this->form_validation->set_rules('witel', 'Witel', 'required|trim');
@@ -397,31 +409,32 @@ class Admin extends CI_Controller
 
 		if ($this->form_validation->run() == FALSE) {
 			$query = $this->Datel_model->getDataDatel($id);
-			if($query->num_rows() > 0) { 
+			if ($query->num_rows() > 0) {
 				$data['row'] = $query->row();
 				$query2 = $this->Witel_model->getDataWitelSelect($data['row']->idWitel);
-				if($query2->num_rows() > 0){
+				if ($query2->num_rows() > 0) {
 					$data['witel'] = $query2;
 				}
-        		$this->template->load('template/template_Admin', 'datel/datel_form_edit', $data);
+				$this->template->load('template/template_Admin', 'datel/datel_form_edit', $data);
 			} else {
 				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='".site_url('Admin/getDatel')."';</script>";
+				echo "window.location='" . site_url('Admin/getDatel') . "';</script>";
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->Datel_model->editDataDatel($post);
-			if($this->db->affected_rows() > 0) {
+			if ($this->db->affected_rows() > 0) {
 				echo "<script>alert('Data berhasil disimpan');</script>";
 			}
-			echo "<script>window.location='".site_url('Admin/getDatel')."';</script>";
+			echo "<script>window.location='" . site_url('Admin/getDatel') . "';</script>";
 		}
 	}
 
-	function datel_check() {
+	function datel_check()
+	{
 		$post = $this->input->post(null, TRUE);
 		$query = $this->db->query("SELECT * FROM datel WHERE namaDatel = '$post[namaDatel]' AND idDatel != '$post[idDatel]'");
-		if($query->num_rows() > 0) {
+		if ($query->num_rows() > 0) {
 			$this->form_validation->set_message('datel_check', '{field} ini sudah dipakai, silahkan ganti');
 			return FALSE;
 		} else {
@@ -434,14 +447,14 @@ class Admin extends CI_Controller
 		$id = $this->input->post('idDatel');
 		$this->Datel_model->deleteDataDatel($id);
 
-		if($this->db->affected_rows() > 0) {
+		if ($this->db->affected_rows() > 0) {
 			echo "<script>alert('Data berhasil dihapus');</script>";
 		}
-		echo "<script>window.location='".site_url('Admin/getDatel')."';</script>";
-  }
-  // End Menu Datel
+		echo "<script>window.location='" . site_url('Admin/getDatel') . "';</script>";
+	}
+	// End Menu Datel
 
-// Start Menu Witel 
+	// Start Menu Witel 
 
 	public function getWitel()
 	{
@@ -461,19 +474,19 @@ class Admin extends CI_Controller
 		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
 		$this->form_validation->set_message('regex_match', '{field} berisi karakter dan numerik');
 		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-		
+
 
 		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
 		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_Admin', 'witel/witel_form_add',$data);
+			$this->template->load('template/template_Admin', 'witel/witel_form_add', $data);
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->Witel_model->addDataWitel($post);
-			if($this->db->affected_rows() > 0) {
+			if ($this->db->affected_rows() > 0) {
 				echo "<script>alert('Data berhasil disimpan');</script>";
 			}
-			echo "<script>window.location='".site_url('Admin/getWitel')."';</script>";
+			echo "<script>window.location='" . site_url('Admin/getWitel') . "';</script>";
 		}
 	}
 
@@ -494,31 +507,32 @@ class Admin extends CI_Controller
 
 		if ($this->form_validation->run() == FALSE) {
 			$query = $this->Witel_model->getDataWitel($id);
-			if($query->num_rows() > 0) { 
+			if ($query->num_rows() > 0) {
 				$data['row'] = $query->row();
 				$query2 = $this->Regional_model->getDataRegionalSelect($data['row']->idRegional);
-				if($query2->num_rows() > 0){
+				if ($query2->num_rows() > 0) {
 					$data['regional'] = $query2;
 				}
 				$this->template->load('template/template_Admin', 'witel/witel_form_edit', $data);
 			} else {
 				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='".site_url('Admin/getWitel')."';</script>";
+				echo "window.location='" . site_url('Admin/getWitel') . "';</script>";
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->Witel_model->editDataWitel($post);
-			if($this->db->affected_rows() > 0) {
+			if ($this->db->affected_rows() > 0) {
 				echo "<script>alert('Data berhasil disimpan');</script>";
 			}
-			echo "<script>window.location='".site_url('Admin/getWitel')."';</script>";
+			echo "<script>window.location='" . site_url('Admin/getWitel') . "';</script>";
 		}
 	}
 
-	function witel_check() {
+	function witel_check()
+	{
 		$post = $this->input->post(null, TRUE);
 		$query = $this->db->query("SELECT * FROM witel WHERE namaWitel = '$post[namaWitel]' AND idWitel != '$post[idWitel]'");
-		if($query->num_rows() > 0) {
+		if ($query->num_rows() > 0) {
 			$this->form_validation->set_message('witel_check', '{field} ini sudah dipakai, silahkan ganti');
 			return FALSE;
 		} else {
@@ -531,10 +545,10 @@ class Admin extends CI_Controller
 		$id = $this->input->post('idWitel');
 		$this->Witel_model->deleteDataWitel($id);
 
-		if($this->db->affected_rows() > 0) {
+		if ($this->db->affected_rows() > 0) {
 			echo "<script>alert('Data berhasil dihapus');</script>";
 		}
-		echo "<script>window.location='".site_url('Admin/getWitel')."';</script>";
+		echo "<script>window.location='" . site_url('Admin/getWitel') . "';</script>";
 	}
 	// End Menu Witel
 
@@ -565,10 +579,10 @@ class Admin extends CI_Controller
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->SpecOLT_model->addDataSpecOLT($post);
-			if($this->db->affected_rows() > 0) {
+			if ($this->db->affected_rows() > 0) {
 				echo "<script>alert('Data berhasil disimpan');</script>";
 			}
-			echo "<script>window.location='".site_url('Admin/getSpecOLT')."';</script>";
+			echo "<script>window.location='" . site_url('Admin/getSpecOLT') . "';</script>";
 		}
 	}
 
@@ -588,27 +602,28 @@ class Admin extends CI_Controller
 
 		if ($this->form_validation->run() == FALSE) {
 			$query = $this->SpecOLT_model->getDataSpecOLT($id);
-			if($query->num_rows() > 0) { 
+			if ($query->num_rows() > 0) {
 				$data['row'] = $query->row();
-		$this->template->load('template/template_Admin', 'specolt/specolt_form_edit', $data);
+				$this->template->load('template/template_Admin', 'specolt/specolt_form_edit', $data);
 			} else {
 				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='".site_url('Admin/getSpecOLT')."';</script>";
+				echo "window.location='" . site_url('Admin/getSpecOLT') . "';</script>";
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->SpecOLT_model->editDataSpecOLT($post);
-			if($this->db->affected_rows() > 0) {
+			if ($this->db->affected_rows() > 0) {
 				echo "<script>alert('Data berhasil disimpan');</script>";
 			}
-			echo "<script>window.location='".site_url('Admin/getSpecOLT')."';</script>";
+			echo "<script>window.location='" . site_url('Admin/getSpecOLT') . "';</script>";
 		}
 	}
 
-	function spek_check() {
+	function spek_check()
+	{
 		$post = $this->input->post(null, TRUE);
 		$query = $this->db->query("SELECT * FROM specification_olt WHERE namaSpecOLT = '$post[namaSpecOLT]' AND idSpecOLT != '$post[idSpecOLT]'");
-		if($query->num_rows() > 0) {
+		if ($query->num_rows() > 0) {
 			$this->form_validation->set_message('spek_check', '{field} ini sudah dipakai, silahkan ganti');
 			return FALSE;
 		} else {
@@ -621,10 +636,10 @@ class Admin extends CI_Controller
 		$id = $this->input->post('idSpecOLT');
 		$this->SpecOLT_model->deleteDataSpecOLT($id);
 
-		if($this->db->affected_rows() > 0) {
+		if ($this->db->affected_rows() > 0) {
 			echo "<script>alert('Data berhasil dihapus');</script>";
 		}
-		echo "<script>window.location='".site_url('Admin/getSpecOLT')."';</script>";
+		echo "<script>window.location='" . site_url('Admin/getSpecOLT') . "';</script>";
 	}
 
 	// START ODP
@@ -638,12 +653,12 @@ class Admin extends CI_Controller
 	{
 		$this->load->view('form');
 	}
-	
+
 	function fetch()
 	{
 		$data = $this->excel_import_model->select();
 		$output = '
-		<h3 align="center">Total Data - '.$data->num_rows().'</h3>
+		<h3 align="center">Total Data - ' . $data->num_rows() . '</h3>
 		<table class="table table-striped table-bordered">
             <tr>
 				<th>ID NOSS</th>
@@ -667,29 +682,28 @@ class Admin extends CI_Controller
                 <th>Update Date</th>
 			</tr>
 		';
-		foreach($data->result() as $row)
-		{
+		foreach ($data->result() as $row) {
 			$output .= '
 			<tr>
-				<td>'.$row->idNOSS.'</td>
-				<td>'.$row->indexODP.'</td>
-				<td>'.$row->idODP.'</td>
-				<td>'.$row->ftp.'</td>
-                <td>'.$row->latitude.'</td>
-                <td>'.$row->longitude.'</td>
-				<td>'.$row->clusterName.'</td>
-				<td>'.$row->clusterStatus.'</td>
-				<td>'.$row->avai.'</td>
-                <td>'.$row->used.'</td>
-                <td>'.$row->rsv.'</td>
-				<td>'.$row->rsk.'</td>
-				<td>'.$row->total.'</td>
-				<td>'.$row->idRegional.'</td>
-                <td>'.$row->idWitel.'</td>
-                <td>'.$row->idDatel.'</td>
-				<td>'.$row->idSTO.'</td>
-				<td>'.$row->infoODP.'</td>
-				<td>'.$row->updateDate.'</td>
+				<td>' . $row->idNOSS . '</td>
+				<td>' . $row->indexODP . '</td>
+				<td>' . $row->idODP . '</td>
+				<td>' . $row->ftp . '</td>
+                <td>' . $row->latitude . '</td>
+                <td>' . $row->longitude . '</td>
+				<td>' . $row->clusterName . '</td>
+				<td>' . $row->clusterStatus . '</td>
+				<td>' . $row->avai . '</td>
+                <td>' . $row->used . '</td>
+                <td>' . $row->rsv . '</td>
+				<td>' . $row->rsk . '</td>
+				<td>' . $row->total . '</td>
+				<td>' . $row->idRegional . '</td>
+                <td>' . $row->idWitel . '</td>
+                <td>' . $row->idDatel . '</td>
+				<td>' . $row->idSTO . '</td>
+				<td>' . $row->infoODP . '</td>
+				<td>' . $row->updateDate . '</td>
 			</tr>
 			';
 		}
@@ -699,61 +713,58 @@ class Admin extends CI_Controller
 
 	function import()
 	{
-		if(isset($_FILES["file"]["name"]))
-		{
+		if (isset($_FILES["file"]["name"])) {
 			$path = $_FILES["file"]["tmp_name"];
 			$object = PHPExcel_IOFactory::load($path);
-			foreach($object->getWorksheetIterator() as $worksheet)
-			{
+			foreach ($object->getWorksheetIterator() as $worksheet) {
 				$highestRow = $worksheet->getHighestRow();
 				$highestColumn = $worksheet->getHighestColumn();
-				for($row=2; $row<=$highestRow; $row++)
-				{
+				for ($row = 2; $row <= $highestRow; $row++) {
 					$idNOSS = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
 					$indexODP = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
 					$idODP = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
 					$ftp = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
-                    $latitude = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
-                    $longitude = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
-                    $clusterName = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
-                    $clusterStatus = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
-                    $avai = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
-                    $used = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
-                    $rsv = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
-                    $rsk = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
-                    $total = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
-                    $idRegional = $worksheet->getCellByColumnAndRow(13, $row)->getValue();
-                    $idWitel = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
-                    $idDatel = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
-                    $idSTO = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
-                    $infoODP = $worksheet->getCellByColumnAndRow(17, $row)->getValue();
-                    $updateDate = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
+					$latitude = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+					$longitude = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+					$clusterName = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
+					$clusterStatus = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
+					$avai = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
+					$used = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
+					$rsv = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
+					$rsk = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
+					$total = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
+					$idRegional = $worksheet->getCellByColumnAndRow(13, $row)->getValue();
+					$idWitel = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
+					$idDatel = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
+					$idSTO = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
+					$infoODP = $worksheet->getCellByColumnAndRow(17, $row)->getValue();
+					$updateDate = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
 					$data[] = array(
-                        'idNOSS'            =>  $idNOSS,
-                        'indexODP'          =>  $indexODP,
-                        'idODP'             =>  $idODP,
-                        'ftp'               =>  $ftp,
-                        'latitude'          =>  $latitude,
-                        'longitude'         =>  $longitude,
-                        'clusterName'       =>  $clusterName,
-                        'clusterStatus'     =>  $clusterStatus,
-                        'avai'              =>  $avai,
-                        'used'              =>  $used,
-                        'rsv'               =>  $rsv,
-                        'rsk'               =>  $rsk,
-                        'total'             =>  $total,
-                        'idRegional'        =>  $idRegional,
-                        'idWitel'           =>  $idWitel,
-                        'idDatel'           =>  $idDatel,
-                        'idSTO'             =>  $idSTO,
-                        'infoODP'           =>  $infoODP,
-                        'updateDate'        =>  $updateDate
+						'idNOSS'            =>  $idNOSS,
+						'indexODP'          =>  $indexODP,
+						'idODP'             =>  $idODP,
+						'ftp'               =>  $ftp,
+						'latitude'          =>  $latitude,
+						'longitude'         =>  $longitude,
+						'clusterName'       =>  $clusterName,
+						'clusterStatus'     =>  $clusterStatus,
+						'avai'              =>  $avai,
+						'used'              =>  $used,
+						'rsv'               =>  $rsv,
+						'rsk'               =>  $rsk,
+						'total'             =>  $total,
+						'idRegional'        =>  $idRegional,
+						'idWitel'           =>  $idWitel,
+						'idDatel'           =>  $idDatel,
+						'idSTO'             =>  $idSTO,
+						'infoODP'           =>  $infoODP,
+						'updateDate'        =>  $updateDate
 					);
 				}
 			}
 			$this->excel_import_model->insert($data);
 			echo 'Data Imported successfully';
-		}	
+		}
 	}
 
 	public function addODP()
@@ -777,7 +788,7 @@ class Admin extends CI_Controller
 		$this->form_validation->set_rules('idSTO', 'ID STO', 'trim');
 		$this->form_validation->set_rules('infoODP', 'Info ODP', 'trim');
 		$this->form_validation->set_rules('updateDate', 'Update Date', 'required|trim');
-				
+
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
@@ -793,16 +804,16 @@ class Admin extends CI_Controller
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->ODP_model->addDataODP($post);
-			if($this->db->affected_rows() > 0) {
+			if ($this->db->affected_rows() > 0) {
 				echo "<script>alert('Data berhasil disimpan');</script>";
 			}
-			echo "<script>window.location='".site_url('Admin/getODP')."';</script>";
+			echo "<script>window.location='" . site_url('Admin/getODP') . "';</script>";
 		}
 	}
 
 	public function editODP($id)
 	{
-		
+
 		$this->form_validation->set_rules('idNOSS', 'ID Noss', 'required|trim');
 		$this->form_validation->set_rules('indexODP', 'index ODP', 'required|trim');
 		$this->form_validation->set_rules('idODP', 'ID ODP', 'required|trim');
@@ -834,20 +845,20 @@ class Admin extends CI_Controller
 
 		if ($this->form_validation->run() == FALSE) {
 			$query = $this->ODP_model->getDataODP($id);
-			if($query->num_rows() > 0) { 
+			if ($query->num_rows() > 0) {
 				$data['row'] = $query->row();
-		$this->template->load('template/template_Admin', 'odp/odp_form_edit', $data);
+				$this->template->load('template/template_Admin', 'odp/odp_form_edit', $data);
 			} else {
 				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='".site_url('Admin/getODP')."';</script>";
+				echo "window.location='" . site_url('Admin/getODP') . "';</script>";
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->ODP_model->editDataODP($post);
-			if($this->db->affected_rows() > 0) {
+			if ($this->db->affected_rows() > 0) {
 				echo "<script>alert('Data berhasil disimpan');</script>";
 			}
-			echo "<script>window.location='".site_url('Admin/getODP')."';</script>";
+			echo "<script>window.location='" . site_url('Admin/getODP') . "';</script>";
 		}
 	}
 
@@ -856,17 +867,104 @@ class Admin extends CI_Controller
 		$id = $this->input->post('idODP');
 		$this->ODP_model->deleteDataODP($id);
 
-		if($this->db->affected_rows() > 0) {
+		if ($this->db->affected_rows() > 0) {
 			echo "<script>alert('Data berhasil dihapus');</script>";
 		}
-		echo "<script>window.location='".site_url('Admin/getODP')."';</script>";
+		echo "<script>window.location='" . site_url('Admin/getODP') . "';</script>";
 	}
 
-	public function detail($id) 
+	public function detail($id)
 	{
-		
 	}
 	// END ODP
+
+	// START OLT
+	public function getOLT()
+	{
+		$data['row'] = $this->OLT_model->getDataOLT();
+		$this->template->load('template/template_Admin', 'olt/olt_data', $data);
+	}
+
+	public function addOLT()
+	{
+		$this->form_validation->set_rules('hostname', 'HOSTNAME', 'required|trim');
+		$this->form_validation->set_rules('ipOLT', 'IP GPON', 'required|trim');
+		$this->form_validation->set_rules('idLogicalDevice', 'ID Logical Device', 'required|trim');
+		$this->form_validation->set_rules('idSTO', 'ID STO', 'required|trim');
+		$this->form_validation->set_rules('idSpecOLT', 'ID Specification OLT', 'required|trim');
+
+		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
+		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
+		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
+		$this->form_validation->set_message('regex_match', '{field} berisi karakter dan numerik');
+		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
+		$this->form_validation->set_message('alpha_dash', '{field} berisi karakter, simbol dan numerik');
+
+		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->template->load('template/template_Admin', 'olt/olt_form_add');
+		} else {
+			$post = $this->input->post(null, TRUE);
+			$this->OLT_model->addDataOLT($post);
+			if ($this->db->affected_rows() > 0) {
+				echo "<script>alert('Data berhasil disimpan');</script>";
+			}
+			echo "<script>window.location='" . site_url('Admin/getOLT') . "';</script>";
+		}
+	}
+
+	public function editOLT($id)
+	{
+
+		$this->form_validation->set_rules('hostname', 'HOSTNAME', 'required|trim');
+		$this->form_validation->set_rules('ipOLT', 'IP GPON', 'required|trim');
+		$this->form_validation->set_rules('idLogicalDevice', 'ID Logical Device', 'required|trim');
+		$this->form_validation->set_rules('idSTO', 'ID STO', 'required|trim');
+		$this->form_validation->set_rules('idSpecOLT', 'ID Specification OLT', 'required|trim');
+
+
+		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
+		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
+		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
+		$this->form_validation->set_message('regex_match', '{field} berisi karakter');
+		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
+		$this->form_validation->set_message('alpha_dash', '{field} berisi karakter, simbol dan numerik');
+
+		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
+
+		if ($this->form_validation->run() == FALSE) {
+			$query = $this->OLT_model->getDataOLT($id);
+			if ($query->num_rows() > 0) {
+				$data['row'] = $query->row();
+				$this->template->load('template/template_Admin', 'olt/olt_form_edit', $data);
+			} else {
+				echo "<script>alert('Data tidak ditemukan');";
+				echo "window.location='" . site_url('Admin/getOLT') . "';</script>";
+			}
+		} else {
+			$post = $this->input->post(null, TRUE);
+			$this->OLT_model->editDataOLT($post);
+			if ($this->db->affected_rows() > 0) {
+				echo "<script>alert('Data berhasil disimpan');</script>";
+			}
+			echo "<script>window.location='" . site_url('Admin/getOLT') . "';</script>";
+		}
+	}
+
+	public function deleteOLT()
+	{
+		$id = $this->input->post('hostname');
+		$this->OLT_model->deleteDataOLT($id);
+
+		if ($this->db->affected_rows() > 0) {
+			echo "<script>alert('Data berhasil dihapus');</script>";
+		}
+		echo "<script>window.location='" . site_url('Admin/getOLT') . "';</script>";
+	}
+
+	
+	// END OLT
 
 }
 
