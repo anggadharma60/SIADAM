@@ -1,0 +1,209 @@
+/*
+ * Skin: Blue
+ * ---------- F698A4 EF465B EC1E37 D71C32 C2192E
+ */
+ @font-face {
+  src: url(assets/dist/css/Fonts/Poppins-Regular.ttf);
+  font-family: Poppins;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.skin-blue-light .main-header .navbar {
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.01), 
+                0 2px 4px rgba(0,0,0,0.01), 
+                0 4px 8px rgba(0,0,0,0.01), 
+                0 8px 16px rgba(0,0,0,0.01),
+                0 16px 32px rgba(0,0,0,0.01), 
+                0 32px 64px rgba(0,0,0,0.01);
+}
+.skin-blue-light .main-header .navbar .nav > li > a {
+  color: rgb(0, 0, 0);
+}
+.skin-blue-light .main-header .navbar .nav > li > a:hover,
+.skin-blue-light .main-header .navbar .nav > li > a:active,
+.skin-blue-light .main-header .navbar .nav > li > a:focus,
+.skin-blue-light .main-header .navbar .nav .open > a,
+.skin-blue-light .main-header .navbar .nav .open > a:hover,
+.skin-blue-light .main-header .navbar .nav .open > a:focus,
+.skin-blue-light .main-header .navbar .nav > .active > a {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgb(0, 0, 0);
+}
+.skin-blue-light .main-header .navbar .sidebar-toggle {
+  color: #000000;
+}
+.skin-blue-light .main-header .navbar .sidebar-toggle:hover {
+  color: #f6f6f6;
+  background: rgba(0, 0, 0, 0.1);
+}
+/* 3 barrrrr */
+.skin-blue-light .main-header .navbar .sidebar-toggle {
+  color:#D71C32;
+}
+.skin-blue-light .main-header .navbar .sidebar-toggle:hover {
+  background-color: #D71C32;
+}
+@media (max-width: 767px) {
+  .skin-blue-light .main-header .navbar .dropdown-menu li.divider {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  .skin-blue-light .main-header .navbar .dropdown-menu li a {
+    color: #EC1E37;
+  }
+  .skin-blue-light .main-header .navbar .dropdown-menu li a:hover {
+    background: #EC1E37;
+  }
+}
+/* logo siadam */
+.skin-blue-light .main-header .logo {
+  background: rgb(194,25,46);
+  background: linear-gradient(90deg, rgba(194,25,46,1) 0%, rgba(236,30,55,1) 100%, rgba(239,70,91,1) 100%);
+  color: #ffffff;
+  border-bottom: 0 solid transparent;
+}
+/* kalo ditempelin */
+.skin-blue-light .main-header .logo:hover {
+  background-color: #C2192E;
+}
+.skin-blue-light .main-header li.user-header {
+  background-image: url("assets/dist/img/photo1.png");
+  background-color: rgb(155, 155, 155);
+}
+.skin-blue-light .content-header {
+  background: transparent;
+}
+
+.skin-blue-light .user-panel > .info,
+.skin-blue-light .user-panel > .info > a {
+  color: #ffffff;
+}
+
+/* sidebar color */
+.skin-blue-light .wrapper,
+.skin-blue-light .main-sidebar,
+.skin-blue-light .left-side {
+  background: rgb(194,25,46);
+  background: linear-gradient(90deg, rgba(194,25,46,1) 0%, rgba(236,30,55,1) 100%, rgba(239,70,91,1) 100%);
+}
+/* border sidebar */
+.skin-blue-light .main-sidebar {
+  box-shadow: 0 1px 1px rgba(0,0,0,0.11), 
+              0 2px 2px rgba(0,0,0,0.11), 
+              0 4px 4px rgba(0,0,0,0.11), 
+              0 8px 8px rgba(0,0,0,0.11), 
+              0 16px 16px rgba(0,0,0,0.11), 
+              0 32px 32px rgba(0,0,0,0.11);
+}
+
+.skin-blue-light .sidebar-menu > li {
+  -webkit-transition: border-left-color 0.3s ease;
+  -o-transition: border-left-color 0.3s ease;
+  transition: border-left-color 0.3s ease;
+}
+/* settings */
+.skin-blue-light .sidebar-menu > li.header {
+  margin-top: 30px;
+  color: #d6d6d6;
+  background: rgb(194,25,46);
+  background: linear-gradient(90deg, rgba(194,25,46,1) 0%, rgba(236,30,55,1) 100%, rgba(239,70,91,1) 100%);
+}
+.skin-blue-light .sidebar-menu > li > a {
+  border-left: 3px solid transparent;
+  font-weight: 500;
+}
+
+/* kalo cursor nempel */
+.skin-blue-light .sidebar-menu > li:hover > a,
+.skin-blue-light .sidebar-menu > li.active > a {
+  /* fontnya */
+  color: #ffffff;
+  background: #D71C32;
+}
+.skin-blue-light .sidebar-menu > li.active {
+  border-left-color: #D71C32;
+}
+.skin-blue-light .sidebar-menu > li.active > a {
+  font-weight: 400;
+}
+/* kalo di pencet treeviewnya */
+.skin-blue-light .sidebar-menu > li > .treeview-menu {
+  background: rgb(194,25,46);
+  background: linear-gradient(90deg, rgba(194,25,46,1) 0%, rgba(215,28,50,1) 100%, rgba(215,28,50,1) 100%);
+}
+/* color font color */
+.skin-blue-light .sidebar a {
+  color: #ffffff;
+}
+.skin-blue-light .sidebar a:hover {
+  text-decoration: none;
+}
+/* font treeview */
+.skin-blue-light .sidebar-menu .treeview-menu > li > a {
+  color: #f1f1f1;
+  font-weight: 300;
+}
+/* kalo nempel di treeview fontnya */
+.skin-blue-light .sidebar-menu .treeview-menu > li.active > a,
+.skin-blue-light .sidebar-menu .treeview-menu > li > a:hover {
+  color: #cfcfcf;
+  font-weight: 400;
+}
+.skin-blue-light .sidebar-menu .treeview-menu > li.active > a {
+  font-weight: 500;
+}
+.skin-blue-light .sidebar-form {
+  border-radius: 3px;
+  border: 1px solid #d2d6de;
+  margin: 10px 10px;
+}
+.skin-blue-light .sidebar-form input[type="text"],
+.skin-blue-light .sidebar-form .btn {
+  box-shadow: none;
+  background-color: #fff;
+  border: 1px solid transparent;
+  height: 35px;
+}
+.skin-blue-light .sidebar-form input[type="text"] {
+  color: #666;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 2px;
+}
+.skin-blue-light .sidebar-form input[type="text"]:focus,
+.skin-blue-light .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+  background-color: #fff;
+  color: #666;
+}
+.skin-blue-light .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+  border-left-color: #fff;
+}
+.skin-blue-light .sidebar-form .btn {
+  color: rgb(172, 172, 172);
+  border-top-left-radius: 0;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 0;
+}
+@media (min-width: 768px) {
+  .skin-blue-light.sidebar-mini.sidebar-collapse .sidebar-menu > li > .treeview-menu {
+    border-left: 1px solid #a9acb3;
+  }
+}
+/* border footer */
+.skin-blue-light .main-footer {
+  font-size: small;
+  border-top-color: #d2d6de;
+}
+.skin-blue.layout-top-nav .main-header > .logo {
+  background-color: #D71C32;
+  color: #ffffff;
+  border-bottom: 0 solid transparent;
+}
+.skin-blue.layout-top-nav .main-header > .logo:hover {
+  background-color: #D71C32;
+}
