@@ -84,9 +84,9 @@ class Admin extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 			$this->Pegawai_model->addDataPegawai($post);
 			if ($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='" . site_url('Admin/getPegawai') . "';</script>";
+			redirect('Admin/getPegawai');
 		}
 	}
 
@@ -129,16 +129,16 @@ class Admin extends CI_Controller
 				$data['row'] = $query->row();
 				$this->template->load('template/template_Admin', 'pegawai/pegawai_form_edit', $data);
 			} else {
-				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='" . site_url('Admin/getPegawai') . "';</script>";
+				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
+				redirect('Admin/getPegawai');
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->Pegawai_model->editDataPegawai($post);
 			if ($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='" . site_url('Admin/getPegawai') . "';</script>";
+			redirect('Admin/getPegawai');
 		}
 	}
 
@@ -160,9 +160,9 @@ class Admin extends CI_Controller
 		$this->Pegawai_model->deleteDataPegawai($id);
 
 		if ($this->db->affected_rows() > 0) {
-			echo "<script>alert('Data berhasil dihapus');</script>";
+			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
 		}
-		echo "<script>window.location='" . site_url('Admin/getPegawai') . "';</script>";
+		redirect('Admin/getPegawai');
 	}
 	// End Menu Pegawai
 
@@ -197,9 +197,9 @@ class Admin extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 			$this->STO_model->addDataSTO($post);
 			if ($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='" . site_url('Admin/getSTO') . "';</script>";
+			redirect('Admin/getSTO');
 		}
 	}
 
@@ -228,16 +228,16 @@ class Admin extends CI_Controller
 				}
 				$this->template->load('template/template_Admin', 'sto/sto_form_edit', $data);
 			} else {
-				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='" . site_url('Admin/getSTO') . "';</script>";
+				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
+				redirect('Admin/getSTO');
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->STO_model->editDataSTO($post);
 			if ($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='" . site_url('Admin/getSTO') . "';</script>";
+			redirect('Admin/getSTO');
 		}
 	}
 
@@ -259,9 +259,9 @@ class Admin extends CI_Controller
 		$this->STO_model->deleteDataSTO($id);
 
 		if ($this->db->affected_rows() > 0) {
-			echo "<script>alert('Data berhasil dihapus');</script>";
+			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
 		}
-		echo "<script>window.location='" . site_url('Admin/getSTO') . "';</script>";
+		redirect('Admin/getSTO');
 	}
 
 	// End Menu STO
@@ -293,9 +293,9 @@ class Admin extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 			$this->Regional_model->addDataRegional($post);
 			if ($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='" . site_url('Admin/getRegional') . "';</script>";
+			redirect('Admin/getRegional');
 		}
 	}
 
@@ -320,16 +320,16 @@ class Admin extends CI_Controller
 				$data['row'] = $query->row();
 				$this->template->load('template/template_Admin', 'regional/regional_form_edit', $data);
 			} else {
-				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='" . site_url('Admin/getRegional') . "';</script>";
+				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
+				redirect('Admin/getRegional');
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->Regional_model->editDataRegional($post);
 			if ($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='" . site_url('Admin/getRegional') . "';</script>";
+			redirect('Admin/getRegional');
 		}
 	}
 
@@ -351,9 +351,9 @@ class Admin extends CI_Controller
 		$this->Regional_model->deleteDataRegional($id);
 
 		if ($this->db->affected_rows() > 0) {
-			echo "<script>alert('Data berhasil dihapus');</script>";
+			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
 		}
-		echo "<script>window.location='" . site_url('Admin/getRegional') . "';</script>";
+		redirect('Admin/getRegional');
 	}
 	// End Menu Regional
 
@@ -386,9 +386,9 @@ class Admin extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 			$this->Datel_model->addDataDatel($post);
 			if ($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='" . site_url('Admin/getDatel') . "';</script>";
+			redirect('Admin/getDatel');
 		}
 	}
 
@@ -417,16 +417,16 @@ class Admin extends CI_Controller
 				}
 				$this->template->load('template/template_Admin', 'datel/datel_form_edit', $data);
 			} else {
-				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='" . site_url('Admin/getDatel') . "';</script>";
+				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
+				redirect('Admin/getDatel');
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->Datel_model->editDataDatel($post);
 			if ($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='" . site_url('Admin/getDatel') . "';</script>";
+			redirect('Admin/getDatel');
 		}
 	}
 
@@ -448,9 +448,9 @@ class Admin extends CI_Controller
 		$this->Datel_model->deleteDataDatel($id);
 
 		if ($this->db->affected_rows() > 0) {
-			echo "<script>alert('Data berhasil dihapus');</script>";
+			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
 		}
-		echo "<script>window.location='" . site_url('Admin/getDatel') . "';</script>";
+		redirect('Admin/getDatel');
 	}
 	// End Menu Datel
 
@@ -484,9 +484,9 @@ class Admin extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 			$this->Witel_model->addDataWitel($post);
 			if ($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='" . site_url('Admin/getWitel') . "';</script>";
+			redirect('Admin/getWitel');
 		}
 	}
 
@@ -515,16 +515,16 @@ class Admin extends CI_Controller
 				}
 				$this->template->load('template/template_Admin', 'witel/witel_form_edit', $data);
 			} else {
-				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='" . site_url('Admin/getWitel') . "';</script>";
+				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
+				redirect('Admin/getWitel');
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->Witel_model->editDataWitel($post);
 			if ($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='" . site_url('Admin/getWitel') . "';</script>";
+			redirect('Admin/getWitel');
 		}
 	}
 
@@ -546,9 +546,9 @@ class Admin extends CI_Controller
 		$this->Witel_model->deleteDataWitel($id);
 
 		if ($this->db->affected_rows() > 0) {
-			echo "<script>alert('Data berhasil dihapus');</script>";
+			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
 		}
-		echo "<script>window.location='" . site_url('Admin/getWitel') . "';</script>";
+		redirect('Admin/getWitel');
 	}
 	// End Menu Witel
 
@@ -580,9 +580,9 @@ class Admin extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 			$this->SpecOLT_model->addDataSpecOLT($post);
 			if ($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='" . site_url('Admin/getSpecOLT') . "';</script>";
+			redirect('Admin/getSpecOLT');
 		}
 	}
 
@@ -606,16 +606,16 @@ class Admin extends CI_Controller
 				$data['row'] = $query->row();
 				$this->template->load('template/template_Admin', 'specolt/specolt_form_edit', $data);
 			} else {
-				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='" . site_url('Admin/getSpecOLT') . "';</script>";
+				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
+				redirect('Admin/getSpecOLT');
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->SpecOLT_model->editDataSpecOLT($post);
 			if ($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='" . site_url('Admin/getSpecOLT') . "';</script>";
+			redirect('Admin/getSpecOLT');
 		}
 	}
 
@@ -637,9 +637,9 @@ class Admin extends CI_Controller
 		$this->SpecOLT_model->deleteDataSpecOLT($id);
 
 		if ($this->db->affected_rows() > 0) {
-			echo "<script>alert('Data berhasil dihapus');</script>";
+			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
 		}
-		echo "<script>window.location='" . site_url('Admin/getSpecOLT') . "';</script>";
+		redirect('Admin/getSpecOLT');
 	}
 
 	// START ODP
@@ -805,9 +805,9 @@ class Admin extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 			$this->ODP_model->addDataODP($post);
 			if ($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='" . site_url('Admin/getODP') . "';</script>";
+			redirect('Admin/getODP');
 		}
 	}
 
@@ -849,16 +849,16 @@ class Admin extends CI_Controller
 				$data['row'] = $query->row();
 				$this->template->load('template/template_Admin', 'odp/odp_form_edit', $data);
 			} else {
-				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='" . site_url('Admin/getODP') . "';</script>";
+				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
+				redirect('Admin/getODP');
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->ODP_model->editDataODP($post);
 			if ($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='" . site_url('Admin/getODP') . "';</script>";
+			redirect('Admin/getODP');
 		}
 	}
 
@@ -868,9 +868,9 @@ class Admin extends CI_Controller
 		$this->ODP_model->deleteDataODP($id);
 
 		if ($this->db->affected_rows() > 0) {
-			echo "<script>alert('Data berhasil dihapus');</script>";
+			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
 		}
-		echo "<script>window.location='" . site_url('Admin/getODP') . "';</script>";
+		redirect('Admin/getODP');
 	}
 
 	public function detail($id)
@@ -908,9 +908,9 @@ class Admin extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 			$this->OLT_model->addDataOLT($post);
 			if ($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='" . site_url('Admin/getOLT') . "';</script>";
+			redirect('Admin/getOLT');
 		}
 	}
 
@@ -939,16 +939,16 @@ class Admin extends CI_Controller
 				$data['row'] = $query->row();
 				$this->template->load('template/template_Admin', 'olt/olt_form_edit', $data);
 			} else {
-				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='" . site_url('Admin/getOLT') . "';</script>";
+				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
+				redirect('Admin/getOLT');
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->OLT_model->editDataOLT($post);
 			if ($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='" . site_url('Admin/getOLT') . "';</script>";
+			redirect('Admin/getOLT');
 		}
 	}
 
@@ -958,12 +958,12 @@ class Admin extends CI_Controller
 		$this->OLT_model->deleteDataOLT($id);
 
 		if ($this->db->affected_rows() > 0) {
-			echo "<script>alert('Data berhasil dihapus');</script>";
+			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
 		}
-		echo "<script>window.location='" . site_url('Admin/getOLT') . "';</script>";
+		redirect('Admin/getOLT');
 	}
 
-	
+
 	// END OLT
 
 }

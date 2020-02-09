@@ -10,7 +10,7 @@
 
 <!-- Main content -->
 <section class="content">
-
+    <?php $this->view('messages') ?>
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">Data OLT</h3>
@@ -43,12 +43,12 @@
                     <?php $no = 1;
                     foreach ($row->result() as $key => $data) { ?>
                         <tr>
-                            <td><?= $data->hostname ?></td>
+                            <td style="width: 16%";><?= $data->hostname ?></td>
                             <td><?= $data->ipOLT ?></td>
                             <td><?= $data->idLogicalDevice ?></td>
                             <td><?= $data->idSTO ?></td>
                             <td><?= $data->idSpecOLT ?></td>
-                            <td class="text-center" width="160px">
+                            <td class="text-center" width="10%">
                                 <form action="<?= site_url('Admin/deleteOLT') ?>" method="post">
                                     <a href="<?= site_url('Admin/detailOLT/' . $data->hostname) ?>" class="btn btn-default btn-xs">
                                         <i class="fa fa-eye"></i>

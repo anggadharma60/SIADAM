@@ -10,7 +10,7 @@
 
 <!-- Main content -->
 <section class="content">
-
+  <?php $this->view('messages') ?>
   <div class="box">
     <div class="box-header">
       <h3 class="box-title">Data Specification OLT</h3>
@@ -42,7 +42,7 @@
               <td><?= $data->merekOLT ?></td>
               <td><?= $data->typeOLT ?></td>
               <td><?= $data->keterangan ?></td>
-              <td class="text-center" width="160px">
+              <td class="text-center" width="10%">
                 <form action="<?= site_url('Admin/deleteSpecOLT') ?>" method="post">
                   <a href="<?= site_url('Admin/editSpecOLT/' . $data->idSpecOLT) ?>" class="btn btn-primary btn-xs">
                     <i class="fa fa-pencil"></i>

@@ -10,7 +10,7 @@
 
 <!-- Main content -->
 <section class="content">
-
+  <?php $this->view('messages') ?>
   <div class="box">
     <div class="box-header">
       <h3 class="box-title">Data ODP</h3>
@@ -76,7 +76,7 @@
               <td><?= $data->idSTO ?></td>
               <td><?= $data->infoODP ?></td>
               <td><?= $data->updateDate ?></td>
-              <td class="text-center" width="160px">
+              <td class="text-center" width="10%">
                 <form action="<?= site_url('Admin/deleteODP') ?>" method="post">
                   <a href="<?= site_url('Admin/detailODP/' . $data->idODP) ?>" class="btn btn-default btn-xs">
                     <i class="fa fa-eye"></i>

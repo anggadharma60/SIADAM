@@ -10,7 +10,8 @@
 
 <!-- Main content -->
 <section class="content">
-
+  <!-- buat ALERT ke messages.php -->
+  <?php $this->view('messages') ?>
   <div class="box">
     <div class="box-header">
       <h3 class="box-title">Data Pegawai</h3>
@@ -26,7 +27,6 @@
         <thead>
           <tr>
             <th>ID Pegawai</th>
-            <!-- <th>NIP</th> -->
             <th>Nama Pegawai</th>
             <th>Username</th>
             <th>Status</th>
@@ -37,12 +37,11 @@
           <?php $no = 1;
           foreach ($row->result() as $key => $data) { ?>
             <tr>
-              <td><?= $data->idPegawai ?></td>
-              <!-- <td><?= $data->NIP ?></td> -->
+              <td style="width: 11%";><?= $data->idPegawai ?></td>
               <td><?= $data->namaPegawai ?></td>
               <td><?= $data->username ?></td>
-              <td><?= $data->status ?></td>
-              <td class="text-center" width="160px">
+              <td style="width: 11%";><?= $data->status ?></td>
+              <td class="text-center" width="10%">
                 <form action="<?= site_url('Admin/deletePegawai') ?>" method="post">
                   <a href="<?= site_url('Admin/detailPegawai/' . $data->idPegawai) ?>" class="btn btn-default btn-xs">
                     <i class="fa fa-eye"></i>

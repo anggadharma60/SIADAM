@@ -10,7 +10,7 @@
 
 <!-- Main content -->
 <section class="content">
-
+  <?php $this->view('messages') ?>
   <div class="box">
     <div class="box-header">
       <h3 class="box-title">Data STO</h3>
@@ -37,19 +37,19 @@
           <?php $no = 1;
           foreach ($row->result() as $key => $data) { ?>
             <tr>
-              <td><?= $data->idSTO ?></td>
-              <td><?= $data->kodeSTO ?></td>
-              <td><?= $data->namaSTO ?></td>
+              <td style="width: 10%";><?= $data->idSTO ?></td>
+              <td style="width: 10%";><?= $data->kodeSTO ?></td>
+              <td style="width: 15%";><?= $data->namaSTO ?></td>
               <td><?= $data->keterangan ?></td>
-              <td><?= $data->namaDatel ?></td>
-              <td class="text-center" width="160px">
+              <td style="width: 15%";><?= $data->namaDatel ?></td>
+              <td class="text-center" width="10%">
                 <form action="<?= site_url('Admin/deleteSTO') ?>" method="post">
                   <a href="<?= site_url('Admin/editSTO/' . $data->idSTO) ?>" class="btn btn-primary btn-xs">
-                    <i class="fa fa-pencil"></i> 
+                    <i class="fa fa-pencil"></i>
                   </a>
                   <input type="hidden" name="idSTO" value="<?= $data->idSTO ?>">
                   <button onclick="return confirm('Apakah Anda Yakin?')" class="btn btn-danger btn-xs">
-                    <i class="fa fa-trash"></i> 
+                    <i class="fa fa-trash"></i>
                   </button>
                 </form>
               </td>
