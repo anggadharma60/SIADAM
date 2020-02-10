@@ -67,9 +67,6 @@
         <th>RSV</th>
         <th>RSK</th>
         <th>Total</th>
-        <th>ID Regional</th>
-        <th>ID Witel</th>
-        <th>ID Datel</th>
         <th>ID STO</th>
         <th>Info ODP</th>
         <th>Update Date</th>
@@ -95,9 +92,6 @@
       $rsv               =  $row['L'];
       $rsk               =  $row['M'];
       $total             =  $row['N'];
-      $idRegional        =  $row['O'];
-      $idWitel           =  $row['P'];
-      $idDatel           =  $row['Q'];
       $idSTO             =  $row['R'];
       $infoODP           =  $row['T'];
       $updateDate        =  $row['U'];
@@ -125,9 +119,6 @@
         $rsv_td = ( ! empty($rsv))? "" : " style='background: #E07171;'"; // Jika Alamat kosong, beri warna merah
         $rsk_td = ( ! empty($rsk))? "" : " style='background: #E07171;'"; // Jika Alamat kosong, beri warna merah
         $total_td = ( ! empty($total))? "" : " style='background: #E07171;'"; // Jika Alamat kosong, beri warna merah
-        $idRegional_td = ( ! empty($idRegional))? "" : " style='background: #E07171;'"; // Jika Alamat kosong, beri warna merah
-        $idWitel_td = ( ! empty($idWitel))? "" : " style='background: #E07171;'"; // Jika Alamat kosong, beri warna merah
-        $idDatel_td = ( ! empty($idDatel))? "" : " style='background: #E07171;'"; // Jika Alamat kosong, beri warna merah
         $idSTO_td = ( ! empty($idSTO))? "" : " style='background: #E07171;'"; // Jika Alamat kosong, beri warna merah
         $infoODP_td = ( ! empty($infoODP))? "" : " style='background: #E07171;'"; // Jika Alamat kosong, beri warna merah
         $updateDate_td = ( ! empty($updateDate))? "" : " style='background: #E07171;'"; // Jika Alamat kosong, beri warna merah
@@ -151,9 +142,6 @@
         echo "<td".$rsv_td.">".$rsv."</td>";
         echo "<td".$rsk_td.">".$rsk."</td>";
         echo "<td".$total_td.">".$total."</td>";
-        echo "<td".$idRegional_td.">".$idRegional."</td>";
-        echo "<td".$idWitel_td.">".$idWitel."</td>";
-        echo "<td".$idDatel_td.">".$idDatel."</td>";
         echo "<td".$idSTO_td.">".$idSTO."</td>";
         echo "<td".$infoODP_td.">".$infoODP."</td>";
         echo "<td".$updateDate_td.">".$updateDate."</td>";
