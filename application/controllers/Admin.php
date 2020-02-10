@@ -903,23 +903,23 @@ class Admin extends CI_Controller
 
 	public function addOLT()
 	{
-		$this->form_validation->set_rules('hostname', 'HOSTNAME', 'required|trim');
-		$this->form_validation->set_rules('ipOLT', 'IP GPON', 'required|trim');
-		$this->form_validation->set_rules('idLogicalDevice', 'ID Logical Device', 'required|trim');
+		$data['sto'] = $this->STO_model->getDataSTO();
+		$data['spec'] = $this->SpecOLT_model->getDataSpecOLT();
+		$this->form_validation->set_rules('hostname', 'HOSTNAME', 'required|is_unique[rekap_data_olt.hostname]|trim');
+		$this->form_validation->set_rules('ipOLT', 'IP GPON', 'required|is_unique[rekap_data_olt.ipOLT]|trim');
+		$this->form_validation->set_rules('idLogicalDevice', 'ID Logical Device', 'required|is_unique[rekap_data_olt.idLogicalDevice]|trim');
 		$this->form_validation->set_rules('idSTO', 'ID STO', 'required|trim');
 		$this->form_validation->set_rules('idSpecOLT', 'ID Specification OLT', 'required|trim');
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
 		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('regex_match', '{field} berisi karakter dan numerik');
 		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-		$this->form_validation->set_message('alpha_dash', '{field} berisi karakter, simbol dan numerik');
 
 		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
 		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_Admin', 'olt/olt_form_add');
+			$this->template->load('template/template_Admin', 'olt/olt_form_add', $data);
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->OLT_model->addDataOLT($post);

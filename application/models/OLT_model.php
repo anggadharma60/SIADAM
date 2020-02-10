@@ -21,7 +21,10 @@ class OLT_model extends CI_Model
 
   public function getDataOLT($id = null)
   {
+    $this->db->select('*');
     $this->db->from('rekap_data_olt');
+    $this->db->join('specification_olt', 'rekap_data_olt.idSpecOLT = specification_olt.idSpecOLT');
+    $this->db->join('sto', 'rekap_data_olt.idSTO=sto.idSTO');
     if ($id != null) {
       $this->db->where('hostname', $id);
     }
