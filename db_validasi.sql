@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 10, 2020 at 08:51 AM
+-- Generation Time: Feb 10, 2020 at 04:22 PM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -42,6 +42,17 @@ DECLARE urut INT;
  
 SET urut = IF(nomer IS NULL, 1, nomer + 1);
 SET kodebaru = CONCAT("ODP", LPAD(urut, 5, 0));
+ 
+RETURN kodebaru;
+END$$
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `kodeoltotomatis` (`nomer` INT) RETURNS VARCHAR(8) CHARSET latin1 NO SQL
+BEGIN
+DECLARE kodebaru CHAR(8);
+DECLARE urut INT;
+ 
+SET urut = IF(nomer IS NULL, 1, nomer + 1);
+SET kodebaru = CONCAT("OLT", LPAD(urut, 5, 0));
  
 RETURN kodebaru;
 END$$
@@ -120,7 +131,7 @@ INSERT INTO `datel` (`idDatel`, `namaDatel`, `keterangan`, `idWitel`) VALUES
 ('D0001', 'Kendal', NULL, 'W0001'),
 ('D0002', 'Semarang Kota', NULL, 'W0001'),
 ('D0003', 'Ungaran', NULL, 'W0001'),
-('D0004', 'Gianyar', '', 'W0002');
+('D0004', 'Gianyar', '', 'W0001');
 
 --
 -- Triggers `datel`
@@ -205,7 +216,8 @@ INSERT INTO `pegawai` (`idPegawai`, `namaPegawai`, `username`, `password`, `stat
 ('P0000021', 'Bayu Iryanto', 'amija5', 'amija5', 'Onsite'),
 ('P0000022', 'Slamet Riyanto', 'amija6', 'amija6', 'Onsite'),
 ('P0000023', 'Novan Ardhiansyah', 'amija7', 'amija7', 'Onsite'),
-('P0000024', 'Angga', 'anggaa', 'angga', 'Admin');
+('P0000024', 'Angga', 'anggaaa', 'angga', 'Admin'),
+('P0000025', 'dada', 'dadaaa', 'aaaaa', 'Admin');
 
 --
 -- Triggers `pegawai`
@@ -298,9 +310,7 @@ CREATE TABLE `rekap_data_odp` (
 --
 
 INSERT INTO `rekap_data_odp` (`idODP`, `idNOSS`, `indexODP`, `namaODP`, `ftp`, `latitude`, `longitude`, `clusterName`, `clusterStatus`, `avai`, `used`, `rsv`, `rsk`, `total`, `idSTO`, `infoODP`, `updateDate`) VALUES
-('ODP00001', '23132', 'dasdas', 'dasda', 'dasd', '2312312', '312312', 'sdasd', 'dadas', '2', '2', '2', '2', '8', '', 'test 1', '2020-02-10 10:53 AM'),
-('ODP00002', '3423', 'sdad', 'sadsa', '1231', '31232', '3123', '312312', '31231', '123', '320', '32', '321', '796', 'S0017', '312312', '2020-02-10 12:55 PM'),
-('ODP00003', '1231', '213', '3213', '1231', '31231', '312', '1323', '312', '33', '33', '33', '33', '132', 'S0002', 'Halo', '2020-02-10 11:37 AM');
+('ODP00001', 'dsad', 'dsadsa', 'dasdsa', 'dasdsa', 'asds', 'dasds', 'dsadas', 'dsad', '3', '3', '3', '3', '12', 'S0017', '', '2020-02-10 10:17 PM');
 
 --
 -- Triggers `rekap_data_odp`
@@ -329,6 +339,7 @@ DELIMITER ;
 --
 
 CREATE TABLE `rekap_data_olt` (
+  `idOLT` varchar(8) NOT NULL,
   `hostname` varchar(16) NOT NULL,
   `ipOLT` varchar(15) DEFAULT NULL,
   `idLogicalDevice` varchar(20) NOT NULL,
@@ -340,14 +351,37 @@ CREATE TABLE `rekap_data_olt` (
 -- Dumping data for table `rekap_data_olt`
 --
 
-INSERT INTO `rekap_data_olt` (`hostname`, `ipOLT`, `idLogicalDevice`, `idSTO`, `idSpecOLT`) VALUES
-('GPON00-D4-KDL-3', '172.22.203.18', '14775007', 'S0008', 'Spec03'),
-('GPON01-D4-BMK-3', '172.22.203.201', '12975107', 'S0003', 'Spec01'),
-('GPON01-D4-JHR-2', ' 172.22.203.49', '12975102', 'S0007', 'Spec05'),
-('GPON02-D4-SMC-3', '172.29.236.40', '14475029', 'S0013', 'Spec04'),
-('GPON02-D4-SSL-5', '172.29.236.8', '15000006', 'S0015', 'Spec02'),
-('GPON07-D4-MJP-3', '172.29.236.43', '129300162', 'S0010', 'Spec07'),
-('GPON11-D4-SMT-2', '172.29.237.229', '105150163', 'S0014', 'Spec06');
+INSERT INTO `rekap_data_olt` (`idOLT`, `hostname`, `ipOLT`, `idLogicalDevice`, `idSTO`, `idSpecOLT`) VALUES
+('OLT00001', 'GPON00-D4-KDL-3', '172.22.203.18', '14775007', 'S0008', 'Spec03'),
+('OLT00002', 'GPON01-D4-BMK-3', '172.22.203.201', '12975107', 'S0003', 'Spec01'),
+('OLT00003', 'GPON01-D4-JHR-2', ' 172.22.203.49', '12975102', 'S0007', 'Spec05'),
+('OLT00004', 'GPON02-D4-SMC-3', '172.29.236.40', '14475029', 'S0013', 'Spec04'),
+('OLT00005', 'GPON02-D4-SSL-5', '172.29.236.8', '15000006', 'S0015', 'Spec02'),
+('OLT00006', 'GPON07-D4-MJP-3', '172.29.236.43', '129300162', 'S0010', 'Spec07'),
+('OLT00007', 'GPON11-D4-SMT-2', '172.29.237.229', '105150163', 'S0014', 'Spec06'),
+('OLT00009', 'dsadd', 'dasdd', 'dsad', 'S0001', 'Spec04'),
+('OLT00010', 'dsadasd', 'dasdsaa', 'sadsad', 'S0001', ''),
+('OLT00011', 'asdfg', 'asdfg', 'asdfg', 'S0007', 'Spec04');
+
+--
+-- Triggers `rekap_data_olt`
+--
+DELIMITER $$
+CREATE TRIGGER `oltotomatis` BEFORE INSERT ON `rekap_data_olt` FOR EACH ROW BEGIN
+DECLARE s VARCHAR(8);
+DECLARE i INTEGER;
+ 
+SET i = (SELECT SUBSTRING(idOLT,4,8) AS Nomer
+FROM rekap_data_olt ORDER BY Nomer DESC LIMIT 1);
+ 
+SET s = (SELECT kodeoltotomatis(i));
+ 
+IF(NEW.idOLT IS NULL OR NEW.idOLT = '')
+ THEN SET NEW.idOLT =s;
+END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -565,7 +599,8 @@ CREATE TABLE `witel` (
 
 INSERT INTO `witel` (`idWitel`, `namaWitel`, `keterangan`, `idRegional`) VALUES
 ('W0001', 'Semarang', '', 'R0001'),
-('W0002', 'Denpasar', '', 'R0002');
+('W0002', 'Denpasar', '', 'R0002'),
+('W0003', 'Suramadu', '', 'R0001');
 
 --
 -- Triggers `witel`
@@ -632,9 +667,9 @@ ALTER TABLE `rekap_data_odp`
 -- Indexes for table `rekap_data_olt`
 --
 ALTER TABLE `rekap_data_olt`
-  ADD PRIMARY KEY (`hostname`),
-  ADD KEY `fk_rekap` (`idSpecOLT`,`idSTO`) USING BTREE,
-  ADD KEY `fk_sto_dua` (`idSTO`);
+  ADD PRIMARY KEY (`idOLT`),
+  ADD KEY `fk_sto` (`idSTO`) USING BTREE,
+  ADD KEY `fk_spek` (`idSpecOLT`);
 
 --
 -- Indexes for table `rekap_data_validasi`
@@ -665,6 +700,18 @@ ALTER TABLE `witel`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `rekap_data_odp`
+--
+ALTER TABLE `rekap_data_odp`
+  ADD CONSTRAINT `fk_sto2` FOREIGN KEY (`idSTO`) REFERENCES `sto` (`idSTO`);
+
+--
+-- Constraints for table `rekap_data_olt`
+--
+ALTER TABLE `rekap_data_olt`
+  ADD CONSTRAINT `fk_sto` FOREIGN KEY (`idSTO`) REFERENCES `sto` (`idSTO`);
 
 --
 -- Constraints for table `sto`

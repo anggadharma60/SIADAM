@@ -23,7 +23,7 @@ class ODP_model extends CI_Model {
     // $this->db->select('rekap_data_odp.*, sto.kodeSTO, sto.namaSTO, sto.idDatel, datel.namaDatel, datel.idWitel, witel.namaWitel, witel.idRegional, regional.namaRegional');
     $this->db->from('rekap_data_odp');
     $this->db->join('sto', 'rekap_data_odp.idSTO = sto.idSTO');
-    $this->db->join('datel', 'sto.idDatel=datel.idDatel');
+    $this->db->join('datel', 'sto.idDatel=datel.idDatel', 'left');
     $this->db->join('witel', 'datel.idWitel=witel.idWitel');
     $this->db->join('regional', 'witel.idRegional = regional.idRegional');
         if($id != null) {

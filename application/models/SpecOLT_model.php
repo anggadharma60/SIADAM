@@ -29,6 +29,14 @@ class SpecOLT_model extends CI_Model {
         return $query;
   }
 
+  public function getDataSpecOLTSelect($id){
+
+    $this->db->from('specification_olt');
+    $this->db->where('idSpecOLT!=', $id);
+    $query = $this->db->get();
+    return $query;
+  }
+
   public function addDataSpecOLT($post)
     {
         $params['namaSpecOLT'] = html_escape($post['namaSpecOLT']);

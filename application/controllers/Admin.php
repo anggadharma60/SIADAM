@@ -898,11 +898,12 @@ class Admin extends CI_Controller
 	{
 		$data['sto'] = $this->STO_model->getDataSTO();
 		$data['spec'] = $this->SpecOLT_model->getDataSpecOLT();
+		
 		$this->form_validation->set_rules('hostname', 'HOSTNAME', 'required|is_unique[rekap_data_olt.hostname]|trim');
 		$this->form_validation->set_rules('ipOLT', 'IP GPON', 'required|is_unique[rekap_data_olt.ipOLT]|trim');
 		$this->form_validation->set_rules('idLogicalDevice', 'ID Logical Device', 'required|is_unique[rekap_data_olt.idLogicalDevice]|trim');
-		$this->form_validation->set_rules('idSTO', 'ID STO', 'required|trim');
-		$this->form_validation->set_rules('idSpecOLT', 'ID Specification OLT', 'required|trim');
+		$this->form_validation->set_rules('STO', 'STO', 'required|trim');
+		$this->form_validation->set_rules('SpecOLT', 'Specification OLT', 'required|trim');
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
@@ -926,19 +927,17 @@ class Admin extends CI_Controller
 	public function editOLT($id)
 	{
 
-		$this->form_validation->set_rules('hostname', 'HOSTNAME', 'required|trim');
-		$this->form_validation->set_rules('ipOLT', 'IP GPON', 'required|trim');
-		$this->form_validation->set_rules('idLogicalDevice', 'ID Logical Device', 'required|trim');
-		$this->form_validation->set_rules('idSTO', 'ID STO', 'required|trim');
-		$this->form_validation->set_rules('idSpecOLT', 'ID Specification OLT', 'required|trim');
+		$this->form_validation->set_rules('hostname', 'HOSTNAME', 'trim');
+		$this->form_validation->set_rules('ipOLT', 'IP GPON', 'required|callback_ipolt_check|trim');
+		$this->form_validation->set_rules('idLogicalDevice', 'ID Logical Device', 'required|callback_idlogicaldevice_check|trim');
+		$this->form_validation->set_rules('STO', 'STO', 'trim');
+		$this->form_validation->set_rules('SpecOLT', 'Specification OLT', 'trim');
 
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
 		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('regex_match', '{field} berisi karakter');
 		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-		$this->form_validation->set_message('alpha_dash', '{field} berisi karakter, simbol dan numerik');
 
 		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
@@ -946,6 +945,14 @@ class Admin extends CI_Controller
 			$query = $this->OLT_model->getDataOLT($id);
 			if ($query->num_rows() > 0) {
 				$data['row'] = $query->row();
+				$query2 = $this->STO_model->getDataSTOSelect($data['row']->idSTO);
+				if ($query2->num_rows() > 0) {
+					$data['sto'] = $query2;
+				}
+				$query3 = $this->SpecOLT_model->getDataSpecOLTSelect($data['row']->idSpecOLT);
+				if ($query3->num_rows() > 0) {
+					$data['spec'] = $query3;
+				}
 				$this->template->load('template/template_Admin', 'olt/olt_form_edit', $data);
 			} else {
 				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
@@ -961,9 +968,33 @@ class Admin extends CI_Controller
 		}
 	}
 
+	function ipolt_check()
+	{
+		$post = $this->input->post(null, TRUE);
+		$query = $this->db->query("SELECT * FROM rekap_data_olt WHERE ipOLT = '$post[ipOLT]' AND idOLT != '$post[idOLT]'");
+		if ($query->num_rows() > 0) {
+			$this->form_validation->set_message('ipolt_check', '{field} ini sudah dipakai, silahkan ganti');
+			return FALSE;
+		} else {
+			return TRUE;
+		}
+	}
+
+	function idlogicaldevice_check()
+	{
+		$post = $this->input->post(null, TRUE);
+		$query = $this->db->query("SELECT * FROM rekap_data_olt WHERE idLogicalDevice = '$post[idLogicalDevice]' AND idOLT != '$post[idOLT]'");
+		if ($query->num_rows() > 0) {
+			$this->form_validation->set_message('idlogicaldevice_check', '{field} ini sudah dipakai, silahkan ganti');
+			return FALSE;
+		} else {
+			return TRUE;
+		}
+	}
+
 	public function deleteOLT()
 	{
-		$id = $this->input->post('hostname');
+		$id = $this->input->post('idOLT');
 		$this->OLT_model->deleteDataOLT($id);
 
 		if ($this->db->affected_rows() > 0) {

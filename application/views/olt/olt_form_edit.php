@@ -27,7 +27,7 @@
                 <form action="" method="post"> 
                     <div class="form-group <?=form_error('hostname') ? 'has-error' : null?>">
                         <label>HOSTNAME *</label>
-                        <input type="hidden" name="hostname" value="<?=$row->hostname?>">
+                        <input type="hidden" name="idOLT" value="<?=$row->idOLT?>">
                         <input type="text" name="hostname" value="<?=$this->input->post('hostname') ?? $row->hostname?>" class="form-control" disabled> 
                         <?=form_error('hostname')?>
                     </div>
@@ -41,16 +41,36 @@
                         <input type="text" name="idLogicalDevice" value="<?=$this->input->post('idLogicalDevice') ?? $row->idLogicalDevice?>" class="form-control">
                         <?=form_error('idLogicalDevice')?>
                     </div>
-                    <div class="form-group <?=form_error('idSTO') ? 'has-error' : null?>">
-                        <label>ID STO *</label>
-                        <input type="text" name="idSTO" value="<?=$this->input->post('idSTO') ?? $row->idSTO?>" class="form-control">
-                        <?=form_error('idSTO')?>
+                    <div class="form-group <?=form_error('STO') ? 'has-error' : null?>">
+                        <label>STO </label>
+                        <select name="STO" class="form-control" disabled>
+                        <option value="<?=$row->idSTO?>" selected="selected"><?=$row->namaSTO?></option>
+                        <?php 
+                        if(($sto->num_rows) != 0 ) { ?>
+                        <?php 
+                          foreach ($sto->result() as $key => $sto) {?>
+                            <option value="<?=$sto->idSTO?>" <?=set_value('STO') == $sto->idSTO ? "selected" : null?>><?=$sto->namaSTO?>
+                            </option>
+                          <?php } ?>
+                        <?php } ?>
+                        </select>
+                        <?=form_error('STO')?>
                     </div>
-                    <div class="form-group <?=form_error('idSpecOLT') ? 'has-error' : null?>">
-                        <label>ID Specification OLT *</label>
-                        <input type="text" name="idSpecOLT" value="<?=$this->input->post('idSpecOLT') ?? $row->idSpecOLT?>" class="form-control">
-                        <?=form_error('idSpecOLT')?>
-                    </div>                    
+                    <div class="form-group <?=form_error('SpecOLT') ? 'has-error' : null?>">
+                        <label>Specification OLT </label>
+                        <select name="SpecOLT" class="form-control">
+                        <option value="<?=$row->idSpecOLT?>" selected="selected"><?=$row->namaSpecOLT?></option>
+                        <?php 
+                        if(($spec->num_rows) != 0 ) { ?>
+                        <?php 
+                          foreach ($spec->result() as $key => $spec) {?>
+                            <option value="<?=$spec->idSpecOLT?>" <?=set_value('SpecOLT') == $spec->idSpecOLT? "selected" : null?>><?=$spec->namaSpecOLT?>
+                            </option>
+                          <?php } ?>
+                        <?php } ?>
+                        </select>
+                        <?=form_error('SpecOLT')?>
+                    </div>                  
                     <div class="form-group">
                         <button type="submit" class="btn btn-success btn-flat">
                             <i class="fa fa-paper-plane"></i> Simpan

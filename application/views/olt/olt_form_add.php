@@ -27,7 +27,7 @@
                 <?php //echo validation_errors() ?>
                 <form action="" method="post"> 
                     <div class="form-group <?=form_error('hostname') ? 'has-error' : null ?>">
-                        <label>HOSTNAME *</label>
+                        <label>Hostname *</label>
                         <input type="text" name="hostname" value="<?=set_value('hostname')?>" class="form-control"> 
                         <?=form_error('hostname')?>
                     </div>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-group <?=form_error('idLogicalDevice') ? 'has-error' : null ?>">
                         <label>ID Logical Device *</label>
-                        <input type="text" name="idLogicalDevice" value="<?=set_value('idOidLogicalDeviceLT')?>" class="form-control"> 
+                        <input type="text" name="idLogicalDevice" value="<?=set_value('idLogicalDevice')?>" class="form-control"> 
                         <?=form_error('idLogicalDevice')?>
                     </div>
                     <div class="form-group <?=form_error('STO') ? 'has-error' : null ?>">
@@ -52,19 +52,19 @@
                         </select>
                         <?=form_error('STO')?>
                     </div>
-                    <div class="form-group <?=form_error('specOLT') ? 'has-error' : null ?>">
-                        <label>Specification OLT *</label>
-                        <select name="specOLT" class="form-control">
+                    <div class="form-group <?=form_error('SpecOLT') ? 'has-error' : null ?>">
+                        <label>Specificaton OLT *</label>
+                        <select name="SpecOLT" class="form-control">
                             <option value="" selected="selected">- Pilih Specification OLT -</option>
                             <?php foreach($spec->result() as $key => $spec) {?>
-                                <option value="<?=$spec->idSpecOLT?>" <?=set_value('specOLT') == $spec->idSpecOLT ? "selected" : null?>><?=$spec->namaSpecOLT?>
+                                <option value="<?=$spec->idSpecOLT?>" <?=set_value('SpecOLT') == $spec->idSpecOLT ? "selected" : null?>><?=$spec->namaSpecOLT?>
                               </option>
                             <?php }?>
                         </select>
-                        <?=form_error('specOLT')?>
+                        <?=form_error('SpecOLT')?>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-success btn-flat">
+                        <button name="submit" type="submit" class="btn btn-success btn-flat">
                             <i class="fa fa-paper-plane"></i> Simpan
                         </button>
                         <button type="reset" class="btn btn-flat">Reset</button>

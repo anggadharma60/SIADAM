@@ -23,10 +23,10 @@ class OLT_model extends CI_Model
   {
     $this->db->select('*');
     $this->db->from('rekap_data_olt');
-    $this->db->join('specification_olt', 'rekap_data_olt.idSpecOLT = specification_olt.idSpecOLT');
+    $this->db->join('specification_olt', 'rekap_data_olt.idSpecOLT = specification_olt.idSpecOLT', 'left outer');
     $this->db->join('sto', 'rekap_data_olt.idSTO=sto.idSTO');
     if ($id != null) {
-      $this->db->where('hostname', $id);
+      $this->db->where('idOLT', $id);
     }
     $query = $this->db->get();
     return $query;
@@ -41,24 +41,24 @@ class OLT_model extends CI_Model
     $params['hostname'] = html_escape($post['hostname']);
     $params['ipOLT'] = html_escape($post['ipOLT']);
     $params['idLogicalDevice'] = html_escape($post['idLogicalDevice']);
-    $params['idSTO'] = html_escape($post['idSTO']);
-    $params['idSpecOLT'] = html_escape($post['idSpecOLT']);
+    $params['idSTO'] = html_escape($post['STO']);
+    $params['idSpecOLT'] = html_escape($post['SpecOLT']);
     $this->db->insert('rekap_data_olt', $params);
   }
 
-  public function editDataODP($post)
-  {
+  public function editDataOLT($post)
+  { 
     $params['ipOLT'] = html_escape($post['ipOLT']);
     $params['idLogicalDevice'] = html_escape($post['idLogicalDevice']);
-    $params['idSTO'] = html_escape($post['idSTO']);
-    $params['idSpecOLT'] = html_escape($post['idSpecOLT']);
-    $this->db->where('hostname', $post['hostname']);
+    // $params['idSTO'] = html_escape($post['STO']);
+    $params['idSpecOLT'] = html_escape($post['SpecOLT']);
+    $this->db->where('idOLT', $post['idOLT']);
     $this->db->update('rekap_data_olt', $params);
   }
 
   public function deleteDataOLT($id)
   {
-    $this->db->where('hostname', $id);
+    $this->db->where('idOLT', $id);
     $this->db->delete('rekap_data_olt');
   }
 

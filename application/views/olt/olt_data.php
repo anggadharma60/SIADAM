@@ -31,7 +31,8 @@
             <table class="table table-bordered table-striped" border="1" cellpadding="8" id="table1">
                 <thead>
                     <tr>
-                        <th>HOSTNAME</th>
+                        <th>ID OLT</th>
+                        <th>Hostname</th>
                         <th>IP GPON</th>
                         <th>ID Logical Device</th>
                         <th>STO</th>
@@ -43,6 +44,7 @@
                     <?php $no = 1;
                     foreach ($row->result() as $key => $data) { ?>
                         <tr>
+                            <td><?= $data->idOLT ?></td>
                             <td style="width: 16%";><?= $data->hostname ?></td>
                             <td><?= $data->ipOLT ?></td>
                             <td><?= $data->idLogicalDevice ?></td>
@@ -50,13 +52,13 @@
                             <td><?= $data->namaSpecOLT ?></td>
                             <td class="text-center" width="10%">
                                 <form action="<?= site_url('Admin/deleteOLT') ?>" method="post">
-                                    <a href="<?= site_url('Admin/detailOLT/' . $data->hostname) ?>" class="btn btn-default btn-xs">
+                                    <a href="<?= site_url('Admin/detailOLT/' . $data->idOLT) ?>" class="btn btn-default btn-xs">
                                         <i class="fa fa-eye"></i>
                                     </a>
-                                    <a href="<?= site_url('Admin/editOLT/' . $data->hostname) ?>" class="btn btn-primary btn-xs">
+                                    <a href="<?= site_url('Admin/editOLT/' . $data->idOLT) ?>" class="btn btn-primary btn-xs">
                                         <i class="fa fa-pencil"></i>
                                     </a>
-                                    <input type="hidden" name="idOLT" value="<?= $data->hostname ?>">
+                                    <input type="hidden" name="idOLT" value="<?= $data->idOLT ?>">
                                     <button onclick="return confirm('Apakah Anda Yakin?')" class="btn btn-danger btn-xs">
                                         <i class="fa fa-trash"></i>
                                     </button>
