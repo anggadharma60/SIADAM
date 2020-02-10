@@ -16,7 +16,7 @@
       <div class="box-header">
         <h3 class="box-title">Edit Specification OLT</h3>
         <div class="pull-right">
-            <a href="<?=site_url('Admin/getSpecOLT')?>" class="btn btn-warning btn-flat">
+            <a href="<?=site_url('Admin/getSpecOLT')?>" class="btn btn-danger btn-flat">
                 <i class="fa fa-undo"></i> Back 
             </a>
         </div>

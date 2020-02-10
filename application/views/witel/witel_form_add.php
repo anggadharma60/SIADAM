@@ -16,7 +16,7 @@
       <div class="box-header">
         <h3 class="box-title">Tambah Witel</h3>
         <div class="pull-right">
-            <a href="<?=site_url('Admin/getWitel')?>" class="btn btn-warning btn-flat">
+            <a href="<?=site_url('Admin/getWitel')?>" class="btn btn-danger btn-flat">
                 <i class="fa fa-undo"></i> Back 
             </a>
         </div>
