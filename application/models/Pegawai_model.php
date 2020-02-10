@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
  *
@@ -16,7 +16,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  */
 
-class Pegawai_model extends CI_Model {
+class Pegawai_model extends CI_Model
+{
 
   // ------------------------------------------------------------------------
 
@@ -27,48 +28,54 @@ class Pegawai_model extends CI_Model {
   public function getLogin($post)
   {
     $this->db->select('*');
-    $this->db->from('pegawai'); 
+    $this->db->from('pegawai');
     $this->db->where('username', $post['username']);
     $this->db->where('password', $post['password']);
     $query = $this->db->get();
     return $query;
   }
 
-  public function getDataPegawai($id = null){
+  public function getDataPegawai($id = null)
+  {
     $this->db->from('pegawai');
-        if($id != null) {
-            $this->db->where('idPegawai', $id);
-        }
-        $query = $this->db->get();
-        return $query;
+    if ($id != null) {
+      $this->db->where('idPegawai', $id);
+    }
+    $query = $this->db->get();
+    return $query;
   }
 
   public function addDataPegawai($post)
-    {
-        $params['namaPegawai'] = html_escape($post['namaPegawai']);
-        $params['username'] = html_escape($post['username']);
-        $params['password'] = html_escape($post['password']);
-        $params['status'] = html_escape($post['status']);
-        $this->db->insert('pegawai', $params);
-    }
+  {
+    $params['namaPegawai'] = html_escape($post['namaPegawai']);
+    $params['username'] = html_escape($post['username']);
+    $params['password'] = html_escape($post['password']);
+    $params['status'] = html_escape($post['status']);
+    $this->db->insert('pegawai', $params);
+  }
 
   public function editDataPegawai($post)
-    {
-        $params['namaPegawai'] = html_escape($post['namaPegawai']);
-        $params['username'] = html_escape($post['username']);
-        if(!empty($post['password'])) {
-          $params['password'] = html_escape($post['password']);
-        }
-        $params['status'] = html_escape($post['status']);
-        $this->db->where('idPegawai', $post['idPegawai']);
-        $this->db->update('pegawai', $params);
+  {
+    $params['namaPegawai'] = html_escape($post['namaPegawai']);
+    $params['username'] = html_escape($post['username']);
+    if (!empty($post['password'])) {
+      $params['password'] = html_escape($post['password']);
     }
+    $params['status'] = html_escape($post['status']);
+    $this->db->where('idPegawai', $post['idPegawai']);
+    $this->db->update('pegawai', $params);
+  }
+  public function detailDataPegawai($id = null)
+  {
+    $query = $this->db->get_where('pegawai', array('idPegawai' => $id))->row();
+    return $query;
+  }
 
   public function deleteDataPegawai($id)
-    {
-      $this->db->where('idPegawai', $id);
-      $this->db->delete('pegawai');
-    }
+  {
+    $this->db->where('idPegawai', $id);
+    $this->db->delete('pegawai');
+  }
   // ------------------------------------------------------------------------
 
 }

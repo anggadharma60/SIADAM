@@ -142,6 +142,13 @@ class Admin extends CI_Controller
 		}
 	}
 
+	public function detailPegawai($id)
+	{
+		$detailPegawai = $this->Pegawai_model->detailDataPegawai($id);
+		$data['detailPegawai'] = $detailPegawai;
+		$this->template->load('template/template_Admin', 'pegawai/pegawai_form_detail', $data);
+	}
+
 	function username_check()
 	{
 		$post = $this->input->post(null, TRUE);
@@ -873,9 +880,6 @@ class Admin extends CI_Controller
 		redirect('Admin/getODP');
 	}
 
-	public function detail($id)
-	{
-	}
 	// END ODP
 
 	// START OLT

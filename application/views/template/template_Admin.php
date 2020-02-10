@@ -25,7 +25,8 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
-  <script src="<?php echo base_url(); ?>assets/jquery.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
+  <!-- <script src="<?php echo base_url(); ?>assets/jquery.min.js"></script> -->
 
 
   <!-- Google Font -->
@@ -140,11 +141,11 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="<?= base_url() ?>dashboard/filtering"><i class="fa fa-filter fa-fw mr-3"></i> Filtering</a></li>
-              <li><a href="<?= base_url() ?>dashboard/chart"><i class="fa fa-pie-chart fa-fw mr-3"></i> Chart</a></li>
+              <li <?=$this->uri->segment(1) == 'dashboard/filtering' ? 'class="active"' : '' ?>><a href="<?= base_url() ?>dashboard/filtering"><i class="fa fa-filter fa-fw mr-3"></i> Filtering</a></li>
+              <li <?=$this->uri->segment(1) == 'dashboard/chart' ? 'class="active"' : '' ?>><a href="<?= base_url() ?>dashboard/chart"><i class="fa fa-pie-chart fa-fw mr-3"></i> Chart</a></li>
             </ul>
           </li>
-          <li class="treeview">
+          <li <?=$this->uri->segment(1) == '#' ? 'class="active"' : '' ?>>
             <a href="#">
               <i class="fa fa-cog"></i> <span>Kelola Data Validasi</span>
               <span class="pull-right-container"></span>
@@ -163,7 +164,7 @@
               <li><a href="#"><i class="fa fa-user fa-fw mr-3"></i> Validasi HD Daman</a></li>
             </ul>
           </li>
-          <li class="treeview">
+          <li class="treeview" <?=$this->uri->segment(1) == 'Admin/getODP' || $this->uri->segment(1) == '#' ? 'active' : '' ?>>
             <a href="#">
               <i class="fa fa-microchip"></i>
               <span>Kelola Data ODP</span>
@@ -172,7 +173,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="<?= site_url('Admin/getODP') ?>"><i class="fa fa-cube fa-fw mr-3"></i> Data ODP</a></li>
+              <li <?=$this->uri->segment(1) == 'Admin/getODP' ? 'class="active"' : '' ?>><a href="<?= site_url('Admin/getODP') ?>"><i class="fa fa-cube fa-fw mr-3"></i> Data ODP</a></li>
               <li><a href="#"><i class="fa fa-sitemap fa-fw mr-3"></i> Data Port ODP</a></li>
             </ul>
           </li>
@@ -207,7 +208,7 @@
           </li>
           <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
             <li class="header">SETTNGS</li>
-            <li>
+            <li <?=$this->uri->segment(1) == 'Admin/getPegawai' ? 'class="active"' : '' ?>>
               <a href="<?= site_url('Admin/getPegawai') ?>">
                 <i class="fa fa-user-plus"></i> <span>Kelola Data Pegawai</span>
                 <span class="pull-right-container"></span>

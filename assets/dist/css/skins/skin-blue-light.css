@@ -111,8 +111,11 @@ body {
   background: rgb(194,25,46);
   background: linear-gradient(90deg, rgba(194,25,46,1) 0%, rgba(236,30,55,1) 100%, rgba(239,70,91,1) 100%);
 }
+
+/* menu active kalo digunakan jare */
 .skin-blue-light .sidebar-menu > li > a {
-  border-left: 3px solid transparent;
+  border-left-color: #D71C32;
+  border-left: 3px; 
   font-weight: 500;
 }
 

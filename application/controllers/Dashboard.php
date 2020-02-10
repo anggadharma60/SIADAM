@@ -24,7 +24,7 @@ class Dashboard extends CI_Controller
   public function index()
   {
     check_not_login();
-    $this->template->load('template', 'dashboard_home');
+    $this->template->load('template/template_admin', 'dashboard_home');
   }
 
 }
