@@ -26,19 +26,19 @@
              <div class="col-md-4 col-md-offset-4">
                 <form action="" method="post"> 
                     <div class="form-group <?=form_error('idNOSS') ? 'has-error' : null?>">
-                        <label>ID NOSS *</label>
-                        <input type="hidden" name="idNOSS" value="<?=$row->idNOSS?>">
+                        <label>ID NOSS </label>
+                        <input type="hidden" name="idODP" value="<?=$row->idODP?>">
                         <input type="text" name="idNOSS" value="<?=$this->input->post('idNOSS') ?? $row->idNOSS?>" class="form-control" disabled> 
                         <?=form_error('idNOSS')?>
                     </div>
                     <div class="form-group <?=form_error('indexODP') ? 'has-error' : null?>">
-                        <label>Index ODP *</label>
-                        <input type="text" name="indexODP" value="<?=$this->input->post('indexODP') ?? $row->indexODP?>" class="form-control">
+                        <label>Index ODP </label>
+                        <input type="text" name="indexODP" value="<?=$this->input->post('indexODP') ?? $row->indexODP?>" class="form-control" disabled> 
                         <?=form_error('indexODP')?>
                     </div>
                     <div class="form-group <?=form_error('idODP') ? 'has-error' : null?>">
-                        <label>ID ODP *</label>
-                        <input type="text" name="idODP" value="<?=$this->input->post('idODP') ?? $row->idODP?>" class="form-control">
+                        <label>Nama ODP </label>
+                        <input type="text" name="namaODP" value="<?=$this->input->post('namaODP') ?? $row->namaODP?>" class="form-control" disabled>
                         <?=form_error('idODP')?>
                     </div>
                     <div class="form-group <?=form_error('ftp') ? 'has-error' : null?>">
@@ -57,71 +57,55 @@
                         <?=form_error('longitude')?>
                     </div>
                     <div class="form-group <?=form_error('clusterName') ? 'has-error' : null?>">
-                        <label>Cluster Name *</label>
+                        <label>Cluster Name </label>
                         <input type="text" name="clusterName" value="<?=$this->input->post('clusterName') ?? $row->clusterName?>" class="form-control">
                         <?=form_error('clusterName')?>
                     </div>
                     <div class="form-group <?=form_error('clusterStatus') ? 'has-error' : null?>">
-                        <label>Cluster Status *</label>
+                        <label>Cluster Status</label>
                         <input type="text" name="clusterStatus" value="<?=$this->input->post('clusterStatus') ?? $row->clusterStatus?>" class="form-control">
                         <?=form_error('clusterStatus')?>
                     </div>
                     <div class="form-group <?=form_error('avai') ? 'has-error' : null?>">
                         <label>Available *</label>
-                        <input type="text" name="avai" value="<?=$this->input->post('avai') ?? $row->avai?>" class="form-control">
+                        <input type="number" min="0" name="avai" value="<?=$this->input->post('avai') ?? $row->avai?>" class="form-control">
                         <?=form_error('avai')?>
                     </div>
                     <div class="form-group <?=form_error('used') ? 'has-error' : null?>">
                         <label>Used *</label>
-                        <input type="text" name="used" value="<?=$this->input->post('used') ?? $row->used?>" class="form-control">
+                        <input type="number" min="0" name="used" value="<?=$this->input->post('used') ?? $row->used?>" class="form-control">
                         <?=form_error('used')?>
                     </div>
                     <div class="form-group <?=form_error('rsv') ? 'has-error' : null?>">
                         <label>RSV *</label>
-                        <input type="text" name="rsv" value="<?=$this->input->post('rsv') ?? $row->rsv?>" class="form-control">
+                        <input type="number" min="0" name="rsv" value="<?=$this->input->post('rsv') ?? $row->rsv?>" class="form-control">
                         <?=form_error('rsv')?>
                     </div>
                     <div class="form-group <?=form_error('rsk') ? 'has-error' : null?>">
                         <label>RSK *</label>
-                        <input type="text" name="rsk" value="<?=$this->input->post('rsk') ?? $row->rsk?>" class="form-control">
+                        <input type="number" min="0" name="rsk" value="<?=$this->input->post('rsk') ?? $row->rsk?>" class="form-control">
                         <?=form_error('rsk')?>
                     </div>
-                    <div class="form-group <?=form_error('total') ? 'has-error' : null?>">
-                        <label>Total *</label>
-                        <input type="text" name="total" value="<?=$this->input->post('total') ?? $row->total?>" class="form-control">
-                        <?=form_error('total')?>
-                    </div>
-                    <div class="form-group <?=form_error('idRegional') ? 'has-error' : null?>">
-                        <label>ID Regional *</label>
-                        <input type="text" name="idRegional" value="<?=$this->input->post('idRegional') ?? $row->idRegional?>" class="form-control">
-                        <?=form_error('idRegional')?>
-                    </div>
-                    <div class="form-group <?=form_error('idWitel') ? 'has-error' : null?>">
-                        <label>ID Witel *</label>
-                        <input type="text" name="idWitel" value="<?=$this->input->post('idWitel') ?? $row->idWitel?>" class="form-control">
-                        <?=form_error('idWitel')?>
-                    </div>
-                    <div class="form-group <?=form_error('idDatel') ? 'has-error' : null?>">
-                        <label>ID Datel *</label>
-                        <input type="text" name="idDatel" value="<?=$this->input->post('idDatel') ?? $row->idDatel?>" class="form-control">
-                        <?=form_error('idDatel')?>
-                    </div>
-                    <div class="form-group <?=form_error('idSTO') ? 'has-error' : null?>">
-                        <label>ID STO *</label>
-                        <input type="text" name="idSTO" value="<?=$this->input->post('idSTO') ?? $row->idSTO?>" class="form-control">
-                        <?=form_error('idSTO')?>
+                    <div class="form-group <?=form_error('STO') ? 'has-error' : null?>">
+                        <label>STO </label>
+                        <select name="STO" class="form-control" disabled>
+                        <option value="<?=$row->idSTO?>" selected="selected"><?=$row->namaSTO?></option>
+                        <?php 
+                        if(($sto->num_rows) != 0 ) { ?>
+                        <?php 
+                          foreach ($sto->result() as $key => $sto) {?>
+                            <option value="<?=$sto->idSTO?>" <?=set_value('STO') == $sto->idSTO ? "selected" : null?>><?=$sto->namaSTO?>
+                            </option>
+                          <?php } ?>
+                        <?php } ?>
+                        </select>
+                        <?=form_error('STO')?>
                     </div>
                     <div class="form-group <?=form_error('infoODP') ? 'has-error' : null?>">
-                        <label>Info ODP *</label>
-                        <input type="text" name="infoODP" value="<?=$this->input->post('infoODP') ?? $row->infoODP?>" class="form-control">
+                        <label>Info ODP</label>
+                        <textarea style="resize:none" name="infoODP" class="form-control" rows="3" ><?=$row->infoODP?></textarea>
                         <?=form_error('infoODP')?>
                     </div>
-                    <div class="form-group <?=form_error('updateDate') ? 'has-error' : null?>">
-                        <label>Update Date *</label>
-                        <input type="text" name="updateDate" value="<?=$this->input->post('updateDate') ?? $row->updateDate?>" class="form-control">
-                        <?=form_error('updateDate')?>
-                    </div>
-                    
                     <div class="form-group">
                         <button type="submit" class="btn btn-success btn-flat">
                             <i class="fa fa-paper-plane"></i> Simpan

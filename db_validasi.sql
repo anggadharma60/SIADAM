@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 07, 2020 at 09:48 AM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.9
+-- Generation Time: Feb 10, 2020 at 05:40 AM
+-- Server version: 10.3.15-MariaDB
+-- PHP Version: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -32,6 +32,16 @@ DECLARE urut INT;
  
 SET urut = IF(nomer IS NULL, 1, nomer + 1);
 SET kodebaru = CONCAT("D", LPAD(urut, 4, 0));
+ 
+RETURN kodebaru;
+END$$
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `kodeodpotomatis` (`nomer` INT) RETURNS VARCHAR(8) CHARSET latin1 BEGIN
+DECLARE kodebaru CHAR(8);
+DECLARE urut INT;
+ 
+SET urut = IF(nomer IS NULL, 1, nomer + 1);
+SET kodebaru = CONCAT("ODP", LPAD(urut, 5, 0));
  
 RETURN kodebaru;
 END$$
@@ -109,7 +119,8 @@ CREATE TABLE `datel` (
 INSERT INTO `datel` (`idDatel`, `namaDatel`, `keterangan`, `idWitel`) VALUES
 ('D0001', 'Kendal', NULL, 'W0001'),
 ('D0002', 'Semarang Kota', NULL, 'W0001'),
-('D0003', 'Ungaran', NULL, 'W0001');
+('D0003', 'Ungaran', NULL, 'W0001'),
+('D0004', 'Gianyar', '', 'W0002');
 
 --
 -- Triggers `datel`
@@ -232,7 +243,8 @@ CREATE TABLE `regional` (
 --
 
 INSERT INTO `regional` (`idRegional`, `namaRegional`, `keterangan`) VALUES
-('R0001', 'Semarang', NULL);
+('R0001', 'Semarang', NULL),
+('R0002', 'Bali', NULL);
 
 --
 -- Triggers `regional`
@@ -261,10 +273,11 @@ DELIMITER ;
 --
 
 CREATE TABLE `rekap_data_odp` (
+  `idODP` varchar(8) NOT NULL,
   `idNOSS` varchar(16) NOT NULL,
   `indexODP` varchar(20) NOT NULL,
-  `idODP` varchar(16) NOT NULL,
-  `ftp` varchar(5) NOT NULL,
+  `namaODP` varchar(16) NOT NULL,
+  `ftp` varchar(8) NOT NULL,
   `latitude` varchar(16) NOT NULL,
   `longitude` varchar(16) NOT NULL,
   `clusterName` varchar(50) DEFAULT NULL,
@@ -276,16 +289,37 @@ CREATE TABLE `rekap_data_odp` (
   `total` varchar(4) NOT NULL,
   `idSTO` varchar(5) NOT NULL,
   `infoODP` varchar(50) DEFAULT NULL,
-  `updateDate` datetime NOT NULL
+  `updateDate` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rekap_data_odp`
 --
 
-INSERT INTO `rekap_data_odp` (`idNOSS`, `indexODP`, `idODP`, `ftp`, `latitude`, `longitude`, `clusterName`, `clusterStatus`, `avai`, `used`, `rsv`, `rsk`, `total`, `idSTO`, `infoODP`, `updateDate`) VALUES
-(' 4123468914.0', 'FA/D02/029.01', 'ODP-MKG-FA/029', '#N/A', '-6967479051', '11029873620', NULL, NULL, '7', '0', '1', '0', '8', 'S0001', NULL, '2020-01-20 14:00:00'),
-(' 4147170941.0', 'FAA/D04/076.01', 'ODP-SMT-FAA/076', '#N/A', '-7018743991', '11034163498', NULL, NULL, '8', '0', '0', '0', '8', 'S0001', NULL, '2020-01-20 14:00:00');
+INSERT INTO `rekap_data_odp` (`idODP`, `idNOSS`, `indexODP`, `namaODP`, `ftp`, `latitude`, `longitude`, `clusterName`, `clusterStatus`, `avai`, `used`, `rsv`, `rsk`, `total`, `idSTO`, `infoODP`, `updateDate`) VALUES
+('ODP00001', '23132', 'dasdas', 'dasda', 'dasd', '2312312', '312312', 'sdasd', 'dadas', '2', '2', '2', '2', '8', '', 'test 1', '2020-02-10 10:53 AM'),
+('ODP00002', '213', '3231', '31231', '1231', '31232', '3123', '312312', '31231', '123', '320', '32', '321', '796', 'S0017', '312312', '2020-02-10 11:36 AM'),
+('ODP00003', '1231', '213', '3213', '1231', '31231', '312', '1323', '312', '33', '33', '33', '33', '132', 'S0002', 'Halo', '2020-02-10 11:37 AM');
+
+--
+-- Triggers `rekap_data_odp`
+--
+DELIMITER $$
+CREATE TRIGGER `odpotomatis` BEFORE INSERT ON `rekap_data_odp` FOR EACH ROW BEGIN
+DECLARE s VARCHAR(8);
+DECLARE i INTEGER;
+ 
+SET i = (SELECT SUBSTRING(idODP,4,8) AS Nomer
+FROM rekap_data_odp ORDER BY Nomer DESC LIMIT 1);
+ 
+SET s = (SELECT kodeodpotomatis(i));
+ 
+IF(NEW.idODP IS NULL OR NEW.idODP = '')
+ THEN SET NEW.idODP =s;
+END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -441,7 +475,7 @@ DELIMITER ;
 CREATE TABLE `sto` (
   `idSTO` varchar(5) NOT NULL,
   `kodeSTO` varchar(5) NOT NULL,
-  `namaSTO` varchar(20) NOT NULL,
+  `namaSTO` varchar(30) NOT NULL,
   `keterangan` varchar(50) DEFAULT NULL,
   `idDatel` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -465,10 +499,11 @@ INSERT INTO `sto` (`idSTO`, `kodeSTO`, `namaSTO`, `keterangan`, `idDatel`) VALUE
 ('S0012', 'SKR', 'Sekaran', '', 'D0002'),
 ('S0013', 'SMC', 'Semarang Candi', '', 'D0002'),
 ('S0014', 'SMT', 'Semarang Tugu', '', 'D0002'),
-('S0015', 'SSL', 'ssl', '', 'D0003'),
+('S0015', 'SSL', 'Semarang Simpang Lima', '', 'D0003'),
 ('S0016', 'UNR', 'Ungaran', '', 'D0003'),
 ('S0017', 'WLR', 'Weleri', '', 'D0002'),
-('S0018', 'WNJ', 'Wonodri', '', 'D0002');
+('S0018', 'WNJ', 'Wonodri', '', 'D0002'),
+('S0019', 'GNYR', 'Gianyar', '', 'D0004');
 
 --
 -- Triggers `sto`
@@ -528,7 +563,8 @@ CREATE TABLE `witel` (
 --
 
 INSERT INTO `witel` (`idWitel`, `namaWitel`, `keterangan`, `idRegional`) VALUES
-('W0001', 'Semarang', NULL, 'R0001');
+('W0001', 'Semarang', '', 'R0001'),
+('W0002', 'Denpasar', '', 'R0002');
 
 --
 -- Triggers `witel`
@@ -585,7 +621,10 @@ ALTER TABLE `regional`
 -- Indexes for table `rekap_data_odp`
 --
 ALTER TABLE `rekap_data_odp`
-  ADD PRIMARY KEY (`idODP`) USING BTREE,
+  ADD PRIMARY KEY (`idODP`),
+  ADD UNIQUE KEY `idNOSS` (`idNOSS`),
+  ADD UNIQUE KEY `indexODP` (`indexODP`),
+  ADD UNIQUE KEY `idODP` (`namaODP`),
   ADD KEY `fk_sto` (`idSTO`);
 
 --
@@ -613,8 +652,7 @@ ALTER TABLE `specification_olt`
 --
 ALTER TABLE `sto`
   ADD PRIMARY KEY (`idSTO`),
-  ADD UNIQUE KEY `kodeSTO` (`kodeSTO`),
-  ADD KEY `fk_datel` (`idDatel`);
+  ADD KEY `fk_datel` (`idDatel`) USING BTREE;
 
 --
 -- Indexes for table `witel`
@@ -626,25 +664,6 @@ ALTER TABLE `witel`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `datel`
---
-ALTER TABLE `datel`
-  ADD CONSTRAINT `fk_witel` FOREIGN KEY (`idWitel`) REFERENCES `witel` (`idWitel`);
-
---
--- Constraints for table `rekap_data_odp`
---
-ALTER TABLE `rekap_data_odp`
-  ADD CONSTRAINT `fk_sto` FOREIGN KEY (`idSTO`) REFERENCES `sto` (`idSTO`);
-
---
--- Constraints for table `rekap_data_olt`
---
-ALTER TABLE `rekap_data_olt`
-  ADD CONSTRAINT `fk_spek` FOREIGN KEY (`idSpecOLT`) REFERENCES `specification_olt` (`idSpecOLT`),
-  ADD CONSTRAINT `fk_sto_dua` FOREIGN KEY (`idSTO`) REFERENCES `sto` (`idSTO`);
 
 --
 -- Constraints for table `sto`

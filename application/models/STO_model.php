@@ -29,6 +29,14 @@ class STO_model extends CI_Model {
     $query = $this->db->get();
     return $query;
   }
+
+  public function getDataSTOSelect($id){
+
+    $this->db->from('sto');
+    $this->db->where('idSTO!=', $id);
+    $query = $this->db->get();
+    return $query;
+  }
   
 
   public function addDataSTO($post)

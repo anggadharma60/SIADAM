@@ -37,9 +37,9 @@
                         <?=form_error('namaSTO')?>
                     </div>
                     <div class="form-group <?=form_error('keterangan') ? 'has-error' : null ?>">
-                            <label>Keterangan</label>
-                            <textarea name="keterangan" class="form-control" rows="3"><?= $this->input->post('keterangan') ?? $row->keterangan?></textarea>
-                            <?=form_error('keterangan')?>
+                        <label>Keterangan</label>
+                        <textarea style="resize:none" name="keterangan" class="form-control" rows="3"><?= $this->input->post('keterangan') ?? $row->keterangan?></textarea>
+                        <?=form_error('keterangan')?>
                     </div>
                     <div class="form-group <?=form_error('datel') ? 'has-error' : null ?>">
                         <label>Datel *</label>

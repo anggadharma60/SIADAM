@@ -19,12 +19,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class ODP_model extends CI_Model {
 
   public function getDataODP($id = null){
+    $this->db->select('*');
+    // $this->db->select('rekap_data_odp.*, sto.kodeSTO, sto.namaSTO, sto.idDatel, datel.namaDatel, datel.idWitel, witel.namaWitel, witel.idRegional, regional.namaRegional');
     $this->db->from('rekap_data_odp');
+    $this->db->join('sto', 'rekap_data_odp.idSTO = sto.idSTO');
+    $this->db->join('datel', 'sto.idDatel=datel.idDatel');
+    $this->db->join('witel', 'datel.idWitel=witel.idWitel');
+    $this->db->join('regional', 'witel.idRegional = regional.idRegional');
         if($id != null) {
             $this->db->where('idODP', $id);
         }
-        $query = $this->db->get();
-        return $query;
+    $query = $this->db->get();
+    return $query;
   }
   public function view(){
     return $this->db->get('rekap_data_odp')->result(); // Tampilkan semua data yang ada di tabel
@@ -61,7 +67,7 @@ class ODP_model extends CI_Model {
     {
         $params['idNOSS'] = html_escape($post['idNOSS']);
         $params['indexODP'] = html_escape($post['indexODP']);
-        $params['idODP'] = html_escape($post['idODP']);
+        $params['namaODP'] = html_escape($post['namaODP']);
         $params['ftp'] = html_escape($post['ftp']);
         $params['latitude'] = html_escape($post['latitude']);
         $params['longitude'] = html_escape($post['longitude']);
@@ -71,20 +77,21 @@ class ODP_model extends CI_Model {
         $params['used'] = html_escape($post['used']);
         $params['rsv'] = html_escape($post['rsv']);
         $params['rsk'] = html_escape($post['rsk']);
-        $params['total'] = html_escape($post['total']);
-        $params['idRegional'] = html_escape($post['idRegional']);
-        $params['idWitel'] = html_escape($post['idWitel']);
-        $params['idDatel'] = html_escape($post['idDatel']);
-        $params['idSTO'] = html_escape($post['idSTO']);
+        $total = $params['avai'] + $params['used'] + $params['rsv'] + $params['rsk'];
+        $params['total'] = html_escape($total);
+        $params['idSTO'] = html_escape($post['STO']);
         $params['infoODP'] = html_escape($post['infoODP']);
-        $params['updateDate'] = html_escape($post['updateDate']);
+        $format = "%Y-%m-%d %h:%i %A";
+        $datetime = mdate($format);
+        $params['updateDate'] = html_escape($datetime);
         $this->db->insert('rekap_data_odp', $params);
     }
 
     public function editDataODP($post)
     {
-        $params['idNOSS'] = html_escape($post['idNOSS']);
-        $params['indexODP'] = html_escape($post['indexODP']);
+        // $params['idNOSS'] = html_escape($post['idNOSS']);
+        // $params['indexODP'] = html_escape($post['indexODP']);
+        // $params['namaODP'] = html_escape($post['namaODP']);
         $params['ftp'] = html_escape($post['ftp']);
         $params['latitude'] = html_escape($post['latitude']);
         $params['longitude'] = html_escape($post['longitude']);
@@ -94,13 +101,17 @@ class ODP_model extends CI_Model {
         $params['used'] = html_escape($post['used']);
         $params['rsv'] = html_escape($post['rsv']);
         $params['rsk'] = html_escape($post['rsk']);
-        $params['total'] = html_escape($post['total']);
-        $params['idRegional'] = html_escape($post['idRegional']);
-        $params['idWitel'] = html_escape($post['idWitel']);
-        $params['idDatel'] = html_escape($post['idDatel']);
-        $params['idSTO'] = html_escape($post['idSTO']);
+        $params['avai'] = html_escape($post['avai']);
+        $params['used'] = html_escape($post['used']);
+        $params['rsv'] = html_escape($post['rsv']);
+        $params['rsk'] = html_escape($post['rsk']);
+        $total = $params['avai'] + $params['used'] + $params['rsv'] + $params['rsk'];
+        $params['total'] = html_escape($total);
+        // $params['idSTO'] = html_escape($post['idSTO']);
         $params['infoODP'] = html_escape($post['infoODP']);
-        $params['updateDate'] = html_escape($post['updateDate']);
+        $format = "%Y-%m-%d %h:%i %A";
+        $datetime = mdate($format);
+        $params['updateDate'] = html_escape($datetime);
         $this->db->where('idODP', $post['idODP']);
         $this->db->update('rekap_data_odp', $params);
     }

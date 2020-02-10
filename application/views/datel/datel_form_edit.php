@@ -33,7 +33,7 @@
                     </div>
                     <div class="form-group <?=form_error('keterangan') ? 'has-error' : null ?>">
                             <label>Keterangan</label>
-                            <textarea name="keterangan" class="form-control" rows="3"><?= $this->input->post('keterangan') ?? $row->keterangan?></textarea>
+                            <textarea style="resize:none" name="keterangan" class="form-control" rows="3"><?= $this->input->post('keterangan') ?? $row->keterangan?></textarea>
                             <?=form_error('keterangan')?>
                     </div>
                     <div class="form-group <?=form_error('witel') ? 'has-error' : null ?>">
@@ -47,7 +47,7 @@
                             <option value="<?=$witel->idWitel?>" <?=set_value('witel') == $witel->idWitel ? "selected" : null?>><?=$witel->namaWitel?>
                             </option>
                           <?php } ?>
-                       <?php } ?>
+                        <?php } ?>
                         </select>
                         <?=form_error('witel')?>
                     </div>
