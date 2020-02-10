@@ -31,9 +31,10 @@
       <table class="table table-bordered table-striped" border="1" cellpadding="8" id="table1">
         <thead>
           <tr>
+            <th>ID ODP</th>
             <th>ID NOSS</th>
             <th>index ODP</th>
-            <th>ID ODP</th>
+            <th>Nama ODP</th>
             <th>FTP</th>
             <th>Latitude</th>
             <th>Longitude</th>
@@ -44,10 +45,10 @@
             <th>RSV</th>
             <th>RSK</th>
             <th>Total</th>
-            <th>ID Regional</th>
-            <th>ID Witel</th>
-            <th>ID Datel</th>
-            <th>ID STO</th>
+            <th>Regional</th>
+            <th>Witel</th>
+            <th>Datel</th>
+            <th>STO</th>
             <th>Info ODP</th>
             <th>Update Date</th>
             <th>Actions</th>
@@ -57,9 +58,10 @@
           <?php $no = 1;
           foreach ($row->result() as $key => $data) { ?>
             <tr>
+              <td><?= $data->idODP ?></td>
               <td><?= $data->idNOSS ?></td>
               <td><?= $data->indexODP ?></td>
-              <td><?= $data->idODP ?></td>
+              <td><?= $data->namaODP ?></td>
               <td><?= $data->ftp ?></td>
               <td><?= $data->latitude ?></td>
               <td><?= $data->longitude ?></td>
@@ -70,10 +72,10 @@
               <td><?= $data->rsv ?></td>
               <td><?= $data->rsk ?></td>
               <td><?= $data->total ?></td>
-              <td><?= $data->idRegional ?></td>
-              <td><?= $data->idWitel ?></td>
-              <td><?= $data->idDatel ?></td>
-              <td><?= $data->idSTO ?></td>
+              <td><?= $data->namaRegional ?></td>
+              <td><?= $data->namaWitel ?></td>
+              <td><?= $data->namaDatel ?></td>
+              <td><?= $data->namaSTO ?></td>
               <td><?= $data->infoODP ?></td>
               <td><?= $data->updateDate ?></td>
               <td class="text-center" width="10%">
@@ -122,5 +124,4 @@
       </table>
     </div>
   </div>
-
 </section>
