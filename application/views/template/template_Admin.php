@@ -26,8 +26,6 @@
   <![endif]-->
 
   <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
-  <!-- <script src="<?php echo base_url(); ?>assets/jquery.min.js"></script> -->
-
 
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,200i,300,300i,400,400i,500,500i,600i,700i&display=swap" rel="stylesheet">

@@ -72,9 +72,6 @@ class Import_ODP extends CI_Controller {
                 'rsv'               =>  $row['L'],
                 'rsk'               =>  $row['M'],
                 'total'             =>  $row['N'],
-                'idRegional'        =>  $row['O'],
-                'idWitel'           =>  $row['P'],
-                'idDatel'           =>  $row['Q'],
                 'idSTO'             =>  $row['R'],
                 'infoODP'           =>  $row['T'],
                 'updateDate'        =>  $row['U']

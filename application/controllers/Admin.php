@@ -65,7 +65,7 @@ class Admin extends CI_Controller
 			array('matches' => '%s tidak sesuai dengan password')
 		);
 		$this->form_validation->set_rules('status', 'Status', 'required|trim');
-		
+
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
 		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
@@ -167,12 +167,12 @@ class Admin extends CI_Controller
 		if ($this->db->affected_rows() > 0) {
 			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
 		}
-		echo "<script>window.location='".site_url('Admin/getPegawai')."';</script>";
-  	}
+		redirect('Admin/getPegawai');
+	}
 	// End Menu Pegawai
-  
-  	// Start Menu Regional
-  	public function getRegional()
+
+	// Start Menu Regional
+	public function getRegional()
 	{
 		$data['row'] = $this->Regional_model->getDataRegional();
 		$this->template->load('template/template_Admin', 'regional/regional_data', $data);
@@ -197,10 +197,10 @@ class Admin extends CI_Controller
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->Regional_model->addDataRegional($post);
-			if($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+			if ($this->db->affected_rows() > 0) {
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='".site_url('Admin/getRegional')."';</script>";
+			redirect('Admin/getRegional');
 		}
 	}
 
@@ -220,28 +220,29 @@ class Admin extends CI_Controller
 
 		if ($this->form_validation->run() == FALSE) {
 			$query = $this->Regional_model->getDataRegional($id);
-			
-			if($query->num_rows() > 0) { 
+
+			if ($query->num_rows() > 0) {
 				$data['row'] = $query->row();
-        		$this->template->load('template/template_Admin', 'regional/regional_form_edit', $data);
+				$this->template->load('template/template_Admin', 'regional/regional_form_edit', $data);
 			} else {
-				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='".site_url('Admin/getRegional')."';</script>";
+				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
+				redirect('Admin/getRegional');
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->Regional_model->editDataRegional($post);
-			if($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+			if ($this->db->affected_rows() > 0) {
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='".site_url('Admin/getRegional')."';</script>";
+			redirect('Admin/getRegional');
 		}
 	}
 
-	function regional_check() {
+	function regional_check()
+	{
 		$post = $this->input->post(null, TRUE);
 		$query = $this->db->query("SELECT * FROM regional WHERE namaRegional = '$post[namaRegional]' AND idRegional != '$post[idRegional]'");
-		if($query->num_rows() > 0) {
+		if ($query->num_rows() > 0) {
 			$this->form_validation->set_message('regional_check', '{field} ini sudah dipakai, silahkan ganti');
 			return FALSE;
 		} else {
@@ -257,11 +258,11 @@ class Admin extends CI_Controller
 		if ($this->db->affected_rows() > 0) {
 			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
 		}
-		echo "<script>window.location='".site_url('Admin/getRegional')."';</script>";
-  	}
- 	// End Menu Regional
+		redirect('Admin/getRegional');
+	}
+	// End Menu Regional
 
-  	// Start Menu Witel 
+	// Start Menu Witel 
 	public function getWitel()
 	{
 		$data['row'] = $this->Witel_model->getDataWitel();
@@ -285,14 +286,14 @@ class Admin extends CI_Controller
 		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
 		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_Admin', 'witel/witel_form_add',$data);
+			$this->template->load('template/template_Admin', 'witel/witel_form_add', $data);
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->Witel_model->addDataWitel($post);
-			if($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+			if ($this->db->affected_rows() > 0) {
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='".site_url('Admin/getWitel')."';</script>";
+			redirect('Admin/getWitel');
 		}
 	}
 
@@ -312,31 +313,32 @@ class Admin extends CI_Controller
 
 		if ($this->form_validation->run() == FALSE) {
 			$query = $this->Witel_model->getDataWitel($id);
-			if($query->num_rows() > 0) { 
+			if ($query->num_rows() > 0) {
 				$data['row'] = $query->row();
 				$query2 = $this->Regional_model->getDataRegionalSelect($data['row']->idRegional);
-				if($query2->num_rows() > 0){
+				if ($query2->num_rows() > 0) {
 					$data['regional'] = $query2;
 				}
 				$this->template->load('template/template_Admin', 'witel/witel_form_edit', $data);
 			} else {
-				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='".site_url('Admin/getWitel')."';</script>";
+				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
+				redirect('Admin/getWitel');
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->Witel_model->editDataWitel($post);
-			if($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+			if ($this->db->affected_rows() > 0) {
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='".site_url('Admin/getWitel')."';</script>";
+			redirect('Admin/getWitel');
 		}
 	}
 
-	function witel_check() {
+	function witel_check()
+	{
 		$post = $this->input->post(null, TRUE);
 		$query = $this->db->query("SELECT * FROM witel WHERE namaWitel = '$post[namaWitel]' AND idWitel != '$post[idWitel]'");
-		if($query->num_rows() > 0) {
+		if ($query->num_rows() > 0) {
 			$this->form_validation->set_message('witel_check', '{field} ini sudah dipakai, silahkan ganti');
 			return FALSE;
 		} else {
@@ -352,12 +354,12 @@ class Admin extends CI_Controller
 		if ($this->db->affected_rows() > 0) {
 			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
 		}
-		echo "<script>window.location='".site_url('Admin/getWitel')."';</script>";
+		redirect('Admin/getWitel');
 	}
 	// End Menu Witel
 
-  	// Start Menu Datel
-  	public function getDatel()
+	// Start Menu Datel
+	public function getDatel()
 	{
 		$data['row'] = $this->Datel_model->getDataDatel();
 		$this->template->load('template/template_Admin', 'datel/datel_data', $data);
@@ -447,9 +449,9 @@ class Admin extends CI_Controller
 		if ($this->db->affected_rows() > 0) {
 			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
 		}
-		echo "<script>window.location='".site_url('Admin/getDatel')."';</script>";
-  	}
- 	// End Menu Datel
+		redirect('Admin/getDatel');
+	}
+	// End Menu Datel
 
 	// Start Menu STO
 	public function getSTO()
@@ -475,19 +477,19 @@ class Admin extends CI_Controller
 		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
 		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_Admin', 'sto/sto_form_add',$data);
+			$this->template->load('template/template_Admin', 'sto/sto_form_add', $data);
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->STO_model->addDataSTO($post);
-			if($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+			if ($this->db->affected_rows() > 0) {
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');;
 			}
-			echo "<script>window.location='".site_url('Admin/getSTO')."';</script>";
+			redirect('Admin/getSTO');
 		}
 	}
 
 	public function editSTO($id)
-	{	
+	{
 		$this->form_validation->set_rules('kodeSTO', 'Kode STO', 'required|min_length[3]|max_length[5]|regex_match[/^[A-Za-z]+$/]|callback_sto_check|trim');
 		$this->form_validation->set_rules('namaSTO', 'Nama STO', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[20]|trim');
 		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
@@ -503,32 +505,32 @@ class Admin extends CI_Controller
 
 		if ($this->form_validation->run() == FALSE) {
 			$query = $this->STO_model->getDataSTO($id);
-			if($query->num_rows() > 0) { 
+			if ($query->num_rows() > 0) {
 				$data['row'] = $query->row();
 				$query2 = $this->Datel_model->getDataDatelSelect($data['row']->idDatel);
-				if($query2->num_rows() > 0){
+				if ($query2->num_rows() > 0) {
 					$data['datel'] = $query2;
 				}
 				$this->template->load('template/template_Admin', 'sto/sto_form_edit', $data);
-				
 			} else {
-				echo "<script>alert('Data tidak ditemukan');";
-				echo "window.location='".site_url('Admin/getSTO')."';</script>";
+				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
+				redirect('Admin/getSTO');
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->STO_model->editDataSTO($post);
-			if($this->db->affected_rows() > 0) {
-				echo "<script>alert('Data berhasil disimpan');</script>";
+			if ($this->db->affected_rows() > 0) {
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			echo "<script>window.location='".site_url('Admin/getSTO')."';</script>";
+			redirect('Admin/getSTO');
 		}
 	}
 
-	function sto_check() {
+	function sto_check()
+	{
 		$post = $this->input->post(null, TRUE);
 		$query = $this->db->query("SELECT * FROM sto WHERE kodeSTO = '$post[kodeSTO]' AND idSTO != '$post[idSTO]'");
-		if($query->num_rows() > 0) {
+		if ($query->num_rows() > 0) {
 			$this->form_validation->set_message('sto_check', '{field} ini sudah dipakai, silahkan ganti');
 			return FALSE;
 		} else {
@@ -544,10 +546,10 @@ class Admin extends CI_Controller
 		if ($this->db->affected_rows() > 0) {
 			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
 		}
-		echo "<script>window.location='".site_url('Admin/getSTO')."';</script>";
+		redirect('Admin/getSTO');
 	}
 	// End Menu STO
-	
+
 	// Start Menu Specification OLT 
 	public function getSpecOLT()
 	{
@@ -670,9 +672,6 @@ class Admin extends CI_Controller
                 <th>RSV</th>
                 <th>RSK</th>
                 <th>Total</th>
-                <th>ID Regional</th>
-                <th>ID Witel</th>
-                <th>ID Datel</th>
                 <th>ID STO</th>
                 <th>Info ODP</th>
                 <th>Update Date</th>
@@ -694,9 +693,6 @@ class Admin extends CI_Controller
                 <td>' . $row->rsv . '</td>
 				<td>' . $row->rsk . '</td>
 				<td>' . $row->total . '</td>
-				<td>' . $row->idRegional . '</td>
-                <td>' . $row->idWitel . '</td>
-                <td>' . $row->idDatel . '</td>
 				<td>' . $row->idSTO . '</td>
 				<td>' . $row->infoODP . '</td>
 				<td>' . $row->updateDate . '</td>
@@ -729,12 +725,9 @@ class Admin extends CI_Controller
 					$rsv = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
 					$rsk = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
 					$total = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
-					$idRegional = $worksheet->getCellByColumnAndRow(13, $row)->getValue();
-					$idWitel = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
-					$idDatel = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
-					$idSTO = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
-					$infoODP = $worksheet->getCellByColumnAndRow(17, $row)->getValue();
-					$updateDate = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
+					$idSTO = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
+					$infoODP = $worksheet->getCellByColumnAndRow(20, $row)->getValue();
+					$updateDate = $worksheet->getCellByColumnAndRow(21, $row)->getValue();
 					$data[] = array(
 						'idNOSS'            =>  $idNOSS,
 						'indexODP'          =>  $indexODP,
@@ -749,9 +742,6 @@ class Admin extends CI_Controller
 						'rsv'               =>  $rsv,
 						'rsk'               =>  $rsk,
 						'total'             =>  $total,
-						'idRegional'        =>  $idRegional,
-						'idWitel'           =>  $idWitel,
-						'idDatel'           =>  $idDatel,
 						'idSTO'             =>  $idSTO,
 						'infoODP'           =>  $infoODP,
 						'updateDate'        =>  $updateDate
@@ -780,7 +770,7 @@ class Admin extends CI_Controller
 		$this->form_validation->set_rules('rsk', 'RSK', 'required|max_length[4]|trim');
 		$this->form_validation->set_rules('STO', 'STO', 'required|trim');
 		$this->form_validation->set_rules('infoODP', 'Info ODP', 'trim');
-				
+
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
 		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
@@ -816,7 +806,7 @@ class Admin extends CI_Controller
 		$this->form_validation->set_rules('rsk', 'RSK', 'required|max_length[4]|trim');
 		$this->form_validation->set_rules('STO', 'STO', 'trim');
 		$this->form_validation->set_rules('infoODP', 'Info ODP', 'trim');
-				
+
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
 		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
@@ -829,10 +819,10 @@ class Admin extends CI_Controller
 			if ($query->num_rows() > 0) {
 				$data['row'] = $query->row();
 				$query2 = $this->STO_model->getDataSTOSelect($data['row']->idSTO);
-				if($query2->num_rows() > 0){
+				if ($query2->num_rows() > 0) {
 					$data['sto'] = $query2;
 				}
-			$this->template->load('template/template_Admin', 'odp/odp_form_edit', $data);
+				$this->template->load('template/template_Admin', 'odp/odp_form_edit', $data);
 			} else {
 				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
 				redirect('Admin/getODP');
@@ -847,10 +837,11 @@ class Admin extends CI_Controller
 		}
 	}
 
-	function noss_check() {
+	function noss_check()
+	{
 		$post = $this->input->post(null, TRUE);
 		$query = $this->db->query("SELECT * FROM specification_olt WHERE namaSpecOLT = '$post[namaSpecOLT]' AND idSpecOLT != '$post[idSpecOLT]'");
-		if($query->num_rows() > 0) {
+		if ($query->num_rows() > 0) {
 			$this->form_validation->set_message('spek_check', '{field} ini sudah dipakai, silahkan ganti');
 			return FALSE;
 		} else {
@@ -858,11 +849,12 @@ class Admin extends CI_Controller
 		}
 	}
 
-	
-	function index_check() {
+
+	function index_check()
+	{
 		$post = $this->input->post(null, TRUE);
 		$query = $this->db->query("SELECT * FROM rekap_data_odp WHERE indexODP= '$post[indexODP]' AND idODP != '$post[idODP]'");
-		if($query->num_rows() > 0) {
+		if ($query->num_rows() > 0) {
 			$this->form_validation->set_message('index_check', '{field} ini sudah dipakai, silahkan ganti');
 			return FALSE;
 		} else {
@@ -870,10 +862,11 @@ class Admin extends CI_Controller
 		}
 	}
 
-	function odp_check() {
+	function odp_check()
+	{
 		$post = $this->input->post(null, TRUE);
 		$query = $this->db->query("SELECT * FROM rekap_data_odp WHERE namaODP = '$post[namaODP]' AND idODP != '$post[idODP]'");
-		if($query->num_rows() > 0) {
+		if ($query->num_rows() > 0) {
 			$this->form_validation->set_message('odp_check', '{field} ini sudah dipakai, silahkan ganti');
 			return FALSE;
 		} else {
