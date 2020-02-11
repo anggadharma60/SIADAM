@@ -24,17 +24,22 @@
       <div class="box-body">
          <div class="row">
              <div class="col-md-4 col-md-offset-4">
-                <?php //echo validation_errors() ?>
-                <form > 
-                   <form action="<?=site_url('Admin/importODP')?>" method="post" id="import_form" enctype="multipart/form-data">
+                <?php if(form_error('fileURL')) {?>    
+                  <div class="alert alert-danger alert-dismissible">
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                      <?php print form_error('fileURL'); ?>
+                  </div>       
+                <?php } ?>
+               
+                   <form action="<?=site_url('Admin/importODP')?>" method="post" id="excel-upl" enctype="multipart/form-data">
                       <p><label>Select Excel File</label>
-                      <input type="file" name="fileODP" id="fileODP" required accept=".csv, .xls, .xlsx"></p>
+                      <input type="file" name="fileURL" id="validatedCustomFile" required accept=".csv, .xls, .xlsx"></p>
                       <p>Unggah file dengan tipe *.xls / .csv</p>
-                      <input type="submit" name="import" value="Import" class="btn btn-success">
+                      <button type="submit" name="import" class="float-right btn btn-primary">Import</button>
                     </form>
-                </form>
-             </div>
+             </div>   
          </div>
+
       </div>
   </div>
 

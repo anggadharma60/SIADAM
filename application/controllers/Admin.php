@@ -705,75 +705,75 @@ class Admin extends CI_Controller
 	}
 
 	//Fungsi file upload
-	public function importODP(){
-		$this->form_validation->set_rules('import_form', 'Upload File ODP', 'callback_checkFileODP');
-		if($this->form_validation->run() == false) {
-            $this->template->load('template/template_Admin', 'odp/odp_form_import');
-         } else {
-            // // If file uploaded
-            // if(!empty($_FILES['fileODP']['name'])) { 
-            //     // get file extension
-            //     $extension = pathinfo($_FILES['fileODP']['name'], PATHINFO_EXTENSION);
+	public function importODP() {
+        $data = array();
+         // Load form validation library
+        
+         $this->form_validation->set_rules('fileURL', 'Upload File ODP', 'callback_checkFileValidation');
+			// If file uploaded
+			print_r($_FILES['fileURL']['name']);
+            if(!empty($_FILES['fileURL']['name'])) { 
+				
+                // get file extension
+                $extension = pathinfo($_FILES['fileURL']['name'], PATHINFO_EXTENSION);
  
-            //     if($extension == 'csv'){
-            //         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
-            //     } elseif($extension == 'xlsx') {
-            //         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-            //     } else {
-            //         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
-            //     }
-            //     // file path
-            //     $spreadsheet = $reader->load($_FILES['fileODP']['tmp_name']);
-            //     $allDataInSheet = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+                if($extension == 'csv'){
+                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+                } elseif($extension == 'xlsx') {
+                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+                } else {
+                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+                }
+                // file path
+                $spreadsheet = $reader->load($_FILES['fileURL']['tmp_name']);
+                $allDataInSheet = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
             
-            //     // array Count
-            //     $arrayCount = count($allDataInSheet);
-            //     $flag = 0;
-            //     $createArray = array('First_Name', 'Last_Name', 'Email', 'DOB', 'Contact_No');
-            //     $makeArray = array('First_Name' => 'First_Name', 'Last_Name' => 'Last_Name', 'Email' => 'Email', 'DOB' => 'DOB', 'Contact_No' => 'Contact_No');
-            //     $SheetDataKey = array();
-            //     foreach ($allDataInSheet as $dataInSheet) {
-            //         foreach ($dataInSheet as $key => $value) {
-            //             if (in_array(trim($value), $createArray)) {
-            //                 $value = preg_replace('/\s+/', '', $value);
-            //                 $SheetDataKey[trim($value)] = $key;
-            //             } 
-            //         }
-            //     }
-            //     $dataDiff = array_diff_key($makeArray, $SheetDataKey);
-            //     if (empty($dataDiff)) {
-            //         $flag = 1;
-            //     }
-            //     // match excel sheet column
-            //     if ($flag == 1) {
-            //         for ($i = 2; $i <= $arrayCount; $i++) {
-            //             $addresses = array();
-            //             $firstName = $SheetDataKey['First_Name'];
-            //             $lastName = $SheetDataKey['Last_Name'];
-            //             $email = $SheetDataKey['Email'];
-            //             $dob = $SheetDataKey['DOB'];
-            //             $contactNo = $SheetDataKey['Contact_No'];
- 
-            //             $firstName = filter_var(trim($allDataInSheet[$i][$firstName]), FILTER_SANITIZE_STRING);
-            //             $lastName = filter_var(trim($allDataInSheet[$i][$lastName]), FILTER_SANITIZE_STRING);
-            //             $email = filter_var(trim($allDataInSheet[$i][$email]), FILTER_SANITIZE_EMAIL);
-            //             $dob = filter_var(trim($allDataInSheet[$i][$dob]), FILTER_SANITIZE_STRING);
-            //             $contactNo = filter_var(trim($allDataInSheet[$i][$contactNo]), FILTER_SANITIZE_STRING);
-            //             $fetchData[] = array('first_name' => $firstName, 'last_name' => $lastName, 'email' => $email, 'dob' => $dob, 'contact_no' => $contactNo);
-            //         }   
-            //         $data['dataInfo'] = $fetchData;
-            //         $this->site->setBatchImport($fetchData);
-            //         $this->site->importData();
-            //     } else {
-            //         echo "Please import correct file, did not match excel sheet column";
-            //     }
-                // $this->load->view('spreadsheet/display', $data);
-            // }              
-        }
+                // array Count
+                $arrayCount = count($allDataInSheet);
+                $flag = 0;
+                // $createArray = array('NIS', 'Nama_Siswa', 'Kelas', 'Biaya_SPP');
+                // $makeArray = array('NIS' => 'NIS', 'Nama_Siswa' => 'Nama_Siswa', 'Kelas' => 'Kelas', 'Biaya_SPP' => 'Biaya_SPP');
+                $SheetDataKey = array();
+                foreach ($allDataInSheet as $dataInSheet) {
+                    foreach ($dataInSheet as $key => $value) {
+                        if (in_array(trim($value), $createArray)) {
+                            $value = preg_replace('/\s+/', '', $value);
+                            $SheetDataKey[trim($value)] = $key;
+                        } 
+                    }
+                }
+                $dataDiff = array_diff_key($makeArray, $SheetDataKey);
+                if (empty($dataDiff)) {
+                    $flag = 1;
+                }
+                // match excel sheet column
+                if ($flag == 1) {
+                    for ($i = 2; $i <= $arrayCount; $i++) {
+                        $addresses = array();
+                        $NIS = $SheetDataKey['NIS'];
+                        $nama_siswa = $SheetDataKey['Nama_Siswa'];
+                        $kelas = $SheetDataKey['Kelas'];
+                        $biaya_spp = $SheetDataKey['Biaya_SPP'];
+                        
+                        $NIS = filter_var(trim($allDataInSheet[$i][$NIS]), FILTER_SANITIZE_STRING);
+                        $nama_siswa = filter_var(trim($allDataInSheet[$i][$nama_siswa]), FILTER_SANITIZE_STRING);
+                        $kelas = filter_var(trim($allDataInSheet[$i][$kelas]), FILTER_SANITIZE_EMAIL);
+                        $biaya_spp = filter_var(trim($allDataInSheet[$i][$biaya_spp]), FILTER_SANITIZE_STRING);
+                        $fetchData[] = array('NIS' => $NIS, 'nama_siswa' => $nama_siswa, 'kelas' => $kelas, 'biaya_spp' => $biaya_spp);
+                    }
+                    $data['data_siswa'] = $fetchData;
+                    $this->siswa_model->setBatchImport($fetchData);
+                    $this->siswa_model->importData();
+                } else {
+                    echo "Please import correct file, did not match excel sheet column";
+                }
+                $this->load->view('Admin/getODP', $data);
+            }            
+        
     }
 	
 
-	public function checkFileODP($string) {
+	public function checkFileValidation($string) {
 		$file_mimes = array('text/x-comma-separated-values', 
 		  'text/comma-separated-values', 
 		  'application/octet-stream', 
@@ -787,10 +787,10 @@ class Admin extends CI_Controller
 		  'text/plain', 
 		  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 		);
-		if(isset($_FILES['fileODP']['name'])) {
-			  $arr_file = explode('.', $_FILES['fileODP']['name']);
+		if(isset($_FILES['fileURL']['name'])) {
+			  $arr_file = explode('.', $_FILES['fileURL']['name']);
 			  $extension = end($arr_file);
-			  if(($extension == 'xlsx' || $extension == 'xls' || $extension == 'csv') && in_array($_FILES['fileODP']['type'], $file_mimes)){
+			  if(($extension == 'xlsx' || $extension == 'xls' || $extension == 'csv') && in_array($_FILES['fileURL']['type'], $file_mimes)){
 				  return true;
 			  }else{
 				  $this->form_validation->set_message('checkFileValidation', 'Please choose correct file.');
@@ -800,7 +800,7 @@ class Admin extends CI_Controller
 			  $this->form_validation->set_message('checkFileValidation', 'Please choose a file.');
 			  return false;
 		  }
-	}
+	  }
 	// function import()
 	// {
 	// 	if (isset($_FILES["file"]["name"])) {
