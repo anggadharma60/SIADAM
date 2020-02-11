@@ -26,9 +26,9 @@
              <div class="col-md-4 col-md-offset-4">
                 <?php //echo validation_errors() ?>
                 <form > 
-                   <form action="" method="post" id="import_form" enctype="multipart/form-data">
+                   <form action="<?=site_url('Admin/importODP')?>" method="post" id="import_form" enctype="multipart/form-data">
                       <p><label>Select Excel File</label>
-                      <input type="file" name="file" id="file" required accept=".xls, .xlsx"></p>
+                      <input type="file" name="fileODP" id="fileODP" required accept=".csv, .xls, .xlsx"></p>
                       <p>Unggah file dengan tipe *.xls / .csv</p>
                       <input type="submit" name="import" value="Import" class="btn btn-success">
                     </form>
@@ -40,38 +40,3 @@
 
 </section>
 
-<script>
-$(document).ready(function(){
-
-	load_data();
-
-	function load_data()
-	{
-		$.ajax({
-			url:"<?php echo base_url(); ?>excel_import/fetch",
-			method:"POST",
-			success:function(data){
-				$('#customer_data').html(data);
-			}
-		})
-	}
-
-	$('#import_form').on('submit', function(event){
-		event.preventDefault();
-		$.ajax({
-			url:"<?php echo base_url(); ?>excel_import/import",
-			method:"POST",
-			data:new FormData(this),
-			contentType:false,
-			cache:false,
-			processData:false,
-			success:function(data){
-				$('#file').val('');
-				load_data();
-				alert(data);
-			}
-		})
-	});
-
-});
-</script>
