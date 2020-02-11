@@ -649,7 +649,7 @@ class Admin extends CI_Controller
 
 	function importODP()
 	{
-		$this->load->view('form');
+		$this->template->load('template/template_Admin', 'odp/odp_form_import');
 	}
 
 	function fetch()

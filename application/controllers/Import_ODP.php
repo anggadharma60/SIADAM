@@ -11,7 +11,7 @@ class Import_ODP extends CI_Controller {
   
   public function index(){
     $data['rekap_data_odp'] = $this->Import_ODP_model->view();
-    $this->load->view('form', $data);
+    $this->load->view('odp/odp_form_import', $data);
   }
   
   public function form(){
@@ -37,7 +37,7 @@ class Import_ODP extends CI_Controller {
       }
     }
 		// $this->template->load('template/template_Admin', 'form', $data);
-    $this->load->view('form', $data);
+    $this->load->view('odp/odp_form_import', $data);
   }
   
   public function import(){
