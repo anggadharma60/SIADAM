@@ -983,6 +983,14 @@ class Admin extends CI_Controller
 		redirect('Admin/getODP');
 	}
 
+	public function exportODP($id)
+    {
+        $this->load->library('mypdf.php');
+        $data['data_responden'] = $this->db->query("select * from data_responden where ID=$id")->result();
+        $data['jawaban'] = $this->db->query("select * from jawaban where ID=$id")->result();
+        $this->mypdf->generate_detail_responden('export_detail_responden', $data);
+    }
+
 	// END ODP
 
 	// START OLT
@@ -996,7 +1004,7 @@ class Admin extends CI_Controller
 	{
 		$data['sto'] = $this->STO_model->getDataSTO();
 		$data['spec'] = $this->SpecOLT_model->getDataSpecOLT();
-		
+
 		$this->form_validation->set_rules('hostname', 'HOSTNAME', 'required|is_unique[rekap_data_olt.hostname]|trim');
 		$this->form_validation->set_rules('ipOLT', 'IP GPON', 'required|is_unique[rekap_data_olt.ipOLT]|trim');
 		$this->form_validation->set_rules('idLogicalDevice', 'ID Logical Device', 'required|is_unique[rekap_data_olt.idLogicalDevice]|trim');
@@ -1103,6 +1111,96 @@ class Admin extends CI_Controller
 
 
 	// END OLT
+
+	// Start Menu Kelola Validasi
+	public function getKelValidasi()
+	{
+		$data['row'] = $this->KelValidasi_model->getDataKelValidasi();
+		$this->template->load('template/template_Admin', 'kelvalidasi/kelvalidasi_data', $data);
+	}
+
+	public function addKelValidasi()
+	{
+		$this->form_validation->set_rules('namaKelValidasi', 'Nama Specification OLT', 'required|max_length[50]|is_unique[specification_olt.namaKelValidasi]|trim');
+		$this->form_validation->set_rules('merekOLT', 'Merek OLT', 'max_length[20]|trim');
+		$this->form_validation->set_rules('typeOLT', 'Type OLT', 'max_length[20]|trim');
+		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
+
+		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
+		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
+		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
+		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
+
+		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->template->load('template/template_Admin', 'specolt/specolt_form_add');
+		} else {
+			$post = $this->input->post(null, TRUE);
+			$this->KelValidasi_model->addDataKelValidasi($post);
+			if ($this->db->affected_rows() > 0) {
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
+			}
+			redirect('Admin/getKelValidasi');
+		}
+	}
+
+	public function editKelValidasi($id)
+	{
+		$this->form_validation->set_rules('namaKelValidasi', 'Nama Specification OLT', 'required|max_length[50]|callback_spek_check|trim');
+		$this->form_validation->set_rules('merekOLT', 'Merek OLT', 'max_length[20]|trim');
+		$this->form_validation->set_rules('typeOLT', 'Type OLT', 'max_length[20]|trim');
+		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
+
+		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
+		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
+		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
+		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
+
+		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
+
+		if ($this->form_validation->run() == FALSE) {
+			$query = $this->KelValidasi_model->getDataKelValidasi($id);
+			if ($query->num_rows() > 0) {
+				$data['row'] = $query->row();
+				$this->template->load('template/template_Admin', 'specolt/specolt_form_edit', $data);
+			} else {
+				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
+				redirect('Admin/getKelValidasi');
+			}
+		} else {
+			$post = $this->input->post(null, TRUE);
+			$this->KelValidasi_model->editDataKelValidasi($post);
+			if ($this->db->affected_rows() > 0) {
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
+			}
+			redirect('Admin/getKelValidasi');
+		}
+	}
+
+	// function spek_check()
+	// {
+	// 	$post = $this->input->post(null, TRUE);
+	// 	$query = $this->db->query("SELECT * FROM specification_olt WHERE namaKelValidasi = '$post[namaKelValidasi]' AND idKelValidasi != '$post[idKelValidasi]'");
+	// 	if ($query->num_rows() > 0) {
+	// 		$this->form_validation->set_message('spek_check', '{field} ini sudah dipakai, silahkan ganti');
+	// 		return FALSE;
+	// 	} else {
+	// 		return TRUE;
+	// 	}
+	// }
+
+	public function deleteKelValidasi()
+	{
+		$id = $this->input->post('idKelValidasi');
+		$this->KelValidasi_model->deleteDataKelValidasi($id);
+
+		if ($this->db->affected_rows() > 0) {
+			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
+		}
+		redirect('Admin/getKelValidasi');
+	}
+	//End Kelola Validasi
 
 }
 

@@ -144,7 +144,7 @@
             </ul>
           </li>
           <li <?=$this->uri->segment(1) == '#' ? 'class="active"' : '' ?>>
-            <a href="#">
+            <a href="<?= site_url('Admin/getKelValidasi') ?>">
               <i class="fa fa-cog"></i> <span>Kelola Data Validasi</span>
               <span class="pull-right-container"></span>
             </a>
