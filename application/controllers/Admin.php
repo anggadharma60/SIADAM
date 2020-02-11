@@ -18,6 +18,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *
  */
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Reader\Csv;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
 class Admin extends CI_Controller
 {
@@ -653,57 +655,6 @@ class Admin extends CI_Controller
 		$this->template->load('template/template_Admin', 'odp/odp_form_import');
 	}
 
-	public function fetch()
-	{
-		$data = $this->excel_import_model->select();
-		$output = '
-		<h3 align="center">Total Data - ' . $data->num_rows() . '</h3>
-		<table class="table table-striped table-bordered">
-            <tr>
-				<th>ID NOSS</th>
-				<th>index ODP</th>
-				<th>ID ODP</th>
-				<th>FTP</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Cluster Name</th>
-                <th>Cluster Status</th>
-                <th>Available</th>
-                <th>Used</th>
-                <th>RSV</th>
-                <th>RSK</th>
-                <th>Total</th>
-                <th>ID STO</th>
-                <th>Info ODP</th>
-                <th>Update Date</th>
-			</tr>
-		';
-		foreach ($data->result() as $row) {
-			$output .= '
-			<tr>
-				<td>' . $row->idNOSS . '</td>
-				<td>' . $row->indexODP . '</td>
-				<td>' . $row->idODP . '</td>
-				<td>' . $row->ftp . '</td>
-                <td>' . $row->latitude . '</td>
-                <td>' . $row->longitude . '</td>
-				<td>' . $row->clusterName . '</td>
-				<td>' . $row->clusterStatus . '</td>
-				<td>' . $row->avai . '</td>
-                <td>' . $row->used . '</td>
-                <td>' . $row->rsv . '</td>
-				<td>' . $row->rsk . '</td>
-				<td>' . $row->total . '</td>
-				<td>' . $row->idSTO . '</td>
-				<td>' . $row->infoODP . '</td>
-				<td>' . $row->updateDate . '</td>
-			</tr>
-			';
-		}
-		$output .= '</table>';
-		echo $output;
-	}
-
 	//Fungsi file upload
 	public function importODP() {
         $data = array();
@@ -711,7 +662,7 @@ class Admin extends CI_Controller
         
          $this->form_validation->set_rules('fileURL', 'Upload File ODP', 'callback_checkFileValidation');
 			// If file uploaded
-			print_r($_FILES['fileURL']['name']);
+			
             if(!empty($_FILES['fileURL']['name'])) { 
 				
                 // get file extension
@@ -729,10 +680,13 @@ class Admin extends CI_Controller
                 $allDataInSheet = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
             
                 // array Count
-                $arrayCount = count($allDataInSheet);
+				$arrayCount = count($allDataInSheet);
+				$sample =$spreadsheet->getActiveSheet();
+				print_r($sample->getHighesRow());
+
                 $flag = 0;
-                // $createArray = array('NIS', 'Nama_Siswa', 'Kelas', 'Biaya_SPP');
-                // $makeArray = array('NIS' => 'NIS', 'Nama_Siswa' => 'Nama_Siswa', 'Kelas' => 'Kelas', 'Biaya_SPP' => 'Biaya_SPP');
+                $createArray = array('NIS', 'Nama_Siswa', 'Kelas', 'Biaya_SPP');
+                $makeArray = array('NIS' => 'NIS', 'Nama_Siswa' => 'Nama_Siswa', 'Kelas' => 'Kelas', 'Biaya_SPP' => 'Biaya_SPP');
                 $SheetDataKey = array();
                 foreach ($allDataInSheet as $dataInSheet) {
                     foreach ($dataInSheet as $key => $value) {
