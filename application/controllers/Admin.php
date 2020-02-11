@@ -1,5 +1,11 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+
+require 'vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 // Don't forget include/define REST_Controller path
 
 /**
@@ -17,9 +23,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @return    ...
  *
  */
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Reader\Csv;
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
 class Admin extends CI_Controller
 {
@@ -937,13 +940,81 @@ class Admin extends CI_Controller
 		redirect('Admin/getODP');
 	}
 
-	public function exportODP($id)
-    {
-        $this->load->library('mypdf.php');
-        $data['data_responden'] = $this->db->query("select * from data_responden where ID=$id")->result();
-        $data['jawaban'] = $this->db->query("select * from jawaban where ID=$id")->result();
-        $this->mypdf->generate_detail_responden('export_detail_responden', $data);
-    }
+	public function exportODP()
+	{
+
+		$spreadsheet = new Spreadsheet();
+		$sheet = $spreadsheet->getActiveSheet();
+		$sheet->setCellValue('A1', 'ID ODP');
+		$sheet->setCellValue('B1', 'ID NOSS');
+		$sheet->setCellValue('C1', 'index ODP');
+		$sheet->setCellValue('D1', 'Nama ODP');
+		$sheet->setCellValue('E1', 'ftp');
+		$sheet->setCellValue('F1', 'Latitude');
+		$sheet->setCellValue('G1', 'Longitude');
+		$sheet->setCellValue('H1', 'Cluster Name');
+		$sheet->setCellValue('I1', 'Cluster Status');
+		$sheet->setCellValue('J1', 'Available');
+		$sheet->setCellValue('K1', 'Used');
+		$sheet->setCellValue('L1', 'RSV');
+		$sheet->setCellValue('M1', 'RSK');
+		$sheet->setCellValue('N1', 'Total');
+		$sheet->setCellValue('O1', 'Regional');
+		$sheet->setCellValue('P1', 'Witel');
+		$sheet->setCellValue('Q1', 'Datel');
+		$sheet->setCellValue('R1', 'STO');
+		$sheet->setCellValue('S1', 'Info ODP');
+		$sheet->setCellValue('T1', 'Update Date');
+
+		$result = $this->ODP_model->getDataODP();
+		if ($result->num_rows() > 0) {
+			$n = 1;
+			// while ($row = $result->result()) {
+			// 	$rowNum= $n  + 1;
+			// 	// $sheet->setCellValue('A'.$rowNum, $row['idODP']);
+			// 	// $sheet->setCellValue('B'.$rowNum, $row['idNOSS']);
+			// 	// $sheet->setCellValue('C'.$rowNum, $row['indexODP']);
+			// 	// $sheet->setCellValue('D'.$rowNum, $row['namaODP']);
+			// 	// $sheet->setCellValue('E'.$rowNum, $row['ftp']);
+			// 	// $sheet->setCellValue('F'.$rowNum, $row['latitude']);
+			// 	// $sheet->setCellValue('G'.$rowNum, $row['longitude']);
+			// 	// $sheet->setCellValue('H'.$rowNum, $row['clusterName']);
+			// 	// $sheet->setCellValue('I'.$rowNum, $row['clusterStatus']);
+			// 	// $sheet->setCellValue('J'.$rowNum, $row['avai']);
+			// 	// $sheet->setCellValue('K'.$rowNum, $row['used']);
+			// 	// $sheet->setCellValue('L'.$rowNum, $row['rsv']);
+			// 	// $sheet->setCellValue('M'.$rowNum, $row['rsk']);
+			// 	// $sheet->setCellValue('N'.$rowNum, $row['total']);
+			// 	// $sheet->setCellValue('O'.$rowNum, $row['namaRegional']);
+			// 	// $sheet->setCellValue('P'.$rowNum, $row['namaWitel']);
+			// 	// $sheet->setCellValue('Q'.$rowNum, $row['namaDatel']);
+			// 	// $sheet->setCellValue('R'.$rowNum, $row['namaSTO']);
+			// 	// $sheet->setCellValue('S'.$rowNum, $row['infoODP']);
+			// 	// $sheet->setCellValue('T'.$rowNum, $row['updateDate']);
+			// 	// $n++;
+			// }
+			
+		}
+
+		print_r($result->result());
+		$filename = 'sampe-'.time().'.xlsx';
+		//redirect output to client
+		// header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		// header('Content-Disposition: attachment;filename="'.$filename.'"');
+		// header('Cache-Control: max-age=0');
+		// //if use IE 9
+		// header('Cache-Control: max-age=1');
+
+		// // If you're serving to IE over SSL, then the following may be needed
+		// header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+		// header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+		// header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+		// header('Pragma: public'); // HTTP/1.
+
+		// $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+		// $writer->save('php://output');
+		// print_r($result->num_rows);
+	}
 
 	// END ODP
 
