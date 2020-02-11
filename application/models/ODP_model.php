@@ -18,6 +18,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class ODP_model extends CI_Model {
 
+  //Variabel import
+  private $varBatchImportODP;
+  
   public function getDataODP($id = null){
     $this->db->select('*');
     // $this->db->select('rekap_data_odp.*, sto.kodeSTO, sto.namaSTO, sto.idDatel, datel.namaDatel, datel.idWitel, witel.namaWitel, witel.idRegional, regional.namaRegional');
@@ -31,36 +34,6 @@ class ODP_model extends CI_Model {
         }
     $query = $this->db->get();
     return $query;
-  }
-  public function view(){
-    return $this->db->get('rekap_data_odp')->result(); // Tampilkan semua data yang ada di tabel
-  }
-  //IMPORT
-  // Fungsi untuk melakukan proses upload file
-  public function upload_file($filename){
-    $this->load->library('upload'); // Load librari upload
-    
-    $config['upload_path'] = './excel/';
-    $config['allowed_types'] = 'xlsx';
-    $config['max_size']  = '2048';
-    $config['overwrite'] = true;
-    $config['file_name'] = $filename;
-  
-    $this->upload->initialize($config); // Load konfigurasi uploadnya
-    if($this->upload->do_upload('file')){ // Lakukan upload dan Cek jika proses upload berhasil
-      // Jika berhasil :
-      $return = array('result' => 'success', 'file' => $this->upload->data(), 'error' => '');
-      return $return;
-    }else{
-      // Jika gagal :
-      $return = array('result' => 'failed', 'file' => '', 'error' => $this->upload->display_errors());
-      return $return;
-    }
-  }
-  
-  // Buat sebuah fungsi untuk melakukan insert lebih dari 1 data
-  public function insert_multiple($data){
-    $this->db->insert_batch('rekap_data_odp', $data);
   }
 
   public function addDataODP($post)
@@ -117,9 +90,51 @@ class ODP_model extends CI_Model {
     }
 
     public function deleteDataODP($id)
-	{
+	  {
 		$this->db->where('idODP', $id);
 		$this->db->delete('rekap_data_odp');
+    }
+
+  
+  //   //IMPORT
+  //   // Fungsi untuk melakukan proses upload file
+  //   public function upload_file($filename){
+  //     $this->load->library('upload'); // Load librari upload
+      
+  //     $config['upload_path'] = './excel/';
+  //     $config['allowed_types'] = 'xlsx';
+  //     $config['max_size']  = '2048';
+  //     $config['overwrite'] = true;
+  //     $config['file_name'] = $filename;
+    
+  //     $this->upload->initialize($config); // Load konfigurasi uploadnya
+  //     if($this->upload->do_upload('file')){ // Lakukan upload dan Cek jika proses upload berhasil
+  //       // Jika berhasil :
+  //       $return = array('result' => 'success', 'file' => $this->upload->data(), 'error' => '');
+  //       return $return;
+  //     }else{
+  //       // Jika gagal :
+  //       $return = array('result' => 'failed', 'file' => '', 'error' => $this->upload->display_errors());
+  //       return $return;
+  //     }
+  // }
+  
+  //   // Buat sebuah fungsi untuk melakukan insert lebih dari 1 data
+  //   public function insert_multiple($data){
+  //     $this->db->insert_batch('rekap_data_odp', $data);
+  //   }
+
+  //Import Excel via phpSpreadsheet
+  public function setBatchImportODP($batchImportODP)
+  {
+    $this->$varBatchImportODP = $batchImportODP;
+  }
+
+  //import data to database
+  public function importDataODP()
+  {
+    $data = $this->varBatchImportODP;
+    $this->db->insert_batch('rekap_data_odp', $data);
   }
 
   
