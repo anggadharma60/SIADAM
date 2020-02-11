@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class ODP_model extends CI_Model {
 
   //Variabel import
-  private $varBatchImportODP;
+  
   
   public function getDataODP($id = null){
     $this->db->select('*');
@@ -125,6 +125,7 @@ class ODP_model extends CI_Model {
   //   }
 
   //Import Excel via phpSpreadsheet
+  private $varBatchImportODP;
   public function setBatchImportODP($batchImportODP)
   {
     $this->$varBatchImportODP = $batchImportODP;

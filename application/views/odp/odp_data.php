@@ -18,7 +18,7 @@
         <a href="<?php echo site_url('Admin/exportODP') ?>" class="btn btn-danger btn-flat">
           <i class="fa fa-upload"></i> Export
         </a>
-        <a href="<?= site_url('Admin/importODP') ?>" class="btn btn-success btn-flat">
+        <a href="<?= site_url('Admin/uploadODP') ?>" class="btn btn-success btn-flat">
           <i class="fa fa-download"></i> Import
         </a>
         <a href="<?= site_url('Admin/addODP') ?>" class="btn btn-primary btn-flat">
