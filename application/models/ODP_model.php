@@ -128,7 +128,7 @@ class ODP_model extends CI_Model {
   private $varBatchImportODP;
   public function setBatchImportODP($batchImportODP)
   {
-    $this->$varBatchImportODP = $batchImportODP;
+    $this->varBatchImportODP = $batchImportODP;
   }
 
   //import data to database

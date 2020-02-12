@@ -670,7 +670,7 @@ class Admin extends CI_Controller
 				
                 // get file extension
                 $extension = pathinfo($_FILES['fileURL']['name'], PATHINFO_EXTENSION);
- 
+				
                 if($extension == 'csv'){
                     $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
                 } elseif($extension == 'xlsx') {
@@ -679,17 +679,15 @@ class Admin extends CI_Controller
                     $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
                 }
                 // file path
-                $spreadsheet = $reader->load($_FILES['fileURL']['tmp_name']);
+				$spreadsheet = $reader->load($_FILES['fileURL']['name']);
+				print_r(($_FILES['fileURL']['tmp_name']));
                 $allDataInSheet = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
-            
                 // array Count
 				$arrayCount = count($allDataInSheet);
-				$sample =$spreadsheet->getActiveSheet();
-				print_r($sample->getHighesRow());
-
+				
                 $flag = 0;
-                $createArray = array('NIS', 'Nama_Siswa', 'Kelas', 'Biaya_SPP');
-                $makeArray = array('NIS' => 'NIS', 'Nama_Siswa' => 'Nama_Siswa', 'Kelas' => 'Kelas', 'Biaya_SPP' => 'Biaya_SPP');
+                $createArray = array('NOSS_ID', 'ODP_INDEX', 'ODP_NAME', 'FTP', 'LATITUDE', 'LONGITUDE', 'CLUSNAME', 'CLUSTERSATATUS', 'AVAI', 'USED', 'RSV', 'RSK', 'IS_TOTAL', 'STO' , 'ODP_INFO', 'UPDATE_DATE');
+				$makeArray = array('NOSS_ID' => 'NOSS_ID', 'ODP_INDEX' => 'ODP_INDEX', 'ODP_NAME' => 'ODP_NAME', 'FTP' => 'FTP', 'LATITUDE' => 'LATITUDE', 'LONGITUDE' => 'LONGITUDE', 'CLUSNAME' => 'CLUSNAME', 'CLUSTERSATATUS' => 'CLUSTERSATATUS', 'AVAI' => 'AVAI', 'USED' => 'USED', 'RSV' => 'RSV', 'RSK' => 'RSK', 'IS_TOTAL' => 'IS_TOTAL', 'STO' => 'STO' , 'ODP_INFO' => 'ODP_INFO', 'UPDATE_DATE' => 'UPDATE_DATE');
                 $SheetDataKey = array();
                 foreach ($allDataInSheet as $dataInSheet) {
                     foreach ($dataInSheet as $key => $value) {
@@ -699,32 +697,69 @@ class Admin extends CI_Controller
                         } 
                     }
                 }
-                $dataDiff = array_diff_key($makeArray, $SheetDataKey);
+				$dataDiff = array_diff_key($makeArray, $SheetDataKey);
                 if (empty($dataDiff)) {
                     $flag = 1;
-                }
+				}
                 // match excel sheet column
                 if ($flag == 1) {
                     for ($i = 2; $i <= $arrayCount; $i++) {
-                        $addresses = array();
-                        $NIS = $SheetDataKey['NIS'];
-                        $nama_siswa = $SheetDataKey['Nama_Siswa'];
-                        $kelas = $SheetDataKey['Kelas'];
-                        $biaya_spp = $SheetDataKey['Biaya_SPP'];
-                        
-                        $NIS = filter_var(trim($allDataInSheet[$i][$NIS]), FILTER_SANITIZE_STRING);
-                        $nama_siswa = filter_var(trim($allDataInSheet[$i][$nama_siswa]), FILTER_SANITIZE_STRING);
-                        $kelas = filter_var(trim($allDataInSheet[$i][$kelas]), FILTER_SANITIZE_EMAIL);
-                        $biaya_spp = filter_var(trim($allDataInSheet[$i][$biaya_spp]), FILTER_SANITIZE_STRING);
-                        $fetchData[] = array('NIS' => $NIS, 'nama_siswa' => $nama_siswa, 'kelas' => $kelas, 'biaya_spp' => $biaya_spp);
-                    }
-                    $data['data_siswa'] = $fetchData;
-                    $this->siswa_model->setBatchImport($fetchData);
-                    $this->siswa_model->importData();
-                } else {
-                    echo "Please import correct file, did not match excel sheet column";
+						$NOSS_ID = $SheetDataKey['NOSS_ID'];
+						$ODP_INDEX = $SheetDataKey['ODP_INDEX'];
+						$ODP_NAME = $SheetDataKey['ODP_NAME'];
+						$FTP = $SheetDataKey['FTP'];
+						$LATITUDE = $SheetDataKey['LATITUDE'];
+						$LONGITUDE = $SheetDataKey['LONGITUDE'];
+						$CLUSNAME = $SheetDataKey['CLUSNAME'];
+						$CLUSTERSATATUS = $SheetDataKey['CLUSTERSATATUS'];
+						$AVAI = $SheetDataKey['AVAI'];
+						$USED = $SheetDataKey['USED'];
+						$RSV = $SheetDataKey['RSV'];
+						$RSK = $SheetDataKey['RSK'];
+						$IS_TOTAL = $SheetDataKey['IS_TOTAL'];
+						$STO = $SheetDataKey['STO'];
+						$ODP_INFO = $SheetDataKey['ODP_INFO'];
+						$UPDATE_DATE = $SheetDataKey['UPDATE_DATE'];
+					
+						
+						
+						$NOSS_ID = filter_var(html_escape(trim($allDataInSheet[$i][$NOSS_ID])), FILTER_SANITIZE_STRING);
+						$ODP_INDEX = filter_var(html_escape(trim($allDataInSheet[$i][$ODP_INDEX])), FILTER_SANITIZE_STRING);
+						$ODP_NAME  = filter_var(html_escape(trim($allDataInSheet[$i][$ODP_NAME])), FILTER_SANITIZE_STRING);
+						$FTP = filter_var(html_escape(trim($allDataInSheet[$i][$FTP])), FILTER_SANITIZE_STRING);
+						$LATITUDE = filter_var(html_escape(trim($allDataInSheet[$i][$LATITUDE])), FILTER_SANITIZE_STRING);
+						$LONGITUDE = filter_var(html_escape(trim($allDataInSheet[$i][$LONGITUDE])), FILTER_SANITIZE_STRING);
+						$CLUSNAME = filter_var(html_escape(trim($allDataInSheet[$i][$CLUSNAME])), FILTER_SANITIZE_STRING);
+						$CLUSTERSATATUS = filter_var(html_escape(trim($allDataInSheet[$i][$CLUSTERSATATUS])), FILTER_SANITIZE_STRING);
+						$AVAI = filter_var(html_escape(trim($allDataInSheet[$i][$AVAI])), FILTER_SANITIZE_STRING);
+						$USED = filter_var(html_escape(trim($allDataInSheet[$i][$USED])), FILTER_SANITIZE_STRING);
+						$RSV = filter_var(html_escape(trim($allDataInSheet[$i][$RSV])), FILTER_SANITIZE_STRING);
+						$IS_TOTAL = filter_var(html_escape(trim($allDataInSheet[$i][$IS_TOTAL])), FILTER_SANITIZE_STRING);
+						$STO = filter_var(html_escape(trim($allDataInSheet[$i][$STO])), FILTER_SANITIZE_STRING);
+						$ODP_INFO = filter_var(html_escape(trim($allDataInSheet[$i][$ODP_INFO])), FILTER_SANITIZE_STRING);
+						$UPDATE_DATE = filter_var(html_escape(trim($allDataInSheet[$i][$UPDATE_DATE])), FILTER_SANITIZE_STRING);
+
+						$newSTO = $this->STO_model->getIDSTOByKode($STO);
+						$idSTO = $newSTO->idSTO;
+					
+						 
+					
+						
+						
+						$fetchData[] = array('idNOSS' => $NOSS_ID, 'indexODP' => $ODP_INDEX, 'namaODP' => $ODP_NAME, 'ftp' => $FTP, 'latitude' => $LATITUDE, 'longitude' => $LONGITUDE, 'clusterName' => $CLUSNAME, 'clusterStatus' => $CLUSTERSATATUS, 'avai' => $AVAI, 'used' => $USED, 'rsv' => $RSV, 'rsk' => $RSK, 'total' => $IS_TOTAL, 'idSTO' => $idSTO , 'infoODP' => $ODP_INFO, 'updateDate' => $UPDATE_DATE);
+						
+					}
+					
+					
+					
+					// $data['data_odp'] = $fetchData;
+					$this->ODP_model->setBatchImportODP($fetchData);
+					$this->ODP_model->importDataODP();
+					 
+				}else {
+                    echo "<br>Please import correct file, did not match excel sheet column";
                 }
-                $this->load->view('Admin/getODP', $data);
+				echo "Import Sukses";
             }            
         
     }

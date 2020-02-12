@@ -30,8 +30,15 @@ class STO_model extends CI_Model {
     return $query;
   }
 
-  public function getDataSTOSelect($id){
+  public function getIDSTOByKode($kode){
+    $this->db->select('idSTO');
+    $this->db->from('sto');
+    $this->db->where('kodeSTO=', $kode);
+    $query = $this->db->get();
+    return $query->row();
+  }
 
+  public function getDataSTOSelect($id){
     $this->db->from('sto');
     $this->db->where('idSTO!=', $id);
     $query = $this->db->get();
