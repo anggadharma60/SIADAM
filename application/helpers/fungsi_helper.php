@@ -25,5 +25,3 @@ function check_admin() {
 }
 
 ?>
-
-<!-- terkendala jika saat delete user yang sedang digunakannn -->

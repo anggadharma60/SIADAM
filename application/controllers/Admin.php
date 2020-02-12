@@ -1,11 +1,14 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require 'vendor/autoload.php';
+// Load library phpspreadsheet
+require 'excel/vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+// End load library phpspreadsheet
 // Don't forget include/define REST_Controller path
 
 /**
@@ -42,7 +45,6 @@ class Admin extends CI_Controller
 		$this->load->model('SpecOLT_model');
 		$this->load->model("Import_ODP_model");
 		$this->load->library('form_validation');
-		$this->load->library("PHPExcel");
 	}
 
 	// Halaman Awal Admin
@@ -659,105 +661,107 @@ class Admin extends CI_Controller
 	}
 
 	//Fungsi file upload
-	public function importODP() {
-        $data = array();
-         // Load form validation library
-        
-         $this->form_validation->set_rules('fileURL', 'Upload File ODP', 'callback_checkFileValidation');
-			// If file uploaded
-			
-            if(!empty($_FILES['fileURL']['name'])) { 
-				
-                // get file extension
-                $extension = pathinfo($_FILES['fileURL']['name'], PATHINFO_EXTENSION);
- 
-                if($extension == 'csv'){
-                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
-                } elseif($extension == 'xlsx') {
-                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-                } else {
-                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
-                }
-                // file path
-                $spreadsheet = $reader->load($_FILES['fileURL']['tmp_name']);
-                $allDataInSheet = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
-            
-                // array Count
-				$arrayCount = count($allDataInSheet);
-				$sample =$spreadsheet->getActiveSheet();
-				print_r($sample->getHighesRow());
+	public function importODP()
+	{
+		$data = array();
+		// Load form validation library
 
-                $flag = 0;
-                $createArray = array('NIS', 'Nama_Siswa', 'Kelas', 'Biaya_SPP');
-                $makeArray = array('NIS' => 'NIS', 'Nama_Siswa' => 'Nama_Siswa', 'Kelas' => 'Kelas', 'Biaya_SPP' => 'Biaya_SPP');
-                $SheetDataKey = array();
-                foreach ($allDataInSheet as $dataInSheet) {
-                    foreach ($dataInSheet as $key => $value) {
-                        if (in_array(trim($value), $createArray)) {
-                            $value = preg_replace('/\s+/', '', $value);
-                            $SheetDataKey[trim($value)] = $key;
-                        } 
-                    }
-                }
-                $dataDiff = array_diff_key($makeArray, $SheetDataKey);
-                if (empty($dataDiff)) {
-                    $flag = 1;
-                }
-                // match excel sheet column
-                if ($flag == 1) {
-                    for ($i = 2; $i <= $arrayCount; $i++) {
-                        $addresses = array();
-                        $NIS = $SheetDataKey['NIS'];
-                        $nama_siswa = $SheetDataKey['Nama_Siswa'];
-                        $kelas = $SheetDataKey['Kelas'];
-                        $biaya_spp = $SheetDataKey['Biaya_SPP'];
-                        
-                        $NIS = filter_var(trim($allDataInSheet[$i][$NIS]), FILTER_SANITIZE_STRING);
-                        $nama_siswa = filter_var(trim($allDataInSheet[$i][$nama_siswa]), FILTER_SANITIZE_STRING);
-                        $kelas = filter_var(trim($allDataInSheet[$i][$kelas]), FILTER_SANITIZE_EMAIL);
-                        $biaya_spp = filter_var(trim($allDataInSheet[$i][$biaya_spp]), FILTER_SANITIZE_STRING);
-                        $fetchData[] = array('NIS' => $NIS, 'nama_siswa' => $nama_siswa, 'kelas' => $kelas, 'biaya_spp' => $biaya_spp);
-                    }
-                    $data['data_siswa'] = $fetchData;
-                    $this->siswa_model->setBatchImport($fetchData);
-                    $this->siswa_model->importData();
-                } else {
-                    echo "Please import correct file, did not match excel sheet column";
-                }
-                $this->load->view('Admin/getODP', $data);
-            }            
-        
-    }
-	
+		$this->form_validation->set_rules('fileURL', 'Upload File ODP', 'callback_checkFileValidation');
+		// If file uploaded
 
-	public function checkFileValidation($string) {
-		$file_mimes = array('text/x-comma-separated-values', 
-		  'text/comma-separated-values', 
-		  'application/octet-stream', 
-		  'application/vnd.ms-excel', 
-		  'application/x-csv', 
-		  'text/x-csv', 
-		  'text/csv', 
-		  'application/csv', 
-		  'application/excel', 
-		  'application/vnd.msexcel', 
-		  'text/plain', 
-		  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+		if (!empty($_FILES['fileURL']['name'])) {
+
+			// get file extension
+			$extension = pathinfo($_FILES['fileURL']['name'], PATHINFO_EXTENSION);
+
+			if ($extension == 'csv') {
+				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+			} elseif ($extension == 'xlsx') {
+				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+			} else {
+				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+			}
+			// file path
+			$spreadsheet = $reader->load($_FILES['fileURL']['tmp_name']);
+			$allDataInSheet = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+
+			// array Count
+			$arrayCount = count($allDataInSheet);
+			$sample = $spreadsheet->getActiveSheet();
+			print_r($sample->getHighesRow());
+
+			$flag = 0;
+			$createArray = array('NIS', 'Nama_Siswa', 'Kelas', 'Biaya_SPP');
+			$makeArray = array('NIS' => 'NIS', 'Nama_Siswa' => 'Nama_Siswa', 'Kelas' => 'Kelas', 'Biaya_SPP' => 'Biaya_SPP');
+			$SheetDataKey = array();
+			foreach ($allDataInSheet as $dataInSheet) {
+				foreach ($dataInSheet as $key => $value) {
+					if (in_array(trim($value), $createArray)) {
+						$value = preg_replace('/\s+/', '', $value);
+						$SheetDataKey[trim($value)] = $key;
+					}
+				}
+			}
+			$dataDiff = array_diff_key($makeArray, $SheetDataKey);
+			if (empty($dataDiff)) {
+				$flag = 1;
+			}
+			// match excel sheet column
+			if ($flag == 1) {
+				for ($i = 2; $i <= $arrayCount; $i++) {
+					$addresses = array();
+					$NIS = $SheetDataKey['NIS'];
+					$nama_siswa = $SheetDataKey['Nama_Siswa'];
+					$kelas = $SheetDataKey['Kelas'];
+					$biaya_spp = $SheetDataKey['Biaya_SPP'];
+
+					$NIS = filter_var(trim($allDataInSheet[$i][$NIS]), FILTER_SANITIZE_STRING);
+					$nama_siswa = filter_var(trim($allDataInSheet[$i][$nama_siswa]), FILTER_SANITIZE_STRING);
+					$kelas = filter_var(trim($allDataInSheet[$i][$kelas]), FILTER_SANITIZE_EMAIL);
+					$biaya_spp = filter_var(trim($allDataInSheet[$i][$biaya_spp]), FILTER_SANITIZE_STRING);
+					$fetchData[] = array('NIS' => $NIS, 'nama_siswa' => $nama_siswa, 'kelas' => $kelas, 'biaya_spp' => $biaya_spp);
+				}
+				$data['data_siswa'] = $fetchData;
+				$this->siswa_model->setBatchImport($fetchData);
+				$this->siswa_model->importData();
+			} else {
+				echo "Please import correct file, did not match excel sheet column";
+			}
+			$this->load->view('Admin/getODP', $data);
+		}
+	}
+
+
+	public function checkFileValidation($string)
+	{
+		$file_mimes = array(
+			'text/x-comma-separated-values',
+			'text/comma-separated-values',
+			'application/octet-stream',
+			'application/vnd.ms-excel',
+			'application/x-csv',
+			'text/x-csv',
+			'text/csv',
+			'application/csv',
+			'application/excel',
+			'application/vnd.msexcel',
+			'text/plain',
+			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 		);
-		if(isset($_FILES['fileURL']['name'])) {
-			  $arr_file = explode('.', $_FILES['fileURL']['name']);
-			  $extension = end($arr_file);
-			  if(($extension == 'xlsx' || $extension == 'xls' || $extension == 'csv') && in_array($_FILES['fileURL']['type'], $file_mimes)){
-				  return true;
-			  }else{
-				  $this->form_validation->set_message('checkFileValidation', 'Please choose correct file.');
-				  return false;
-			  }
-		  }else{
-			  $this->form_validation->set_message('checkFileValidation', 'Please choose a file.');
-			  return false;
-		  }
-	  }
+		if (isset($_FILES['fileURL']['name'])) {
+			$arr_file = explode('.', $_FILES['fileURL']['name']);
+			$extension = end($arr_file);
+			if (($extension == 'xlsx' || $extension == 'xls' || $extension == 'csv') && in_array($_FILES['fileURL']['type'], $file_mimes)) {
+				return true;
+			} else {
+				$this->form_validation->set_message('checkFileValidation', 'Please choose correct file.');
+				return false;
+			}
+		} else {
+			$this->form_validation->set_message('checkFileValidation', 'Please choose a file.');
+			return false;
+		}
+	}
 	// function import()
 	// {
 	// 	if (isset($_FILES["file"]["name"])) {
@@ -943,77 +947,83 @@ class Admin extends CI_Controller
 	public function exportODP()
 	{
 
+		$this->load->model('ODP_model');
+		// Create new Spreadsheet object
 		$spreadsheet = new Spreadsheet();
-		$sheet = $spreadsheet->getActiveSheet();
-		$sheet->setCellValue('A1', 'ID ODP');
-		$sheet->setCellValue('B1', 'ID NOSS');
-		$sheet->setCellValue('C1', 'index ODP');
-		$sheet->setCellValue('D1', 'Nama ODP');
-		$sheet->setCellValue('E1', 'ftp');
-		$sheet->setCellValue('F1', 'Latitude');
-		$sheet->setCellValue('G1', 'Longitude');
-		$sheet->setCellValue('H1', 'Cluster Name');
-		$sheet->setCellValue('I1', 'Cluster Status');
-		$sheet->setCellValue('J1', 'Available');
-		$sheet->setCellValue('K1', 'Used');
-		$sheet->setCellValue('L1', 'RSV');
-		$sheet->setCellValue('M1', 'RSK');
-		$sheet->setCellValue('N1', 'Total');
-		$sheet->setCellValue('O1', 'Regional');
-		$sheet->setCellValue('P1', 'Witel');
-		$sheet->setCellValue('Q1', 'Datel');
-		$sheet->setCellValue('R1', 'STO');
-		$sheet->setCellValue('S1', 'Info ODP');
-		$sheet->setCellValue('T1', 'Update Date');
+		
+		$Excel_writer = new Csv($spreadsheet);
 
-		$result = $this->ODP_model->getDataODP();
-		if ($result->num_rows() > 0) {
-			$n = 1;
-			// while ($row = $result->result()) {
-			// 	$rowNum= $n  + 1;
-			// 	// $sheet->setCellValue('A'.$rowNum, $row['idODP']);
-			// 	// $sheet->setCellValue('B'.$rowNum, $row['idNOSS']);
-			// 	// $sheet->setCellValue('C'.$rowNum, $row['indexODP']);
-			// 	// $sheet->setCellValue('D'.$rowNum, $row['namaODP']);
-			// 	// $sheet->setCellValue('E'.$rowNum, $row['ftp']);
-			// 	// $sheet->setCellValue('F'.$rowNum, $row['latitude']);
-			// 	// $sheet->setCellValue('G'.$rowNum, $row['longitude']);
-			// 	// $sheet->setCellValue('H'.$rowNum, $row['clusterName']);
-			// 	// $sheet->setCellValue('I'.$rowNum, $row['clusterStatus']);
-			// 	// $sheet->setCellValue('J'.$rowNum, $row['avai']);
-			// 	// $sheet->setCellValue('K'.$rowNum, $row['used']);
-			// 	// $sheet->setCellValue('L'.$rowNum, $row['rsv']);
-			// 	// $sheet->setCellValue('M'.$rowNum, $row['rsk']);
-			// 	// $sheet->setCellValue('N'.$rowNum, $row['total']);
-			// 	// $sheet->setCellValue('O'.$rowNum, $row['namaRegional']);
-			// 	// $sheet->setCellValue('P'.$rowNum, $row['namaWitel']);
-			// 	// $sheet->setCellValue('Q'.$rowNum, $row['namaDatel']);
-			// 	// $sheet->setCellValue('R'.$rowNum, $row['namaSTO']);
-			// 	// $sheet->setCellValue('S'.$rowNum, $row['infoODP']);
-			// 	// $sheet->setCellValue('T'.$rowNum, $row['updateDate']);
-			// 	// $n++;
-			// }
-			
+		
+		// $spreadsheet->getProperties()
+		// 	->setCreator('SIADAM - Telkom Witel')
+		// 	->setLastModifiedBy('SIADAM - Telkom Witel')
+		// 	->setTitle('Office 2007 XLSX Test Document')
+		// 	->setSubject('Office 2007 XLSX Test Document')
+		// 	->setDescription('Test document for Office 2007 XLSX, generated using PHP classes.')
+		// 	->setKeywords('office 2007 openxml php')
+		// 	->setCategory('Test result file');
+		
+        
+        foreach (range('A1', 'T1') as $test) {
+            $spreadsheet->getActiveSheet()->getColumnDimension($test)->setAutoSize(true);
+        }
+
+		$spreadsheet->setActiveSheetIndex(0);
+		$activeSheet = $spreadsheet->getActiveSheet();
+			$activeSheet->setCellValue('A1', 'ID ODP');
+			$activeSheet->setCellValue('B1', 'ID NOSS');
+			$activeSheet->setCellValue('C1', 'index ODP');
+			$activeSheet->setCellValue('D1', 'Nama ODP');
+			$activeSheet->setCellValue('E1', 'ftp');
+			$activeSheet->setCellValue('F1', 'Latitude');
+			$activeSheet->setCellValue('G1', 'Longitude');
+			$activeSheet->setCellValue('H1', 'Cluster Name');
+			$activeSheet->setCellValue('I1', 'Cluster Status');
+			$activeSheet->setCellValue('J1', 'Available');
+			$activeSheet->setCellValue('K1', 'Used');
+			$activeSheet->setCellValue('L1', 'RSV');
+			$activeSheet->setCellValue('M1', 'RSK');
+			$activeSheet->setCellValue('N1', 'Total');
+			$activeSheet->setCellValue('O1', 'Regional');
+			$activeSheet->setCellValue('P1', 'Witel');
+			$activeSheet->setCellValue('Q1', 'Datel');
+			$activeSheet->setCellValue('R1', 'STO');
+			$activeSheet->setCellValue('S1', 'Info ODP');
+			$activeSheet->setCellValue('T1', 'Update Date');
+
+
+		// $query = $db->query("SELECT * FROM rekap_data_odp ORDER BY idODP DESC");
+		$query = $this->ODP_model->getDataODP()->result();
+		$i=2; foreach($query as $row) {
+			$activeSheet->setCellValue('A'.$i, $row->idODP);
+			$activeSheet->setCellValue('B'.$i, $row->idNOSS);
+			$activeSheet->setCellValue('C'.$i, $row->indexODP);
+			$activeSheet->setCellValue('D'.$i, $row->namaODP);
+			$activeSheet->setCellValue('E'.$i, $row->ftp);
+			$activeSheet->setCellValue('F'.$i, $row->latitude);
+			$activeSheet->setCellValue('G'.$i, $row->longitude);
+			$activeSheet->setCellValue('H'.$i, $row->clusterName);
+			$activeSheet->setCellValue('I'.$i, $row->clusterStatus);
+			$activeSheet->setCellValue('J'.$i, $row->avai);
+			$activeSheet->setCellValue('K'.$i, $row->used);
+			$activeSheet->setCellValue('L'.$i, $row->rsv);
+			$activeSheet->setCellValue('M'.$i, $row->rsk);
+			$activeSheet->setCellValue('N'.$i, $row->total);
+			$activeSheet->setCellValue('O'.$i, $row->namaRegional);
+			$activeSheet->setCellValue('P'.$i, $row->namaWitel);
+			$activeSheet->setCellValue('Q'.$i, $row->namaDatel);
+			$activeSheet->setCellValue('R'.$i, $row->namaSTO);
+			$activeSheet->setCellValue('S'.$i, $row->infoODP);
+			$activeSheet->setCellValue('T'.$i, $row->updateDate);
+			$i++;
 		}
-
-		print_r($result->result());
-		$filename = 'sampe-'.time().'.xlsx';
-		//redirect output to client
-		// header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		// header('Content-Disposition: attachment;filename="'.$filename.'"');
-		// header('Cache-Control: max-age=0');
-		// //if use IE 9
-		// header('Cache-Control: max-age=1');
-
-		// // If you're serving to IE over SSL, then the following may be needed
-		// header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-		// header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
-		// header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-		// header('Pragma: public'); // HTTP/1.
-
-		// $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-		// $writer->save('php://output');
-		// print_r($result->num_rows);
+		
+		$filename = 'products.csv';
+ 
+header('Content-Type: application/text-csv');
+header('Content-Disposition: attachment;filename="'. $filename);
+header('Cache-Control: max-age=0');
+$Excel_writer->save('php://output');
 	}
 
 	// END ODP
