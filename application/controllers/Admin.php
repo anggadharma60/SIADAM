@@ -670,7 +670,7 @@ class Admin extends CI_Controller
 				
                 // get file extension
                 $extension = pathinfo($_FILES['fileURL']['name'], PATHINFO_EXTENSION);
-				
+			
                 if($extension == 'csv'){
                     $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
                 } elseif($extension == 'xlsx') {
@@ -679,8 +679,7 @@ class Admin extends CI_Controller
                     $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
                 }
                 // file path
-				$spreadsheet = $reader->load($_FILES['fileURL']['name']);
-				print_r(($_FILES['fileURL']['tmp_name']));
+                $spreadsheet = $reader->load($_FILES['fileURL']['tmp_name']);
                 $allDataInSheet = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
                 // array Count
 				$arrayCount = count($allDataInSheet);
@@ -741,16 +740,10 @@ class Admin extends CI_Controller
 
 						$newSTO = $this->STO_model->getIDSTOByKode($STO);
 						$idSTO = $newSTO->idSTO;
-					
-						 
-					
-						
-						
+			
 						$fetchData[] = array('idNOSS' => $NOSS_ID, 'indexODP' => $ODP_INDEX, 'namaODP' => $ODP_NAME, 'ftp' => $FTP, 'latitude' => $LATITUDE, 'longitude' => $LONGITUDE, 'clusterName' => $CLUSNAME, 'clusterStatus' => $CLUSTERSATATUS, 'avai' => $AVAI, 'used' => $USED, 'rsv' => $RSV, 'rsk' => $RSK, 'total' => $IS_TOTAL, 'idSTO' => $idSTO , 'infoODP' => $ODP_INFO, 'updateDate' => $UPDATE_DATE);
 						
 					}
-					
-					
 					
 					// $data['data_odp'] = $fetchData;
 					$this->ODP_model->setBatchImportODP($fetchData);
