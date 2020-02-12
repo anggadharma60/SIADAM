@@ -15,7 +15,7 @@
     <div class="box-header">
       <h3 class="box-title">Data ODP</h3>
       <div class="pull-right">
-        <a href="<?php echo site_url('Admin/exportODP') ?>" class="btn btn-danger btn-flat">
+        <a href="<?= site_url('Admin/exportODP')?>" class="btn btn-danger btn-flat">
           <i class="fa fa-upload"></i> Export
         </a>
         <a href="<?= site_url('Admin/uploadODP') ?>" class="btn btn-success btn-flat">
