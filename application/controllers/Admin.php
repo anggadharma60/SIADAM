@@ -729,8 +729,6 @@ class Admin extends CI_Controller
 						$ODP_INFO = $SheetDataKey['ODP_INFO'];
 						$UPDATE_DATE = $SheetDataKey['UPDATE_DATE'];
 					
-						
-						
 						$NOSS_ID = filter_var(html_escape(trim($allDataInSheet[$i][$NOSS_ID])), FILTER_SANITIZE_STRING);
 						$ODP_INDEX = filter_var(html_escape(trim($allDataInSheet[$i][$ODP_INDEX])), FILTER_SANITIZE_STRING);
 						$ODP_NAME  = filter_var(html_escape(trim($allDataInSheet[$i][$ODP_NAME])), FILTER_SANITIZE_STRING);
@@ -946,34 +944,35 @@ class Admin extends CI_Controller
 
 		$spreadsheet->setActiveSheetIndex(0);
 		$activeSheet = $spreadsheet->getActiveSheet();
-			$activeSheet->setCellValue('A1', 'ID ODP');
-			$activeSheet->setCellValue('B1', 'ID NOSS');
-			$activeSheet->setCellValue('C1', 'index ODP');
-			$activeSheet->setCellValue('D1', 'Nama ODP');
-			$activeSheet->setCellValue('E1', 'ftp');
-			$activeSheet->setCellValue('F1', 'Latitude');
-			$activeSheet->setCellValue('G1', 'Longitude');
-			$activeSheet->setCellValue('H1', 'Cluster Name');
-			$activeSheet->setCellValue('I1', 'Cluster Status');
-			$activeSheet->setCellValue('J1', 'Available');
-			$activeSheet->setCellValue('K1', 'Used');
+			$activeSheet->setCellValue('A1', 'NOSS_ID');
+			$activeSheet->setCellValue('B1', 'ODP_INDEX');
+			$activeSheet->setCellValue('C1', 'ODP_NAME');
+			$activeSheet->setCellValue('D1', 'ODP 3 DIGIT');
+			$activeSheet->setCellValue('E1', 'FTP');
+			$activeSheet->setCellValue('F1', 'LATITUDE');
+			$activeSheet->setCellValue('G1', 'LONGITUDE');
+			$activeSheet->setCellValue('H1', 'CLUSNAME');
+			$activeSheet->setCellValue('I1', 'CLUSTERSATATUS');
+			$activeSheet->setCellValue('J1', 'AVAI');
+			$activeSheet->setCellValue('K1', 'USED');
 			$activeSheet->setCellValue('L1', 'RSV');
 			$activeSheet->setCellValue('M1', 'RSK');
-			$activeSheet->setCellValue('N1', 'Total');
-			$activeSheet->setCellValue('O1', 'Regional');
-			$activeSheet->setCellValue('P1', 'Witel');
-			$activeSheet->setCellValue('Q1', 'Datel');
+			$activeSheet->setCellValue('N1', 'IS_TOTAL');
+			$activeSheet->setCellValue('O1', 'REGIONAL');
+			$activeSheet->setCellValue('P1', 'WITEL');
+			$activeSheet->setCellValue('Q1', 'DATEL');
 			$activeSheet->setCellValue('R1', 'STO');
-			$activeSheet->setCellValue('S1', 'Info ODP');
-			$activeSheet->setCellValue('T1', 'Update Date');
+			$activeSheet->setCellValue('S1', 'STO_DESC');
+			$activeSheet->setCellValue('T1', 'ODP_INFO');
+			$activeSheet->setCellValue('U1', 'UPDATE_DATE');
 
 
 		// $query = $db->query("SELECT * FROM rekap_data_odp ORDER BY idODP DESC");
 		$query = $this->ODP_model->getDataODP()->result();
 		$i=2; foreach($query as $row) {
-			$activeSheet->setCellValue('A'.$i, $row->idODP);
-			$activeSheet->setCellValue('B'.$i, $row->idNOSS);
-			$activeSheet->setCellValue('C'.$i, $row->indexODP);
+			$activeSheet->setCellValue('A'.$i, $row->idNOSS);
+			$activeSheet->setCellValue('B'.$i, $row->indexODP);
+			$activeSheet->setCellValue('C'.$i, $row->namaODP);
 			$activeSheet->setCellValue('D'.$i, $row->namaODP);
 			$activeSheet->setCellValue('E'.$i, $row->ftp);
 			$activeSheet->setCellValue('F'.$i, $row->latitude);
@@ -988,9 +987,10 @@ class Admin extends CI_Controller
 			$activeSheet->setCellValue('O'.$i, $row->namaRegional);
 			$activeSheet->setCellValue('P'.$i, $row->namaWitel);
 			$activeSheet->setCellValue('Q'.$i, $row->namaDatel);
-			$activeSheet->setCellValue('R'.$i, $row->namaSTO);
-			$activeSheet->setCellValue('S'.$i, $row->infoODP);
-			$activeSheet->setCellValue('T'.$i, $row->updateDate);
+			$activeSheet->setCellValue('R'.$i, $row->kodeSTO);
+			$activeSheet->setCellValue('S'.$i, $row->namaSTO);
+			$activeSheet->setCellValue('T'.$i, $row->infoODP);
+			$activeSheet->setCellValue('U'.$i, $row->updateDate);
 			$i++;
 		}
 		
@@ -1130,7 +1130,7 @@ class Admin extends CI_Controller
         $data = array();
          // Load form validation library
         
-         $this->form_validation->set_rules('fileURL', 'Upload File ODP', 'callback_checkFileValidation');
+         $this->form_validation->set_rules('fileURL', 'Upload File OLT', 'callback_checkFileValidation');
 			// If file uploaded
 			
             if(!empty($_FILES['fileURL']['name'])) { 
@@ -1152,17 +1152,17 @@ class Admin extends CI_Controller
 				$arrayCount = count($allDataInSheet);
 				
                 $flag = 0;
-                $createArray = array('NOSS_ID', 'ODP_INDEX', 'ODP_NAME', 'FTP', 'LATITUDE', 'LONGITUDE', 'CLUSNAME', 'CLUSTERSATATUS', 'AVAI', 'USED', 'RSV', 'RSK', 'IS_TOTAL', 'STO' , 'ODP_INFO', 'UPDATE_DATE');
-				$makeArray = array('NOSS_ID' => 'NOSS_ID', 'ODP_INDEX' => 'ODP_INDEX', 'ODP_NAME' => 'ODP_NAME', 'FTP' => 'FTP', 'LATITUDE' => 'LATITUDE', 'LONGITUDE' => 'LONGITUDE', 'CLUSNAME' => 'CLUSNAME', 'CLUSTERSATATUS' => 'CLUSTERSATATUS', 'AVAI' => 'AVAI', 'USED' => 'USED', 'RSV' => 'RSV', 'RSK' => 'RSK', 'IS_TOTAL' => 'IS_TOTAL', 'STO' => 'STO' , 'ODP_INFO' => 'ODP_INFO', 'UPDATE_DATE' => 'UPDATE_DATE');
+                $createArray = array('HOSTNAME BARU', 'IP GPON', 'STO', 'ID Logical Device', 'Specification');
+				$makeArray = array('HOSTNAME BARU' => 'HOSTNAME BARU' , 'IP GPON' => 'IP GPON', 'STO' => 'STO', 'ID Logical Device' => 'ID Logical Device', 'Specification' => 'Specification' );
                 $SheetDataKey = array();
                 foreach ($allDataInSheet as $dataInSheet) {
                     foreach ($dataInSheet as $key => $value) {
                         if (in_array(trim($value), $createArray)) {
-                            $value = preg_replace('/\s+/', '', $value);
+                        
                             $SheetDataKey[trim($value)] = $key;
                         } 
                     }
-                }
+				}
 				$dataDiff = array_diff_key($makeArray, $SheetDataKey);
                 if (empty($dataDiff)) {
                     $flag = 1;
@@ -1170,52 +1170,33 @@ class Admin extends CI_Controller
                 // match excel sheet column
                 if ($flag == 1) {
                     for ($i = 2; $i <= $arrayCount; $i++) {
-						$NOSS_ID = $SheetDataKey['NOSS_ID'];
-						$ODP_INDEX = $SheetDataKey['ODP_INDEX'];
-						$ODP_NAME = $SheetDataKey['ODP_NAME'];
-						$FTP = $SheetDataKey['FTP'];
-						$LATITUDE = $SheetDataKey['LATITUDE'];
-						$LONGITUDE = $SheetDataKey['LONGITUDE'];
-						$CLUSNAME = $SheetDataKey['CLUSNAME'];
-						$CLUSTERSATATUS = $SheetDataKey['CLUSTERSATATUS'];
-						$AVAI = $SheetDataKey['AVAI'];
-						$USED = $SheetDataKey['USED'];
-						$RSV = $SheetDataKey['RSV'];
-						$RSK = $SheetDataKey['RSK'];
-						$IS_TOTAL = $SheetDataKey['IS_TOTAL'];
+						$HOSTNAMEBARU = $SheetDataKey['HOSTNAME BARU'];
+						$IPGPON = $SheetDataKey['IP GPON'];
 						$STO = $SheetDataKey['STO'];
-						$ODP_INFO = $SheetDataKey['ODP_INFO'];
-						$UPDATE_DATE = $SheetDataKey['UPDATE_DATE'];
-					
-						
-						
-						$NOSS_ID = filter_var(html_escape(trim($allDataInSheet[$i][$NOSS_ID])), FILTER_SANITIZE_STRING);
-						$ODP_INDEX = filter_var(html_escape(trim($allDataInSheet[$i][$ODP_INDEX])), FILTER_SANITIZE_STRING);
-						$ODP_NAME  = filter_var(html_escape(trim($allDataInSheet[$i][$ODP_NAME])), FILTER_SANITIZE_STRING);
-						$FTP = filter_var(html_escape(trim($allDataInSheet[$i][$FTP])), FILTER_SANITIZE_STRING);
-						$LATITUDE = filter_var(html_escape(trim($allDataInSheet[$i][$LATITUDE])), FILTER_SANITIZE_STRING);
-						$LONGITUDE = filter_var(html_escape(trim($allDataInSheet[$i][$LONGITUDE])), FILTER_SANITIZE_STRING);
-						$CLUSNAME = filter_var(html_escape(trim($allDataInSheet[$i][$CLUSNAME])), FILTER_SANITIZE_STRING);
-						$CLUSTERSATATUS = filter_var(html_escape(trim($allDataInSheet[$i][$CLUSTERSATATUS])), FILTER_SANITIZE_STRING);
-						$AVAI = filter_var(html_escape(trim($allDataInSheet[$i][$AVAI])), FILTER_SANITIZE_STRING);
-						$USED = filter_var(html_escape(trim($allDataInSheet[$i][$USED])), FILTER_SANITIZE_STRING);
-						$RSV = filter_var(html_escape(trim($allDataInSheet[$i][$RSV])), FILTER_SANITIZE_STRING);
-						$RSK = filter_var(html_escape(trim($allDataInSheet[$i][$RSK])), FILTER_SANITIZE_STRING);
-						$IS_TOTAL = filter_var(html_escape(trim($allDataInSheet[$i][$IS_TOTAL])), FILTER_SANITIZE_STRING);
-						$STO = filter_var(html_escape(trim($allDataInSheet[$i][$STO])), FILTER_SANITIZE_STRING);
-						$ODP_INFO = filter_var(html_escape(trim($allDataInSheet[$i][$ODP_INFO])), FILTER_SANITIZE_STRING);
-						$UPDATE_DATE = filter_var(html_escape(trim($allDataInSheet[$i][$UPDATE_DATE])), FILTER_SANITIZE_STRING);
+						$IDLOGICALDEVICE = $SheetDataKey['ID Logical Device'];
+						$SPECIFICATION = $SheetDataKey['Specification'];
+												
+						$HOSTNAMEBARU = filter_var(html_escape(trim($allDataInSheet[$i][$HOSTNAMEBARU])), FILTER_SANITIZE_STRING);
+						$IPGPON = filter_var(html_escape(trim($allDataInSheet[$i][$IPGPON])), FILTER_SANITIZE_STRING);
+						$STO  = filter_var(html_escape(trim($allDataInSheet[$i][$STO])), FILTER_SANITIZE_STRING);
+						$IDLOGICALDEVICE = filter_var(html_escape(trim($allDataInSheet[$i][$IDLOGICALDEVICE])), FILTER_SANITIZE_STRING);
+						$SPECIFICATION = filter_var(html_escape(trim($allDataInSheet[$i][$SPECIFICATION])), FILTER_SANITIZE_STRING);
 
-						$newSTO = $this->STO_model->getIDSTOByKode($STO);
+						$newSTO = $this->STO_model->getIDSTOByName($STO);
 						$idSTO = $newSTO->idSTO;
+						if(!empty($SPECIFICATION) or $SPECIFICATION != null){
+							$newSpecOLT = $this->SpecOLT_model->getIDSpecOLTByName($SPECIFICATION);
+							$idSpecOLT = $newSpecOLT->idSpecOLT;
+						}
+						
 			
-						$fetchData[] = array('idNOSS' => $NOSS_ID, 'indexODP' => $ODP_INDEX, 'namaODP' => $ODP_NAME, 'ftp' => $FTP, 'latitude' => $LATITUDE, 'longitude' => $LONGITUDE, 'clusterName' => $CLUSNAME, 'clusterStatus' => $CLUSTERSATATUS, 'avai' => $AVAI, 'used' => $USED, 'rsv' => $RSV, 'rsk' => $RSK, 'total' => $IS_TOTAL, 'idSTO' => $idSTO , 'infoODP' => $ODP_INFO, 'updateDate' => $UPDATE_DATE);
+						$fetchData[] = array('hostname' => $HOSTNAMEBARU , 'ipOLT' => $IPGPON, 'idSTO' => $idSTO, 'idLogicalDevice' => $IDLOGICALDEVICE, 'idSpecOLT' => $idSpecOLT);
 						
 					}
 					
-					// $data['data_odp'] = $fetchData;
-					$this->ODP_model->setBatchImportODP($fetchData);
-					$this->ODP_model->importDataODP();
+					
+					$this->OLT_model->setBatchImportOLT($fetchData);
+					$this->OLT_model->importDataOLT();
 					 
 				}else {
                     echo "<br>Please import correct file, did not match excel sheet column";
@@ -1224,74 +1205,54 @@ class Admin extends CI_Controller
 					$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
 			$data['row'] = $this->OLT_model->getDataOLT();
-			$this->template->load('template/template_Admin', 'odp/olt_data', $data);
+			$this->template->load('template/template_Admin', 'olt/olt_data', $data);
          }            
         
 	}
 	public function exportOLT()
 	{
 
-		$this->load->model('ODP_model');
+		$this->load->model('OLT_model');
 		// Create new Spreadsheet object
 		$spreadsheet = new Spreadsheet();
 		
-		$Excel_writer = new Xlxs($spreadsheet);
+		$Excel_writer = new Xlsx($spreadsheet);
         
-        foreach (range('A1', 'T1') as $test) {
+        foreach (range('A1', 'I1') as $test) {
             $spreadsheet->getActiveSheet()->getColumnDimension($test)->setAutoSize(true);
         }
 
 		$spreadsheet->setActiveSheetIndex(0);
 		$activeSheet = $spreadsheet->getActiveSheet();
-			$activeSheet->setCellValue('A1', 'ID ODP');
-			$activeSheet->setCellValue('B1', 'ID NOSS');
-			$activeSheet->setCellValue('C1', 'index ODP');
-			$activeSheet->setCellValue('D1', 'Nama ODP');
-			$activeSheet->setCellValue('E1', 'ftp');
-			$activeSheet->setCellValue('F1', 'Latitude');
-			$activeSheet->setCellValue('G1', 'Longitude');
-			$activeSheet->setCellValue('H1', 'Cluster Name');
-			$activeSheet->setCellValue('I1', 'Cluster Status');
-			$activeSheet->setCellValue('J1', 'Available');
-			$activeSheet->setCellValue('K1', 'Used');
-			$activeSheet->setCellValue('L1', 'RSV');
-			$activeSheet->setCellValue('M1', 'RSK');
-			$activeSheet->setCellValue('N1', 'Total');
-			$activeSheet->setCellValue('O1', 'Regional');
-			$activeSheet->setCellValue('P1', 'Witel');
-			$activeSheet->setCellValue('Q1', 'Datel');
-			$activeSheet->setCellValue('R1', 'STO');
-			$activeSheet->setCellValue('S1', 'Info ODP');
-			$activeSheet->setCellValue('T1', 'Update Date');
-
+			$activeSheet->setCellValue('A1', 'NO');
+			$activeSheet->setCellValue('B1', 'HOSTNAME BARU');
+			$activeSheet->setCellValue('C1', 'IP GPON');
+			$activeSheet->setCellValue('D1', 'STO');
+			$activeSheet->setCellValue('E1', 'Type OLT');
+			$activeSheet->setCellValue('F1', 'MERK');
+			$activeSheet->setCellValue('G1', 'ID Logical Device');
+			$activeSheet->setCellValue('H1', 'Name');
+			$activeSheet->setCellValue('I1', 'Specification');
 
 		// $query = $db->query("SELECT * FROM rekap_data_odp ORDER BY idODP DESC");
-		$query = $this->ODP_model->getDataODP()->result();
-		$i=2; foreach($query as $row) {
-			$activeSheet->setCellValue('A'.$i, $row->idODP);
-			$activeSheet->setCellValue('B'.$i, $row->idNOSS);
-			$activeSheet->setCellValue('C'.$i, $row->indexODP);
-			$activeSheet->setCellValue('D'.$i, $row->namaODP);
-			$activeSheet->setCellValue('E'.$i, $row->ftp);
-			$activeSheet->setCellValue('F'.$i, $row->latitude);
-			$activeSheet->setCellValue('G'.$i, $row->longitude);
-			$activeSheet->setCellValue('H'.$i, $row->clusterName);
-			$activeSheet->setCellValue('I'.$i, $row->clusterStatus);
-			$activeSheet->setCellValue('J'.$i, $row->avai);
-			$activeSheet->setCellValue('K'.$i, $row->used);
-			$activeSheet->setCellValue('L'.$i, $row->rsv);
-			$activeSheet->setCellValue('M'.$i, $row->rsk);
-			$activeSheet->setCellValue('N'.$i, $row->total);
-			$activeSheet->setCellValue('O'.$i, $row->namaRegional);
-			$activeSheet->setCellValue('P'.$i, $row->namaWitel);
-			$activeSheet->setCellValue('Q'.$i, $row->namaDatel);
-			$activeSheet->setCellValue('R'.$i, $row->namaSTO);
-			$activeSheet->setCellValue('S'.$i, $row->infoODP);
-			$activeSheet->setCellValue('T'.$i, $row->updateDate);
+		$query = $this->OLT_model->getDataOLT()->result();
+		$i=2; 
+		foreach($query as $row) {
+			$activeSheet->setCellValue('A'.$i, $i-1);
+			$activeSheet->setCellValue('B'.$i, $row->hostname);
+			$activeSheet->setCellValue('C'.$i, $row->ipOLT);
+			$activeSheet->setCellValue('D'.$i, $row->namaSTO);
+			$activeSheet->setCellValue('E'.$i, $row->typeOLT);
+			$activeSheet->setCellValue('F'.$i, $row->merekOLT);
+			$nama = $row->hostname."(".$row->ipOLT.")" ;
+			$activeSheet->setCellValue('G'.$i, $row->idLogicalDevice);
+			$activeSheet->setCellValue('H'.$i, $nama);
+			$activeSheet->setCellValue('I'.$i, $row->namaSpecOLT);
 			$i++;
 		}
 		
-		$filename = 'products.xlsx';
+		$filename = 'RekapOLT.xlsx';
+		
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		header('Content-Disposition: attachment;filename="'. $filename);
 		header('Cache-Control: max-age=0');
