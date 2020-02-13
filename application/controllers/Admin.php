@@ -40,6 +40,7 @@ class Admin extends CI_Controller
 		$this->load->model('Pegawai_model');
 		$this->load->model('Regional_model');
 		$this->load->model('STO_model');
+		$this->load->model('KelValidasi_model');
 		$this->load->model('Datel_model');
 		$this->load->model('Witel_model');
 		$this->load->model('SpecOLT_model');

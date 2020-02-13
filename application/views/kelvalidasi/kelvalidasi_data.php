@@ -66,7 +66,7 @@
           </tr>
         </thead>
         <tbody>
-          <?php $no = 1;
+          <!-- <?php $no = 1;
           foreach ($row->result() as $key => $data) { ?>
             <tr>
               <td><?= $data->idODP ?></td>
@@ -114,7 +114,7 @@
             </tr>
           <?php
           }
-          ?>
+          ?> -->
         </tbody>
         <tfoot>
           <tr>
