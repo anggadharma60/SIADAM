@@ -20,7 +20,8 @@ class STO_model extends CI_Model {
 
   // ------------------------------------------------------------------------
   public function getDataSTO($id = null){
-    $this->db->select('sto.idSTO, sto.kodeSTO, sto.namaSTO, sto.keterangan, sto.idDatel, datel.namaDatel');
+    $this->db->select('*');
+    // $this->db->select('sto.idSTO, sto.kodeSTO, sto.namaSTO, sto.keterangan, sto.idDatel, datel.namaDatel');
     $this->db->from('sto');
     $this->db->join('datel', 'sto.idDatel=datel.idDatel');
     if($id != null) {
@@ -34,6 +35,14 @@ class STO_model extends CI_Model {
     $this->db->select('idSTO');
     $this->db->from('sto');
     $this->db->where('kodeSTO=', $kode);
+    $query = $this->db->get();
+    return $query->row();
+  }
+
+  public function getIDSTOByName($kode){
+    $this->db->select('idSTO');
+    $this->db->from('sto');
+    $this->db->where('namaSTO=', $kode);
     $query = $this->db->get();
     return $query->row();
   }

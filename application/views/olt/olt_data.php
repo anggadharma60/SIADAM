@@ -71,11 +71,12 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>HOSTNAME</th>
+                        <th>ID OLT</th>
+                        <th>Hostname</th>
                         <th>IP GPON</th>
                         <th>ID Logical Device</th>
-                        <th>ID STO</th>
-                        <th>ID Specification OLT</th>
+                        <th>STO</th>
+                        <th>Specification OLT</th>
                         <th>Actions</th>
                     </tr>
                 </tfoot>
