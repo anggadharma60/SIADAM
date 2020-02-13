@@ -154,7 +154,7 @@
               <li><a href="#"><i class="fa fa-user fa-fw mr-3"></i> Validasi HD Daman</a></li>
             </ul>
           </li>
-          <li>
+          <li class="treeview">
             <a href="#">
               <i class="fa fa-microchip"></i>
               <span>Kelola Data ODP</span>
