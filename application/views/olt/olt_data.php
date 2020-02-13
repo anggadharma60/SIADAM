@@ -15,10 +15,10 @@
         <div class="box-header">
             <h3 class="box-title">Data OLT</h3>
             <div class="pull-right">
-                <a href="#" class="btn btn-danger btn-flat">
+                <a href="<?= site_url('Admin/exportOLT')?>" class="btn btn-danger btn-flat">
                     <i class="fa fa-upload  "></i> Export
                 </a>
-                <a href="#" class="btn btn-success btn-flat">
+                <a href="<?= site_url('Admin/uploadOLT')?>" class="btn btn-success btn-flat">
                     <i class="fa fa-download"></i> Import
                 </a>
                 <a href="<?= site_url('Admin/addOLT') ?>" class="btn btn-primary btn-flat">

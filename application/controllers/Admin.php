@@ -1004,6 +1004,11 @@ class Admin extends CI_Controller
 		$this->template->load('template/template_Admin', 'olt/olt_data', $data);
 	}
 
+	public function uploadOLT()
+	{
+		$this->template->load('template/template_Admin', 'olt/olt_form_import');
+	}
+
 	public function addOLT()
 	{
 		$data['sto'] = $this->STO_model->getDataSTO();
@@ -1211,8 +1216,8 @@ class Admin extends CI_Controller
 			if ($this->db->affected_rows() > 0) {
 					$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			$data['row'] = $this->ODP_model->getDataODP();
-			$this->template->load('template/template_Admin', 'odp/odp_data', $data);
+			$data['row'] = $this->OLT_model->getDataOLT();
+			$this->template->load('template/template_Admin', 'odp/olt_data', $data);
          }            
         
 	}
