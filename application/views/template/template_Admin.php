@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Data Tables -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/dist/css/AdminLTE.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -59,26 +61,16 @@
           <ul class="nav navbar-nav">
             <!-- Tasks: style can be found in dropdown.less -->
             <li class="dropdown tasks-menu">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-flag-o"></i>
-                <span class="label label-danger">3</span>
-              </a>
+              
               <ul class="dropdown-menu">
-                <li class="header">You have 3 tasks</li>
+                
                 <li>
                   <!-- inner menu: contains the actual data -->
                   <ul class="menu">
                     <li>
                       <!-- Task item -->
                       <a href="#">
-                        <h3>
-                          Design some buttons
-                          <small class="pull-right">20%</small>
-                        </h3>
                         <div class="progress xs">
-                          <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                            <span class="sr-only">20% Complete</span>
-                          </div>
                         </div>
                       </a>
                     </li>
@@ -139,11 +131,11 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li <?=$this->uri->segment(1) == 'dashboard/filtering' ? 'class="active"' : '' ?>><a href="<?= base_url() ?>dashboard/filtering"><i class="fa fa-filter fa-fw mr-3"></i> Filtering</a></li>
-              <li <?=$this->uri->segment(1) == 'dashboard/chart' ? 'class="active"' : '' ?>><a href="<?= base_url() ?>dashboard/chart"><i class="fa fa-pie-chart fa-fw mr-3"></i> Chart</a></li>
+              <li><a href="<?= site_url('Admin/filtering') ?>"><i class="fa fa-filter fa-fw mr-3"></i> Filtering</a></li>
+              <li><a href="<?= site_url('Admin/chart') ?>"><i class="fa fa-pie-chart fa-fw mr-3"></i> Chart</a></li>
             </ul>
           </li>
-          <li <?=$this->uri->segment(1) == '#' ? 'class="active"' : '' ?>>
+          <li>
             <a href="<?= site_url('Admin/getKelValidasi') ?>">
               <i class="fa fa-cog"></i> <span>Kelola Data Validasi</span>
               <span class="pull-right-container"></span>
@@ -162,7 +154,7 @@
               <li><a href="#"><i class="fa fa-user fa-fw mr-3"></i> Validasi HD Daman</a></li>
             </ul>
           </li>
-          <li class="treeview" <?=$this->uri->segment(1) == 'Admin/getODP' || $this->uri->segment(1) == '#' ? 'active' : '' ?>>
+          <li>
             <a href="#">
               <i class="fa fa-microchip"></i>
               <span>Kelola Data ODP</span>
@@ -171,7 +163,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li <?=$this->uri->segment(1) == 'Admin/getODP' ? 'class="active"' : '' ?>><a href="<?= site_url('Admin/getODP') ?>"><i class="fa fa-cube fa-fw mr-3"></i> Data ODP</a></li>
+              <li><a href="<?= site_url('Admin/getODP') ?>"><i class="fa fa-cube fa-fw mr-3"></i> Data ODP</a></li>
               <li><a href="#"><i class="fa fa-sitemap fa-fw mr-3"></i> Data Port ODP</a></li>
             </ul>
           </li>
@@ -290,6 +282,112 @@
       });
 
     });
+
+     //-------------
+    //- PIE CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+    var pieChart       = new Chart(pieChartCanvas)
+    var PieData        = [
+      {
+        value    : 700,
+        color    : '#f56954',
+        highlight: '#f56954',
+        label    : 'Chrome'
+      },
+      {
+        value    : 500,
+        color    : '#00a65a',
+        highlight: '#00a65a',
+        label    : 'IE'
+      },
+      {
+        value    : 400,
+        color    : '#f39c12',
+        highlight: '#f39c12',
+        label    : 'FireFox'
+      },
+      {
+        value    : 600,
+        color    : '#00c0ef',
+        highlight: '#00c0ef',
+        label    : 'Safari'
+      },
+      {
+        value    : 300,
+        color    : '#3c8dbc',
+        highlight: '#3c8dbc',
+        label    : 'Opera'
+      },
+      {
+        value    : 100,
+        color    : '#d2d6de',
+        highlight: '#d2d6de',
+        label    : 'Navigator'
+      }
+    ]
+    var pieOptions     = {
+      //Boolean - Whether we should show a stroke on each segment
+      segmentShowStroke    : true,
+      //String - The colour of each segment stroke
+      segmentStrokeColor   : '#fff',
+      //Number - The width of each segment stroke
+      segmentStrokeWidth   : 2,
+      //Number - The percentage of the chart that we cut out of the middle
+      percentageInnerCutout: 50, // This is 0 for Pie charts
+      //Number - Amount of animation steps
+      animationSteps       : 100,
+      //String - Animation easing effect
+      animationEasing      : 'easeOutBounce',
+      //Boolean - Whether we animate the rotation of the Doughnut
+      animateRotate        : true,
+      //Boolean - Whether we animate scaling the Doughnut from the centre
+      animateScale         : false,
+      //Boolean - whether to make the chart responsive to window resizing
+      responsive           : true,
+      // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+      maintainAspectRatio  : true,
+      //String - A legend template
+      legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    pieChart.Doughnut(PieData, pieOptions)
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script type="text/javascript">
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [
+          <?php
+            if (count($graph)>0) {
+              foreach ($graph as $data) {
+                echo "'" .$data->provinsi ."',";
+              }
+            }
+          ?>
+        ],
+        datasets: [{
+            label: 'Jumlah Penduduk',
+            backgroundColor: '#ADD8E6',
+            borderColor: '##93C3D2',
+            data: [
+              <?php
+                if (count($graph)>0) {
+                   foreach ($graph as $data) {
+                    echo $data->jumlah . ", ";
+                  }
+                }
+              ?>
+            ]
+        }]
+    },
+});
+ 
   </script>
 
 </body>

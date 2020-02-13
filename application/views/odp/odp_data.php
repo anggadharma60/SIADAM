@@ -34,7 +34,7 @@
             <th>ID ODP</th>
             <th>ID NOSS</th>
             <th>index ODP</th>
-            <th>Nama ODP</th>
+            <th style="width: 5%;">Nama ODP</th>
             <th>FTP</th>
             <th>Latitude</th>
             <th>Longitude</th>
@@ -61,11 +61,11 @@
               <td><?= $data->idODP ?></td>
               <td><?= $data->idNOSS ?></td>
               <td><?= $data->indexODP ?></td>
-              <td><?= $data->namaODP ?></td>
+              <td style="width: 5%;" ><?= $data->namaODP ?></td>
               <td><?= $data->ftp ?></td>
               <td><?= $data->latitude ?></td>
               <td><?= $data->longitude ?></td>
-              <td><?= $data->clusterName ?></td>
+              <td style="width: 30%" ;><?= $data->clusterName ?></td>
               <td><?= $data->clusterStatus ?></td>
               <td><?= $data->avai ?></td>
               <td><?= $data->used ?></td>

@@ -33,8 +33,11 @@
                
                    <form action="<?=site_url('Admin/importOLT')?>" method="post" id="excel-upl" enctype="multipart/form-data">
                       <p><label>Select Excel File</label>
+                      <br>
+                      <a href="#" class="float-right btn-flat btn-xs btn-info">Download Format Data</a></br>
+                      <p></p>
                       <input type="file" name="fileURL" id="validatedCustomFile" required accept=".csv, .xls, .xlsx"></p>
-                      <p>Unggah file dengan tipe *.xls / .csv</p>
+                      <p>Unggah file dengan tipe *.Xlsx / .Csv</p>
                       <button type="submit" name="import" class="float-right btn btn-primary">Import</button>
                     </form>
              </div>   

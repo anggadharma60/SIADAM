@@ -20,6 +20,11 @@
 
         <link rel="icon" type="image/x-icon" sizes="48x48" href="<?php echo base_url('assets/img/') . 'siadampng.png'?>">
         </head>
+        <style>
+              html {
+            scroll-behavior: smooth;
+        }
+        </style>
 
         <body data-spy="scroll" data-target="#navbarResponsive">
 

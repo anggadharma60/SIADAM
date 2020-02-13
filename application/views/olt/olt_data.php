@@ -44,10 +44,10 @@
                     <?php $no = 1;
                     foreach ($row->result() as $key => $data) { ?>
                         <tr>
-                            <td><?= $data->idOLT ?></td>
+                            <td style="width: 9%";><?= $data->idOLT ?></td>
                             <td style="width: 16%";><?= $data->hostname ?></td>
                             <td><?= $data->ipOLT ?></td>
-                            <td><?= $data->idLogicalDevice ?></td>
+                            <td style="width: 15%";><?= $data->idLogicalDevice ?></td>
                             <td><?= $data->namaSTO ?></td>
                             <td><?= $data->namaSpecOLT ?></td>
                             <td class="text-center" width="10%">
@@ -71,11 +71,12 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>HOSTNAME</th>
+                        <th>ID OLT</th>
+                        <th>Hostname</th>
                         <th>IP GPON</th>
                         <th>ID Logical Device</th>
-                        <th>ID STO</th>
-                        <th>ID Specification OLT</th>
+                        <th>STO</th>
+                        <th>Specification OLT</th>
                         <th>Actions</th>
                     </tr>
                 </tfoot>

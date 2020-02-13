@@ -55,6 +55,12 @@ class Admin extends CI_Controller
 		$this->template->load('template/template_Admin', 'dashboard_home');
 	}
 
+	public function chart()
+	{
+		$this->template->load('template/template_Admin', 'dashboard/chart');
+	}
+
+
 	// Start Menu Pegawai 
 	public function getPegawai()
 	{
@@ -1297,8 +1303,8 @@ class Admin extends CI_Controller
 	// Start Menu Kelola Validasi
 	public function getKelValidasi()
 	{
-		$data['row'] = $this->KelValidasi_model->getDataKelValidasi();
-		$this->template->load('template/template_Admin', 'kelvalidasi/kelvalidasi_data', $data);
+		// $data['row'] = $this->KelValidasi_model->getDataKelValidasi();
+		$this->template->load('template/template_Admin', 'kelvalidasi/kelvalidasi_data');
 	}
 
 	public function addKelValidasi()

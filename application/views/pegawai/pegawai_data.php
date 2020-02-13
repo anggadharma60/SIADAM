@@ -40,7 +40,7 @@
               <td style="width: 11%" ;><?= $data->idPegawai ?></td>
               <td><?= $data->namaPegawai ?></td>
               <td><?= $data->username ?></td>
-              <td style="width: 11%" ;><?= $data->status ?></td>
+              <td style="width: 15%" ;><?= $data->status ?></td>
               <td class="text-center" width="10%">
                 <form action="<?= site_url('Admin/deletePegawai') ?>" method="post">
                   <a href="<?= site_url('Admin/detailPegawai/' . $data->idPegawai) ?>" class="btn btn-default btn-xs">
