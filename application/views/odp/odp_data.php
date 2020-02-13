@@ -99,9 +99,10 @@
         </tbody>
         <tfoot>
           <tr>
+            <th>ID ODP</th>
             <th>ID NOSS</th>
             <th>index ODP</th>
-            <th>ID ODP</th>
+            <th>Nama ODP</th>
             <th>FTP</th>
             <th>Latitude</th>
             <th>Longitude</th>
@@ -112,10 +113,10 @@
             <th>RSV</th>
             <th>RSK</th>
             <th>Total</th>
-            <th>ID Regional</th>
-            <th>ID Witel</th>
-            <th>ID Datel</th>
-            <th>ID STO</th>
+            <th>Regional</th>
+            <th>Witel</th>
+            <th>Datel</th>
+            <th>STO</th>
             <th>Info ODP</th>
             <th>Update Date</th>
             <th>Actions</th>
