@@ -22,20 +22,48 @@
   <link rel="stylesheet" href="<?= base_url() ?>assets/dist/css/skins/skin-blue-light.css">
   <!-- icon -->
   <link rel="icon" type="image/png" sizes="48x48" href="<?php echo base_url('assets/img/') . 'siadampng.png' ?>">
+  <!-- css admin ltw -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@2.4.1/dist/css/AdminLTE.min.css">
+  <!-- cdn bootstraps -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
   <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
+  <style>
+    #load{
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      text-indent: 100%;
+      background: #e0e0e0 url('./assets/dist/img/loadingg.gif') no-repeat center;
+      z-index: 1;
+      opacity: 0.6;
+      background-size: 8%;
+    }
+    #loading{
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      text-indent: 100%;
+      background: #e0e0e0 url('./assets/dist/img/loadingg.gif') no-repeat center;
+      z-index: 1;
+      opacity: 0.6;
+      background-size: 8%;
+    }
+  </style>
 
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,200i,300,300i,400,400i,500,500i,600i,700i&display=swap" rel="stylesheet">
+  
 </head>
 
 <body class="hold-transition skin-blue-light sidebar-mini">
+  <div id="load">loading...</div>
   <!-- Site wrapper -->
-  <div class="wrapper">
+  <div class="wrapper" >
 
     <header class="main-header">
       <!-- Logo -->
@@ -227,8 +255,12 @@
       <strong>Copyright &copy; 2020 <a href="https://www.telkom.co.id/">Telkom Witel Semarang</a>.</strong> All rights
       reserved.
     </footer>
+    <div id="loading" class="overlay">
+      <i class="fa fa-spinnner fa-spin"></i>
+    </div>
 
   </div>
+
   <!-- ./wrapper -->
 
   <!-- jQuery 3 -->
@@ -248,6 +280,20 @@
       $('#table1').DataTable()
     })
   </script>
+  <script>
+    $(document).ready(function() {
+      $("#load").fadeOut(500); //jika document html sudah siap maka fungsi ini akan dijalankan
+
+      $("#loading").addClass('overlay');
+      $("#loading").html('<i class="fa fa-spinnner fa-spin"></i>');
+      setTimeout(RemoveClass, 100);
+    });
+
+    function RemoveClass() {
+      $("#loading").RemoveClass('overlay');
+      $("#loading").fadeOut();
+    }
+  </script>
 
   <script>
     $(document).ready(function() {
@@ -263,7 +309,7 @@
           }
         })
       }
-
+  
       $('#import_form').on('submit', function(event) {
         event.preventDefault();
         $.ajax({

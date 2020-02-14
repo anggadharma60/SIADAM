@@ -66,55 +66,7 @@
           </tr>
         </thead>
         <tbody>
-          <!-- <?php $no = 1;
-          foreach ($row->result() as $key => $data) { ?>
-            <tr>
-              <td><?= $data->idODP ?></td>
-              <td><?= $data->idNOSS ?></td>
-              <td><?= $data->indexODP ?></td>
-              <td><?= $data->namaODP ?></td>
-              <td><?= $data->ftp ?></td>
-              <td><?= $data->latitude ?></td>
-              <td><?= $data->longitude ?></td>
-              <td><?= $data->clusterName ?></td>
-              <td><?= $data->clusterStatus ?></td>
-              <td><?= $data->avai ?></td>
-              <td><?= $data->used ?></td>
-              <td><?= $data->rsv ?></td>
-              <td><?= $data->rsk ?></td>
-              <td><?= $data->total ?></td>
-              <td><?= $data->namaRegional ?></td>
-              <td><?= $data->namaWitel ?></td>
-              <td><?= $data->namaDatel ?></td>
-              <td><?= $data->namaSTO ?></td>
-              <td><?= $data->infoODP ?></td>
-              <td><?= $data->updateDate ?></td>
-              <td><?= $data->rsk ?></td>
-              <td><?= $data->total ?></td>
-              <td><?= $data->namaRegional ?></td>
-              <td><?= $data->namaWitel ?></td>
-              <td><?= $data->namaDatel ?></td>
-              <td><?= $data->namaSTO ?></td>
-              <td><?= $data->infoODP ?></td>
-              <td><?= $data->updateDate ?></td>
-              <td class="text-center" width="10%">
-                <form action="<?= site_url('Admin/deleteODP') ?>" method="post">
-                  <a href="<?= site_url('Admin/detailODP/' . $data->idODP) ?>" class="btn btn-default btn-xs">
-                    <i class="fa fa-eye"></i>
-                  </a>
-                  <a href="<?= site_url('Admin/editODP/' . $data->idODP) ?>" class="btn btn-primary btn-xs">
-                    <i class="fa fa-pencil"></i>
-                  </a>
-                  <input type="hidden" name="idODP" value="<?= $data->idODP ?>">
-                  <button onclick="return confirm('Apakah Anda Yakin?')" class="btn btn-danger btn-xs">
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </form>
-              </td>
-            </tr>
-          <?php
-          }
-          ?> -->
+        
         </tbody>
         <tfoot>
           <tr>

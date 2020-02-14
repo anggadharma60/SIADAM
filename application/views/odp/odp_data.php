@@ -78,7 +78,7 @@
               <td><?= $data->namaSTO ?></td>
               <td><?= $data->infoODP ?></td>
               <td><?= $data->updateDate ?></td>
-              <td class="text-center" width="10%">
+              <td class="text-center" width="13%">
                 <form action="<?= site_url('Admin/deleteODP') ?>" method="post">
                   <a href="<?= site_url('Admin/detailODP/' . $data->idODP) ?>" class="btn btn-default btn-xs">
                     <i class="fa fa-eye"></i>
@@ -125,4 +125,7 @@
       </table>
     </div>
   </div>
+  <div id="loading" class="overlay">
+      <i class="fa fa-spinnner fa-spin"></i>
+    </div>
 </section>
