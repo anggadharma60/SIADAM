@@ -99,6 +99,10 @@ class ODP_model extends CI_Model
     $this->db->delete('rekap_data_odp');
   }
 
+  public function deleteAllDataODP($table)
+  {
+    $this->db->empty_table($table);
+  }
 
   //   //IMPORT
   //   // Fungsi untuk melakukan proses upload file

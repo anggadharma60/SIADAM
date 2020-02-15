@@ -97,7 +97,7 @@ class Admin extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 			$this->Pegawai_model->addDataPegawai($post);
 			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
+				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			}
 			redirect('Admin/getPegawai');
 		}
@@ -213,7 +213,7 @@ class Admin extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 			$this->Regional_model->addDataRegional($post);
 			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
+				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			}
 			redirect('Admin/getRegional');
 		}
@@ -306,7 +306,7 @@ class Admin extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 			$this->Witel_model->addDataWitel($post);
 			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
+				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			}
 			redirect('Admin/getWitel');
 		}
@@ -401,7 +401,7 @@ class Admin extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 			$this->Datel_model->addDataDatel($post);
 			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
+				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			}
 			redirect('Admin/getDatel');
 		}
@@ -592,7 +592,7 @@ class Admin extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 			$this->SpecOLT_model->addDataSpecOLT($post);
 			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
+				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			}
 			redirect('Admin/getSpecOLT');
 		}
@@ -761,7 +761,7 @@ class Admin extends CI_Controller
                     echo "<br>Please import correct file, did not match excel sheet column";
 			}
 			if ($this->db->affected_rows() > 0) {
-					$this->session->set_flashdata('danger', 'Data berhasil disimpan');
+					$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			}
 			$data['row'] = $this->ODP_model->getDataODP();
 			$this->template->load('template/template_Admin', 'odp/odp_data', $data);
@@ -829,7 +829,7 @@ class Admin extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 			$this->ODP_model->addDataODP($post);
 			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
+				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			}
 			redirect('Admin/getODP');
 		}
@@ -925,6 +925,16 @@ class Admin extends CI_Controller
 
 		if ($this->db->affected_rows() > 0) {
 			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
+		}
+		redirect('Admin/getODP');
+	}
+
+	public function deleteAllODP()
+	{
+		$this->ODP_model->deleteAllDataODP('rekap_data_odp');
+
+		if ($this->db->affected_rows() > 0) {
+			$this->session->set_flashdata('danger', 'Semua data berhasil dihapus');
 		}
 		redirect('Admin/getODP');
 	}
@@ -1040,7 +1050,7 @@ class Admin extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 			$this->OLT_model->addDataOLT($post);
 			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
+				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			}
 			redirect('Admin/getOLT');
 		}
@@ -1202,7 +1212,7 @@ class Admin extends CI_Controller
                     echo "<br>Please import correct file, did not match excel sheet column";
 			}
 			if ($this->db->affected_rows() > 0) {
-					$this->session->set_flashdata('danger', 'Data berhasil disimpan');
+					$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			}
 			$data['row'] = $this->OLT_model->getDataOLT();
 			$this->template->load('template/template_Admin', 'olt/olt_data', $data);
@@ -1264,16 +1274,51 @@ class Admin extends CI_Controller
 	// Start Menu Kelola Validasi
 	public function getKelValidasi()
 	{
-		// $data['row'] = $this->KelValidasi_model->getDataKelValidasi();
+		$data['row'] = $this->KelValidasi_model->getDataKelValidasi();
 		$this->template->load('template/template_Admin', 'kelvalidasi/kelvalidasi_data');
+	}
+
+	public function uploadKelValidasi()
+	{
+		$this->template->load('template/template_Admin', 'kelvalidasi/kelvalidasi_form_import');
 	}
 
 	public function addKelValidasi()
 	{
-		$this->form_validation->set_rules('namaKelValidasi', 'Nama Specification OLT', 'required|max_length[50]|is_unique[specification_olt.namaKelValidasi]|trim');
-		$this->form_validation->set_rules('merekOLT', 'Merek OLT', 'max_length[20]|trim');
-		$this->form_validation->set_rules('typeOLT', 'Type OLT', 'max_length[20]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
+		$data['row'] = $this->KelValidasi_model->getDataKelValidasi();
+		$this->form_validation->set_rules('tanggalpelurusan', 'TANGGAL PELURUSAN', 'required|max_length[16]|trim');
+		$this->form_validation->set_rules('ondeks', 'ONDESK', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('onsite', 'ONSITE', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('namaODP', 'NAMA ODP', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('note', 'NOTE', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('QRcode', 'QR ODP', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('KoordinatODP', 'KOORDINAT ODP', 'max_length[50]required|trim');
+		$this->form_validation->set_rules('namaOLT', 'NAMA OLT (IP OLT)', 'max_length[15]|trim');
+		$this->form_validation->set_rules('portOLT', 'PORT OLT', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('totalinODP', 'TOTAL IN ODP', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('kapasitasODP', 'KAPASITAS ODP', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('PortOutSplitter', 'PORT OUT SPLITTER', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('QRoutSplitter', 'QR OUT SPLITTER', 'required|trim');
+		$this->form_validation->set_rules('port', 'PORT', 'trim');
+		$this->form_validation->set_rules('QRcode', 'QR ODP', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('status', 'STATUS', 'max_length[50]required|trim');
+		$this->form_validation->set_rules('onu', 'ONU', 'max_length[15]|trim');
+		$this->form_validation->set_rules('sn', 'SN', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('service', 'SERVICE', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('QRdropcore', 'QR DROPCORE', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('NoteUrutDropcore', 'NOTE URUT DROPCORE', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('flagOLTport', 'FLAG OLT & PORT', 'required|trim');
+		$this->form_validation->set_rules('connectivityODPOLT', 'CONNECTIVITY ODP TO OLT', 'trim');
+		$this->form_validation->set_rules('ODPONT', 'ODP - ONT', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('rfs', 'RFS', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('note', 'NOTE', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('tglUpdateUIM', 'TANGGAL UPDATE UIM', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('updaterUIM', 'UPDATER UIM', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('QRodp', 'QR ODP', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('QRoutSplitter', 'QR OUT SPLITTER', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('QRdropcore', 'QR DROPCORE', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('updaterDava', 'UPDATER DAVA', 'required|max_length[20]|trim');
+		
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
@@ -1283,12 +1328,12 @@ class Admin extends CI_Controller
 		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
 		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_Admin', 'specolt/specolt_form_add');
+			$this->template->load('template/template_Admin', 'kelvalidasi/KelValidasi_form_add');
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->KelValidasi_model->addDataKelValidasi($post);
 			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
+				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			}
 			redirect('Admin/getKelValidasi');
 		}
@@ -1296,10 +1341,38 @@ class Admin extends CI_Controller
 
 	public function editKelValidasi($id)
 	{
-		$this->form_validation->set_rules('namaKelValidasi', 'Nama Specification OLT', 'required|max_length[50]|callback_spek_check|trim');
-		$this->form_validation->set_rules('merekOLT', 'Merek OLT', 'max_length[20]|trim');
-		$this->form_validation->set_rules('typeOLT', 'Type OLT', 'max_length[20]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
+		$this->form_validation->set_rules('tanggalpelurusan', 'TANGGAL PELURUSAN', 'required|max_length[16]|trim');
+		$this->form_validation->set_rules('ondeks', 'ONDESK', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('onsite', 'ONSITE', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('namaODP', 'NAMA ODP', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('note', 'NOTE', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('QRcode', 'QR ODP', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('KoordinatODP', 'KOORDINAT ODP', 'max_length[50]required|trim');
+		$this->form_validation->set_rules('namaOLT', 'NAMA OLT (IP OLT)', 'max_length[15]|trim');
+		$this->form_validation->set_rules('portOLT', 'PORT OLT', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('totalinODP', 'TOTAL IN ODP', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('kapasitasODP', 'KAPASITAS ODP', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('PortOutSplitter', 'PORT OUT SPLITTER', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('QRoutSplitter', 'QR OUT SPLITTER', 'required|trim');
+		$this->form_validation->set_rules('port', 'PORT', 'trim');
+		$this->form_validation->set_rules('QRcode', 'QR ODP', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('status', 'STATUS', 'max_length[50]required|trim');
+		$this->form_validation->set_rules('onu', 'ONU', 'max_length[15]|trim');
+		$this->form_validation->set_rules('sn', 'SN', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('service', 'SERVICE', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('QRdropcore', 'QR DROPCORE', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('NoteUrutDropcore', 'NOTE URUT DROPCORE', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('flagOLTport', 'FLAG OLT & PORT', 'required|trim');
+		$this->form_validation->set_rules('connectivityODPOLT', 'CONNECTIVITY ODP TO OLT', 'trim');
+		$this->form_validation->set_rules('ODPONT', 'ODP - ONT', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('rfs', 'RFS', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('note', 'NOTE', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('tglUpdateUIM', 'TANGGAL UPDATE UIM', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('updaterUIM', 'UPDATER UIM', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('QRodp', 'QR ODP', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('QRoutSplitter', 'QR OUT SPLITTER', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('QRdropcore', 'QR DROPCORE', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('updaterDava', 'UPDATER DAVA', 'required|max_length[20]|trim');
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
@@ -1327,17 +1400,6 @@ class Admin extends CI_Controller
 		}
 	}
 
-	// function spek_check()
-	// {
-	// 	$post = $this->input->post(null, TRUE);
-	// 	$query = $this->db->query("SELECT * FROM specification_olt WHERE namaKelValidasi = '$post[namaKelValidasi]' AND idKelValidasi != '$post[idKelValidasi]'");
-	// 	if ($query->num_rows() > 0) {
-	// 		$this->form_validation->set_message('spek_check', '{field} ini sudah dipakai, silahkan ganti');
-	// 		return FALSE;
-	// 	} else {
-	// 		return TRUE;
-	// 	}
-	// }
 
 	public function deleteKelValidasi()
 	{

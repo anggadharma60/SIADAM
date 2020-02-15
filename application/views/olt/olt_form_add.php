@@ -65,7 +65,7 @@
                     </div>
                     <div class="form-group">
                         <button name="submit" type="submit" class="btn btn-success btn-flat">
-                            <i class="fa fa-paper-plane"></i> Simpan
+                            <i class=""></i> Tambah
                         </button>
                         <button type="reset" class="btn btn-flat">Reset</button>
                     </div>

@@ -15,7 +15,12 @@
     <div class="box-header">
       <h3 class="box-title">Data ODP</h3>
       <div class="pull-right">
-        <a href="<?= site_url('Admin/exportODP')?>" class="btn btn-danger btn-flat">
+        <a href="<?= site_url('Admin/deleteAllODP')?>">
+        <button onclick="return confirm('Apakah Anda Yakin ingin menghapus semua Data?')" class="btn btn-danger btn-flat">
+          <i class="fa fa-trash"></i> Delete All
+          </button>
+        </a>
+        <a href="<?= site_url('Admin/exportODP')?>" class="btn btn-info btn-flat">
           <i class="fa fa-upload"></i> Export
         </a>
         <a href="<?= site_url('Admin/uploadODP') ?>" class="btn btn-success btn-flat">

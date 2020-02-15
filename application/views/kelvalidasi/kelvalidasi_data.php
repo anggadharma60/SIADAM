@@ -15,13 +15,13 @@
     <div class="box-header">
       <h3 class="box-title">Data Validasi</h3>
       <div class="pull-right">
-        <a href="#" class="btn btn-danger btn-flat">
+        <a href="<?= site_url('Admin/exportKelValidasi')?>" class="btn btn-danger btn-flat">
           <i class="fa fa-upload  "></i> Export
         </a>
-        <a href="#" class="btn btn-success btn-flat">
+        <a href="<?= site_url('Admin/uploadKelValidasi')?>" class="btn btn-success btn-flat">
           <i class="fa fa-download"></i> Import
         </a>
-        <a href="#" class="btn btn-primary btn-flat">
+        <a href="<?= site_url('Admin/addKelValidasi')?>" class="btn btn-primary btn-flat">
           <i class="fa fa-user-plus"></i> Create
         </a>
       </div>
