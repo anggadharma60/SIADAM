@@ -12,7 +12,7 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Data Tables -->
-  <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <!-- <link rel="stylesheet" type="text/css" href="<?php echo base_url('datatables/lib/css/dataTables.bootstrap.min.css') ?>"/> -->
   <!-- Ionicons -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
@@ -30,8 +30,10 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-
   <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
+  
+  
+  
   <style>
     #load{
       width: 100%;
@@ -191,7 +193,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="<?= site_url('Admin/getODP') ?>"><i class="fa fa-cube fa-fw mr-3"></i> Data ODP</a></li>
+              <li><a href="<?= site_url('Admin/viewListODP') ?>"><i class="fa fa-cube fa-fw mr-3"></i> Data ODP</a></li>
               <li><a href="#"><i class="fa fa-sitemap fa-fw mr-3"></i> Data Port ODP</a></li>
             </ul>
           </li>
@@ -272,21 +274,130 @@
   <!-- AdminLTE App -->
   <script src="<?= base_url() ?>assets/dist/js/adminlte.min.js"></script>
 
-  <script src="<?= base_url() ?>assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-  <script src="<?= base_url() ?>assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+  
+		<script type="text/javascript" src="<?php echo base_url('datatables/datatables.min.js') ?>"></script>
+		<script type="text/javascript" src="<?php echo base_url('datatables/lib/js/dataTables.bootstrap.min.js') ?>"></script>
+		
+  <script>
+		var tabel = null;
 
+		$(document).ready(function() {
+		    tabel = $('#tableODP').DataTable({
+		        "processing": true,
+		        "serverSide": true,
+		        "ordering": true, // Set true agar bisa di sorting
+		        "order": [[ 0, 'asc' ]], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
+            responsive: true,
+            'paging'      : true,
+            'lengthChange': true,
+            'searching'   : true,
+            'ordering'    : true,
+            'info'        : true,
+            'autoWidth'   : true,
+            "processing": true,
+            "serverSide": true,
+            "sScrollY": "35em",//scroll tambahan y
+            "sScrollX": "100%",//scroll tambahan x
+            "bScrollCollapse": true,
+		        "ajax":
+		        {
+		            "url": "<?=base_url()?>index.php/Admin/loadDataODP", // URL file untuk proses select datanya
+		            "type": "POST"
+		        },
+		        "deferRender": true,
+		        "aLengthMenu": [[10, 25, 50, 75, 100],[10, 25, 50, 75, 100]], // Combobox Limit
+		        "columns": [
+					{ "data" : 'idODP' },
+					{ "data": 'idNOSS' },
+					{ "data": 'indexODP' },
+					{ "data": 'namaODP' },
+					{ "data": 'ftp' },
+					{ "data": 'latitude' },
+					{ "data": 'longitude' },
+					{ "data": 'clusterName' },
+					{ "data": 'clusterStatus' },
+					{ "data": 'avai' },
+					{ "data": 'used' },
+					{ "data": 'rsv' },
+					{ "data": 'rsk' },
+					{ "data": 'total' },
+					{ "data": 'namaRegional' },
+					{ "data": 'namaWitel' },
+					{ "data": 'namaDatel' },
+					{ "data": 'namaSTO' },
+					{ "data": 'infoODP' },
+					{ "data": 'updateDate' },
+		            { "render": function ( data, type, row ) { // Tampilkan kolom aksi
+		                    var html  = "<button href=''>EDIT</button> | "
+							html += "<button href=''>DELETE</button>|"
+							html += "<button href=''>DETAIL</button>"
+
+		                    return html
+		                }
+		            },
+		        ],
+		    });
+        $(window).bind('resize', function () {
+          table.draw();
+          });
+		});
+		</script>
   <script>
     $(document).ready(function() {
-      $('#table1').DataTable()
-    })
+     
+        $('#table2').DataTable({
+          responsive: true,
+        'paging'      : true,
+        'lengthChange': true,
+        'searching'   : true,
+        'ordering'    : true,
+        'info'        : true,
+        'autoWidth'   : true,
+        "processing": true,
+        "serverSide": true,
+        "sScrollY": "35em",
+        "sScrollX": "100%",
+        "bScrollCollapse": true, 
+        
+        "ajax": {
+          "url":"<?=base_url()?>index.php/Admin/loadDataODP",
+        "type": "POST"
+        },
+        "columns": [
+          { "data" : 'idODP' },
+          { "data": 'idNOSS' },
+          { "data": 'indexODP' },
+          { "data": 'namaODP' },
+          { "data": 'ftp' },
+          { "data": 'latitude' },
+          { "data": 'longitude' },
+          { "data": 'clusterName' },
+          { "data": 'clusterStatus' },
+          { "data": 'avai' },
+          { "data": 'used' },
+          { "data": 'rsv' },
+          { "data": 'rsk' },
+          { "data": 'total' },
+          // { "data": 'namaRegional' },
+          // { "data": 'namaWitel' },
+          // { "data": 'namaDatel' },
+          // { "data": 'namaSTO' },
+          { "data": 'infoODP' },
+          { "data": 'updateDate' }
+        ]
+      });
+      $(window).bind('resize', function () {
+      table.draw();
+      });
+    });
   </script>
   <script>
     $(document).ready(function() {
-      $("#load").fadeOut(500); //jika document html sudah siap maka fungsi ini akan dijalankan
+      $("#load").fadeOut(5); //jika document html sudah siap maka fungsi ini akan dijalankan 500
 
       $("#loading").addClass('overlay');
       $("#loading").html('<i class="fa fa-spinnner fa-spin"></i>');
-      setTimeout(RemoveClass, 100);
+      setTimeout(RemoveClass, 1); // 100
     });
 
     function RemoveClass() {
