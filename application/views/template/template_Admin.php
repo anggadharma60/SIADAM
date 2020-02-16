@@ -12,8 +12,8 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/font-awesome/css/font-awesome.min.css">
   
-   <!-- Data Tables -->
-   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- Data Tables -->
+    <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- daterange picker -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.css">
    <!-- Data Tables -->
@@ -278,10 +278,9 @@
   <script src="<?= base_url() ?>assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
   <!-- AdminLTE App -->
   <script src="<?= base_url() ?>assets/dist/js/adminlte.min.js"></script>
-
-  
-		<script type="text/javascript" src="<?php echo base_url('datatables/datatables.min.js') ?>"></script>
-		<script type="text/javascript" src="<?php echo base_url('datatables/lib/js/dataTables.bootstrap.min.js') ?>"></script>
+  <script src="<?= base_url() ?>assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="<?= base_url() ?>assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+	
 		
   <script>
 		var tabel = null;
@@ -347,53 +346,11 @@
 		});
 		</script>
   <script>
-    $(document).ready(function() {
-     
-        $('#table2').DataTable({
-          responsive: true,
-        'paging'      : true,
-        'lengthChange': true,
-        'searching'   : true,
-        'ordering'    : true,
-        'info'        : true,
-        'autoWidth'   : true,
-        "processing": true,
-        "serverSide": true,
-        "sScrollY": "35em",
-        "sScrollX": "100%",
-        "bScrollCollapse": true, 
-        
-        "ajax": {
-          "url":"<?=base_url()?>index.php/Admin/loadDataODP",
-        "type": "POST"
-        },
-        "columns": [
-          { "data" : 'idODP' },
-          { "data": 'idNOSS' },
-          { "data": 'indexODP' },
-          { "data": 'namaODP' },
-          { "data": 'ftp' },
-          { "data": 'latitude' },
-          { "data": 'longitude' },
-          { "data": 'clusterName' },
-          { "data": 'clusterStatus' },
-          { "data": 'avai' },
-          { "data": 'used' },
-          { "data": 'rsv' },
-          { "data": 'rsk' },
-          { "data": 'total' },
-          // { "data": 'namaRegional' },
-          // { "data": 'namaWitel' },
-          // { "data": 'namaDatel' },
-          // { "data": 'namaSTO' },
-          { "data": 'infoODP' },
-          { "data": 'updateDate' }
-        ]
-      });
-      $(window).bind('resize', function () {
-      table.draw();
-      });
-    });
+        $(document).ready(function() {
+      $('#table1').DataTable()
+    })
+
+
   </script>
   <script>
     $(document).ready(function() {
