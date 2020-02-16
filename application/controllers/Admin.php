@@ -60,6 +60,11 @@ class Admin extends CI_Controller
 		$this->template->load('template/template_Admin', 'dashboard/chart');
 	}
 
+	public function filtering()
+	{
+		$this->template->load('template/template_Admin', 'dashboard/filtering');
+	}
+
 
 	// Start Menu Pegawai 
 	public function getPegawai()
