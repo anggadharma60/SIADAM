@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Data Tables -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
@@ -33,7 +35,7 @@
 
   <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
   <style>
-    #load{
+    #load {
       width: 100%;
       height: 100%;
       position: fixed;
@@ -43,7 +45,8 @@
       opacity: 0.6;
       background-size: 8%;
     }
-    #loading{
+
+    #loading {
       width: 100%;
       height: 100%;
       position: fixed;
@@ -57,13 +60,13 @@
 
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,200i,300,300i,400,400i,500,500i,600i,700i&display=swap" rel="stylesheet">
-  
+
 </head>
 
 <body class="hold-transition skin-blue-light sidebar-mini">
   <div id="load">loading...</div>
   <!-- Site wrapper -->
-  <div class="wrapper" >
+  <div class="wrapper">
 
     <header class="main-header">
       <!-- Logo -->
@@ -89,9 +92,9 @@
           <ul class="nav navbar-nav">
             <!-- Tasks: style can be found in dropdown.less -->
             <li class="dropdown tasks-menu">
-              
+
               <ul class="dropdown-menu">
-                
+
                 <li>
                   <!-- inner menu: contains the actual data -->
                   <ul class="menu">
@@ -226,7 +229,7 @@
           </li>
           <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
             <li class="header">SETTNGS</li>
-            <li <?=$this->uri->segment(1) == 'Admin/getPegawai' ? 'class="active"' : '' ?>>
+            <li <?= $this->uri->segment(1) == 'Admin/getPegawai' ? 'class="active"' : '' ?>>
               <a href="<?= site_url('Admin/getPegawai') ?>">
                 <i class="fa fa-user-plus"></i> <span>Kelola Data Pegawai</span>
                 <span class="pull-right-container"></span>
@@ -271,9 +274,43 @@
   <script src="<?= base_url() ?>assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
   <!-- AdminLTE App -->
   <script src="<?= base_url() ?>assets/dist/js/adminlte.min.js"></script>
+  <!-- date-range-picker -->
+  <script src="<?= base_url() ?>assets//bower_components/moment/min/moment.min.js"></script>
+  <script src="<?= base_url() ?>assets//bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 
   <script src="<?= base_url() ?>assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
   <script src="<?= base_url() ?>assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+  <script>
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({
+      timePicker: true,
+      timePickerIncrement: 30,
+      format: 'MM/DD/YYYY h:mm A'
+    })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker({
+        ranges: {
+          'Today': [moment(), moment()],
+          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month': [moment().startOf('month'), moment().endOf('month')],
+          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate: moment()
+      },
+      function(start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
+  </script>
 
   <script>
     $(document).ready(function() {
@@ -309,7 +346,7 @@
           }
         })
       }
-  
+
       $('#import_form').on('submit', function(event) {
         event.preventDefault();
         $.ajax({
@@ -329,111 +366,108 @@
 
     });
 
-     //-------------
+    //-------------
     //- PIE CHART -
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
     var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-    var pieChart       = new Chart(pieChartCanvas)
-    var PieData        = [
-      {
-        value    : 700,
-        color    : '#f56954',
+    var pieChart = new Chart(pieChartCanvas)
+    var PieData = [{
+        value: 700,
+        color: '#f56954',
         highlight: '#f56954',
-        label    : 'Chrome'
+        label: 'Chrome'
       },
       {
-        value    : 500,
-        color    : '#00a65a',
+        value: 500,
+        color: '#00a65a',
         highlight: '#00a65a',
-        label    : 'IE'
+        label: 'IE'
       },
       {
-        value    : 400,
-        color    : '#f39c12',
+        value: 400,
+        color: '#f39c12',
         highlight: '#f39c12',
-        label    : 'FireFox'
+        label: 'FireFox'
       },
       {
-        value    : 600,
-        color    : '#00c0ef',
+        value: 600,
+        color: '#00c0ef',
         highlight: '#00c0ef',
-        label    : 'Safari'
+        label: 'Safari'
       },
       {
-        value    : 300,
-        color    : '#3c8dbc',
+        value: 300,
+        color: '#3c8dbc',
         highlight: '#3c8dbc',
-        label    : 'Opera'
+        label: 'Opera'
       },
       {
-        value    : 100,
-        color    : '#d2d6de',
+        value: 100,
+        color: '#d2d6de',
         highlight: '#d2d6de',
-        label    : 'Navigator'
+        label: 'Navigator'
       }
     ]
-    var pieOptions     = {
+    var pieOptions = {
       //Boolean - Whether we should show a stroke on each segment
-      segmentShowStroke    : true,
+      segmentShowStroke: true,
       //String - The colour of each segment stroke
-      segmentStrokeColor   : '#fff',
+      segmentStrokeColor: '#fff',
       //Number - The width of each segment stroke
-      segmentStrokeWidth   : 2,
+      segmentStrokeWidth: 2,
       //Number - The percentage of the chart that we cut out of the middle
       percentageInnerCutout: 50, // This is 0 for Pie charts
       //Number - Amount of animation steps
-      animationSteps       : 100,
+      animationSteps: 100,
       //String - Animation easing effect
-      animationEasing      : 'easeOutBounce',
+      animationEasing: 'easeOutBounce',
       //Boolean - Whether we animate the rotation of the Doughnut
-      animateRotate        : true,
+      animateRotate: true,
       //Boolean - Whether we animate scaling the Doughnut from the centre
-      animateScale         : false,
+      animateScale: false,
       //Boolean - whether to make the chart responsive to window resizing
-      responsive           : true,
+      responsive: true,
       // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-      maintainAspectRatio  : true,
+      maintainAspectRatio: true,
       //String - A legend template
-      legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+      legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
     }
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
     pieChart.Doughnut(PieData, pieOptions)
-
   </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script type="text/javascript">
     var ctx = document.getElementById('myChart').getContext('2d');
     var chart = new Chart(ctx, {
-    type: 'bar',
-    data: {
+      type: 'bar',
+      data: {
         labels: [
           <?php
-            if (count($graph)>0) {
-              foreach ($graph as $data) {
-                echo "'" .$data->provinsi ."',";
-              }
+          if (count($graph) > 0) {
+            foreach ($graph as $data) {
+              echo "'" . $data->provinsi . "',";
             }
+          }
           ?>
         ],
         datasets: [{
-            label: 'Jumlah Penduduk',
-            backgroundColor: '#ADD8E6',
-            borderColor: '##93C3D2',
-            data: [
-              <?php
-                if (count($graph)>0) {
-                   foreach ($graph as $data) {
-                    echo $data->jumlah . ", ";
-                  }
-                }
-              ?>
-            ]
+          label: 'Jumlah Penduduk',
+          backgroundColor: '#ADD8E6',
+          borderColor: '##93C3D2',
+          data: [
+            <?php
+            if (count($graph) > 0) {
+              foreach ($graph as $data) {
+                echo $data->jumlah . ", ";
+              }
+            }
+            ?>
+          ]
         }]
-    },
-});
- 
+      },
+    });
   </script>
 
 </body>
