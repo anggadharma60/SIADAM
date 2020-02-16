@@ -12,7 +12,9 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Data Tables -->
-  <!-- <link rel="stylesheet" type="text/css" href="<?php echo base_url('datatables/lib/css/dataTables.bootstrap.min.css') ?>"/> -->
+  
+  
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url('datatables/lib/css/dataTables.bootstrap.min.css') ?>"/>
   <!-- Ionicons -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
@@ -287,7 +289,6 @@
 		        "serverSide": true,
 		        "ordering": true, // Set true agar bisa di sorting
 		        "order": [[ 0, 'asc' ]], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
-            responsive: true,
             'paging'      : true,
             'lengthChange': true,
             'searching'   : true,
@@ -296,7 +297,7 @@
             'autoWidth'   : true,
             "processing": true,
             "serverSide": true,
-            "sScrollY": "35em",//scroll tambahan y
+            // "sScrollY": "35em",//scroll tambahan y
             "sScrollX": "100%",//scroll tambahan x
             "bScrollCollapse": true,
 		        "ajax":
@@ -337,9 +338,9 @@
 		            },
 		        ],
 		    });
-        $(window).bind('resize', function () {
-          table.draw();
-          });
+        // $(window).bind('resize', function () {
+        //   table.draw();
+        // });
 		});
 		</script>
   <script>
