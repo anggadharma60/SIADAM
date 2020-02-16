@@ -33,76 +33,36 @@
     </div>
     <div class="box-body table-responsive">
       <!-- id="table1" buat searching pagination dan row -->
-      <table class="table table-bordered table-striped" border="1" cellpadding="8" id="table1">
-        <thead>
-          <tr>
-            <th>ID ODP</th>
-            <th>ID NOSS</th>
-            <th>index ODP</th>
-            <th style="width: 5%;">Nama ODP</th>
-            <th>FTP</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <th>Cluster Name</th>
-            <th>Cluster Status</th>
-            <th>Available</th>
-            <th>Used</th>
-            <th>RSV</th>
-            <th>RSK</th>
-            <th>Total</th>
-            <th>Regional</th>
-            <th>Witel</th>
-            <th>Datel</th>
-            <th>STO</th>
-            <th>Info ODP</th>
-            <th>Update Date</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php $no = 1;
-          foreach ($row->result() as $key => $data) { ?>
-            <tr>
-              <td><?= $data->idODP ?></td>
-              <td><?= $data->idNOSS ?></td>
-              <td><?= $data->indexODP ?></td>
-              <td style="width: 5%;" ><?= $data->namaODP ?></td>
-              <td><?= $data->ftp ?></td>
-              <td><?= $data->latitude ?></td>
-              <td><?= $data->longitude ?></td>
-              <td style="width: 30%" ;><?= $data->clusterName ?></td>
-              <td><?= $data->clusterStatus ?></td>
-              <td><?= $data->avai ?></td>
-              <td><?= $data->used ?></td>
-              <td><?= $data->rsv ?></td>
-              <td><?= $data->rsk ?></td>
-              <td><?= $data->total ?></td>
-              <td><?= $data->namaRegional ?></td>
-              <td><?= $data->namaWitel ?></td>
-              <td><?= $data->namaDatel ?></td>
-              <td><?= $data->namaSTO ?></td>
-              <td><?= $data->infoODP ?></td>
-              <td><?= $data->updateDate ?></td>
-              <td class="text-center" width="13%">
-                <form action="<?= site_url('Admin/deleteODP') ?>" method="post">
-                  <a href="<?= site_url('Admin/detailODP/' . $data->idODP) ?>" class="btn btn-default btn-xs">
-                    <i class="fa fa-eye"></i>
-                  </a>
-                  <a href="<?= site_url('Admin/editODP/' . $data->idODP) ?>" class="btn btn-primary btn-xs">
-                    <i class="fa fa-pencil"></i>
-                  </a>
-                  <input type="hidden" name="idODP" value="<?= $data->idODP ?>">
-                  <button onclick="return confirm('Apakah Anda Yakin?')" class="btn btn-danger btn-xs">
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </form>
-              </td>
-            </tr>
-          <?php
-          }
-          ?>
-        </tbody>
-        <tfoot>
+      <table class="table table-bordered table-striped dt-responsive nowrap" style="width:100%" border="1" cellpadding="8" id="tableODP">
+      <thead>
+						<tr>
+						<th>ID ODP</th>
+						<th>ID NOSS</th>
+						<th>index ODP</th>
+						<th>Nama ODP</th>
+						<th>FTP</th>
+						<th>Latitude</th>
+						<th>Longitude</th>
+						<th>Cluster Name</th>
+						<th>Cluster Status</th>
+						<th>Available</th>
+						<th>Used</th>
+						<th>RSV</th>
+						<th>RSK</th>
+						<th>Total</th>
+						<th>Regional</th>
+						<th>Witel</th>
+						<th>Datel</th>
+						<th>STO</th>
+						<th>Info ODP</th>
+						<th>Update Date</th>
+						<th>Actions</th>
+						</tr>
+					</thead>
+        <!-- <tbody>
+         
+        </tbody> -->
+        <!-- <tfoot>
           <tr>
             <th>ID ODP</th>
             <th>ID NOSS</th>
@@ -126,7 +86,7 @@
             <th>Update Date</th>
             <th>Actions</th>
           </tr>
-        </tfoot>
+        </tfoot> -->
       </table>
     </div>
   </div>
