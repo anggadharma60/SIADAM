@@ -144,7 +144,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <p>Amija</p>
-                    
+
                         <label>
                             <input type="checkbox" class="minimal-red">
                         </label>
@@ -160,8 +160,47 @@
                         </label>
                     </div>
 
-
-                <div class="form-group">
+                    <div class="col-md-6">
+                        <div>
+                            <p>UIM Non-Connectivity</p>
+                            <label>
+                                <input type="checkbox" class="minimal-red">
+                            </label>
+                            <label>
+                                ODP - ONT
+                            </label>
+                            <br>
+                            <label>
+                                <input type="checkbox" class="minimal-red">
+                            </label>
+                            <label>
+                                RFS
+                            </label>
+                            <br>
+                            <label>
+                                <input type="checkbox" class="minimal-red">
+                            </label>
+                            <label>
+                                NOTE
+                            </label>
+                            <br>
+                            <label>
+                                <input type="checkbox" class="minimal-red">
+                            </label>
+                            <label>
+                                TANGGAL UPDATE UIM
+                            </label>
+                            <br>
+                            <label>
+                                <input type="checkbox" class="minimal-red">
+                            </label>
+                            <label>
+                                UPDATER UIM
+                            </label>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <div>
                             <p>ODP</p>
                         </div>
@@ -257,46 +296,7 @@
                         </label>
                         <br>
                     </div>
-                    <div class="col-md-6">
-                        <div>
-                            <p>UIM Non-Connectivity</p>
-                        <label>
-                            <input type="checkbox" class="minimal-red">
-                        </label>
-                        <label>
-                            ODP - ONT
-                        </label>
-                        <br>
-                        <label>
-                            <input type="checkbox" class="minimal-red">
-                        </label>
-                        <label>
-                            RFS
-                        </label>
-                        <br>
-                        <label>
-                            <input type="checkbox" class="minimal-red">
-                        </label>
-                        <label>
-                            NOTE
-                        </label>
-                        <br>
-                        <label>
-                            <input type="checkbox" class="minimal-red">
-                        </label>
-                        <label>
-                            TANGGAL UPDATE UIM
-                        </label>
-                        <br>
-                        <label>
-                            <input type="checkbox" class="minimal-red">
-                        </label>
-                        <label>
-                            UPDATER UIM
-                        </label>
-                        <br>
-                        </div>
-                    </div>
+
                     <div class="col-md-6">
                         <div>
                             <p>OLT</p>
@@ -308,6 +308,9 @@
                             NAMA OLT (IP OLT)
                         </label>
                         <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
                         <label>
                             PORT OLT
                         </label>
@@ -351,7 +354,7 @@
                         </label>
                         <br>
                     </div>
-                    <div class="form-group">
+                    <div class="col-md-6">
                         <div>
                             <p>Update Dava</p>
                         </div>
@@ -384,20 +387,19 @@
                         </label>
                     </div>
                 </div>
-                    </div>
-                </div>
+
+                <!-- Minimal red style -->
             </div>
 
-            <!-- Minimal red style -->
-        </div>
 
-        <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a id="btn-custom" class="btn btn-danger" href="#">Find</a>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a id="btn-custom" class="btn btn-danger" href="#">Find</a>
+            </div>
         </div>
     </div>
 </div>
-</div>
+
 <script>
     function Custom(url) {
         $('#btn-custom').attr('href', url);
