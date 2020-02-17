@@ -140,13 +140,263 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalCenter">Find Your Data</h5>
             </div>
-            <div class="modal-body">DATA DATA DATAd.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a id="btn-custom" class="btn btn-danger" href="#">Find</a>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Amija</p>
+                    
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            ONDESK
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            ONSITE
+                        </label>
+                    </div>
+
+
+                <div class="form-group">
+                        <div>
+                            <p>ODP</p>
+                        </div>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            NAMA ODP
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            NOTE
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            QR ODP
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            KOORDINAT ODP
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            TOTAL IN ODP
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            KAPASITAS ODP
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            PORT
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            STATUS
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            ONU
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            SN
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            SERVICE
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            QR DROPCORE
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            NO URUT DROPCORE
+                        </label>
+                        <br>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <p>UIM Non-Connectivity</p>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            ODP - ONT
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            RFS
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            NOTE
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            TANGGAL UPDATE UIM
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            UPDATER UIM
+                        </label>
+                        <br>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <p>OLT</p>
+                        </div>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            NAMA OLT (IP OLT)
+                        </label>
+                        <br>
+                        <label>
+                            PORT OLT
+                        </label>
+                        <br>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <p>Out Splitter</p>
+                        </div>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            PORT OUT SPLITTER
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            QR OUT SPLITTER
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            FLAG OLT & PORT
+                        </label>
+                        <br>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <p>UIM Connectivity</p>
+                        </div>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            CONNECTIVITY ODP TO OLT
+                        </label>
+                        <br>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <p>Update Dava</p>
+                        </div>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            QR ODP
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            QR OUT SPLITTER
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            QR DROPCORE
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class="minimal-red">
+                        </label>
+                        <label>
+                            UPDATER DAVA
+                        </label>
+                    </div>
+                </div>
+                    </div>
+                </div>
             </div>
+
+            <!-- Minimal red style -->
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a id="btn-custom" class="btn btn-danger" href="#">Find</a>
         </div>
     </div>
+</div>
 </div>
 <script>
     function Custom(url) {
