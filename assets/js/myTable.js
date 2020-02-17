@@ -1,4 +1,4 @@
-// var tabel = null;
+var tabel = null;
 
     $(document).ready(function() {
 
@@ -56,5 +56,5 @@
             }
               },
             ],
-      });
+    });
     });

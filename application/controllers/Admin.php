@@ -789,7 +789,7 @@ class Admin extends CI_Controller
 					// $data['data_odp'] = $fetchData;
 					$this->ODP_model->setBatchImportODP($fetchData);
 					$this->ODP_model->importDataODP();
-					 
+					 redirect('Admin/viewListODP');
 				}else {
                     echo "<br>Please import correct file, did not match excel sheet column";
 			}
@@ -964,7 +964,8 @@ class Admin extends CI_Controller
 	}
 
 	public function deleteAllODP()
-	{
+	{	
+		$this->exportODP();
 		$this->ODP_model->deleteAllDataODP('rekap_data_odp');
 
 		if ($this->db->affected_rows() > 0) {
