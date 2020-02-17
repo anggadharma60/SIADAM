@@ -666,7 +666,7 @@ class Admin extends CI_Controller
 		$data['row'] = $this->ODP_model->getDataODP();
 		$this->template->load('template/template_Admin', 'odp/odp_data', $data);
 	}
-
+	
 	public function viewListODP()
 	{
 		$this->template->load('template/template_Admin', 'odp/odp_data');
@@ -796,8 +796,9 @@ class Admin extends CI_Controller
 			if ($this->db->affected_rows() > 0) {
 					$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			}
-			$data['row'] = $this->ODP_model->getDataODP();
-			$this->template->load('template/template_Admin', 'odp/odp_data', $data);
+			// $data['row'] = $this->ODP_model->getDataODP();
+			// $this->template->load('template/template_Admin', 'odp/odp_data', $data);
+			redirect('Admin/viewListODP');
          }            
         
     }
@@ -864,7 +865,7 @@ class Admin extends CI_Controller
 			if ($this->db->affected_rows() > 0) {
 				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			}
-			redirect('Admin/getODP');
+			redirect('Admin/viewListODP');
 		}
 	}
 
@@ -903,7 +904,7 @@ class Admin extends CI_Controller
 				$this->template->load('template/template_Admin', 'odp/odp_form_edit', $data);
 			} else {
 				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
-				redirect('Admin/getODP');
+				redirect('Admin/viewListODP');
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
@@ -911,7 +912,7 @@ class Admin extends CI_Controller
 			if ($this->db->affected_rows() > 0) {
 				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			redirect('Admin/getODP');
+			redirect('Admin/viewListODP');
 		}
 	}
 
@@ -951,15 +952,15 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function deleteODP()
+	public function deleteODP($id)
 	{
-		$id = $this->input->post('idODP');
+		// $id = $this->input->post('idODP');
 		$this->ODP_model->deleteDataODP($id);
 
 		if ($this->db->affected_rows() > 0) {
 			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
 		}
-		redirect('Admin/getODP');
+		redirect('Admin/viewListODP');
 	}
 
 	public function deleteAllODP()
@@ -969,7 +970,7 @@ class Admin extends CI_Controller
 		if ($this->db->affected_rows() > 0) {
 			$this->session->set_flashdata('danger', 'Semua data berhasil dihapus');
 		}
-		redirect('Admin/getODP');
+		redirect('Admin/viewListODP');
 	}
 
 	public function exportODP()

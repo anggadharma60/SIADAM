@@ -35,7 +35,7 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-  <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
+  <!-- <script src="<?php echo base_url() ?>assets/js/jquery-3.3.1.js"></script> -->
   
   
   
@@ -280,12 +280,25 @@
   <script src="<?= base_url() ?>assets/dist/js/adminlte.min.js"></script>
   <script src="<?= base_url() ?>assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
   <script src="<?= base_url() ?>assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <!-- Data Tables -->
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('datatables/lib/css/dataTables.bootstrap.min.css') ?>"/<>
+   
+    <script src="<?php echo base_url() ?>assets/js/myTables.js"></script>
 	
-		
+  <script>
+    var tabel = null;
+  
+  $(document).ready(function() {
+
+    tabel = $('#table1').DataTable({});
+      
+    });
+  </script>	
   <script>
 		var tabel = null;
-
+  
 		$(document).ready(function() {
+  
 		    tabel = $('#tableODP').DataTable({
 		        "processing": true,
 		        "serverSide": true,
@@ -304,61 +317,53 @@
             "bScrollCollapse": true,
 		        "ajax":
 		        {
-		            "url": "<?=base_url()?>index.php/Admin/loadDataODP", // URL file untuk proses select datanya
-		            "type": "POST"
+		          "url": "<?=base_url()?>index.php/Admin/loadDataODP", // URL file untuk proses select datanya
+		          "type": "POST"
 		        },
 		        "deferRender": true,
 		        "aLengthMenu": [[10, 25, 50, 75, 100],[10, 25, 50, 75, 100]], // Combobox Limit
 		        "columns": [
-					{ "data" : 'idODP' },
-					{ "data": 'idNOSS' },
-					{ "data": 'indexODP' },
-					{ "data": 'namaODP' },
-					{ "data": 'ftp' },
-					{ "data": 'latitude' },
-					{ "data": 'longitude' },
-					{ "data": 'clusterName' },
-					{ "data": 'clusterStatus' },
-					{ "data": 'avai' },
-					{ "data": 'used' },
-					{ "data": 'rsv' },
-					{ "data": 'rsk' },
-					{ "data": 'total' },
-					{ "data": 'namaRegional' },
-					{ "data": 'namaWitel' },
-					{ "data": 'namaDatel' },
-					{ "data": 'namaSTO' },
-					{ "data": 'infoODP' },
-					{ "data": 'updateDate' },
-		            { "render": function ( data, type, row ) { // Tampilkan kolom aksi
-		                    var html  = "<button href=''>EDIT</button> | "
-							html += "<button href=''>DELETE</button>|"
-							html += "<button href=''>DETAIL</button>"
+              { "data" : 'idODP' },
+              { "data": 'idNOSS' },
+              { "data": 'indexODP' },
+              { "data": 'namaODP' },
+              { "data": 'ftp' },
+              { "data": 'latitude' },
+              { "data": 'longitude' },
+              { "data": 'clusterName' },
+              { "data": 'clusterStatus' },
+              { "data": 'avai' },
+              { "data": 'used' },
+              { "data": 'rsv' },
+              { "data": 'rsk' },
+              { "data": 'total' },
+              { "data": 'namaRegional' },
+              { "data": 'namaWitel' },
+              { "data": 'namaDatel' },
+              { "data": 'namaSTO' },
+              { "data": 'infoODP' },
+              { "data": 'updateDate' },
+              { "render": function ( data, type, row ) { // Tampilkan kolom aksi
+                  var html  = "<div class='text-center'>"+
+                              "<a href='<?=site_url()?>Admin/editODP/"+row.idODP+"' class='btn btn-primary btn-xs'><i class='fa fa-pencil'></i></a> " + 
+                              " <a href='<?=site_url()?>Admin/deleteODP/"+row.idODP+"' onclick='return confirm(\"Anda yakin?\");' class='btn btn-danger btn-xs'><i class='fa fa-trash'></i></a> "+
+                              "</div>";
 
-		                    return html
-		                }
-		            },
+                  return html
+                }
+		          },
 		        ],
-		    });
-        // $(window).bind('resize', function () {
-        //   table.draw();
-        // });
+        });   
 		});
 		</script>
-  <script>
-        $(document).ready(function() {
-      $('#table1').DataTable()
-    })
 
-
-  </script>
   <script>
     $(document).ready(function() {
-      $("#load").fadeOut(5); //jika document html sudah siap maka fungsi ini akan dijalankan 500
+      $("#load").fadeOut(500); //jika document html sudah siap maka fungsi ini akan dijalankan 500
 
       $("#loading").addClass('overlay');
       $("#loading").html('<i class="fa fa-spinnner fa-spin"></i>');
-      setTimeout(RemoveClass, 1); // 100
+      setTimeout(RemoveClass, 100); // 100
     });
 
     function RemoveClass() {
@@ -367,7 +372,7 @@
     }
   </script>
 
-  <script>
+  <!-- <script>
     $(document).ready(function() {
 
       load_data();
@@ -473,8 +478,8 @@
     // You can switch between pie and douhnut using the method below.
     pieChart.Doughnut(PieData, pieOptions)
 
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  </script> --> 
+  <!--  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script type="text/javascript">
     var ctx = document.getElementById('myChart').getContext('2d');
     var chart = new Chart(ctx, {
@@ -506,7 +511,7 @@
     },
 });
  
-  </script>
+  </script> -->
 
 </body>
 

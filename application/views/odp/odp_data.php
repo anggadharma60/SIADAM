@@ -59,10 +59,10 @@
 						<th>Actions</th>
 						</tr>
 					</thead>
-        <!-- <tbody>
+        <tbody id="show_data">
          
-        </tbody> -->
-        <!-- <tfoot>
+        </tbody>
+        <tfoot>
           <tr>
             <th>ID ODP</th>
             <th>ID NOSS</th>
@@ -86,7 +86,7 @@
             <th>Update Date</th>
             <th>Actions</th>
           </tr>
-        </tfoot> -->
+        </tfoot>
       </table>
     </div>
   </div>
