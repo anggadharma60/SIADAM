@@ -16,7 +16,7 @@
       <div class="box-header">
         <h3 class="box-title">Edit ODP</h3>
         <div class="pull-right">
-            <a href="<?=site_url('Admin/getODP')?>" class="btn btn-danger btn-flat">
+            <a href="<?=site_url('Admin/viewListODP')?>" class="btn btn-danger btn-flat">
                 <i class="fa fa-undo"></i> Back 
             </a>
         </div>
