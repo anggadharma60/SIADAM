@@ -442,10 +442,7 @@
     $('#datepicker').datepicker({
       autoclose: true
     })
-})
-</script>
-<script>
-$(function() {
+
     $('#datepicker').datepicker({
     autoclose: true
     })
@@ -453,7 +450,5 @@ $(function() {
     $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
     checkboxClass: 'icheckbox_minimal-red'
     })
-
-
 })
 </script>
