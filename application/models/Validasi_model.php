@@ -16,9 +16,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  */
 
-class KelValidasi_model extends CI_Model {
+class Validasi_model extends CI_Model {
 
-  public function getDataKelValidasi($id = null){
+  public function getDataValidasi($id = null){
     // $this->db->select('*');
     // // $this->db->select('rekap_data_odp.*, sto.kodeSTO, sto.namaSTO, sto.idDatel, datel.namaDatel, datel.idWitel, witel.namaWitel, witel.idRegional, regional.namaRegional');
     // $this->db->from('rekap_data_odp');
@@ -33,7 +33,7 @@ class KelValidasi_model extends CI_Model {
     // return $query;
   }
 
-  public function addDataKelValidasi($post)
+  public function addDataValidasi($post)
     {
         // $params['idNOSS'] = html_escape($post['idNOSS']);
         // $params['indexODP'] = html_escape($post['indexODP']);
@@ -57,7 +57,7 @@ class KelValidasi_model extends CI_Model {
         // $this->db->insert('rekap_data_odp', $params);
     }
 
-    public function editDataKelValidasi($post)
+    public function editDataValidasi($post)
     {
         // // $params['idNOSS'] = html_escape($post['idNOSS']);
         // // $params['indexODP'] = html_escape($post['indexODP']);
@@ -86,11 +86,16 @@ class KelValidasi_model extends CI_Model {
         // $this->db->update('rekap_data_odp', $params);
     }
 
-    public function deleteDataKelValidasi($id)
-	{
-		// $this->db->where('idODP', $id);
-		// $this->db->delete('rekap_data_odp');
-  }
+    public function deleteAllDataValidasi($table)
+    {
+      $this->db->empty_table($table);
+    }
+    
+    public function deleteDataValidasi($id)
+    {
+      // $this->db->where('idODP', $id);
+      // $this->db->delete('rekap_data_odp');
+    }
 
   
   

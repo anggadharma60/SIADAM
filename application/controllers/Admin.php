@@ -40,7 +40,7 @@ class Admin extends CI_Controller
 		$this->load->model('Pegawai_model');
 		$this->load->model('Regional_model');
 		$this->load->model('STO_model');
-		$this->load->model('KelValidasi_model');
+		$this->load->model('Validasi_model');
 		$this->load->model('Datel_model');
 		$this->load->model('Witel_model');
 		$this->load->model('SpecOLT_model');
@@ -695,6 +695,7 @@ class Admin extends CI_Controller
 		header('Content-Type: application/json');
 		echo json_encode($callback); // Convert array $callback ke json
 	}
+	
 	public function uploadODP()
 	{
 		$this->template->load('template/template_Admin', 'odp/odp_form_import');
@@ -789,18 +790,16 @@ class Admin extends CI_Controller
 					// $data['data_odp'] = $fetchData;
 					$this->ODP_model->setBatchImportODP($fetchData);
 					$this->ODP_model->importDataODP();
+					
+						$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
+				
 					 redirect('Admin/viewListODP');
 				}else {
-                    echo "<br>Please import correct file, did not match excel sheet column";
-			}
-			if ($this->db->affected_rows() > 0) {
-					$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
-			}
-			// $data['row'] = $this->ODP_model->getDataODP();
-			// $this->template->load('template/template_Admin', 'odp/odp_data', $data);
+					
+					$this->session->set_flashdata('danger', 'Please import correct file, did not match excel sheet column');
+				}
 			redirect('Admin/viewListODP');
-         }            
-        
+         }             
     }
 	
 	public function checkFileValidation($string) {
@@ -1242,13 +1241,13 @@ class Admin extends CI_Controller
 					
 					$this->OLT_model->setBatchImportOLT($fetchData);
 					$this->OLT_model->importDataOLT();
-					 
-				}else {
-                    echo "<br>Please import correct file, did not match excel sheet column";
-			}
-			if ($this->db->affected_rows() > 0) {
 					$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
+				}else {
+					$this->session->set_flashdata('danger', 'Please import correct file, did not match excel sheet column');
 			}
+			// if ($this->db->affected_rows() > 0) {
+			// 		$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
+			// }
 			$data['row'] = $this->OLT_model->getDataOLT();
 			$this->template->load('template/template_Admin', 'olt/olt_data', $data);
          }            
@@ -1303,24 +1302,153 @@ class Admin extends CI_Controller
 		header('Cache-Control: max-age=0');
 		$Excel_writer->save('php://output');
 	}
-
 	// END OLT
 
 	// Start Menu Kelola Validasi
-	public function getKelValidasi()
+	public function getValidasi()
 	{
-		$data['row'] = $this->KelValidasi_model->getDataKelValidasi();
-		$this->template->load('template/template_Admin', 'kelvalidasi/kelvalidasi_data');
+		$data['row'] = $this->Validasi_model->getDataValidasi();
+		$this->template->load('template/template_Admin', 'validasi/validasi_data');
 	}
 
-	public function uploadKelValidasi()
+	public function uploadValidasi()
 	{
-		$this->template->load('template/template_Admin', 'kelvalidasi/kelvalidasi_form_import');
+		$this->template->load('template/template_Admin', 'validasi/validasi_form_import');
 	}
 
-	public function addKelValidasi()
+	public function viewListValidasi()
 	{
-		$data['row'] = $this->KelValidasi_model->getDataKelValidasi();
+		$this->template->load('template/template_Admin', 'validasi/validasi_data');
+	}
+
+	public function loadDataValidasi()
+	{
+		$search = $_POST['search']['value']; // Ambil data yang di ketik user pada textbox pencarian
+		$limit = $_POST['length']; // Ambil data limit per page
+		$start = $_POST['start']; // Ambil data start
+		$order_index = $_POST['order'][0]['column']; // Untuk mengambil index yg menjadi acuan untuk sorting
+		$order_field = $_POST['columns'][$order_index]['data']; // Untuk mengambil nama field yg menjadi acuan untuk sorting
+		$order_ascdesc = $_POST['order'][0]['dir']; // Untuk menentukan order by "ASC" atau "DESC"
+
+		$sql_total = $this->ODP_model->count_all(); // Panggil fungsi count_all pada SiswaModel
+		$sql_data = $this->ODP_model->filter($search, $limit, $start, $order_field, $order_ascdesc); // Panggil fungsi filter pada SiswaModel
+		$sql_filter = $this->ODP_model->count_filter($search); // Panggil fungsi count_filter pada SiswaModel
+
+		$callback = array(
+		    'draw'=>$_POST['draw'], // Ini dari datatablenya
+		    'recordsTotal'=>$sql_total,
+		    'recordsFiltered'=>$sql_filter,
+		    'data'=>$sql_data
+		);
+
+		header('Content-Type: application/json');
+		echo json_encode($callback); // Convert array $callback ke json
+	}
+
+	//Fungsi file upload
+	public function importValidasi() {
+		$data = array();
+		// Load form validation library
+	   
+		$this->form_validation->set_rules('fileURL', 'Upload File ODP', 'callback_checkFileValidation');
+		   // If file uploaded
+		   
+		   if(!empty($_FILES['fileURL']['name'])) { 
+			   
+			   // get file extension
+			   $extension = pathinfo($_FILES['fileURL']['name'], PATHINFO_EXTENSION);
+		   
+			   if($extension == 'csv'){
+				   $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+			   } elseif($extension == 'xlsx') {
+				   $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+			   } else {
+				   $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+			   }
+			   // file path
+			   $spreadsheet = $reader->load($_FILES['fileURL']['tmp_name']);
+			   $allDataInSheet = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+			   // array Count
+			   $arrayCount = count($allDataInSheet);
+			   
+			   $flag = 0;
+			   $createArray = array('NOSS_ID', 'ODP_INDEX', 'ODP_NAME', 'FTP', 'LATITUDE', 'LONGITUDE', 'CLUSNAME', 'CLUSTERSATATUS', 'AVAI', 'USED', 'RSV', 'RSK', 'IS_TOTAL', 'STO' , 'ODP_INFO', 'UPDATE_DATE');
+			   $makeArray = array('NOSS_ID' => 'NOSS_ID', 'ODP_INDEX' => 'ODP_INDEX', 'ODP_NAME' => 'ODP_NAME', 'FTP' => 'FTP', 'LATITUDE' => 'LATITUDE', 'LONGITUDE' => 'LONGITUDE', 'CLUSNAME' => 'CLUSNAME', 'CLUSTERSATATUS' => 'CLUSTERSATATUS', 'AVAI' => 'AVAI', 'USED' => 'USED', 'RSV' => 'RSV', 'RSK' => 'RSK', 'IS_TOTAL' => 'IS_TOTAL', 'STO' => 'STO' , 'ODP_INFO' => 'ODP_INFO', 'UPDATE_DATE' => 'UPDATE_DATE');
+			   $SheetDataKey = array();
+			   foreach ($allDataInSheet as $dataInSheet) {
+				   foreach ($dataInSheet as $key => $value) {
+					   if (in_array(trim($value), $createArray)) {
+						   $value = preg_replace('/\s+/', '', $value);
+						   $SheetDataKey[trim($value)] = $key;
+					   } 
+				   }
+			   }
+			   $dataDiff = array_diff_key($makeArray, $SheetDataKey);
+			   if (empty($dataDiff)) {
+				   $flag = 1;
+			   }
+			   // match excel sheet column
+			   if ($flag == 1) {
+				   for ($i = 2; $i <= $arrayCount; $i++) {
+					   $NOSS_ID = $SheetDataKey['NOSS_ID'];
+					   $ODP_INDEX = $SheetDataKey['ODP_INDEX'];
+					   $ODP_NAME = $SheetDataKey['ODP_NAME'];
+					   $FTP = $SheetDataKey['FTP'];
+					   $LATITUDE = $SheetDataKey['LATITUDE'];
+					   $LONGITUDE = $SheetDataKey['LONGITUDE'];
+					   $CLUSNAME = $SheetDataKey['CLUSNAME'];
+					   $CLUSTERSATATUS = $SheetDataKey['CLUSTERSATATUS'];
+					   $AVAI = $SheetDataKey['AVAI'];
+					   $USED = $SheetDataKey['USED'];
+					   $RSV = $SheetDataKey['RSV'];
+					   $RSK = $SheetDataKey['RSK'];
+					   $IS_TOTAL = $SheetDataKey['IS_TOTAL'];
+					   $STO = $SheetDataKey['STO'];
+					   $ODP_INFO = $SheetDataKey['ODP_INFO'];
+					   $UPDATE_DATE = $SheetDataKey['UPDATE_DATE'];
+				   
+					   $NOSS_ID = filter_var(html_escape(trim($allDataInSheet[$i][$NOSS_ID])), FILTER_SANITIZE_STRING);
+					   $ODP_INDEX = filter_var(html_escape(trim($allDataInSheet[$i][$ODP_INDEX])), FILTER_SANITIZE_STRING);
+					   $ODP_NAME  = filter_var(html_escape(trim($allDataInSheet[$i][$ODP_NAME])), FILTER_SANITIZE_STRING);
+					   $FTP = filter_var(html_escape(trim($allDataInSheet[$i][$FTP])), FILTER_SANITIZE_STRING);
+					   $LATITUDE = filter_var(html_escape(trim($allDataInSheet[$i][$LATITUDE])), FILTER_SANITIZE_STRING);
+					   $LONGITUDE = filter_var(html_escape(trim($allDataInSheet[$i][$LONGITUDE])), FILTER_SANITIZE_STRING);
+					   $CLUSNAME = filter_var(html_escape(trim($allDataInSheet[$i][$CLUSNAME])), FILTER_SANITIZE_STRING);
+					   $CLUSTERSATATUS = filter_var(html_escape(trim($allDataInSheet[$i][$CLUSTERSATATUS])), FILTER_SANITIZE_STRING);
+					   $AVAI = filter_var(html_escape(trim($allDataInSheet[$i][$AVAI])), FILTER_SANITIZE_STRING);
+					   $USED = filter_var(html_escape(trim($allDataInSheet[$i][$USED])), FILTER_SANITIZE_STRING);
+					   $RSV = filter_var(html_escape(trim($allDataInSheet[$i][$RSV])), FILTER_SANITIZE_STRING);
+					   $RSK = filter_var(html_escape(trim($allDataInSheet[$i][$RSK])), FILTER_SANITIZE_STRING);
+					   $IS_TOTAL = filter_var(html_escape(trim($allDataInSheet[$i][$IS_TOTAL])), FILTER_SANITIZE_STRING);
+					   $STO = filter_var(html_escape(trim($allDataInSheet[$i][$STO])), FILTER_SANITIZE_STRING);
+					   $ODP_INFO = filter_var(html_escape(trim($allDataInSheet[$i][$ODP_INFO])), FILTER_SANITIZE_STRING);
+					   $UPDATE_DATE = filter_var(html_escape(trim($allDataInSheet[$i][$UPDATE_DATE])), FILTER_SANITIZE_STRING);
+
+					   $newSTO = $this->STO_model->getIDSTOByKode($STO);
+					   $idSTO = $newSTO->idSTO;
+		   
+					   $fetchData[] = array('idNOSS' => $NOSS_ID, 'indexODP' => $ODP_INDEX, 'namaODP' => $ODP_NAME, 'ftp' => $FTP, 'latitude' => $LATITUDE, 'longitude' => $LONGITUDE, 'clusterName' => $CLUSNAME, 'clusterStatus' => $CLUSTERSATATUS, 'avai' => $AVAI, 'used' => $USED, 'rsv' => $RSV, 'rsk' => $RSK, 'total' => $IS_TOTAL, 'idSTO' => $idSTO , 'infoODP' => $ODP_INFO, 'updateDate' => $UPDATE_DATE);
+					   
+				   }
+				   
+				   // $data['data_odp'] = $fetchData;
+				   $this->ODP_model->setBatchImportODP($fetchData);
+				   $this->ODP_model->importDataODP();
+				   
+					   $this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
+			   
+					redirect('Admin/viewListODP');
+			   }else {
+				   
+				   $this->session->set_flashdata('danger', 'Please import correct file, did not match excel sheet column');
+			   }
+		   redirect('Admin/viewListODP');
+		} 
+    }
+
+	public function addValidasi()
+	{
+		$data['row'] = $this->Validasi_model->getDataValidasi();
 		$this->form_validation->set_rules('tanggalpelurusan', 'TANGGAL PELURUSAN', 'required|max_length[16]|trim');
 		$this->form_validation->set_rules('ondeks', 'ONDESK', 'required|max_length[20]|trim');
 		$this->form_validation->set_rules('onsite', 'ONSITE', 'required|max_length[20]|trim');
@@ -1363,18 +1491,18 @@ class Admin extends CI_Controller
 		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
 		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_Admin', 'kelvalidasi/KelValidasi_form_add');
+			$this->template->load('template/template_Admin', 'validasi/Validasi_form_add');
 		} else {
 			$post = $this->input->post(null, TRUE);
-			$this->KelValidasi_model->addDataKelValidasi($post);
+			$this->Validasi_model->addDataValidasi($post);
 			if ($this->db->affected_rows() > 0) {
 				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			}
-			redirect('Admin/getKelValidasi');
+			redirect('Admin/getValidasi');
 		}
 	}
 
-	public function editKelValidasi($id)
+	public function editValidasi($id)
 	{
 		$this->form_validation->set_rules('tanggalpelurusan', 'TANGGAL PELURUSAN', 'required|max_length[16]|trim');
 		$this->form_validation->set_rules('ondeks', 'ONDESK', 'required|max_length[20]|trim');
@@ -1417,34 +1545,117 @@ class Admin extends CI_Controller
 		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
 		if ($this->form_validation->run() == FALSE) {
-			$query = $this->KelValidasi_model->getDataKelValidasi($id);
+			$query = $this->Validasi_model->getDataValidasi($id);
 			if ($query->num_rows() > 0) {
 				$data['row'] = $query->row();
-				$this->template->load('template/template_Admin', 'specolt/specolt_form_edit', $data);
+				$this->template->load('template/template_Admin', 'validasi/validasi_form_edit', $data);
 			} else {
 				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
-				redirect('Admin/getKelValidasi');
+				redirect('Admin/getValidasi');
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
-			$this->KelValidasi_model->editDataKelValidasi($post);
+			$this->Validasi_model->editDataValidasi($post);
 			if ($this->db->affected_rows() > 0) {
 				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			redirect('Admin/getKelValidasi');
+			redirect('Admin/getValidasi');
 		}
 	}
 
+	public function deleteAllValidasi()
+	{	
+		// $this->exportODP();
+		// $this->ODP_model->deleteAllDataODP('rekap_data_odp');
 
-	public function deleteKelValidasi()
+		// if ($this->db->affected_rows() > 0) {
+		// 	$this->session->set_flashdata('danger', 'Semua data berhasil dihapus');
+		// }
+		// redirect('Admin/viewListODP');
+	}
+	public function deleteValidasi()
 	{
-		$id = $this->input->post('idKelValidasi');
-		$this->KelValidasi_model->deleteDataKelValidasi($id);
+		$id = $this->input->post('idValidasi');
+		$this->Validasi_model->deleteDataValidasi($id);
 
 		if ($this->db->affected_rows() > 0) {
 			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
 		}
-		redirect('Admin/getKelValidasi');
+		redirect('Admin/getValidasi');
+	}
+
+	public function exportValidasi()
+	{
+
+		$this->load->model('Validasi_model');
+		// Create new Spreadsheet object
+		$spreadsheet = new Spreadsheet();
+		
+		$Excel_writer = new Xlsx($spreadsheet);
+        
+        foreach (range('A1', 'T1') as $test) {
+            $spreadsheet->getActiveSheet()->getColumnDimension($test)->setAutoSize(true);
+        }
+
+		$spreadsheet->setActiveSheetIndex(0);
+		$activeSheet = $spreadsheet->getActiveSheet();
+			$activeSheet->setCellValue('A1', 'NOSS_ID');
+			$activeSheet->setCellValue('B1', 'ODP_INDEX');
+			$activeSheet->setCellValue('C1', 'ODP_NAME');
+			$activeSheet->setCellValue('D1', 'ODP 3 DIGIT');
+			$activeSheet->setCellValue('E1', 'FTP');
+			$activeSheet->setCellValue('F1', 'LATITUDE');
+			$activeSheet->setCellValue('G1', 'LONGITUDE');
+			$activeSheet->setCellValue('H1', 'CLUSNAME');
+			$activeSheet->setCellValue('I1', 'CLUSTERSATATUS');
+			$activeSheet->setCellValue('J1', 'AVAI');
+			$activeSheet->setCellValue('K1', 'USED');
+			$activeSheet->setCellValue('L1', 'RSV');
+			$activeSheet->setCellValue('M1', 'RSK');
+			$activeSheet->setCellValue('N1', 'IS_TOTAL');
+			$activeSheet->setCellValue('O1', 'REGIONAL');
+			$activeSheet->setCellValue('P1', 'WITEL');
+			$activeSheet->setCellValue('Q1', 'DATEL');
+			$activeSheet->setCellValue('R1', 'STO');
+			$activeSheet->setCellValue('S1', 'STO_DESC');
+			$activeSheet->setCellValue('T1', 'ODP_INFO');
+			$activeSheet->setCellValue('U1', 'UPDATE_DATE');
+
+
+		// $query = $db->query("SELECT * FROM rekap_data_odp ORDER BY idODP DESC");
+		$query = $this->ODP_model->getDataODP()->result();
+		$i=2; foreach($query as $row) {
+			$activeSheet->setCellValue('A'.$i, $row->idNOSS);
+			$activeSheet->setCellValue('B'.$i, $row->indexODP);
+			$activeSheet->setCellValue('C'.$i, $row->namaODP);
+			$activeSheet->setCellValue('D'.$i, $row->namaODP);
+			$activeSheet->setCellValue('E'.$i, $row->ftp);
+			$activeSheet->setCellValue('F'.$i, $row->latitude);
+			$activeSheet->setCellValue('G'.$i, $row->longitude);
+			$activeSheet->setCellValue('H'.$i, $row->clusterName);
+			$activeSheet->setCellValue('I'.$i, $row->clusterStatus);
+			$activeSheet->setCellValue('J'.$i, $row->avai);
+			$activeSheet->setCellValue('K'.$i, $row->used);
+			$activeSheet->setCellValue('L'.$i, $row->rsv);
+			$activeSheet->setCellValue('M'.$i, $row->rsk);
+			$activeSheet->setCellValue('N'.$i, $row->total);
+			$activeSheet->setCellValue('O'.$i, $row->namaRegional);
+			$activeSheet->setCellValue('P'.$i, $row->namaWitel);
+			$activeSheet->setCellValue('Q'.$i, $row->namaDatel);
+			$activeSheet->setCellValue('R'.$i, $row->kodeSTO);
+			$activeSheet->setCellValue('S'.$i, $row->namaSTO);
+			$activeSheet->setCellValue('T'.$i, $row->infoODP);
+			$activeSheet->setCellValue('U'.$i, $row->updateDate);
+			$i++;
+		}
+		
+		$filename = 'RekapValidasi.xlsx';
+ 
+		
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment;filename="'. $filename);
+		header('Cache-Control: max-age=0');
+		$Excel_writer->save('php://output');
 	}
 	//End Kelola Validasi
 

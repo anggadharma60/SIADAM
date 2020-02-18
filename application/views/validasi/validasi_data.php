@@ -15,13 +15,18 @@
     <div class="box-header">
       <h3 class="box-title">Data Validasi</h3>
       <div class="pull-right">
-        <a href="<?= site_url('Admin/exportKelValidasi')?>" class="btn btn-danger btn-flat">
+        <a href="<?= site_url('Admin/deleteAllValidasi')?>">
+        <button onclick="return confirm('Apakah Anda Yakin ingin menghapus semua Data?')" class="btn btn-danger btn-flat">
+          <i class="fa fa-trash"></i> Delete All
+          </button>
+        </a>
+        <a href="<?= site_url('Admin/exportValidasi')?>" class="btn btn-danger btn-flat">
           <i class="fa fa-upload  "></i> Export
         </a>
-        <a href="<?= site_url('Admin/uploadKelValidasi')?>" class="btn btn-success btn-flat">
+        <a href="<?= site_url('Admin/uploadValidasi')?>" class="btn btn-success btn-flat">
           <i class="fa fa-download"></i> Import
         </a>
-        <a href="<?= site_url('Admin/addKelValidasi')?>" class="btn btn-primary btn-flat">
+        <a href="<?= site_url('Admin/addValidasi')?>" class="btn btn-primary btn-flat">
           <i class="fa fa-user-plus"></i> Create
         </a>
       </div>
