@@ -11,13 +11,16 @@
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/font-awesome/css/font-awesome.min.css">
-  
-    <!-- Data Tables -->
-    <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <!-- Data Tables -->
+  <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- daterange picker -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.css">
-   <!-- Data Tables -->
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url('datatables/lib/css/dataTables.bootstrap.min.css') ?>"/>
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/iCheck/all.css">
+  <!-- Data Tables -->
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url('datatables/lib/css/dataTables.bootstrap.min.css') ?>" />
   <!-- Ionicons -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
@@ -36,11 +39,11 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
   <!-- <script src="<?php echo base_url() ?>assets/js/jquery-3.3.1.js"></script> -->
-  
-  
-  
+
+
+
   <style>
-    #load{
+    #load {
       width: 100%;
       height: 100%;
       position: fixed;
@@ -50,7 +53,8 @@
       opacity: 0.6;
       background-size: 8%;
     }
-    #loading{
+
+    #loading {
       width: 100%;
       height: 100%;
       position: fixed;
@@ -64,13 +68,13 @@
 
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,200i,300,300i,400,400i,500,500i,600i,700i&display=swap" rel="stylesheet">
-  
+
 </head>
 
 <body class="hold-transition skin-blue-light sidebar-mini">
   <div id="load">loading...</div>
   <!-- Site wrapper -->
-  <div class="wrapper" >
+  <div class="wrapper">
 
     <header class="main-header">
       <!-- Logo -->
@@ -96,9 +100,9 @@
           <ul class="nav navbar-nav">
             <!-- Tasks: style can be found in dropdown.less -->
             <li class="dropdown tasks-menu">
-              
+
               <ul class="dropdown-menu">
-                
+
                 <li>
                   <!-- inner menu: contains the actual data -->
                   <ul class="menu">
@@ -233,7 +237,7 @@
           </li>
           <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
             <li class="header">SETTNGS</li>
-            <li <?=$this->uri->segment(1) == 'Admin/getPegawai' ? 'class="active"' : '' ?>>
+            <li <?= $this->uri->segment(1) == 'Admin/getPegawai' ? 'class="active"' : '' ?>>
               <a href="<?= site_url('Admin/getPegawai') ?>">
                 <i class="fa fa-user-plus"></i> <span>Kelola Data Pegawai</span>
                 <span class="pull-right-container"></span>
@@ -280,82 +284,126 @@
   <script src="<?= base_url() ?>assets/dist/js/adminlte.min.js"></script>
   <script src="<?= base_url() ?>assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
   <script src="<?= base_url() ?>assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <!-- Data Tables -->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url('datatables/lib/css/dataTables.bootstrap.min.css') ?>"/<>
-   
-    <script src="<?php echo base_url() ?>assets/js/myTables.js"></script>
-	
+  <!-- Data Tables -->
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url('datatables/lib/css/dataTables.bootstrap.min.css') ?>"/ <>
+
+  <script src="<?php echo base_url() ?>assets/js/myTables.js"></script>
+
   <script>
     var tabel = null;
-  
-  $(document).ready(function() {
 
-    tabel = $('#table1').DataTable({});
-      
+    $(document).ready(function() {
+
+      tabel = $('#table1').DataTable({});
+
     });
-  </script>	
+  </script>
   <script>
-		var tabel = null;
-  
-		$(document).ready(function() {
-  
-		    tabel = $('#tableODP').DataTable({
-		        "processing": true,
-		        "serverSide": true,
-		        "ordering": true, // Set true agar bisa di sorting
-		        "order": [[ 0, 'asc' ]], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
-            'paging'      : true,
-            'lengthChange': true,
-            'searching'   : true,
-            'ordering'    : true,
-            'info'        : true,
-            'autoWidth'   : true,
-            "processing": true,
-            "serverSide": true,
-            "sScrollY": "35em",//scroll tambahan y
-            "sScrollX": "100%",//scroll tambahan x
-            "bScrollCollapse": true,
-		        "ajax":
-		        {
-		          "url": "<?=base_url()?>index.php/Admin/loadDataODP", // URL file untuk proses select datanya
-		          "type": "POST"
-		        },
-		        "deferRender": true,
-		        "aLengthMenu": [[10, 25, 50, 75, 100],[10, 25, 50, 75, 100]], // Combobox Limit
-		        "columns": [
-              { "data" : 'idODP' },
-              { "data": 'idNOSS' },
-              { "data": 'indexODP' },
-              { "data": 'namaODP' },
-              { "data": 'ftp' },
-              { "data": 'latitude' },
-              { "data": 'longitude' },
-              { "data": 'clusterName' },
-              { "data": 'clusterStatus' },
-              { "data": 'avai' },
-              { "data": 'used' },
-              { "data": 'rsv' },
-              { "data": 'rsk' },
-              { "data": 'total' },
-              { "data": 'namaRegional' },
-              { "data": 'namaWitel' },
-              { "data": 'namaDatel' },
-              { "data": 'namaSTO' },
-              { "data": 'infoODP' },
-              { "data": 'updateDate' },
-              { "render": function ( data, type, row ) { // Tampilkan kolom aksi
-                  var html  = "<div class='text-center'>"+
-                              "<a href='<?=site_url()?>Admin/editODP/"+row.idODP+"' class='btn btn-primary btn-xs'><i class='fa fa-pencil'></i></a> " + 
-                              " <a href='<?=site_url()?>Admin/deleteODP/"+row.idODP+"' onclick='return confirm(\"Anda yakin?\");' class='btn btn-danger btn-xs'><i class='fa fa-trash'></i></a> "+
-                              "</div>";
+    var tabel = null;
 
-                  return html
-                }
-		          },
-		        ],
-        });   
-		});
-		</script>
+    $(document).ready(function() {
+
+      tabel = $('#tableODP').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ordering": true, // Set true agar bisa di sorting
+        "order": [
+          [0, 'asc']
+        ], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
+        'paging': true,
+        'lengthChange': true,
+        'searching': true,
+        'ordering': true,
+        'info': true,
+        'autoWidth': true,
+        "processing": true,
+        "serverSide": true,
+        "sScrollY": "35em", //scroll tambahan y
+        "sScrollX": "100%", //scroll tambahan x
+        "bScrollCollapse": true,
+        "ajax": {
+          "url": "<?= base_url() ?>index.php/Admin/loadDataODP", // URL file untuk proses select datanya
+          "type": "POST"
+        },
+        "deferRender": true,
+        "aLengthMenu": [
+          [10, 25, 50, 75, 100],
+          [10, 25, 50, 75, 100]
+        ], // Combobox Limit
+        "columns": [{
+            "data": 'idODP'
+          },
+          {
+            "data": 'idNOSS'
+          },
+          {
+            "data": 'indexODP'
+          },
+          {
+            "data": 'namaODP'
+          },
+          {
+            "data": 'ftp'
+          },
+          {
+            "data": 'latitude'
+          },
+          {
+            "data": 'longitude'
+          },
+          {
+            "data": 'clusterName'
+          },
+          {
+            "data": 'clusterStatus'
+          },
+          {
+            "data": 'avai'
+          },
+          {
+            "data": 'used'
+          },
+          {
+            "data": 'rsv'
+          },
+          {
+            "data": 'rsk'
+          },
+          {
+            "data": 'total'
+          },
+          {
+            "data": 'namaRegional'
+          },
+          {
+            "data": 'namaWitel'
+          },
+          {
+            "data": 'namaDatel'
+          },
+          {
+            "data": 'namaSTO'
+          },
+          {
+            "data": 'infoODP'
+          },
+          {
+            "data": 'updateDate'
+          },
+          {
+            "render": function(data, type, row) { // Tampilkan kolom aksi
+              var html = "<div class='text-center'>" +
+                "<a href='<?= site_url() ?>Admin/editODP/" + row.idODP + "' class='btn btn-primary btn-xs'><i class='fa fa-pencil'></i></a> " +
+                " <a href='<?= site_url() ?>Admin/deleteODP/" + row.idODP + "' onclick='return confirm(\"Anda yakin?\");' class='btn btn-danger btn-xs'><i class='fa fa-trash'></i></a> " +
+                "</div>";
+
+              return html
+            }
+          },
+        ],
+      });
+    });
+  </script>
 
   <script>
     $(document).ready(function() {
@@ -372,7 +420,7 @@
     }
   </script>
 
-  <!-- <script>
+  <!-- 
     $(document).ready(function() {
 
       load_data();
@@ -478,7 +526,7 @@
     // You can switch between pie and douhnut using the method below.
     pieChart.Doughnut(PieData, pieOptions)
 
-  </script> --> 
+  </script> -->
   <!--  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script type="text/javascript">
     var ctx = document.getElementById('myChart').getContext('2d');
@@ -487,11 +535,11 @@
     data: {
         labels: [
           <?php
-            if (count($graph)>0) {
-              foreach ($graph as $data) {
-                echo "'" .$data->provinsi ."',";
-              }
+          if (count($graph) > 0) {
+            foreach ($graph as $data) {
+              echo "'" . $data->provinsi . "',";
             }
+          }
           ?>
         ],
         datasets: [{
@@ -500,11 +548,11 @@
             borderColor: '##93C3D2',
             data: [
               <?php
-                if (count($graph)>0) {
-                   foreach ($graph as $data) {
-                    echo $data->jumlah . ", ";
-                  }
+              if (count($graph) > 0) {
+                foreach ($graph as $data) {
+                  echo $data->jumlah . ", ";
                 }
+              }
               ?>
             ]
         }]
