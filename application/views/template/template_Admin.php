@@ -175,7 +175,7 @@
             </ul>
           </li>
           <li>
-            <a href="<?= site_url('Admin/getKelValidasi') ?>">
+            <a href="<?= site_url('Admin/getValidasi') ?>">
               <i class="fa fa-cog"></i> <span>Kelola Data Validasi</span>
               <span class="pull-right-container"></span>
             </a>
