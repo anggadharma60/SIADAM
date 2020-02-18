@@ -1248,7 +1248,8 @@ class Admin extends CI_Controller
 			// if ($this->db->affected_rows() > 0) {
 			// 		$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			// }
-			$data['row'] = $this->OLT_model->getDataOLT();
+			$data['row'] = $this->OLT_model->get
+			DataOLT();
 			$this->template->load('template/template_Admin', 'olt/olt_data', $data);
          }            
         
