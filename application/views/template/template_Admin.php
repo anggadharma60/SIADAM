@@ -285,7 +285,14 @@
   <script src="<?= base_url() ?>assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
   <script src="<?= base_url() ?>assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
   <!-- Data Tables -->
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url('datatables/lib/css/dataTables.bootstrap.min.css') ?>"/ <>
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url('datatables/lib/css/dataTables.bootstrap.min.css') ?>">
+  <!-- date-range-picker -->
+  <script src="<?= base_url() ?>assets/bower_components/moment/min/moment.min.js"></script>
+  <script src="<?= base_url() ?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <!-- bootstrap datepicker -->
+  <script src="<?= base_url() ?>assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <!-- iCheck 1.0.1 -->
+  <script src="<?= base_url() ?>assets/plugins/iCheck/icheck.min.js"></script>
 
   <script src="<?php echo base_url() ?>assets/js/myTables.js"></script>
 
