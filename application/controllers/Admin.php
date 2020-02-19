@@ -1330,11 +1330,11 @@ class Admin extends CI_Controller
 		$order_field = $_POST['columns'][$order_index]['data']; // Untuk mengambil nama field yg menjadi acuan untuk sorting
 		$order_ascdesc = $_POST['order'][0]['dir']; // Untuk menentukan order by "ASC" atau "DESC"
 
-		$sql_total = $this->ODP_model->count_all(); // Panggil fungsi count_all pada SiswaModel
-		$sql_data = $this->ODP_model->filter($search, $limit, $start, $order_field, $order_ascdesc); // Panggil fungsi filter pada SiswaModel
-		$sql_filter = $this->ODP_model->count_filter($search); // Panggil fungsi count_filter pada SiswaModel
+		$sql_total = $this->Validasi_model->count_all(); // Panggil fungsi count_all pada SiswaModel
+		$sql_data = $this->Validasi_model->filter($search, $limit, $start, $order_field, $order_ascdesc); // Panggil fungsi filter pada SiswaModel
+		$sql_filter = $this->Validasi_model->count_filter($search); // Panggil fungsi count_filter pada SiswaModel
 
-		$callback = array(
+		$callback2 = array(
 		    'draw'=>$_POST['draw'], // Ini dari datatablenya
 		    'recordsTotal'=>$sql_total,
 		    'recordsFiltered'=>$sql_filter,
@@ -1342,7 +1342,7 @@ class Admin extends CI_Controller
 		);
 
 		header('Content-Type: application/json');
-		echo json_encode($callback); // Convert array $callback ke json
+		echo json_encode($callback2); // Convert array $callback ke json
 	}
 
 	//Fungsi file upload
@@ -1350,7 +1350,7 @@ class Admin extends CI_Controller
 		$data = array();
 		// Load form validation library
 	   
-		$this->form_validation->set_rules('fileURL', 'Upload File ODP', 'callback_checkFileValidation');
+		$this->form_validation->set_rules('fileURL', 'Upload File Validasi', 'callback_checkFileValidation');
 		   // If file uploaded
 		   
 		   if(!empty($_FILES['fileURL']['name'])) { 
@@ -1372,8 +1372,9 @@ class Admin extends CI_Controller
 			   $arrayCount = count($allDataInSheet);
 			   
 			   $flag = 0;
-			   $createArray = array('NOSS_ID', 'ODP_INDEX', 'ODP_NAME', 'FTP', 'LATITUDE', 'LONGITUDE', 'CLUSNAME', 'CLUSTERSATATUS', 'AVAI', 'USED', 'RSV', 'RSK', 'IS_TOTAL', 'STO' , 'ODP_INFO', 'UPDATE_DATE');
-			   $makeArray = array('NOSS_ID' => 'NOSS_ID', 'ODP_INDEX' => 'ODP_INDEX', 'ODP_NAME' => 'ODP_NAME', 'FTP' => 'FTP', 'LATITUDE' => 'LATITUDE', 'LONGITUDE' => 'LONGITUDE', 'CLUSNAME' => 'CLUSNAME', 'CLUSTERSATATUS' => 'CLUSTERSATATUS', 'AVAI' => 'AVAI', 'USED' => 'USED', 'RSV' => 'RSV', 'RSK' => 'RSK', 'IS_TOTAL' => 'IS_TOTAL', 'STO' => 'STO' , 'ODP_INFO' => 'ODP_INFO', 'UPDATE_DATE' => 'UPDATE_DATE');
+			   
+			   $createArray = array('TANGGAL_PELURUSAN', 'ONDESK', 'ONSITE', 'NAMA_ODP', 'NOTE_ODP', 'QR_ODP', 'KOORDINAT_ODP', 'NAMA_OLT', 'PORT_OLT', 'TOTAL_IN_ODP', 'KAPASITAS', 'PORT_OUT_SPLITTER', 'QR_OUT_SPLITTER', 'PORT_ODP' , 'STATUS', 'ONU', 'SN', 'SERVICE', 'QR_DROPCORE','NOTE_URUT_DROPCORE', 'FLAG_OLT_PORT', 'CONNECTIVITY_ODP_TO_OLT', 'ODP_ONT', 'RFS', 'NOTE_HD_DAMAN', 'TANGGAL_UPDATE_UIM', 'UPDATER_UIM', 'NOTE_QR_ODP', 'NOTE_QR_OUT_SPLITTER', 'NOTE_QR_DROPCORE', 'UPDATER_DAVA');
+			   $makeArray = array('TANGGAL_PELURUSAN' => 'TANGGAL_PELURUSAN', 'ONDESK' => 'ONDESK', 'ONSITE' => 'ONSITE', 'NAMA_ODP' => 'NAMA_ODP', 'NOTE_ODP' => 'NOTE_ODP', 'QR_ODP' => 'QR_ODP', 'KOORDINAT_ODP' => 'KOORDINAT_ODP', 'NAMA_OLT' => 'NAMA_OLT', 'PORT_OLT' => 'PORT_OLT', 'TOTAL_IN_ODP' => 'TOTAL_IN_ODP', 'KAPASITAS' =>'KAPASITAS', 'PORT_OUT_SPLITTER' => 'PORT_OUT_SPLITTER', 'QR_OUT_SPLITTER' => 'QR_OUT_SPLITTER', 'PORT_ODP' => 'PORT_ODP' , 'STATUS' => 'STATUS', 'ONU' => 'ONU', 'SN' => 'SN', 'SERVICE' => 'SERVICE', 'QR_DROPCORE' => 'QR_DROPCORE','NOTE_URUT_DROPCORE' => 'NOTE_URUT_DROPCORE', 'FLAG_OLT_PORT' => 'FLAG_OLT_PORT', 'CONNECTIVITY_ODP_TO_OLT' => 'CONNECTIVITY_ODP_TO_OLT', 'ODP_ONT' => 'ODP_ONT', 'RFS' => 'RFS', 'NOTE_HD_DAMAN' => 'NOTE_HD_DAMAN', 'TANGGAL_UPDATE_UIM' => 'TANGGAL_UPDATE_UIM', 'UPDATER_UIM' => 'UPDATER_UIM', 'NOTE_QR_ODP' => 'NOTE_QR_ODP', 'NOTE_QR_OUT_SPLITTER' => 'NOTE_QR_OUT_SPLITTER', 'NOTE_QR_DROPCORE' => 'NOTE_QR_DROPCORE', 'UPDATER_DAVA' => 'UPDATER_DAVA');
 			   $SheetDataKey = array();
 			   foreach ($allDataInSheet as $dataInSheet) {
 				   foreach ($dataInSheet as $key => $value) {
@@ -1387,62 +1388,93 @@ class Admin extends CI_Controller
 			   if (empty($dataDiff)) {
 				   $flag = 1;
 			   }
+			
 			   // match excel sheet column
 			   if ($flag == 1) {
 				   for ($i = 2; $i <= $arrayCount; $i++) {
-					   $NOSS_ID = $SheetDataKey['NOSS_ID'];
-					   $ODP_INDEX = $SheetDataKey['ODP_INDEX'];
-					   $ODP_NAME = $SheetDataKey['ODP_NAME'];
-					   $FTP = $SheetDataKey['FTP'];
-					   $LATITUDE = $SheetDataKey['LATITUDE'];
-					   $LONGITUDE = $SheetDataKey['LONGITUDE'];
-					   $CLUSNAME = $SheetDataKey['CLUSNAME'];
-					   $CLUSTERSATATUS = $SheetDataKey['CLUSTERSATATUS'];
-					   $AVAI = $SheetDataKey['AVAI'];
-					   $USED = $SheetDataKey['USED'];
-					   $RSV = $SheetDataKey['RSV'];
-					   $RSK = $SheetDataKey['RSK'];
-					   $IS_TOTAL = $SheetDataKey['IS_TOTAL'];
-					   $STO = $SheetDataKey['STO'];
-					   $ODP_INFO = $SheetDataKey['ODP_INFO'];
-					   $UPDATE_DATE = $SheetDataKey['UPDATE_DATE'];
-				   
-					   $NOSS_ID = filter_var(html_escape(trim($allDataInSheet[$i][$NOSS_ID])), FILTER_SANITIZE_STRING);
-					   $ODP_INDEX = filter_var(html_escape(trim($allDataInSheet[$i][$ODP_INDEX])), FILTER_SANITIZE_STRING);
-					   $ODP_NAME  = filter_var(html_escape(trim($allDataInSheet[$i][$ODP_NAME])), FILTER_SANITIZE_STRING);
-					   $FTP = filter_var(html_escape(trim($allDataInSheet[$i][$FTP])), FILTER_SANITIZE_STRING);
-					   $LATITUDE = filter_var(html_escape(trim($allDataInSheet[$i][$LATITUDE])), FILTER_SANITIZE_STRING);
-					   $LONGITUDE = filter_var(html_escape(trim($allDataInSheet[$i][$LONGITUDE])), FILTER_SANITIZE_STRING);
-					   $CLUSNAME = filter_var(html_escape(trim($allDataInSheet[$i][$CLUSNAME])), FILTER_SANITIZE_STRING);
-					   $CLUSTERSATATUS = filter_var(html_escape(trim($allDataInSheet[$i][$CLUSTERSATATUS])), FILTER_SANITIZE_STRING);
-					   $AVAI = filter_var(html_escape(trim($allDataInSheet[$i][$AVAI])), FILTER_SANITIZE_STRING);
-					   $USED = filter_var(html_escape(trim($allDataInSheet[$i][$USED])), FILTER_SANITIZE_STRING);
-					   $RSV = filter_var(html_escape(trim($allDataInSheet[$i][$RSV])), FILTER_SANITIZE_STRING);
-					   $RSK = filter_var(html_escape(trim($allDataInSheet[$i][$RSK])), FILTER_SANITIZE_STRING);
-					   $IS_TOTAL = filter_var(html_escape(trim($allDataInSheet[$i][$IS_TOTAL])), FILTER_SANITIZE_STRING);
-					   $STO = filter_var(html_escape(trim($allDataInSheet[$i][$STO])), FILTER_SANITIZE_STRING);
-					   $ODP_INFO = filter_var(html_escape(trim($allDataInSheet[$i][$ODP_INFO])), FILTER_SANITIZE_STRING);
-					   $UPDATE_DATE = filter_var(html_escape(trim($allDataInSheet[$i][$UPDATE_DATE])), FILTER_SANITIZE_STRING);
-
-					   $newSTO = $this->STO_model->getIDSTOByKode($STO);
-					   $idSTO = $newSTO->idSTO;
-		   
-					   $fetchData[] = array('idNOSS' => $NOSS_ID, 'indexODP' => $ODP_INDEX, 'namaODP' => $ODP_NAME, 'ftp' => $FTP, 'latitude' => $LATITUDE, 'longitude' => $LONGITUDE, 'clusterName' => $CLUSNAME, 'clusterStatus' => $CLUSTERSATATUS, 'avai' => $AVAI, 'used' => $USED, 'rsv' => $RSV, 'rsk' => $RSK, 'total' => $IS_TOTAL, 'idSTO' => $idSTO , 'infoODP' => $ODP_INFO, 'updateDate' => $UPDATE_DATE);
 					   
+					   $TANGGAL_PELURUSAN = $SheetDataKey['TANGGAL_PELURUSAN'];
+					   $ONDESK = $SheetDataKey['ONDESK'];
+					   $ONSITE = $SheetDataKey['ONSITE'];
+					   $NAMA_ODP = $SheetDataKey['NAMA_ODP'];
+					   $NOTE_ODP = $SheetDataKey['NOTE_ODP'];
+					   $QR_ODP = $SheetDataKey['QR_ODP'];
+					   $KOORDINAT_ODP = $SheetDataKey['KOORDINAT_ODP'];
+					   $NAMA_OLT = $SheetDataKey['NAMA_OLT'];
+					   $PORT_OLT = $SheetDataKey['PORT_OLT'];
+					   $TOTAL_IN_ODP = $SheetDataKey['TOTAL_IN_ODP'];
+					   $KAPASITAS = $SheetDataKey['KAPASITAS'];
+					   $PORT_OUT_SPLITTER = $SheetDataKey['PORT_OUT_SPLITTER'];
+					   $QR_OUT_SPLITTER = $SheetDataKey['QR_OUT_SPLITTER'];
+					   $PORT_ODP= $SheetDataKey['PORT_ODP'];
+					   $STATUS = $SheetDataKey['STATUS'];
+					   $ONU = $SheetDataKey['ONU'];
+					   $SN = $SheetDataKey['SN'];
+					   $SERVICE = $SheetDataKey['SERVICE'];
+					   $QR_DROPCORE = $SheetDataKey['QR_DROPCORE'];
+					   $NOTE_URUT_DROPCORE = $SheetDataKey['NOTE_URUT_DROPCORE'];
+					   $FLAG_OLT_PORT= $SheetDataKey['FLAG_OLT_PORT'];
+					   $CONNECTIVITY_ODP_TO_OLT = $SheetDataKey['CONNECTIVITY_ODP_TO_OLT'];
+					   $ODP_ONT = $SheetDataKey['ODP_ONT'];
+					   $RFS = $SheetDataKey['RFS'];
+					   $NOTE_HD_DAMAN = $SheetDataKey['NOTE_HD_DAMAN'];
+					   $TANGGAL_UPDATE_UIM = $SheetDataKey['TANGGAL_UPDATE_UIM'];
+					   $UPDATER_UIM = $SheetDataKey['UPDATER_UIM'];
+					   $NOTE_QR_ODP = $SheetDataKey['NOTE_QR_ODP'];
+					   $NOTE_QR_OUT_SPLITTER = $SheetDataKey['NOTE_QR_OUT_SPLITTER'];
+					   $NOTE_QR_DROPCORE = $SheetDataKey['NOTE_QR_DROPCORE'];
+					   $UPDATER_DAVA = $SheetDataKey['UPDATER_DAVA'];
+
+					   $TANGGAL_PELURUSAN = filter_var(html_escape(trim($allDataInSheet[$i][$TANGGAL_PELURUSAN])), FILTER_SANITIZE_STRING);
+					   $ONDESK = filter_var(html_escape(trim($allDataInSheet[$i][$ONDESK])), FILTER_SANITIZE_STRING);
+					   $ONSITE = filter_var(html_escape(trim($allDataInSheet[$i][$ONSITE])), FILTER_SANITIZE_STRING);
+					   $NAMA_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$NAMA_ODP])), FILTER_SANITIZE_STRING);
+					   $NOTE_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$NOTE_ODP])), FILTER_SANITIZE_STRING);
+					   $QR_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$QR_ODP])), FILTER_SANITIZE_STRING);
+					   $KOORDINAT_ODP  = filter_var(html_escape(trim($allDataInSheet[$i][$KOORDINAT_ODP ])), FILTER_SANITIZE_STRING);
+					   $NAMA_OLT = filter_var(html_escape(trim($allDataInSheet[$i][$NAMA_OLT])), FILTER_SANITIZE_STRING);
+					   $PORT_OLT = filter_var(html_escape(trim($allDataInSheet[$i][$PORT_OLT])), FILTER_SANITIZE_STRING);
+					   $TOTAL_IN_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$TOTAL_IN_ODP])), FILTER_SANITIZE_STRING);
+					   $KAPASITAS = filter_var(html_escape(trim($allDataInSheet[$i][$KAPASITAS])), FILTER_SANITIZE_STRING);
+					   $PORT_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i][$PORT_OUT_SPLITTER])), FILTER_SANITIZE_STRING);
+					   $QR_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i][$QR_OUT_SPLITTER])), FILTER_SANITIZE_STRING);
+					   $PORT_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$PORT_ODP])), FILTER_SANITIZE_STRING);
+					   $STATUS = filter_var(html_escape(trim($allDataInSheet[$i][$STATUS])), FILTER_SANITIZE_STRING);
+					   $ONU = filter_var(html_escape(trim($allDataInSheet[$i][$ONU])), FILTER_SANITIZE_STRING);
+					   $SN = filter_var(html_escape(trim($allDataInSheet[$i][$SN])), FILTER_SANITIZE_STRING);
+					   $SERVICE = filter_var(html_escape(trim($allDataInSheet[$i][$SERVICE])), FILTER_SANITIZE_STRING);
+					   $QR_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i][$QR_DROPCORE])), FILTER_SANITIZE_STRING);
+					   $NOTE_URUT_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i][$NOTE_URUT_DROPCORE])), FILTER_SANITIZE_STRING);
+					   $FLAG_OLT_PORT = filter_var(html_escape(trim($allDataInSheet[$i][$FLAG_OLT_PORT])), FILTER_SANITIZE_STRING);
+					   $CONNECTIVITY_ODP_TO_OLT = filter_var(html_escape(trim($allDataInSheet[$i][$CONNECTIVITY_ODP_TO_OLT])), FILTER_SANITIZE_STRING);
+					   $ODP_ONT = filter_var(html_escape(trim($allDataInSheet[$i][$ODP_ONT])), FILTER_SANITIZE_STRING);
+					   $RFS = filter_var(html_escape(trim($allDataInSheet[$i][$RFS])), FILTER_SANITIZE_STRING);
+					   $NOTE_HD_DAMAN = filter_var(html_escape(trim($allDataInSheet[$i][$NOTE_HD_DAMAN])), FILTER_SANITIZE_STRING);
+					   $TANGGAL_UPDATE_UIM = filter_var(html_escape(trim($allDataInSheet[$i][$TANGGAL_UPDATE_UIM])), FILTER_SANITIZE_STRING);
+					   $UPDATER_UIM = filter_var(html_escape(trim($allDataInSheet[$i][$UPDATER_UIM])), FILTER_SANITIZE_STRING);
+					   $MOTE_QR_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$NOTE_QR_ODP])), FILTER_SANITIZE_STRING);
+					   $NOTE_QR_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i][$NOTE_QR_OUT_SPLITTER])), FILTER_SANITIZE_STRING);
+					   $NOTE_QR_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i][$NOTE_QR_DROPCORE])), FILTER_SANITIZE_STRING);
+					   $UPDATER_DAVA = filter_var(html_escape(trim($allDataInSheet[$i][$UPDATER_DAVA])), FILTER_SANITIZE_STRING);
+
+				   
+					   $fetchData[] = array('tanggalPelurusan' => $TANGGAL_PELURUSAN, 'ondesk' => $ONDESK, 'onsite' => $ONSITE, 'namaODP' => $NAMA_ODP, 'noteODP' => $NOTE_ODP, 'QRODP' => $QR_ODP, 'koordinatODP' => $KOORDINAT_ODP, 'hostname' => $NAMA_OLT, 'portOLT' => $PORT_OLT, 'totalIN' => $TOTAL_IN_ODP, 'kapasitasODP' => $KAPASITAS, 'portOutSplitter' => $PORT_OUT_SPLITTER, 'QRPortOutSplitter' => $QR_OUT_SPLITTER, 'portODP' => $PORT_ODP, 'statusPortODP' => $STATUS, 'ONU' => $ONU, 'serialNumber' => $SN, 'serviceNumber' => $SERVICE, 'QRDropCore' => $QR_DROPCORE, 'noteUrut' => $NOTE_URUT_DROPCORE, 'flagOLTPort' => $FLAG_OLT_PORT, 'ODPtoOLT' => $CONNECTIVITY_ODP_TO_OLT, 'ODPtoONT' => $ODP_ONT, 'RFS' => $RFS, 'noteHDDaman' => $NOTE_HD_DAMAN, 'updateDateUIM' => $TANGGAL_UPDATE_UIM, 'updaterUIM' => $UPDATER_UIM, 'noteQRODP' => $NOTE_QR_ODP, 'noteQROutSplitter' => $NOTE_QR_OUT_SPLITTER, 'noteQRDropCore' => $NOTE_QR_DROPCORE, 'updaterDava' => $UPDATER_DAVA);
+							   
 				   }
+
 				   
-				   // $data['data_odp'] = $fetchData;
-				   $this->ODP_model->setBatchImportODP($fetchData);
-				   $this->ODP_model->importDataODP();
+					//print_r($fetchData);
+					$this->Validasi_model->setBatchImportValidasi($fetchData);
+				 	$this->Validasi_model->importDataValidasi();
 				   
-					   $this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
+					$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			   
-					redirect('Admin/viewListODP');
+					 redirect('Admin/viewListValidasi');
 			   }else {
 				   
 				   $this->session->set_flashdata('danger', 'Please import correct file, did not match excel sheet column');
 			   }
-		   redirect('Admin/viewListODP');
+		   redirect('Admin/viewListValidasi');
 		} 
     }
 

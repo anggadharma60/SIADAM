@@ -175,7 +175,7 @@
             </ul>
           </li>
           <li>
-            <a href="<?= site_url('Admin/getValidasi') ?>">
+            <a href="<?= site_url('Admin/viewListValidasi') ?>">
               <i class="fa fa-cog"></i> <span>Kelola Data Validasi</span>
               <span class="pull-right-container"></span>
             </a>
@@ -296,6 +296,148 @@
 
       tabel = $('#table1').DataTable({});
 
+    });
+  </script>
+ <script>
+    var tabel = null;
+
+    $(document).ready(function() {
+
+      tabel = $('#tableValidasi').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ordering": true, // Set true agar bisa di sorting
+        "order": [
+          [0, 'asc']
+        ], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
+        'paging': true,
+        'lengthChange': true,
+        'searching': true,
+        'ordering': true,
+        'info': true,
+        'autoWidth': true,
+        "processing": true,
+        "serverSide": true,
+        "sScrollY": "35em", //scroll tambahan y
+        "sScrollX": "100%", //scroll tambahan x
+        "bScrollCollapse": true,
+        "ajax": {
+          "url": "<?= base_url() ?>index.php/Admin/loadDataValidasi", // URL file untuk proses select datanya
+          "type": "POST"
+        },
+        "deferRender": true,
+        "aLengthMenu": [
+          [10, 25, 50, 75, 100],
+          [10, 25, 50, 75, 100]
+        ], // Combobox Limit
+        "columns": [{
+            "data": 'id'
+          },
+          {
+            "data": 'tanggalPelurusan'
+          },
+          {
+            "data": 'ondesk'
+          },
+          {
+            "data": 'onsite'
+          },
+          {
+            "data": 'namaODP'
+          },
+          {
+            "data": 'noteODP'
+          },
+          {
+            "data": 'QRODP'
+          },
+          {
+            "data": 'koordinatODP'
+          },
+          {
+            "data": 'hostname'
+          },
+          {
+            "data": 'portOLT'
+          },
+          {
+            "data": 'totalIN'
+          },
+          {
+            "data": 'kapasitasODP'
+          },
+          {
+            "data": 'portOutSplitter'
+          },
+          {
+            "data": 'QRPortOutSplitter'
+          },
+          {
+            "data": 'portODP'
+          },
+          {
+            "data": 'statusPortODP'
+          },
+          {
+            "data": 'ONU'
+          },
+          {
+            "data": 'serialNumber'
+          },
+          {
+            "data": 'serviceNumber'
+          },
+          {
+            "data": 'QRDropCore'
+          },
+          {
+            "data": 'noteUrut'
+          },
+          {
+            "data": 'flagOLTPort'
+          },
+          {
+            "data": 'ODPtoOLT'
+          },
+          {
+            "data": 'ODPtoONT'
+          },
+          {
+            "data": 'RFS'
+          },
+          {
+            "data": 'noteHDDaman'
+          },
+          {
+            "data": 'updateDateUIM'
+          },
+          {
+            "data": 'updaterUIM'
+          },
+          {
+            "data": 'noteQRODP'
+          },
+          {
+            "data": 'noteQROutSplitter'
+          },
+          {
+            "data": 'noteQRDropCore'
+          },
+          {
+            "data": 'updaterDava'
+          },
+          {
+            "render": function(data, type, row) { // Tampilkan kolom aksi
+              var html = "<div class='text-center'>" +
+                "<a href='<?= site_url() ?>Admin/editValidasi/" + row.id + "' class='btn btn-primary btn-xs'><i class='fa fa-pencil'></i></a> " +
+                " <a href='<?= site_url() ?>Admin/deleteValidasi/" + row.id + "' onclick='return confirm(\"Anda yakin?\");' class='btn btn-danger btn-xs'><i class='fa fa-trash'></i></a> " +
+                "</div>";
+
+              return html
+            }
+          },
+        ],
+      });
     });
   </script>
   <script>

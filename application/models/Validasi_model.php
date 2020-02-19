@@ -97,6 +97,101 @@ class Validasi_model extends CI_Model {
       // $this->db->delete('rekap_data_odp');
     }
 
+    public function filter($search, $limit, $start, $order_field, $order_ascdesc){
+      $this->db->like('id', $search); // Untuk menambahkan query where LIKE
+      $this->db->or_like('tanggalPelurusan', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('ondesk', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('onsite', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('namaODP', $search); // Untuk menambahkan query where LIKE
+      $this->db->or_like('noteODP', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('QRODP', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('koordinatODP', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('hostname', $search); // Untuk menambahkan query where LIKE
+      $this->db->or_like('portOLT', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('totalIN', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('kapasitasODP', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('portOutSplitter', $search); // Untuk menambahkan query where LIKE
+      $this->db->or_like('QRPortOutSplitter', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('portODP', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('statusPortODP', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('ONU', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('serialNumber', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('serviceNumber', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('QRDropCore', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('noteUrut', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('flagOLTPort', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('ODPtoOLT', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('ODPtoONT', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('RFS', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('noteHDDaman', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('updateDateUIM', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('updaterUIM', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('noteQRODP', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('noteQROutSplitter', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('noteQRDropCore', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('updaterDava', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->order_by($order_field, $order_ascdesc); // Untuk menambahkan query ORDER BY
+      $this->db->select('*');
+      $this->db->from('rekap_data_validasi');
+      $this->db->limit($limit, $start); // Untuk menambahkan query LIMIT
+    
+      return $this->db->get()->result_array(); // Eksekusi query sql sesuai kondisi diatas
+    }
+    
+    public function count_all(){
+      return $this->db->count_all('rekap_data_validasi'); // Untuk menghitung semua data siswa
+    }
+    
+    public function count_filter($search){
+      $this->db->like('id', $search); // Untuk menambahkan query where LIKE
+      $this->db->or_like('tanggalPelurusan', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('ondesk', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('onsite', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('namaODP', $search); // Untuk menambahkan query where LIKE
+      $this->db->or_like('noteODP', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('QRODP', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('koordinatODP', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('hostname', $search); // Untuk menambahkan query where LIKE
+      $this->db->or_like('portOLT', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('totalIN', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('kapasitasODP', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('portOutSplitter', $search); // Untuk menambahkan query where LIKE
+      $this->db->or_like('QRPortOutSplitter', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('portODP', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('statusPortODP', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('ONU', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('serialNumber', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('serviceNumber', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('QRDropCore', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('noteUrut', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('flagOLTPort', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('ODPtoOLT', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('ODPtoONT', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('RFS', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('noteHDDaman', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('updateDateUIM', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('updaterUIM', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('noteQRODP', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('noteQROutSplitter', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('noteQRDropCore', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->or_like('updaterDava', $search); // Untuk menambahkan query where OR LIKE
+      $this->db->select('*');
+      $this->db->from('rekap_data_validasi');
+      return $this->db->get()->num_rows(); // Untuk menghitung jumlah data sesuai dengan filter pada textbox pencarian
+    }
+
+    private $varBatchImportValidasi;
+    public function setBatchImportValidasi($batchImportValidasi)
+    {
+      $this->varBatchImportValidasi = $batchImportValidasi;
+    }
+
+    //import data to database
+    public function importDataValidasi()
+    {
+      $data = $this->varBatchImportValidasi;
+      $this->db->insert_batch('rekap_data_validasi', $data);
+    }
   
   
 

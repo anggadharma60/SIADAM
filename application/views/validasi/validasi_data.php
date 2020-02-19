@@ -33,9 +33,10 @@
     </div>
     <div class="box-body table-responsive">
       <!-- id="table1" buat searching pagination dan row -->
-      <table class="table table-bordered table-striped" border="1" cellpadding="8" id="table1">
+      <table class="table table-bordered table-striped" border="1" cellpadding="8" id="tableValidasi">
         <thead>
           <tr>
+            <th>ID</th>
             <th>TANGGAL PELURUSAN</th>
             <th>ONDESK</th>
             <th>ONSITE</th>
@@ -75,7 +76,8 @@
         </tbody>
         <tfoot>
           <tr>
-          <th>TANGGAL PELURUSAN</th>
+          <th>ID</th>
+            <th>TANGGAL PELURUSAN</th>
             <th>ONDESK</th>
             <th>ONSITE</th>
             <th>NAMA ODP</th>
