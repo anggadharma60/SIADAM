@@ -1603,7 +1603,7 @@ class Admin extends CI_Controller
 			$activeSheet->setCellValue('A2', 'TANGGAL PELURUSAN');
 			$activeSheet->setCellValue('A3', '');
 			$activeSheet->mergeCells('B1:C1');
-			$activeSheet->setCellValue('B1', 'AMIJA')
+			$activeSheet->setCellValue('B1', 'AMIJA');
 			$activeSheet->setCellValue('B2', 'ONDESK');
 			$activeSheet->setCellValue('C2', 'ONSITE');
 			$activeSheet->setCellValue('B3', 'nama ondesk');
