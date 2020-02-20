@@ -35,26 +35,43 @@ class Validasi_model extends CI_Model {
 
   public function addDataValidasi($post)
     {
-        // $params['idNOSS'] = html_escape($post['idNOSS']);
-        // $params['indexODP'] = html_escape($post['indexODP']);
-        // $params['namaODP'] = html_escape($post['namaODP']);
-        // $params['ftp'] = html_escape($post['ftp']);
-        // $params['latitude'] = html_escape($post['latitude']);
-        // $params['longitude'] = html_escape($post['longitude']);
-        // $params['clusterName'] = html_escape($post['clusterName']);
-        // $params['clusterStatus'] = html_escape($post['clusterStatus']);
-        // $params['avai'] = html_escape($post['avai']);
-        // $params['used'] = html_escape($post['used']);
-        // $params['rsv'] = html_escape($post['rsv']);
-        // $params['rsk'] = html_escape($post['rsk']);
-        // $total = $params['avai'] + $params['used'] + $params['rsv'] + $params['rsk'];
-        // $params['total'] = html_escape($total);
-        // $params['idSTO'] = html_escape($post['STO']);
-        // $params['infoODP'] = html_escape($post['infoODP']);
-        // $format = "%Y-%m-%d %h:%i %A";
-        // $datetime = mdate($format);
-        // $params['updateDate'] = html_escape($datetime);
-        // $this->db->insert('rekap_data_odp', $params);
+        $params['tanggal_pelurusan'] = html_escape($post['tanggal_pelurusan']);
+        $params['idOndeks'] = html_escape($post['indexODP']);
+        $params['idOnsite1'] = html_escape($post['namaODP']);
+        $params['idOnsite2'] = html_escape($post['ftp']);
+        $params['idODP'] = html_escape($post['latitude']);
+        $params['noteODP'] = html_escape($post['longitude']);
+        $params['QRODP'] = html_escape($post['clusterName']);
+        $params['koordinatODP'] = html_escape($post['clusterStatus']);
+        $params['hostname'] = html_escape($post['avai']);
+        $params['portOLT'] = html_escape($post['used']);
+        $params['totalIn'] = html_escape($post['rsv']);
+        $params['kapasitasODP'] = html_escape($post['rsk']);
+        $params['portOutSplitter'] = html_escape($total);
+        $params['QROutSplitter'] = html_escape($post['STO']);
+        $params['portODP'] = html_escape($post['infoODP']);
+        $params['statusportODP'] = html_escape($post['clusterName']);
+        $params['ONU'] = html_escape($post['clusterStatus']);
+        $params['serialNumber'] = html_escape($post['avai']);
+        $params['serviceNumber'] = html_escape($post['used']);
+        $params['QRDropCore'] = html_escape($post['rsv']);
+        $params['noteDropcore'] = html_escape($post['rsk']);
+        $params['flagOLTPort'] = html_escape($total);
+        $params['ODPtoOLT'] = html_escape($post['STO']);
+        $params['ODPtoONT'] = html_escape($post['infoODP']);
+        $params['RFS'] = html_escape($post['tanggal_pelurusan']);
+        $params['noteHDDaman'] = html_escape($post['indexODP']);
+        $params['updateDataUIM'] = html_escape($post['namaODP']);
+        $params['updaterUIM'] = html_escape($post['ftp']);
+        $params['noteQRODP'] = html_escape($post['latitude']);
+        $params['noteQROutSplitter'] = html_escape($post['longitude']);
+        $params['noteQRDropCore'] = html_escape($post['clusterName']);
+        $params['updaterDava'] = html_escape($post['clusterStatus']);
+        
+        $format = "%Y-%m-%d %h:%i %A";
+        $datetime = mdate($format);
+        $params['updateDate'] = html_escape($datetime);
+        $this->db->insert('rekap_data_odp', $params);
     }
 
     public function editDataValidasi($post)
