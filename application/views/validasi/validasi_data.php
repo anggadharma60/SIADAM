@@ -76,7 +76,7 @@
         </tbody>
         <tfoot>
           <tr>
-          <th>ID</th>
+            <th>ID</th>
             <th>TANGGAL PELURUSAN</th>
             <th>ONDESK</th>
             <th>ONSITE</th>

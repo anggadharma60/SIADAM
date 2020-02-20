@@ -67,7 +67,7 @@ class Validasi_model extends CI_Model {
         $format = "%Y-%m-%d %h:%i %A";
         $datetime = mdate($format);
         $params['updateDate'] = html_escape($datetime);
-        $this->db->insert('rekap_data_odp', $params);
+        $this->db->insert('rekap_data_validasi', $params);
     }
 
     public function editDataValidasi($post)
