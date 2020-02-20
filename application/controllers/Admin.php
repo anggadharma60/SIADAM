@@ -35,17 +35,16 @@ class Admin extends CI_Controller
 		check_not_login();
 		//check admin buat fungsi_helper
 		check_admin();
+		$this->load->model('Datel_model');
 		$this->load->model('ODP_model');
 		$this->load->model('OLT_model');
 		$this->load->model('Pegawai_model');
 		$this->load->model('Regional_model');
+		$this->load->model('SpecOLT_model');
 		$this->load->model('STO_model');
 		$this->load->model('Validasi_model');
-		$this->load->model('Datel_model');
 		$this->load->model('Witel_model');
-		$this->load->model('SpecOLT_model');
-		$this->load->model("Import_ODP_model");
-		$this->load->library('form_validation');
+		
 	}
 
 	// Halaman Awal Admin
@@ -53,6 +52,60 @@ class Admin extends CI_Controller
 	{
 		check_not_login();
 		$this->template->load('template/template_Admin', 'dashboard_home');
+	}
+
+	public function editProfile()
+	{	
+		
+		$id = $this->session->userdata['idPegawai'];
+		$this->form_validation->set_rules('namaPegawai', 'Nama', 'required|regex_match[/^[a-zA-Z ]+$/]|min_length[0]|max_length[30]|trim');
+		$this->form_validation->set_rules('username', 'Username', 'required|alpha_numeric|callback_username_check|min_length[5]|max_length[20]|trim');
+		if ($this->input->post('password')) {
+			$this->form_validation->set_rules('password', 'Password', 'alpha_numeric|min_length[5]|max_length[16]|trim');
+			$this->form_validation->set_rules(
+				'passconf',
+				'Konfirmasi Password',
+				'matches[password]|alpha_numeric|min_length[5]|max_length[16]|trim',
+				array('matches' => '%s tidak sesuai dengan password')
+			);
+		}
+		if ($this->input->post('passconf')) {
+			$this->form_validation->set_rules(
+				'passconf',
+				'Konfirmasi Password',
+				'matches[password]|alpha_numeric|min_length[5]|max_length[16]|trim',
+				array('matches' => '%s tidak sesuai dengan password')
+			);
+		}
+		
+
+		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
+		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
+		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
+		$this->form_validation->set_message('regex_match', '{field} berisi karakter');
+		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
+		$this->form_validation->set_message('alpha_numeric_spaces', '{field} berisi karakter');
+		$this->form_validation->set_message('alpha_numeric', '{field} berisi karakter dan numerik');
+
+		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
+
+		if ($this->form_validation->run() == FALSE) {
+			$query = $this->pegawai_model->getDataPegawai($id);
+			if ($query->num_rows() > 0) {
+				$data['row'] = $query->row();
+				$this->template->load('template/template_Admin', 'template/edit_profile', $data);
+			} else {
+				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
+				redirect('Admin/getPegawai');
+			}
+		} else {
+			$post = $this->input->post(null, TRUE);
+			$this->Pegawai_model->editDataPegawai($post);
+			if ($this->db->affected_rows() > 0) {
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
+			}
+			redirect('Admin/getPegawai');
+		}
 	}
 
 	public function chart()
@@ -957,7 +1010,7 @@ class Admin extends CI_Controller
 
 	public function deleteODP($id)
 	{
-		// $id = $this->input->post('idODP');
+		
 		$this->ODP_model->deleteDataODP($id);
 
 		if ($this->db->affected_rows() > 0) {
@@ -968,8 +1021,8 @@ class Admin extends CI_Controller
 
 	public function deleteAllODP()
 	{	
-		$this->exportODP();
-		$this->ODP_model->deleteAllDataODP('rekap_data_odp');
+		// $this->exportODP();
+	
 
 		if ($this->db->affected_rows() > 0) {
 			$this->session->set_flashdata('danger', 'Semua data berhasil dihapus');
@@ -981,7 +1034,7 @@ class Admin extends CI_Controller
 	public function exportODP()
 	{
 
-		$this->load->model('ODP_model');
+		
 		// Create new Spreadsheet object
 		$spreadsheet = new Spreadsheet();
 		
@@ -1265,8 +1318,6 @@ class Admin extends CI_Controller
 	}
 	public function exportOLT()
 	{
-
-		$this->load->model('OLT_model');
 		// Create new Spreadsheet object
 		$spreadsheet = new Spreadsheet();
 		
@@ -1615,7 +1666,7 @@ class Admin extends CI_Controller
 
 	public function deleteAllValidasi()
 	{	
-		$this->exportValidasi();
+		// $this->exportValidasi();
 		$this->Validasi_model->deleteAllDataValidasi('rekap_data_validasi');
 
 		if ($this->db->affected_rows() > 0) {
@@ -1623,21 +1674,20 @@ class Admin extends CI_Controller
 		}
 	
 	}
-	public function deleteValidasi()
+	public function deleteValidasi($id)
 	{
-		$id = $this->input->post('idValidasi');
 		$this->Validasi_model->deleteDataValidasi($id);
 
 		if ($this->db->affected_rows() > 0) {
 			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
 		}
-		redirect('Admin/getValidasi');
+		redirect('Admin/viewListValidasi');
 	}
 
 	public function exportValidasi()
 	{
 
-		$this->load->model('Validasi_model');
+		
 		// Create new Spreadsheet object
 		$spreadsheet = new Spreadsheet();
 		

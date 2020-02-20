@@ -106,8 +106,8 @@ class Validasi_model extends CI_Model {
     
     public function deleteDataValidasi($id)
     {
-      // $this->db->where('idODP', $id);
-      // $this->db->delete('rekap_data_odp');
+      $this->db->where('id', $id);
+      $this->db->delete('rekap_data_validasi');
     }
 
     public function filter($search, $limit, $start, $order_field, $order_ascdesc){
