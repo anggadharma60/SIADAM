@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2020 at 04:23 AM
+-- Generation Time: Feb 20, 2020 at 03:27 PM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -299,7 +299,7 @@ CREATE TABLE `rekap_data_odp` (
   `total` varchar(4) NOT NULL,
   `idSTO` varchar(5) DEFAULT NULL,
   `infoODP` varchar(50) DEFAULT NULL,
-  `updateDate` varchar(25) NOT NULL
+  `updateDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -365,7 +365,7 @@ DELIMITER ;
 
 CREATE TABLE `rekap_data_validasi` (
   `id` int(11) NOT NULL,
-  `tanggalPelurusan` varchar(25) NOT NULL,
+  `tanggalPelurusan` date NOT NULL,
   `ondesk` varchar(40) NOT NULL,
   `onsite` varchar(80) NOT NULL,
   `namaODP` varchar(40) NOT NULL,
@@ -390,7 +390,7 @@ CREATE TABLE `rekap_data_validasi` (
   `ODPtoONT` varchar(40) DEFAULT NULL,
   `RFS` varchar(40) DEFAULT NULL,
   `noteHDDaman` varchar(100) DEFAULT NULL,
-  `updateDateUIM` varchar(25) DEFAULT NULL,
+  `updateDateUIM` date DEFAULT NULL,
   `updaterUIM` varchar(40) DEFAULT 'NULL',
   `noteQRODP` varchar(45) DEFAULT NULL,
   `noteQROutSplitter` varchar(45) DEFAULT NULL,

@@ -15,14 +15,8 @@
         <div class="box-header">
             <h3 class="box-title">Filtering</h3>
             <div class="pull-right">
-                <a href="#" class="btn btn-danger btn-flat">
+                <a href="<?= site_url('Admin/exportValidasi')?>" class="btn btn-danger btn-flat">
                     <i class="fa fa-upload  "></i> Export
-                </a>
-                <a href="#" class="btn btn-success btn-flat">
-                    <i class="fa fa-download"></i> Import
-                </a>
-                <a href="#" class="btn btn-primary btn-flat">
-                    <i class="fa fa-user-plus"></i> Create
                 </a>
             </div>
         </div>
@@ -52,9 +46,10 @@
         <!-- /.form group -->
         <div class="box-body table-responsive">
             <!-- id="table1" buat searching pagination dan row -->
-            <table class="table table-bordered table-striped" border="1" cellpadding="8" id="table1">
+            <table class="table table-bordered table-striped" border="1" cellpadding="8" id="tableValidasi">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>TANGGAL PELURUSAN</th>
                         <th>ONDESK</th>
                         <th>ONSITE</th>
@@ -86,6 +81,7 @@
                         <th>QR OUT SPLITTER</th>
                         <th>QR DROPCORE</th>
                         <th>UPDATER DAVA</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -93,6 +89,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
+                        <th>ID</th>
                         <th>TANGGAL PELURUSAN</th>
                         <th>ONDESK</th>
                         <th>ONSITE</th>
@@ -124,6 +121,7 @@
                         <th>QR OUT SPLITTER</th>
                         <th>QR DROPCORE</th>
                         <th>UPDATER DAVA</th>
+                        <th>Actions</th>
                     </tr>
                 </tfoot>
             </table>

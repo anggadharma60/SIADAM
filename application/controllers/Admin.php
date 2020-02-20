@@ -782,9 +782,13 @@ class Admin extends CI_Controller
 
 						$newSTO = $this->STO_model->getIDSTOByKode($STO);
 						$idSTO = $newSTO->idSTO;
-			
-						$fetchData[] = array('idNOSS' => $NOSS_ID, 'indexODP' => $ODP_INDEX, 'namaODP' => $ODP_NAME, 'ftp' => $FTP, 'latitude' => $LATITUDE, 'longitude' => $LONGITUDE, 'clusterName' => $CLUSNAME, 'clusterStatus' => $CLUSTERSATATUS, 'avai' => $AVAI, 'used' => $USED, 'rsv' => $RSV, 'rsk' => $RSK, 'total' => $IS_TOTAL, 'idSTO' => $idSTO , 'infoODP' => $ODP_INFO, 'updateDate' => $UPDATE_DATE);
+						$newDate = date("Y-m-d H:i", strtotime($UPDATE_DATE)); 
 						
+						$fetchData[] = array('idNOSS' => $NOSS_ID, 'indexODP' => $ODP_INDEX, 'namaODP' => $ODP_NAME, 'ftp' => $FTP, 'latitude' => $LATITUDE, 'longitude' => $LONGITUDE, 'clusterName' => $CLUSNAME, 'clusterStatus' => $CLUSTERSATATUS, 'avai' => $AVAI, 'used' => $USED, 'rsv' => $RSV, 'rsk' => $RSK, 'total' => $IS_TOTAL, 'idSTO' => $idSTO , 'infoODP' => $ODP_INFO, 'updateDate' => $newDate);
+						
+						// print_r($UPDATE_DATE);
+						
+						// print_r($newDate);
 					}
 					
 					// $data['data_odp'] = $fetchData;
@@ -969,8 +973,9 @@ class Admin extends CI_Controller
 
 		if ($this->db->affected_rows() > 0) {
 			$this->session->set_flashdata('danger', 'Semua data berhasil dihapus');
+			
 		}
-		redirect('Admin/viewListODP');
+		
 	}
 
 	public function exportODP()
@@ -1034,7 +1039,9 @@ class Admin extends CI_Controller
 			$activeSheet->setCellValue('R'.$i, $row->kodeSTO);
 			$activeSheet->setCellValue('S'.$i, $row->namaSTO);
 			$activeSheet->setCellValue('T'.$i, $row->infoODP);
-			$activeSheet->setCellValue('U'.$i, $row->updateDate);
+
+			$newDate = date("d/m/Y H:i", strtotime($row->updateDate)); 
+			$activeSheet->setCellValue('U'.$i, $newDate);
 			$i++;
 		}
 		
@@ -1044,7 +1051,10 @@ class Admin extends CI_Controller
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		header('Content-Disposition: attachment;filename="'. $filename);
 		header('Cache-Control: max-age=0');
+		
 		$Excel_writer->save('php://output');
+		
+		
 	}
 	// END ODP
 
@@ -1457,8 +1467,13 @@ class Admin extends CI_Controller
 					   $NOTE_QR_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i]['AD'])), FILTER_SANITIZE_STRING);
 					   $UPDATER_DAVA = filter_var(html_escape(trim($allDataInSheet[$i]['AE'])), FILTER_SANITIZE_STRING);
 
-				   
-					   $fetchData[] = array('tanggalPelurusan' => $TANGGAL_PELURUSAN, 'ondesk' => $ONDESK, 'onsite' => $ONSITE, 'namaODP' => $NAMA_ODP, 'noteODP' => $NOTE_ODP, 'QRODP' => $QR_ODP, 'koordinatODP' => $KOORDINAT_ODP, 'hostname' => $NAMA_OLT, 'portOLT' => $PORT_OLT, 'totalIN' => $TOTAL_IN_ODP, 'kapasitasODP' => $KAPASITAS, 'portOutSplitter' => $PORT_OUT_SPLITTER, 'QRPortOutSplitter' => $QR_OUT_SPLITTER, 'portODP' => $PORT_ODP, 'statusPortODP' => $STATUS, 'ONU' => $ONU, 'serialNumber' => $SN, 'serviceNumber' => $SERVICE, 'QRDropCore' => $QR_DROPCORE, 'noteUrut' => $NOTE_URUT_DROPCORE, 'flagOLTPort' => $FLAG_OLT_PORT, 'ODPtoOLT' => $CONNECTIVITY_ODP_TO_OLT, 'ODPtoONT' => $ODP_ONT, 'RFS' => $RFS, 'noteHDDaman' => $NOTE_HD_DAMAN, 'updateDateUIM' => $TANGGAL_UPDATE_UIM, 'updaterUIM' => $UPDATER_UIM, 'noteQRODP' => $NOTE_QR_ODP, 'noteQROutSplitter' => $NOTE_QR_OUT_SPLITTER, 'noteQRDropCore' => $NOTE_QR_DROPCORE, 'updaterDava' => $UPDATER_DAVA);
+					   $newDateA = date("Y-m-d", strtotime($TANGGAL_PELURUSAN)); 
+					   if($TANGGAL_UPDATE_UIM != "" or $TANGGAL_UPDATE_UIM != null){
+						$newDateB = date("Y-m-d", strtotime($TANGGAL_UPDATE_UIM)); 
+					   }
+					   
+
+					   $fetchData[] = array('tanggalPelurusan' => $newDateA, 'ondesk' => $ONDESK, 'onsite' => $ONSITE, 'namaODP' => $NAMA_ODP, 'noteODP' => $NOTE_ODP, 'QRODP' => $QR_ODP, 'koordinatODP' => $KOORDINAT_ODP, 'hostname' => $NAMA_OLT, 'portOLT' => $PORT_OLT, 'totalIN' => $TOTAL_IN_ODP, 'kapasitasODP' => $KAPASITAS, 'portOutSplitter' => $PORT_OUT_SPLITTER, 'QRPortOutSplitter' => $QR_OUT_SPLITTER, 'portODP' => $PORT_ODP, 'statusPortODP' => $STATUS, 'ONU' => $ONU, 'serialNumber' => $SN, 'serviceNumber' => $SERVICE, 'QRDropCore' => $QR_DROPCORE, 'noteUrut' => $NOTE_URUT_DROPCORE, 'flagOLTPort' => $FLAG_OLT_PORT, 'ODPtoOLT' => $CONNECTIVITY_ODP_TO_OLT, 'ODPtoONT' => $ODP_ONT, 'RFS' => $RFS, 'noteHDDaman' => $NOTE_HD_DAMAN, 'updateDateUIM' => $newDateB, 'updaterUIM' => $UPDATER_UIM, 'noteQRODP' => $NOTE_QR_ODP, 'noteQROutSplitter' => $NOTE_QR_OUT_SPLITTER, 'noteQRDropCore' => $NOTE_QR_DROPCORE, 'updaterDava' => $UPDATER_DAVA);
 							   
 				   }
 
@@ -1600,13 +1615,13 @@ class Admin extends CI_Controller
 
 	public function deleteAllValidasi()
 	{	
-		// $this->exportODP();
-		// $this->ODP_model->deleteAllDataODP('rekap_data_odp');
+		$this->exportValidasi();
+		$this->Validasi_model->deleteAllDataValidasi('rekap_data_validasi');
 
-		// if ($this->db->affected_rows() > 0) {
-		// 	$this->session->set_flashdata('danger', 'Semua data berhasil dihapus');
-		// }
-		// redirect('Admin/viewListODP');
+		if ($this->db->affected_rows() > 0) {
+			$this->session->set_flashdata('danger', 'Semua data berhasil dihapus');
+		}
+	
 	}
 	public function deleteValidasi()
 	{
@@ -1730,7 +1745,8 @@ class Admin extends CI_Controller
 		// $query = $db->query("SELECT * FROM rekap_data_odp ORDER BY idODP DESC");
 		$query = $this->Validasi_model->getDataValidasi()->result();
 		$i=4; foreach($query as $row) {
-			$activeSheet->setCellValue('A'.$i, $row->tanggalPelurusan);
+			$newDateA = date("d/m/Y", strtotime($row->tanggalPelurusan)); 
+			$activeSheet->setCellValue('A'.$i, $newDateA);
 			$activeSheet->setCellValue('B'.$i, $row->ondesk);
 			$activeSheet->setCellValue('C'.$i, $row->onsite);
 			$activeSheet->setCellValue('D'.$i, $row->namaODP);
@@ -1755,7 +1771,8 @@ class Admin extends CI_Controller
 			$activeSheet->setCellValue('W'.$i, $row->ODPtoONT);
 			$activeSheet->setCellValue('X'.$i, $row->RFS);
 			$activeSheet->setCellValue('Y'.$i, $row->noteHDDaman);
-			$activeSheet->setCellValue('Z'.$i, $row->updateDateUIM);
+			$newDateB = date("d/m/Y", strtotime($row->updateDateUIM)); 
+			$activeSheet->setCellValue('Z'.$i, $newDateB);
 			$activeSheet->setCellValue('AA'.$i, $row->updaterUIM);
 			$activeSheet->setCellValue('AB'.$i, $row->noteQRODP);
 			$activeSheet->setCellValue('AC'.$i, $row->noteQROutSplitter);
