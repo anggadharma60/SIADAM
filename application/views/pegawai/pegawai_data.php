@@ -7,7 +7,6 @@
     <li class="active">Pegawai</li>
   </ol>
 </section>
-
 <!-- Main content -->
 <section class="content">
   <!-- buat ALERT ke messages.php -->
@@ -50,9 +49,13 @@
                     <i class="fa fa-pencil"></i>
                   </a>
                   <input type="hidden" name="idPegawai" value="<?= $data->idPegawai ?>">
-                  <button onclick="return confirm('Apakah Anda Yakin?')" class="btn btn-danger btn-xs">
-                    <i class="fa fa-trash"></i>
-                  </button>
+                  <?php
+                    if($data->status != 'Admin') { ?>
+                        <button onclick="return confirm('Apakah Anda Yakin?')" class="btn btn-danger btn-xs">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                    <?php }?>
+                  
                 </form>
               </td>
             </tr>

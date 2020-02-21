@@ -35,17 +35,16 @@ class Admin extends CI_Controller
 		check_not_login();
 		//check admin buat fungsi_helper
 		check_admin();
+		$this->load->model('Datel_model');
 		$this->load->model('ODP_model');
 		$this->load->model('OLT_model');
 		$this->load->model('Pegawai_model');
 		$this->load->model('Regional_model');
+		$this->load->model('SpecOLT_model');
 		$this->load->model('STO_model');
 		$this->load->model('Validasi_model');
-		$this->load->model('Datel_model');
 		$this->load->model('Witel_model');
-		$this->load->model('SpecOLT_model');
-		$this->load->model("Import_ODP_model");
-		$this->load->library('form_validation');
+		
 	}
 
 	// Halaman Awal Admin
@@ -53,6 +52,60 @@ class Admin extends CI_Controller
 	{
 		check_not_login();
 		$this->template->load('template/template_Admin', 'dashboard_home');
+	}
+
+	public function editProfile()
+	{	
+		
+		$id = $this->session->userdata['idPegawai'];
+		$this->form_validation->set_rules('namaPegawai', 'Nama', 'required|regex_match[/^[a-zA-Z ]+$/]|min_length[0]|max_length[30]|trim');
+		$this->form_validation->set_rules('username', 'Username', 'required|alpha_numeric|callback_username_check|min_length[5]|max_length[20]|trim');
+		if ($this->input->post('password')) {
+			$this->form_validation->set_rules('password', 'Password', 'alpha_numeric|min_length[5]|max_length[16]|trim');
+			$this->form_validation->set_rules(
+				'passconf',
+				'Konfirmasi Password',
+				'matches[password]|alpha_numeric|min_length[5]|max_length[16]|trim',
+				array('matches' => '%s tidak sesuai dengan password')
+			);
+		}
+		if ($this->input->post('passconf')) {
+			$this->form_validation->set_rules(
+				'passconf',
+				'Konfirmasi Password',
+				'matches[password]|alpha_numeric|min_length[5]|max_length[16]|trim',
+				array('matches' => '%s tidak sesuai dengan password')
+			);
+		}
+		
+
+		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
+		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
+		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
+		$this->form_validation->set_message('regex_match', '{field} berisi karakter');
+		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
+		$this->form_validation->set_message('alpha_numeric_spaces', '{field} berisi karakter');
+		$this->form_validation->set_message('alpha_numeric', '{field} berisi karakter dan numerik');
+
+		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
+
+		if ($this->form_validation->run() == FALSE) {
+			$query = $this->pegawai_model->getDataPegawai($id);
+			if ($query->num_rows() > 0) {
+				$data['row'] = $query->row();
+				$this->template->load('template/template_Admin', 'template/edit_profile', $data);
+			} else {
+				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
+				redirect('Admin/getPegawai');
+			}
+		} else {
+			$post = $this->input->post(null, TRUE);
+			$this->Pegawai_model->editDataPegawai($post);
+			if ($this->db->affected_rows() > 0) {
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
+			}
+			redirect('Admin/getPegawai');
+		}
 	}
 
 	public function chart()
@@ -782,9 +835,13 @@ class Admin extends CI_Controller
 
 						$newSTO = $this->STO_model->getIDSTOByKode($STO);
 						$idSTO = $newSTO->idSTO;
-			
-						$fetchData[] = array('idNOSS' => $NOSS_ID, 'indexODP' => $ODP_INDEX, 'namaODP' => $ODP_NAME, 'ftp' => $FTP, 'latitude' => $LATITUDE, 'longitude' => $LONGITUDE, 'clusterName' => $CLUSNAME, 'clusterStatus' => $CLUSTERSATATUS, 'avai' => $AVAI, 'used' => $USED, 'rsv' => $RSV, 'rsk' => $RSK, 'total' => $IS_TOTAL, 'idSTO' => $idSTO , 'infoODP' => $ODP_INFO, 'updateDate' => $UPDATE_DATE);
+						$newDate = date("Y-m-d H:i", strtotime($UPDATE_DATE)); 
 						
+						$fetchData[] = array('idNOSS' => $NOSS_ID, 'indexODP' => $ODP_INDEX, 'namaODP' => $ODP_NAME, 'ftp' => $FTP, 'latitude' => $LATITUDE, 'longitude' => $LONGITUDE, 'clusterName' => $CLUSNAME, 'clusterStatus' => $CLUSTERSATATUS, 'avai' => $AVAI, 'used' => $USED, 'rsv' => $RSV, 'rsk' => $RSK, 'total' => $IS_TOTAL, 'idSTO' => $idSTO , 'infoODP' => $ODP_INFO, 'updateDate' => $newDate);
+						
+						// print_r($UPDATE_DATE);
+						
+						// print_r($newDate);
 					}
 					
 					// $data['data_odp'] = $fetchData;
@@ -953,7 +1010,7 @@ class Admin extends CI_Controller
 
 	public function deleteODP($id)
 	{
-		// $id = $this->input->post('idODP');
+		
 		$this->ODP_model->deleteDataODP($id);
 
 		if ($this->db->affected_rows() > 0) {
@@ -964,19 +1021,20 @@ class Admin extends CI_Controller
 
 	public function deleteAllODP()
 	{	
-		$this->exportODP();
-		$this->ODP_model->deleteAllDataODP('rekap_data_odp');
+		// $this->exportODP();
+	
 
 		if ($this->db->affected_rows() > 0) {
 			$this->session->set_flashdata('danger', 'Semua data berhasil dihapus');
+			
 		}
-		redirect('Admin/viewListODP');
+		
 	}
 
 	public function exportODP()
 	{
 
-		$this->load->model('ODP_model');
+		
 		// Create new Spreadsheet object
 		$spreadsheet = new Spreadsheet();
 		
@@ -1034,7 +1092,9 @@ class Admin extends CI_Controller
 			$activeSheet->setCellValue('R'.$i, $row->kodeSTO);
 			$activeSheet->setCellValue('S'.$i, $row->namaSTO);
 			$activeSheet->setCellValue('T'.$i, $row->infoODP);
-			$activeSheet->setCellValue('U'.$i, $row->updateDate);
+
+			$newDate = date("d/m/Y H:i", strtotime($row->updateDate)); 
+			$activeSheet->setCellValue('U'.$i, $newDate);
 			$i++;
 		}
 		
@@ -1044,7 +1104,10 @@ class Admin extends CI_Controller
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		header('Content-Disposition: attachment;filename="'. $filename);
 		header('Cache-Control: max-age=0');
+		
 		$Excel_writer->save('php://output');
+		
+		
 	}
 	// END ODP
 
@@ -1255,8 +1318,6 @@ class Admin extends CI_Controller
 	}
 	public function exportOLT()
 	{
-
-		$this->load->model('OLT_model');
 		// Create new Spreadsheet object
 		$spreadsheet = new Spreadsheet();
 		
@@ -1457,8 +1518,13 @@ class Admin extends CI_Controller
 					   $NOTE_QR_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i]['AD'])), FILTER_SANITIZE_STRING);
 					   $UPDATER_DAVA = filter_var(html_escape(trim($allDataInSheet[$i]['AE'])), FILTER_SANITIZE_STRING);
 
-				   
-					   $fetchData[] = array('tanggalPelurusan' => $TANGGAL_PELURUSAN, 'ondesk' => $ONDESK, 'onsite' => $ONSITE, 'namaODP' => $NAMA_ODP, 'noteODP' => $NOTE_ODP, 'QRODP' => $QR_ODP, 'koordinatODP' => $KOORDINAT_ODP, 'hostname' => $NAMA_OLT, 'portOLT' => $PORT_OLT, 'totalIN' => $TOTAL_IN_ODP, 'kapasitasODP' => $KAPASITAS, 'portOutSplitter' => $PORT_OUT_SPLITTER, 'QRPortOutSplitter' => $QR_OUT_SPLITTER, 'portODP' => $PORT_ODP, 'statusPortODP' => $STATUS, 'ONU' => $ONU, 'serialNumber' => $SN, 'serviceNumber' => $SERVICE, 'QRDropCore' => $QR_DROPCORE, 'noteUrut' => $NOTE_URUT_DROPCORE, 'flagOLTPort' => $FLAG_OLT_PORT, 'ODPtoOLT' => $CONNECTIVITY_ODP_TO_OLT, 'ODPtoONT' => $ODP_ONT, 'RFS' => $RFS, 'noteHDDaman' => $NOTE_HD_DAMAN, 'updateDateUIM' => $TANGGAL_UPDATE_UIM, 'updaterUIM' => $UPDATER_UIM, 'noteQRODP' => $NOTE_QR_ODP, 'noteQROutSplitter' => $NOTE_QR_OUT_SPLITTER, 'noteQRDropCore' => $NOTE_QR_DROPCORE, 'updaterDava' => $UPDATER_DAVA);
+					   $newDateA = date("Y-m-d", strtotime($TANGGAL_PELURUSAN)); 
+					   if($TANGGAL_UPDATE_UIM != "" or $TANGGAL_UPDATE_UIM != null){
+						$newDateB = date("Y-m-d", strtotime($TANGGAL_UPDATE_UIM)); 
+					   }
+					   
+
+					   $fetchData[] = array('tanggalPelurusan' => $newDateA, 'ondesk' => $ONDESK, 'onsite' => $ONSITE, 'namaODP' => $NAMA_ODP, 'noteODP' => $NOTE_ODP, 'QRODP' => $QR_ODP, 'koordinatODP' => $KOORDINAT_ODP, 'hostname' => $NAMA_OLT, 'portOLT' => $PORT_OLT, 'totalIN' => $TOTAL_IN_ODP, 'kapasitasODP' => $KAPASITAS, 'portOutSplitter' => $PORT_OUT_SPLITTER, 'QRPortOutSplitter' => $QR_OUT_SPLITTER, 'portODP' => $PORT_ODP, 'statusPortODP' => $STATUS, 'ONU' => $ONU, 'serialNumber' => $SN, 'serviceNumber' => $SERVICE, 'QRDropCore' => $QR_DROPCORE, 'noteUrut' => $NOTE_URUT_DROPCORE, 'flagOLTPort' => $FLAG_OLT_PORT, 'ODPtoOLT' => $CONNECTIVITY_ODP_TO_OLT, 'ODPtoONT' => $ODP_ONT, 'RFS' => $RFS, 'noteHDDaman' => $NOTE_HD_DAMAN, 'updateDateUIM' => $newDateB, 'updaterUIM' => $UPDATER_UIM, 'noteQRODP' => $NOTE_QR_ODP, 'noteQROutSplitter' => $NOTE_QR_OUT_SPLITTER, 'noteQRDropCore' => $NOTE_QR_DROPCORE, 'updaterDava' => $UPDATER_DAVA);
 							   
 				   }
 
@@ -1600,29 +1666,28 @@ class Admin extends CI_Controller
 
 	public function deleteAllValidasi()
 	{	
-		// $this->exportODP();
-		// $this->ODP_model->deleteAllDataODP('rekap_data_odp');
+		// $this->exportValidasi();
+		$this->Validasi_model->deleteAllDataValidasi('rekap_data_validasi');
 
-		// if ($this->db->affected_rows() > 0) {
-		// 	$this->session->set_flashdata('danger', 'Semua data berhasil dihapus');
-		// }
-		// redirect('Admin/viewListODP');
+		if ($this->db->affected_rows() > 0) {
+			$this->session->set_flashdata('danger', 'Semua data berhasil dihapus');
+		}
+	
 	}
-	public function deleteValidasi()
+	public function deleteValidasi($id)
 	{
-		$id = $this->input->post('idValidasi');
 		$this->Validasi_model->deleteDataValidasi($id);
 
 		if ($this->db->affected_rows() > 0) {
 			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
 		}
-		redirect('Admin/getValidasi');
+		redirect('Admin/viewListValidasi');
 	}
 
 	public function exportValidasi()
 	{
 
-		$this->load->model('Validasi_model');
+		
 		// Create new Spreadsheet object
 		$spreadsheet = new Spreadsheet();
 		
@@ -1730,7 +1795,8 @@ class Admin extends CI_Controller
 		// $query = $db->query("SELECT * FROM rekap_data_odp ORDER BY idODP DESC");
 		$query = $this->Validasi_model->getDataValidasi()->result();
 		$i=4; foreach($query as $row) {
-			$activeSheet->setCellValue('A'.$i, $row->tanggalPelurusan);
+			$newDateA = date("d/m/Y", strtotime($row->tanggalPelurusan)); 
+			$activeSheet->setCellValue('A'.$i, $newDateA);
 			$activeSheet->setCellValue('B'.$i, $row->ondesk);
 			$activeSheet->setCellValue('C'.$i, $row->onsite);
 			$activeSheet->setCellValue('D'.$i, $row->namaODP);
@@ -1755,7 +1821,8 @@ class Admin extends CI_Controller
 			$activeSheet->setCellValue('W'.$i, $row->ODPtoONT);
 			$activeSheet->setCellValue('X'.$i, $row->RFS);
 			$activeSheet->setCellValue('Y'.$i, $row->noteHDDaman);
-			$activeSheet->setCellValue('Z'.$i, $row->updateDateUIM);
+			$newDateB = date("d/m/Y", strtotime($row->updateDateUIM)); 
+			$activeSheet->setCellValue('Z'.$i, $newDateB);
 			$activeSheet->setCellValue('AA'.$i, $row->updaterUIM);
 			$activeSheet->setCellValue('AB'.$i, $row->noteQRODP);
 			$activeSheet->setCellValue('AC'.$i, $row->noteQROutSplitter);
