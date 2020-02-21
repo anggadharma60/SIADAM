@@ -23,7 +23,7 @@
     </div>
     <div class="box-body">
       <div class="row">
-        <div class="col-md-4 ">
+        <div class="col-md-6 ">
           <?php //echo validation_errors() 
           ?>
           <form action="" method="post">
@@ -55,7 +55,7 @@
           </form>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-6">
           <?php //echo validation_errors() 
           ?>
           <form action="" method="post">
@@ -87,7 +87,7 @@
           </form>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-6">
           <?php //echo validation_errors() 
           ?>
           <form action="" method="post">
@@ -118,120 +118,119 @@
             </div>
           </form>
         </div>
+        <div class="col-md-6">
+          <?php //echo validation_errors() 
+          ?>
+          <form action="" method="post">
+            <div class="form-group <?= form_error('serialNumber') ? 'has-error' : null ?>">
+              <label>SERIAL NUMBER *</label>
+              <input type="text" name="serialNumber" value="<?= set_value('serialNumber') ?>" class="form-control">
+              <?= form_error('serialNumber') ?>
+            </div>
+            <div class="form-group <?= form_error('serviceNumber') ? 'has-error' : null ?>">
+              <label>SERVICE NUMBER *</label>
+              <input type="text" name="serviceNumber" value="<?= set_value('serviceNumber') ?>" class="form-control">
+              <?= form_error('serviceNumber') ?>
+            </div>
+            <div class="form-group <?= form_error('QRDropCore') ? 'has-error' : null ?>">
+              <label>QR DROPCORE *</label>
+              <input type="text" name="QRDropCore" value="<?= set_value('QRDropCore') ?>" class="form-control">
+              <?= form_error('QRDropCore') ?>
+            </div>
+            <div class="form-group <?= form_error('noteUrut') ? 'has-error' : null ?>">
+              <label>NOTE URUT DROPCORE *</label>
+              <input type="text" name="noteUrut" value="<?= set_value('noteUrut') ?>" class="form-control">
+              <?= form_error('noteUrut') ?>
+            </div>
+            <div class="form-group <?= form_error('flagOLTPort') ? 'has-error' : null ?>">
+              <label>FLAG OLT & PORT *</label>
+              <input type="text" name="flagOLTPort" value="<?= set_value('flagOLTPort') ?>" class="form-control">
+              <?= form_error('flagOLTPort') ?>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
     <!-- pembatas atas bawah -->
     <br>
-        <div class="box-body">
-          <div class="row">
-          <div class="col-md-4">
-            <?php //echo validation_errors() 
-            ?>
-            <form action="" method="post">
-              <div class="form-group <?= form_error('serialNumber') ? 'has-error' : null ?>">
-                <label>SERIAL NUMBER *</label>
-                <input type="text" name="serialNumber" value="<?= set_value('serialNumber') ?>" class="form-control">
-                <?= form_error('serialNumber') ?>
-              </div>
-              <div class="form-group <?= form_error('serviceNumber') ? 'has-error' : null ?>">
-                <label>SERVICE NUMBER *</label>
-                <input type="text" name="serviceNumber" value="<?= set_value('serviceNumber') ?>" class="form-control">
-                <?= form_error('serviceNumber') ?>
-              </div>
-              <div class="form-group <?= form_error('QRDropCore') ? 'has-error' : null ?>">
-                <label>QR DROPCORE *</label>
-                <input type="text" name="QRDropCore" value="<?= set_value('QRDropCore') ?>" class="form-control">
-                <?= form_error('QRDropCore') ?>
-              </div>
-              <div class="form-group <?= form_error('noteUrut') ? 'has-error' : null ?>">
-                <label>NOTE URUT DROPCORE *</label>
-                <input type="text" name="noteUrut" value="<?= set_value('noteUrut') ?>" class="form-control">
-                <?= form_error('noteUrut') ?>
-              </div>
-              <div class="form-group <?= form_error('flagOLTPort') ? 'has-error' : null ?>">
-                <label>FLAG OLT & PORT *</label>
-                <input type="text" name="flagOLTPort" value="<?= set_value('flagOLTPort') ?>" class="form-control">
-                <?= form_error('flagOLTPort') ?>
-              </div>
-            </form>
-          </div>
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-6">
+          <?php //echo validation_errors() 
+          ?>
+          <form action="" method="post">
+            <div class="form-group <?= form_error('ODPtoOLT') ? 'has-error' : null ?>">
+              <label>CONNECTIVITY ODP TO OLT *</label>
+              <input type="text" name="ODPtoOLT" value="<?= set_value('ODPtoOLT') ?>" class="form-control">
+              <?= form_error('ODPtoOLT') ?>
+            </div>
+            <div class="form-group <?= form_error('ODPtoONT') ? 'has-error' : null ?>">
+              <label>ODP - ONT *</label>
+              <input type="text" name="ODPtoONT" value="<?= set_value('ODPtoONT') ?>" class="form-control">
+              <?= form_error('ODPtoONT') ?>
+            </div>
+            <div class="form-group <?= form_error('RFS') ? 'has-error' : null ?>">
+              <label>RFS *</label>
+              <input type="text" name="RFS" value="<?= set_value('RFS') ?>" class="form-control">
+              <?= form_error('RFS') ?>
+            </div>
+            <div class="form-group <?= form_error('noteHDDaman') ? 'has-error' : null ?>">
+              <label>NOTE HD DAMAN *</label>
+              <input type="text" name="noteHDDaman" value="<?= set_value('noteHDDaman') ?>" class="form-control">
+              <?= form_error('noteHDDaman') ?>
+            </div>
+            <div class="form-group <?= form_error('updateDateUIM') ? 'has-error' : null ?>">
+              <label>TANGGAL UPDATE UIM *</label>
+              <input type="text" name="updateDateUIM" value="<?= set_value('updateDateUIM') ?>" class="form-control">
+              <?= form_error('updateDateUIM') ?>
+            </div>
+          </form>
+        </div>
 
-          <div class="col-md-4">
-            <?php //echo validation_errors() 
-            ?>
-            <form action="" method="post">
-              <div class="form-group <?= form_error('ODPtoOLT') ? 'has-error' : null ?>">
-                <label>CONNECTIVITY ODP TO OLT *</label>
-                <input type="text" name="ODPtoOLT" value="<?= set_value('ODPtoOLT') ?>" class="form-control">
-                <?= form_error('ODPtoOLT') ?>
-              </div>
-              <div class="form-group <?= form_error('ODPtoONT') ? 'has-error' : null ?>">
-                <label>ODP - ONT *</label>
-                <input type="text" name="ODPtoONT" value="<?= set_value('ODPtoONT') ?>" class="form-control">
-                <?= form_error('ODPtoONT') ?>
-              </div>
-              <div class="form-group <?= form_error('RFS') ? 'has-error' : null ?>">
-                <label>RFS *</label>
-                <input type="text" name="RFS" value="<?= set_value('RFS') ?>" class="form-control">
-                <?= form_error('RFS') ?>
-              </div>
-              <div class="form-group <?= form_error('noteHDDaman') ? 'has-error' : null ?>">
-                <label>NOTE HD DAMAN *</label>
-                <input type="text" name="noteHDDaman" value="<?= set_value('noteHDDaman') ?>" class="form-control">
-                <?= form_error('noteHDDaman') ?>
-              </div>
-              <div class="form-group <?= form_error('updateDateUIM') ? 'has-error' : null ?>">
-                <label>TANGGAL UPDATE UIM *</label>
-                <input type="text" name="updateDateUIM" value="<?= set_value('updateDateUIM') ?>" class="form-control">
-                <?= form_error('updateDateUIM') ?>
-              </div>
-            </form>
-          </div>
-
-          <div class="col-md-4">
-            <?php //echo validation_errors() 
-            ?>
-            <form action="" method="post">
-              <div class="form-group <?= form_error('updaterUIM') ? 'has-error' : null ?>">
-                <label>UPDATER UIM *</label>
-                <input type="text" name="updaterUIM" value="<?= set_value('updaterUIM') ?>" class="form-control">
-                <?= form_error('updaterUIM') ?>
-              </div>
-              <div class="form-group <?= form_error('noteQRODP') ? 'has-error' : null ?>">
-                <label>NOTE QR ODP *</label>
-                <input type="text" name="noteQRODP" value="<?= set_value('noteQRODP') ?>" class="form-control">
-                <?= form_error('noteQRODP') ?>
-              </div>
-              <div class="form-group <?= form_error('noteQROutSplitter') ? 'has-error' : null ?>">
-                <label>NOTE QR OUT SPLITTER *</label>
-                <input type="text" name="noteQROutSplitter" value="<?= set_value('noteQROutSplitter') ?>" class="form-control">
-                <?= form_error('noteQROutSplitter') ?>
-              </div>
-              <div class="form-group <?= form_error('noteQRDropCore') ? 'has-error' : null ?>">
-                <label>NOTE QR DROPCORE *</label>
-                <input type="text" name="noteQRDropCore" value="<?= set_value('noteQRDropCore') ?>" class="form-control">
-                <?= form_error('noteQRDropCore') ?>
-              </div>
-              <div class="form-group <?= form_error('updaterDava') ? 'has-error' : null ?>">
-                <label>UPDATER DAVA *</label>
-                <input type="text" name="updaterDava" value="<?= set_value('updaterDava') ?>" class="form-control">
-                <?= form_error('updaterDava') ?>
-              </div>
-            </form>
-          </div>
-          <div class="col-md-4  col-md-offset-5">
-            <?php //echo validation_errors() 
-            ?>
-            <form action="" method="post">
-              <div class="form-group">
-                <button type="submit" class="btn btn-success btn-flat">
-                  <i class=""></i> Tambah
-                </button>
-                <button type="reset" class="btn btn-flat">Reset</button>
-              </div>
-            </form>
-          </div>
+        <div class="col-md-6">
+          <?php //echo validation_errors() 
+          ?>
+          <form action="" method="post">
+            <div class="form-group <?= form_error('updaterUIM') ? 'has-error' : null ?>">
+              <label>UPDATER UIM *</label>
+              <input type="text" name="updaterUIM" value="<?= set_value('updaterUIM') ?>" class="form-control">
+              <?= form_error('updaterUIM') ?>
+            </div>
+            <div class="form-group <?= form_error('noteQRODP') ? 'has-error' : null ?>">
+              <label>NOTE QR ODP *</label>
+              <input type="text" name="noteQRODP" value="<?= set_value('noteQRODP') ?>" class="form-control">
+              <?= form_error('noteQRODP') ?>
+            </div>
+            <div class="form-group <?= form_error('noteQROutSplitter') ? 'has-error' : null ?>">
+              <label>NOTE QR OUT SPLITTER *</label>
+              <input type="text" name="noteQROutSplitter" value="<?= set_value('noteQROutSplitter') ?>" class="form-control">
+              <?= form_error('noteQROutSplitter') ?>
+            </div>
+            <div class="form-group <?= form_error('noteQRDropCore') ? 'has-error' : null ?>">
+              <label>NOTE QR DROPCORE *</label>
+              <input type="text" name="noteQRDropCore" value="<?= set_value('noteQRDropCore') ?>" class="form-control">
+              <?= form_error('noteQRDropCore') ?>
+            </div>
+            <div class="form-group <?= form_error('updaterDava') ? 'has-error' : null ?>">
+              <label>UPDATER DAVA *</label>
+              <input type="text" name="updaterDava" value="<?= set_value('updaterDava') ?>" class="form-control">
+              <?= form_error('updaterDava') ?>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-4  col-md-offset-5">
+          <?php //echo validation_errors() 
+          ?>
+          <form action="" method="post">
+            <div class="form-group">
+              <button type="submit" class="btn btn-success btn-flat">
+                <i class=""></i> Tambah
+              </button>
+              <button type="reset" class="btn btn-flat">Reset</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
+  </div>
 </section>
