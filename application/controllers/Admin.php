@@ -1028,6 +1028,7 @@ class Admin extends CI_Controller
 			$this->session->set_flashdata('danger', 'Semua data berhasil dihapus');
 			
 		}
+		redirect('Admin/viewListODP');
 		
 	}
 
@@ -1521,6 +1522,8 @@ class Admin extends CI_Controller
 					   $newDateA = date("Y-m-d", strtotime($TANGGAL_PELURUSAN)); 
 					   if($TANGGAL_UPDATE_UIM != "" or $TANGGAL_UPDATE_UIM != null){
 						$newDateB = date("Y-m-d", strtotime($TANGGAL_UPDATE_UIM)); 
+					   }else{
+						$newDateB = "" ;
 					   }
 					   
 
@@ -1597,7 +1600,7 @@ class Admin extends CI_Controller
 			if ($this->db->affected_rows() > 0) {
 				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			}
-			redirect('Admin/getValidasi');
+			redirect('Admin/viewListValidasi');
 		}
 	}
 
@@ -1652,7 +1655,7 @@ class Admin extends CI_Controller
 				$this->template->load('template/template_Admin', 'validasi/validasi_form_edit', $data);
 			} else {
 				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
-				redirect('Admin/getValidasi');
+				redirect('Admin/viewListValidasi');
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
@@ -1660,7 +1663,7 @@ class Admin extends CI_Controller
 			if ($this->db->affected_rows() > 0) {
 				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			redirect('Admin/getValidasi');
+			redirect('Admin/viewListValidasi');
 		}
 	}
 
@@ -1672,8 +1675,10 @@ class Admin extends CI_Controller
 		if ($this->db->affected_rows() > 0) {
 			$this->session->set_flashdata('danger', 'Semua data berhasil dihapus');
 		}
+		redirect('Admin/viewListValidasi');
 	
 	}
+
 	public function deleteValidasi($id)
 	{
 		$this->Validasi_model->deleteDataValidasi($id);
@@ -1838,6 +1843,36 @@ class Admin extends CI_Controller
 		header('Content-Disposition: attachment;filename="'. $filename);
 		header('Cache-Control: max-age=0');
 		$Excel_writer->save('php://output');
+	}
+
+	public function filterDate(){
+		$search = $_POST['search']['value']; // Ambil data yang di ketik user pada textbox pencarian
+		$limit = $_POST['length']; // Ambil data limit per page
+		$start = $_POST['start']; // Ambil data start
+		$order_index = $_POST['order'][0]['column']; // Untuk mengambil index yg menjadi acuan untuk sorting
+		$order_field = $_POST['columns'][$order_index]['data']; // Untuk mengambil nama field yg menjadi acuan untuk sorting
+		$order_ascdesc = $_POST['order'][0]['dir']; // Untuk menentukan order by "ASC" atau "DESC"
+		$input = $this->input->post(null, TRUE);
+		$start_date = $input["start_date"];
+		$end_date = $input["end_date"];
+		// print_r($start_date);
+		// print_r($end_date);
+
+		$sql_total = $this->Validasi_model->count_all(); // Panggil fungsi count_all pada SiswaModel
+		$sql_data = $this->Validasi_model->filterDate($search, $limit, $start, $order_field, $order_ascdesc, $start_date, $end_date); // Panggil fungsi filter pada SiswaModel
+		$sql_filter = $this->Validasi_model->count_filterDate($search, $start_date, $end_date); // Panggil fungsi count_filter pada SiswaModel
+		// print_r($search);
+		// print_r($sql_filter);
+		$callback3 = array(
+		    'draw'=>$_POST['draw'], // Ini dari datatablenya
+		    'recordsTotal'=>$sql_total,
+		    'recordsFiltered'=>$sql_filter,
+		    'data'=>$sql_data
+		);
+		
+
+		header('Content-Type: application/json');
+		echo json_encode($callback3); // Convert array $callback ke json
 	}
 	//End Kelola Validasi
 

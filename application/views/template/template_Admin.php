@@ -294,7 +294,6 @@
   <!-- iCheck 1.0.1 -->
   <script src="<?= base_url() ?>assets/plugins/iCheck/icheck.min.js"></script>
 
-  <script src="<?php echo base_url() ?>assets/js/myTables.js"></script>
 
   <script>
     var tabel = null;
@@ -447,6 +446,307 @@
       });
     });
   </script>
+
+  <script type="text/javascript" language="javascript" >
+    $(document).ready(function(){
+      var tabel = $('#tableFilter').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ordering": true, // Set true agar bisa di sorting
+        "order": [
+          [0, 'asc']
+        ], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
+        'paging': true,
+        'lengthChange': true,
+        'searching': true,
+        'ordering': true,
+        'info': true,
+        'autoWidth': true,
+        "processing": true,
+        "serverSide": true,
+        "sScrollY": "35em", //scroll tambahan y
+        "sScrollX": "100%", //scroll tambahan x
+        "bScrollCollapse": true,
+        "ajax": {
+          "url": "<?= base_url() ?>index.php/Admin/loadDataValidasi", // URL file untuk proses select datanya
+          "type": "POST"
+        },
+        "deferRender": true,
+        "aLengthMenu": [
+          [10, 25, 50, 75, 100],
+          [10, 25, 50, 75, 100]
+        ], // Combobox Limit
+        "columns": [{
+            "data": 'id'
+          },
+          {
+            "data": 'tanggalPelurusan'
+          },
+          {
+            "data": 'ondesk'
+          },
+          {
+            "data": 'onsite'
+          },
+          {
+            "data": 'namaODP'
+          },
+          {
+            "data": 'noteODP'
+          },
+          {
+            "data": 'QRODP'
+          },
+          {
+            "data": 'koordinatODP'
+          },
+          {
+            "data": 'hostname'
+          },
+          {
+            "data": 'portOLT'
+          },
+          {
+            "data": 'totalIN'
+          },
+          {
+            "data": 'kapasitasODP'
+          },
+          {
+            "data": 'portOutSplitter'
+          },
+          {
+            "data": 'QRPortOutSplitter'
+          },
+          {
+            "data": 'portODP'
+          },
+          {
+            "data": 'statusPortODP'
+          },
+          {
+            "data": 'ONU'
+          },
+          {
+            "data": 'serialNumber'
+          },
+          {
+            "data": 'serviceNumber'
+          },
+          {
+            "data": 'QRDropCore'
+          },
+          {
+            "data": 'noteUrut'
+          },
+          {
+            "data": 'flagOLTPort'
+          },
+          {
+            "data": 'ODPtoOLT'
+          },
+          {
+            "data": 'ODPtoONT'
+          },
+          {
+            "data": 'RFS'
+          },
+          {
+            "data": 'noteHDDaman'
+          },
+          {
+            "data": 'updateDateUIM'
+          },
+          {
+            "data": 'updaterUIM'
+          },
+          {
+            "data": 'noteQRODP'
+          },
+          {
+            "data": 'noteQROutSplitter'
+          },
+          {
+            "data": 'noteQRDropCore'
+          },
+          {
+            "data": 'updaterDava'
+          },
+        ],
+      });
+
+      $('.input-daterange').datepicker({
+        todayBtn:'linked',
+        format: "yyyy-mm-dd",
+        autoclose: true
+      });
+
+      // fetch_data('no');
+
+      // function fetch_data(is_date_search, start_date='', end_date='')
+      // {
+      //   var dataTable = $('#tabelFilter').DataTable({
+      //   "processing" : true,
+      //   "serverSide" : true,
+      //   "sScrollY": "35em", //scroll tambahan y
+      //   "sScrollX": "100%", //scroll tambahan x
+      //   "bScrollCollapse": true,
+      //   "order" : [],
+      //   "ajax" : {
+      //     url:"<?= base_url() ?>index.php/Admin/FilterDate",
+      //     type:"POST",
+      //     data:{
+      //     start_date:start_date, end_date:end_date
+      //     }
+        
+      //   }
+      //   });
+      // }
+
+      $('#search').click(function(){
+        var start_date = $('#start_date').val();
+        var end_date = $('#end_date').val();
+        if(start_date != '' && end_date !=''){
+          $('#tableFilter').DataTable().destroy();
+          
+          $('#tableFilter').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ordering": true, // Set true agar bisa di sorting
+            "order": [
+              [0, 'asc']
+            ], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
+            'paging': true,
+            'lengthChange': true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': true,
+            "processing": true,
+            "serverSide": true,
+            "sScrollY": "35em", //scroll tambahan y
+            "sScrollX": "100%", //scroll tambahan x
+            "bScrollCollapse": true,
+            "ajax": {
+              "url": "<?= base_url() ?>index.php/Admin/filterDate", // URL file untuk proses select datanya
+              "type": "POST",
+              data:{
+                  start_date:start_date, end_date: end_date
+              },
+            },
+            "deferRender": true,
+            "aLengthMenu": [
+              [10, 25, 50, 75, 100],
+              [10, 25, 50, 75, 100]
+            ], // Combobox Limit
+            "columns": [{
+                "data": 'id'
+              },
+              {
+                "data": 'tanggalPelurusan'
+              },
+              {
+                "data": 'ondesk'
+              },
+              {
+                "data": 'onsite'
+              },
+              {
+                "data": 'namaODP'
+              },
+              {
+                "data": 'noteODP'
+              },
+              {
+                "data": 'QRODP'
+              },
+              {
+                "data": 'koordinatODP'
+              },
+              {
+                "data": 'hostname'
+              },
+              {
+                "data": 'portOLT'
+              },
+              {
+                "data": 'totalIN'
+              },
+              {
+                "data": 'kapasitasODP'
+              },
+              {
+                "data": 'portOutSplitter'
+              },
+              {
+                "data": 'QRPortOutSplitter'
+              },
+              {
+                "data": 'portODP'
+              },
+              {
+                "data": 'statusPortODP'
+              },
+              {
+                "data": 'ONU'
+              },
+              {
+                "data": 'serialNumber'
+              },
+              {
+                "data": 'serviceNumber'
+              },
+              {
+                "data": 'QRDropCore'
+              },
+              {
+                "data": 'noteUrut'
+              },
+              {
+                "data": 'flagOLTPort'
+              },
+              {
+                "data": 'ODPtoOLT'
+              },
+              {
+                "data": 'ODPtoONT'
+              },
+              {
+                "data": 'RFS'
+              },
+              {
+                "data": 'noteHDDaman'
+              },
+              {
+                "data": 'updateDateUIM'
+              },
+              {
+                "data": 'updaterUIM'
+              },
+              {
+                "data": 'noteQRODP'
+              },
+              {
+                "data": 'noteQROutSplitter'
+              },
+              {
+                "data": 'noteQRDropCore'
+              },
+              {
+                "data": 'updaterDava'
+              },
+            ],
+          })
+     
+          // fetch_data('yes', start_date, end_date);
+        }else{
+          alert("Both Date is Required");
+        }
+      }); 
+    
+    });
+  </script>
+
   <script>
     var tabel = null;
 
@@ -553,7 +853,7 @@
       });
     });
   </script>
-
+  
   <script>
     $(document).ready(function() {
       $("#load").fadeOut(500); //jika document html sudah siap maka fungsi ini akan dijalankan 500
