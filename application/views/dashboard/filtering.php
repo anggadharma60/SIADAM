@@ -1,3 +1,10 @@
+<style>
+    .input-group-addon{
+        width: ;
+    }
+</style>
+    
+
 <section class="content-header">
     <h1>
         Filtering </h1>
@@ -15,38 +22,65 @@
         <div class="box-header">
             <h3 class="box-title">Filtering</h3>
             <div class="pull-right">
+                <a onclick="Custom()" href="#!" class="btn btn-danger btn-flat">
+                        Show/Hide
+                </a>
                 <a href="<?= site_url('Admin/exportValidasi')?>" class="btn btn-danger btn-flat">
                     <i class="fa fa-upload  "></i> Export
                 </a>
+                
+                
             </div>
         </div>
         <!-- Date range -->
-        <div class="form-group" style="width: 30%; margin-left: 20px;">
+        <div class="form-group" style="width: 50%; margin-left: 20px;">
             <label>Date range:</label>
-
-            <div class="input-group">
+            <div class="row">
+                <div class="input-daterange">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" name="start_date" id="start_date" class="form-control pull-right" readonly=""/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" name="end_date" id="end_date" class="form-control pull-right" readonly="" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <input type="button" name="search" id="search" value="Search" class="btn btn-info" />
+                </div>
+            </div>
+            <!-- <div class="input-group">
                 <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                 </div>
                 <input type="text" class="form-control pull-right" id="reservation">
-            </div>
+            </div> -->
             <!-- /.input group -->
         </div>
         <!-- customm -->
-        <div class="form-group" style="margin-left: 20px;">
+        <!-- <div class="form-group" style="margin-left: 20px;">
             <div class="input-group">
                 <div class="pull-right">
                     <a onclick="Custom()" href="#!" class="btn btn-danger btn-flat">
                         CUSTOM
                     </a>
                 </div>
-            </div>
+            </div> -->
             <!-- /.input group -->
-        </div>
+        <!-- </div> -->
         <!-- /.form group -->
         <div class="box-body table-responsive">
             <!-- id="table1" buat searching pagination dan row -->
-            <table class="table table-bordered table-striped" border="1" cellpadding="8" id="tableValidasi">
+            <table class="table table-bordered table-striped" border="1" cellpadding="8" id="tableFilter">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -81,7 +115,6 @@
                         <th>QR OUT SPLITTER</th>
                         <th>QR DROPCORE</th>
                         <th>UPDATER DAVA</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -121,7 +154,6 @@
                         <th>QR OUT SPLITTER</th>
                         <th>QR DROPCORE</th>
                         <th>UPDATER DAVA</th>
-                        <th>Actions</th>
                     </tr>
                 </tfoot>
             </table>

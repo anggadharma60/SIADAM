@@ -50,7 +50,7 @@
                   </a>
                   <input type="hidden" name="idPegawai" value="<?= $data->idPegawai ?>">
                   <?php
-                    if($data->status != 'Admin') { ?>
+                    if($data->idPegawai != $this->session->userdata['idPegawai']) { ?>
                         <button onclick="return confirm('Apakah Anda Yakin?')" class="btn btn-danger btn-xs">
                           <i class="fa fa-trash"></i>
                         </button>
