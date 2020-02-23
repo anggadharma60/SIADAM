@@ -62,6 +62,11 @@ class OLT_model extends CI_Model
     $this->db->delete('rekap_data_olt');
   }
 
+  public function deleteAllDataOLT()
+  {
+    $this->db->empty_table('rekap_data_olt');
+  }
+
    //Import Excel via phpSpreadsheet
    private $varBatchImportOLT;
    public function setBatchImportOLT($batchImportOLT)

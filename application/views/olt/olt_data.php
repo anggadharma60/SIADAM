@@ -15,6 +15,11 @@
         <div class="box-header">
             <h3 class="box-title">Data OLT</h3>
             <div class="pull-right">
+                <a href="<?= site_url('Admin/deleteAllOLT')?>">
+                    <button onclick="return confirm('Apakah Anda Yakin ingin menghapus semua Data?')" class="btn btn-danger btn-flat">
+                        <i class="fa fa-trash"></i> Delete All
+                    </button>
+                </a>
                 <a href="<?= site_url('Admin/exportOLT')?>" class="btn btn-danger btn-flat">
                     <i class="fa fa-upload  "></i> Export
                 </a>

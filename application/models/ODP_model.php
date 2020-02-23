@@ -168,9 +168,9 @@ public function count_filter($search){
     $this->db->delete('rekap_data_odp');
   }
 
-  public function deleteAllDataODP($table)
+  public function deleteAllDataODP()
   {
-    $this->db->empty_table($table);
+    $this->db->empty_table('rekap_data_odp');
   }
 
   
@@ -187,6 +187,15 @@ public function count_filter($search){
   {
     $data = $this->varBatchImportODP;
     $this->db->insert_batch('rekap_data_odp', $data);
+  }
+
+  public function jumlahRekapODP(){
+    $this->db->select('s.idSTO, s.kodeSTO, s.namaSTO, COUNT(r.idSTO) as grand_total');
+    $this->db->from('rekap_data_odp as r');
+    $this->db->join('sto as s', 's.idSTO = r.idSTO');
+    $this->db->group_by('s.idSTO');
+    $query = $this->db->get();
+    return $query;
   }
 
  

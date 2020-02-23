@@ -17,7 +17,9 @@
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap datepicker -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-  <!-- iCheck for checkboxes and radio inputs -->
+  <!--  chart -->
+  <script src="<?= base_url() ?>assets/bower_components/chart.js/Chart.js"></script>
+    <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/iCheck/all.css">
   <!-- Data Tables -->
   <link rel="stylesheet" type="text/css" href="<?php echo base_url('datatables/lib/css/dataTables.bootstrap.min.css') ?>" />
@@ -291,9 +293,11 @@
   <script src="<?= base_url() ?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
   <!-- bootstrap datepicker -->
   <script src="<?= base_url() ?>assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <!--  chart -->
+  <script src="<?= base_url() ?>assets/bower_components/chart.js/Chart.js"></script>
   <!-- iCheck 1.0.1 -->
   <script src="<?= base_url() ?>assets/plugins/iCheck/icheck.min.js"></script>
-
+  
 
   <script>
     var tabel = null;
@@ -868,6 +872,7 @@
       $("#loading").fadeOut();
     }
   </script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script> -->
 
   <!-- 
     $(document).ready(function() {

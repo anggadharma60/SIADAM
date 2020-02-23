@@ -295,6 +295,16 @@ class Validasi_model extends CI_Model {
       $data = $this->varBatchImportValidasi;
       $this->db->insert_batch('rekap_data_validasi', $data);
     }
+    
+    public function jumlahRekapValidasi(){
+      $query = $this->db->query('SELECT s.idSTO,s.namaSTO, COUNT(s.idSTO) as total
+      FROM sto s
+      JOIN rekap_data_odp r
+      ON s.idSTO = r.idSTO
+      WHERE r.namaODP IN (SELECT DISTINCT namaODP FROM rekap_data_validasi)
+      GROUP BY s.idSTO');
+      return $query;
+    }
   
   
 

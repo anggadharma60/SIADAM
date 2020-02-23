@@ -108,16 +108,24 @@ class Admin extends CI_Controller
 		}
 	}
 
+	//Start Dashboard
 	public function chart()
 	{
-		$this->template->load('template/template_Admin', 'dashboard/chart');
+		$data['totalODP'] = $this->ODP_model->jumlahRekapODP();
+		// print_r($data['totalODP']->result());
+		
+		// $data['validasiODP'] = $this->Validasi_model->listValidasiODP();
+		// print_r($data['validasiODP']);
+		$data['totalValidasi'] = $this->Validasi_model->jumlahRekapValidasi();
+		// print_r($data['totalValidasi']->result());
+		$this->template->load('template/template_Admin', 'dashboard/chart',$data);
 	}
 
 	public function filtering()
 	{
 		$this->template->load('template/template_Admin', 'dashboard/filtering');
 	}
-
+	//End Dashboard
 
 	// Start Menu Pegawai 
 	public function getPegawai()
@@ -1023,7 +1031,7 @@ class Admin extends CI_Controller
 	{	
 		// $this->exportODP();
 	
-
+		$this->ODP_model->deleteAllDataODP();
 		if ($this->db->affected_rows() > 0) {
 			$this->session->set_flashdata('danger', 'Semua data berhasil dihapus');
 			
@@ -1233,6 +1241,19 @@ class Admin extends CI_Controller
 		redirect('Admin/getOLT');
 	}
 
+	public function deleteAllOLT()
+	{	
+		// $this->exportODP();
+	
+		$this->OLT_model->deleteAllDataOLT();
+		if ($this->db->affected_rows() > 0) {
+			$this->session->set_flashdata('danger', 'Semua data berhasil dihapus');
+			
+		}
+		redirect('Admin/getOLT');
+		
+	}
+
 	//Fungsi file upload
 	public function importOLT() {
         $data = array();
@@ -1284,7 +1305,7 @@ class Admin extends CI_Controller
 						// $IDLOGICALDEVICE = $SheetDataKey['ID Logical Device'];
 						// $SPECIFICATION = $SheetDataKey['Specification'];
 												
-						$HOSTNAMEBARU = filter_var(html_escape(trim($allDataInSheet[$i]['A'])), FILTER_SANITIZE_STRING);
+						$HOSTNAMEBARU = filter_var(html_escape(trim($allDataInSheet[$i]['B'])), FILTER_SANITIZE_STRING);
 						$IPGPON = filter_var(html_escape(trim($allDataInSheet[$i]['C'])), FILTER_SANITIZE_STRING);
 						$STO  = filter_var(html_escape(trim($allDataInSheet[$i]['D'])), FILTER_SANITIZE_STRING);
 						$IDLOGICALDEVICE = filter_var(html_escape(trim($allDataInSheet[$i]['H'])), FILTER_SANITIZE_STRING);
