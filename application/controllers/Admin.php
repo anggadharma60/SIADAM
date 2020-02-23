@@ -35,6 +35,12 @@ class Admin extends CI_Controller
 		check_not_login();
 		//check admin buat fungsi_helper
 		check_admin();
+		// check_daman();
+		// check_hddaman();
+		// check_ondesk();
+		// check_onsite();
+		// check_dava();
+
 		$this->load->model('Datel_model');
 		$this->load->model('ODP_model');
 		$this->load->model('OLT_model');
@@ -44,6 +50,7 @@ class Admin extends CI_Controller
 		$this->load->model('STO_model');
 		$this->load->model('Validasi_model');
 		$this->load->model('Witel_model');
+		$this->load->library('form_validation');
 		
 	}
 

@@ -17,8 +17,8 @@
     <div class="box box-widget widget-user">
       <!-- Add the bg color to the header using any of the bg-* classes -->
       <div class="widget-user-header bg-red">
-        <h3 class="widget-user-username">Selamat Datang <strong><?= $this->fungsi->user_login()->namaPegawai ?></strong></h3>
-        <h5 class="widget-user-desc">Ke Dalam Sistem Informasi Access Data Management</h5>
+        <h3 class="widget-user-username"><center>Selamat Datang <strong><?= $this->fungsi->user_login()->namaPegawai ?></strong></center></h3>
+        <h5 class="widget-user-desc"><center>Ke Dalam Sistem Informasi Access Data Management</center></h5>
       </div>
       <div class="widget-user-image">
         <img class="" src="<?php echo base_url() . 'assets/dist/img/siadampng.png' ?>" alt="User Avatar" style="border: 0px ">
