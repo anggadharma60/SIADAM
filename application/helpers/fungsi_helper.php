@@ -20,7 +20,55 @@ function check_admin() {
     $ci =& get_instance();
     $ci->load->library('fungsi');
     if($ci->fungsi->user_login()->status != 'Admin') {
-        redirect('Autentikasi');
+        redirect('Admin');
+    }
+}
+
+function check_daman() {
+    $ci =& get_instance();
+    $ci->load->library('fungsi');
+    if($ci->fungsi->user_login()->status != 'Daman') {
+        redirect('Daman');
+    }
+}
+
+function check_hddaman() {
+    $ci =& get_instance();
+    $ci->load->library('fungsi');
+    if($ci->fungsi->user_login()->status != 'HD Daman') {
+        redirect('HDDaman');
+    }
+}
+
+function check_ondesk() {
+    $ci =& get_instance();
+    $ci->load->library('fungsi');
+    if($ci->fungsi->user_login()->status != 'Ondesk') {
+        redirect('Ondesk');
+    }
+}
+
+function check_onsite() {
+    $ci =& get_instance();
+    $ci->load->library('fungsi');
+    if($ci->fungsi->user_login()->status != 'Onsite') {
+        redirect('Onsite');
+    }
+}
+
+function check_dava() {
+    $ci =& get_instance();
+    $ci->load->library('fungsi');
+    if($ci->fungsi->user_login()->status != 'Dava') {
+        redirect('Dava');
+    }
+}
+
+function check_sdi() {
+    $ci =& get_instance();
+    $ci->load->library('fungsi');
+    if($ci->fungsi->user_login()->status != 'SDI') {
+        redirect('SDI');
     }
 }
 

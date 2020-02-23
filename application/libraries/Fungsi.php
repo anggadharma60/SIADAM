@@ -14,4 +14,5 @@ Class Fungsi {
         $user_data = $this->ci->pegawai_model->getDataPegawai($idPegawai)->row();
         return $user_data;
     }
+    
 }
