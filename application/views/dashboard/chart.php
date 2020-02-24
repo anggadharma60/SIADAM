@@ -8,6 +8,9 @@
         <li class="active">Chart</li>
     </ol>
 </section>
+<?php $data = json_decode($chart);
+    // print_r($data->total);
+?>
 
 <!-- Main content -->
 <section class="content">
@@ -16,7 +19,7 @@
         <div class="col-md-12">
             <div class="box box-danger">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Donut Chart</h3>
+                    <h3 class="box-title">Statistik Data</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
@@ -30,10 +33,17 @@
              <!-- /.box -->
         </div>
     </div>
-    <div class="col-md-6">
+    <?php 
+        for($i=0;$i<$totalSTO;$i++) { ?>
+            <?php 
+            if($i%2==1) {?>
+                <div class="row">
+
+            <?php }?>
+            <div class="col-md-6">
             <div class="box box-danger">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Donut Chart</h3>
+                    <h3 class="box-title"><?=$data->namaSTO[$i]?></h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
@@ -41,86 +51,80 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <canvas id="1" style="height:250px"></canvas>
+                    <canvas id="<?=$i?>" style="height:250px"></canvas>
                 </div>
             <!-- /.box-body -->
             </div>
              <!-- /.box -->
         </div>
-
-        <div class="col-md-6">
-            <div class="box box-danger">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Donut Chart</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
+            <?php 
+            if($i%2==1) {?>
                 </div>
-                <div class="box-body">
-                    <canvas id="chart-area2" style="height:250px"></canvas>
-                </div>
-            <!-- /.box-body -->
-            </div>
-             <!-- /.box -->
-        </div>
-    </div>
-    
 
-   
+            <?php }?>
+      <?php  } ?>
+    </div> 
     
-    
-
     <script>
-
-		var doughnutData = [
-				{
-					value: 300,
-					color:"#F7464A",
-					highlight: "#FF5A5E",
-					label: "Red"
-				},
-				{
-					value: 50,
-					color: "#46BFBD",
-					highlight: "#5AD3D1",
-					label: "Green"
-				},
-				{
-					value: 100,
-					color: "#FDB45C",
-					highlight: "#FFC870",
-					label: "Yellow"
-				},
-				{
-					value: 40,
-					color: "#949FB1",
-					highlight: "#A8B3C5",
-					label: "Grey"
-				},
-				{
-					value: 120,
-					color: "#4D5360",
-					highlight: "#616774",
-					label: "Dark Grey"
-				}
-
-			];
-
-			window.onload = function(){
-                var i;
-                for(i=1;i<=2;i++){
-                    console.log(i);
-                    var ctx = push(document.getElementById(i).getContext("2d"));
-                    console.log(ctx);
-                    window.myDoughnut = new Chart(ctx[i]).Doughnut(doughnutData, {responsive : true});
-
+ 
+        var chart = JSON.parse('<?php echo $chart?>');
+        var n;
+        var m;
+        
+        var config = new Array();
+        for(n=0;n<chart.totalSTO;n++){
+            console.log(chart.total[n]);
+            // console.log(chart.grand_total[n]);
+            config[n] = {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [
+                            chart.total[n],
+                            chart.grand_total[n],
+                        ],
+                        backgroundColor: [
+                            'rgba(81, 244, 40, 0.95)',
+                            'rgba(40, 183, 244, 0.95)',
+                        ],
+                        label: 'Dataset 1'
+                    }],
+                    labels: [
+                        'Rekap ODP',
+                        'Rekap Validasi',
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: false,
+                        text: 'Chart.js Doughnut Chart'
+                    },
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    }
                 }
-                
-                // var ctx2 = document.getElementById("chart-area2").getContext("2d");
-                // window.myDoughnut = new Chart(ctx2).Doughnut(doughnutData, {responsive : true});
-			};
+            };
+
+		
+        }
+
+        var ctx = new Array();
+        window.onload = function() {
+            for(m=0;m<chart.totalSTO;m++){
+                ctx[m] = document.getElementById(m).getContext('2d');
+            // ctx[1] = document.getElementById(1).getContext('2d');
+                window.myDoughnut = new Chart(ctx[m], config[m]);
+            // window.myDoughnut = new Chart(ctx[1], config[2]);
+            }
+
+            
+		};
+		
 
 
 

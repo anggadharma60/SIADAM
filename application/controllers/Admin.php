@@ -118,14 +118,29 @@ class Admin extends CI_Controller
 	//Start Dashboard
 	public function chart()
 	{
-		$data['totalODP'] = $this->ODP_model->jumlahRekapODP();
-		// print_r($data['totalODP']->result());
+		$data['ODP'] = $this->ODP_model->jumlahRekapODP();
+		$ODP = $data['ODP'];
+		foreach($ODP->result() as $rekapODP){
+			$data['idSTO'][]= $rekapODP->idSTO;
+			$data['kodeSTO'][]= $rekapODP->kodeSTO;
+			$data['namaSTO'][]= $rekapODP->namaSTO;
+			$data['grand_total'][]= $rekapODP->grand_total;
+		}
+		$data['totalSTO'] = $ODP->num_rows();
 		
-		// $data['validasiODP'] = $this->Validasi_model->listValidasiODP();
-		// print_r($data['validasiODP']);
-		$data['totalValidasi'] = $this->Validasi_model->jumlahRekapValidasi();
+		
+		// print_r($data['totalODP']->row());
+		
+		$data['validasi'] = $this->Validasi_model->jumlahRekapValidasi()->result();
+		$validasi = $data['validasi'];
+		foreach($validasi as $rekapValidasi){
+			$data['total'][]= $rekapValidasi->total;
+		}
+		// $data['totalValidasi'] = $this->Validasi_model->jumlahRekapValidasi();
 		// print_r($data['totalValidasi']->result());
-		$this->template->load('template/template_Admin', 'dashboard/chart',$data);
+		$data['chart'] = json_encode($data);
+		// print_r($data['chart']);
+		$this->template->load('template/template_Admin', 'dashboard/chart', $data);
 	}
 
 	public function filtering()
