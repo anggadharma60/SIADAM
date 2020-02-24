@@ -19,13 +19,28 @@
         <div class="col-md-12">
             <div class="box box-danger">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Statistik Data</h3>
+                    <!-- <h3 class="box-title"></h3> -->
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
-                        </button>
+                        </button> -->
                     </div>
-                    
+                    <div class="box-body text-center">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3>Total Rekap Validasi</h3>
+                                <?php echo '<h4>'.$totalValidasi.'</h4>'?>
+                            </div>
+                            <div class="col-md-4">
+                                <h3>Total Rekap ODP</h3>
+                                <?php echo '<h4>'.($totalODP-$totalValidasi).'</h4>'?>
+                            </div>
+                            <div class="col-md-4">
+                                <h3>Total Data</h3>
+                                <?php echo '<h4>'.$totalODP.'</h4>'?>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
             <!-- /.box-body -->
@@ -50,8 +65,19 @@
                         </button>
                     </div>
                 </div>
-                <div class="box-body">
+                <div class="box-body text-center">
+                
                     <canvas id="<?=$i?>" style="height:250px"></canvas>
+                    
+                    
+                    <label>
+                    <?php 
+                        echo "Rekap Validasi :".$data->total[$i]."&emsp;&emsp;";
+                        echo "Rekap ODP :".($data->grand_total[$i]-$data->total[$i])."&emsp;&emsp;";
+                        echo "Total :".$data->grand_total[$i]."&emsp;&emsp;";
+                    ?>
+            
+                    </label>
                 </div>
             <!-- /.box-body -->
             </div>
@@ -81,7 +107,7 @@
                     datasets: [{
                         data: [
                             chart.total[n],
-                            chart.grand_total[n],
+                            chart.grand_total[n]-chart.total[n],
                         ],
                         backgroundColor: [
                             'rgba(81, 244, 40, 0.95)',
@@ -90,14 +116,14 @@
                         label: 'Dataset 1'
                     }],
                     labels: [
-                        'Rekap ODP',
                         'Rekap Validasi',
+                        'Rekap ODP',
                     ]
                 },
                 options: {
                     responsive: true,
                     legend: {
-                        position: 'bottom',
+                        position: 'top',
                     },
                     title: {
                         display: false,

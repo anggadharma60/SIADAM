@@ -126,6 +126,7 @@ class Admin extends CI_Controller
 			$data['namaSTO'][]= $rekapODP->namaSTO;
 			$data['grand_total'][]= $rekapODP->grand_total;
 		}
+		$data['totalODP'] = array_sum($data['grand_total']);
 		$data['totalSTO'] = $ODP->num_rows();
 		
 		
@@ -136,6 +137,7 @@ class Admin extends CI_Controller
 		foreach($validasi as $rekapValidasi){
 			$data['total'][]= $rekapValidasi->total;
 		}
+		$data['totalValidasi'] = array_sum($data['total']);
 		// $data['totalValidasi'] = $this->Validasi_model->jumlahRekapValidasi();
 		// print_r($data['totalValidasi']->result());
 		$data['chart'] = json_encode($data);
