@@ -194,7 +194,7 @@ public function count_filter($search){
     $this->db->from('rekap_data_odp as r');
     $this->db->join('sto as s', 's.idSTO = r.idSTO');
     $this->db->group_by('s.idSTO');
-    $this->db->order_by('s.namaSTO');
+    $this->db->order_by('s.idSTO');
     $query = $this->db->get();
     return $query;
   }
