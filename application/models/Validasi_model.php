@@ -302,7 +302,8 @@ class Validasi_model extends CI_Model {
       JOIN rekap_data_odp r
       ON s.idSTO = r.idSTO
       WHERE r.namaODP IN (SELECT DISTINCT namaODP FROM rekap_data_validasi)
-      GROUP BY s.idSTO');
+      GROUP BY s.idSTO
+      ORDER BY s.namaSTO');
       return $query;
     }
   

@@ -28,7 +28,7 @@ function check_daman() {
     $ci =& get_instance();
     $ci->load->library('fungsi');
     if($ci->fungsi->user_login()->status != 'Daman') {
-        redirect('Daman');
+        redirect($ci->fungsi->user_login()->status);
     }
 }
 

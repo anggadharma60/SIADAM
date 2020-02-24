@@ -18,7 +18,7 @@
   <!-- bootstrap datepicker -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
   <!--  chart -->
-  <script src="<?= base_url() ?>assets/bower_components/chart.js/Chart.js"></script>
+  <!-- <script src="<?= base_url() ?>chart.js/Chart.min.js"></script> -->
     <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/iCheck/all.css">
   <!-- Data Tables -->
@@ -42,8 +42,6 @@
   <![endif]-->
   <!-- <script src="<?php echo base_url() ?>assets/js/jquery-3.3.1.js"></script> -->
 
-
-
   <style>
     #load {
       width: 100%;
@@ -66,6 +64,11 @@
       opacity: 0.6;
       background-size: 8%;
     }
+    canvas {
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
   </style>
 
   <!-- Google Font -->
@@ -293,10 +296,10 @@
   <!-- bootstrap datepicker -->
   <script src="<?= base_url() ?>assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
   <!--  chart -->
-  <script src="<?= base_url() ?>assets/bower_components/chart.js/Chart.js"></script>
+  <script src="<?= base_url() ?>chart.js/Chart.bundle.min.js"></script>
   <!-- iCheck 1.0.1 -->
   <script src="<?= base_url() ?>assets/plugins/iCheck/icheck.min.js"></script>
-  
+ 
 
   <script>
     var tabel = null;
@@ -1130,7 +1133,7 @@
       $("#loading").fadeOut();
     }
   </script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script> -->
+  
 
   <!-- 
     $(document).ready(function() {
