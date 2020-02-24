@@ -71,8 +71,8 @@
         var m;
 
         var config = new Array();
-        for (n = 0; n < chart.totalSTO; n++) {
-            console.log(chart.total[n]);
+        for(n=0;n<chart.totalSTO;n++){
+            // console.log(chart.total[n]);
             // console.log(chart.grand_total[n]);
             config[n] = {
                 type: 'doughnut',
