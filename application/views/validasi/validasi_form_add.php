@@ -1,11 +1,11 @@
 <section class="content-header">
   <h1>
-    ODP
-    <small>Data ODP</small>
+    Validasi
+    <small>Data Validasi</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i></a></li>
-    <li class="active">ODP</li>
+    <li class="active">Validasi</li>
   </ol>
 </section>
 
@@ -14,7 +14,7 @@
 
   <div class="box">
     <div class="box-header">
-      <h3 class="box-title">Tambah ODP</h3>
+      <h3 class="box-title">Tambah Validasi</h3>
       <div class="pull-right">
         <a href="<?= site_url('Admin/viewListValidasi') ?>" class="btn btn-danger btn-flat">
           <i class="fa fa-undo"></i> Back
