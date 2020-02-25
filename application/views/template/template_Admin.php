@@ -861,29 +861,7 @@
         format: "yyyy-mm-dd",
         autoclose: true
       });
-
-      // fetch_data('no');
-
-      // function fetch_data(is_date_search, start_date='', end_date='')
-      // {
-      //   var dataTable = $('#tabelFilter').DataTable({
-      //   "processing" : true,
-      //   "serverSide" : true,
-      //   "sScrollY": "35em", //scroll tambahan y
-      //   "sScrollX": "100%", //scroll tambahan x
-      //   "bScrollCollapse": true,
-      //   "order" : [],
-      //   "ajax" : {
-      //     url:"<?= base_url() ?>index.php/Admin/FilterDate",
-      //     type:"POST",
-      //     data:{
-      //     start_date:start_date, end_date:end_date
-      //     }
-
-      //   }
-      //   });
-      // }
-
+      
       $('#search').click(function() {
         var start_date = $('#start_date').val();
         var end_date = $('#end_date').val();
@@ -908,6 +886,135 @@
             "sScrollY": "35em", //scroll tambahan y
             "sScrollX": "100%", //scroll tambahan x
             "bScrollCollapse": true,
+            "columnDefs": [{
+              "width": "5px",
+              "targets": 0
+              },
+              {
+                "width": "150px",
+                "targets": 1
+              },
+              {
+                "width": "30px",
+                "targets": 2
+              },
+              {
+                "width": "150px",
+                "targets": 3
+              },
+              {
+                "width": "110px",
+                "targets": 4
+              },
+              {
+                "width": "100px",
+                "targets": 5
+              },
+              {
+                "width": "100px",
+                "targets": 6
+              },
+              {
+                "width": "100px",
+                "targets": 7
+              },
+              {
+                "width": "130px",
+                "targets": 8
+              },
+              {
+                "width": "70px",
+                "targets": 9
+              },
+              {
+                "width": "100px",
+                "targets": 10
+              },
+              {
+                "width": "110px",
+                "targets": 11
+              },
+              {
+                "width": "130px",
+                "targets": 12
+              },
+              {
+                "width": "120px",
+                "targets": 13
+              },
+              {
+                "width": "35px",
+                "targets": 14
+              },
+              {
+                "width": "80px",
+                "targets": 15
+              },
+              {
+                "width": "35px",
+                "targets": 16
+              },
+              {
+                "width": "90px",
+                "targets": 17
+              },
+              {
+                "width": "100px",
+                "targets": 18
+              },
+              {
+                "width": "100px",
+                "targets": 19
+              },
+              {
+                "width": "160px",
+                "targets": 20
+              },
+              {
+                "width": "120px",
+                "targets": 21
+              },
+              {
+                "width": "185px",
+                "targets": 22
+              },
+              {
+                "width": "75px",
+                "targets": 23
+              },
+              {
+                "width": "45px",
+                "targets": 24
+              },
+              {
+                "width": "170px",
+                "targets": 25
+              },
+              {
+                "width": "150px",
+                "targets": 26
+              },
+              {
+                "width": "120px",
+                "targets": 27
+              },
+              {
+                "width": "80px",
+                "targets": 28
+              },
+              {
+                "width": "130px",
+                "targets": 29
+              },
+              {
+                "width": "100px",
+                "targets": 30
+              },
+              {
+                "width": "120px",
+                "targets": 31
+              }
+            ],  
             "ajax": {
               "url": "<?= base_url() ?>index.php/Admin/filterDate", // URL file untuk proses select datanya
               "type": "POST",
@@ -1151,148 +1258,6 @@
     }
   </script>
   
-
-  <!-- 
-    $(document).ready(function() {
-
-      load_data();
-
-      function load_data() {
-        $.ajax({
-          url: "<?php echo base_url(); ?>excel_import/fetch",
-          method: "POST",
-          success: function(data) {
-            $('#customer_data').html(data);
-          }
-        })
-      }
-  
-      $('#import_form').on('submit', function(event) {
-        event.preventDefault();
-        $.ajax({
-          url: "<?php echo base_url(); ?>excel_import/import",
-          method: "POST",
-          data: new FormData(this),
-          contentType: false,
-          cache: false,
-          processData: false,
-          success: function(data) {
-            $('#file').val('');
-            load_data();
-            alert(data);
-          }
-        })
-      });
-
-    });
-
-     //-------------
-    //- PIE CHART -
-    //-------------
-    // Get context with jQuery - using jQuery's .get() method.
-    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-    var pieChart       = new Chart(pieChartCanvas)
-    var PieData        = [
-      {
-        value    : 700,
-        color    : '#f56954',
-        highlight: '#f56954',
-        label    : 'Chrome'
-      },
-      {
-        value    : 500,
-        color    : '#00a65a',
-        highlight: '#00a65a',
-        label    : 'IE'
-      },
-      {
-        value    : 400,
-        color    : '#f39c12',
-        highlight: '#f39c12',
-        label    : 'FireFox'
-      },
-      {
-        value    : 600,
-        color    : '#00c0ef',
-        highlight: '#00c0ef',
-        label    : 'Safari'
-      },
-      {
-        value    : 300,
-        color    : '#3c8dbc',
-        highlight: '#3c8dbc',
-        label    : 'Opera'
-      },
-      {
-        value    : 100,
-        color    : '#d2d6de',
-        highlight: '#d2d6de',
-        label    : 'Navigator'
-      }
-    ]
-    var pieOptions     = {
-      //Boolean - Whether we should show a stroke on each segment
-      segmentShowStroke    : true,
-      //String - The colour of each segment stroke
-      segmentStrokeColor   : '#fff',
-      //Number - The width of each segment stroke
-      segmentStrokeWidth   : 2,
-      //Number - The percentage of the chart that we cut out of the middle
-      percentageInnerCutout: 50, // This is 0 for Pie charts
-      //Number - Amount of animation steps
-      animationSteps       : 100,
-      //String - Animation easing effect
-      animationEasing      : 'easeOutBounce',
-      //Boolean - Whether we animate the rotation of the Doughnut
-      animateRotate        : true,
-      //Boolean - Whether we animate scaling the Doughnut from the centre
-      animateScale         : false,
-      //Boolean - whether to make the chart responsive to window resizing
-      responsive           : true,
-      // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-      maintainAspectRatio  : true,
-      //String - A legend template
-      legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
-    }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    pieChart.Doughnut(PieData, pieOptions)
-
-  </script> -->
-  <!--  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-  <script type="text/javascript">
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var chart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: [
-          <?php
-          if (count($graph) > 0) {
-            foreach ($graph as $data) {
-              echo "'" . $data->provinsi . "',";
-            }
-          }
-          ?>
-        ],
-        datasets: [{
-            label: 'Jumlah Penduduk',
-            backgroundColor: '#ADD8E6',
-            borderColor: '##93C3D2',
-            data: [
-              <?php
-              if (count($graph) > 0) {
-                foreach ($graph as $data) {
-                  echo $data->jumlah . ", ";
-                }
-              }
-              ?>
-            ]
-        }]
-    },
-});
- 
-  </script> -->
-
 </body>
 
 </html>

@@ -119,27 +119,58 @@ class Admin extends CI_Controller
 	{
 		$data['ODP'] = $this->ODP_model->jumlahRekapODP();
 		$ODP = $data['ODP'];
-		foreach ($ODP->result() as $rekapODP) {
-			$data['idSTO'][] = $rekapODP->idSTO;
-			$data['kodeSTO'][] = $rekapODP->kodeSTO;
-			$data['namaSTO'][] = $rekapODP->namaSTO;
-			$data['grand_total'][] = $rekapODP->grand_total;
+		$data['idSTO'][]= null;
+		$data['kodeSTO']= null;
+		$data['namaSTO']= null;
+		$data['grand_total']=null;
+		$data['totalODP']=null;
+		$data['total']=null;
+		$data['totalValidasi'] = null;
+		
+		if($ODP!=null){
+			foreach($ODP->result() as $rekapODP){
+
+				$data['idSTO'][]= $rekapODP->idSTO;
+				$data['kodeSTO'][]= $rekapODP->kodeSTO;
+				$data['namaSTO'][]= $rekapODP->namaSTO;
+				$data['grand_total'][]= $rekapODP->grand_total;
+				$data['totalODP'] += $rekapODP->grand_total;
+			}	
 		}
-		$data['totalSTO'] = $ODP->num_rows();
-
-
+	
+		$sto = $this->STO_model->getDataSTO();
+		$totalSTO = $sto->num_rows();
+		if ($totalSTO!=null){
+			$data['totalSTO'] = $totalSTO;
+		}
+		if($sto != null){
+			foreach($sto->result() as $sto){
+				$data['namaSTO'][] = $sto->namaSTO;
+			}
+		}
+		
+		// $data['totalODP'] = array_sum($data['grand_total']);
+		// $data['totalSTO'] = $ODP->num_rows();
+		
+		
 		// print_r($data['totalODP']->row());
 
 		$data['validasi'] = $this->Validasi_model->jumlahRekapValidasi()->result();
 		$validasi = $data['validasi'];
-		foreach ($validasi as $rekapValidasi) {
-			$data['total'][] = $rekapValidasi->total;
+		foreach($validasi as $rekapValidasi){
+			$data['total'][]= $rekapValidasi->total;
+			$data['totalValidasi'] += $rekapValidasi->total;
 		}
+		// $data['totalValidasi'] = array_sum($data['total']);
 		// $data['totalValidasi'] = $this->Validasi_model->jumlahRekapValidasi();
 		// print_r($data['totalValidasi']->result());
 		$data['chart'] = json_encode($data);
 		// print_r($data['chart']);
+		
+		
 		$this->template->load('template/template_Admin', 'dashboard/chart', $data);
+		
+		// $this->template->load('template/template_Admin', 'dashboard/chart');
 	}
 
 	public function filtering()
