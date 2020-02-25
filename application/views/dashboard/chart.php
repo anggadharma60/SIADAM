@@ -29,15 +29,35 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <h3>Total Rekap Validasi</h3>
-                                <?php echo '<h4>'.$totalValidasi.'</h4>'?>
+                                <?php 
+                                if(isset($totalValidasi)){
+                                    echo '<h4>'.$totalValidasi.'</h4>';
+                                }else{
+                                    echo '<h4>'.'Tidak Ada Data'.'</h4>';
+                                }
+                                ?>
                             </div>
                             <div class="col-md-4">
                                 <h3>Total Rekap ODP</h3>
-                                <?php echo '<h4>'.($totalODP-$totalValidasi).'</h4>'?>
+                                <?php 
+                                if(!isset($totalODP) or !isset($totalValidasi)){
+                                    echo '<h4>'.'Tidak Ada Data'.'</h4>';
+                                }else{
+                                    echo '<h4>'.($totalODP-$totalValidasi).'</h4>';
+                                    
+                                }
+                                ?>
                             </div>
                             <div class="col-md-4">
                                 <h3>Total Data</h3>
-                                <?php echo '<h4>'.$totalODP.'</h4>'?>
+                                <?php 
+                                if(isset($totalODP)){
+                                    echo '<h4>'.$totalODP.'</h4>';
+                                }else{
+                                    echo '<h4>'.'Tidak Ada Data'.'</h4>';
+                                }
+                                ?>
+                            
                             </div>
                         </div>
                     </div>
@@ -58,7 +78,7 @@
             <div class="col-md-6">
             <div class="box box-danger">
                 <div class="box-header with-border">
-                    <h3 class="box-title"><?=$data->namaSTO[$i]?></h3>
+                    <h3 class="box-title"><?=$namaSTO[$i]?></h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
@@ -69,12 +89,26 @@
                 
                     <canvas id="<?=$i?>" style="height:250px"></canvas>
                     
-                    
+                    <br>
                     <label>
-                    <?php 
-                        echo "Rekap Validasi :".$data->total[$i]."&emsp;&emsp;";
-                        echo "Rekap ODP :".($data->grand_total[$i]-$data->total[$i])."&emsp;&emsp;";
-                        echo "Total :".$data->grand_total[$i]."&emsp;&emsp;";
+                    <?php
+                
+                        if($data->total!=null){
+                            echo "Rekap Validasi :".$data->total[$i]."&emsp;&emsp;";
+                        }else{
+                            echo "Rekap Validasi :"."&emsp;&emsp;";
+                        }
+                        if($data->totalODP !=null and $data->totalValidasi!=null){
+                            echo "Rekap ODP :".($data->grand_total[$i]-$data->total[$i])."&emsp;&emsp;";
+                        }else{
+                            echo "Rekap ODP :"."&emsp;&emsp;";
+                        }
+                        if($data->grand_total!=null){
+                            echo "Total : ".$data->grand_total[$i]."&emsp;&emsp;";
+                        }else{
+                            echo "Total :"."&emsp;&emsp;";
+                        }
+                        
                     ?>
             
                     </label>
@@ -89,13 +123,15 @@
 
             <?php }?>
       <?php  } ?>
-    </div> 
+   
     
+    </section>    
     <script>
  
         var chart = JSON.parse('<?php echo $chart?>');
         var n;
         var m;
+        
         
         var config = new Array();
         for(n=0;n<chart.totalSTO;n++){
@@ -108,6 +144,7 @@
                         data: [
                             chart.total[n],
                             chart.grand_total[n]-chart.total[n],
+                           
                         ],
                         backgroundColor: [
                             'rgba(81, 244, 40, 0.95)',
@@ -155,5 +192,5 @@
 
 
 	</script>
-</section>
+
 

@@ -24,6 +24,7 @@ class STO_model extends CI_Model {
     // $this->db->select('sto.idSTO, sto.kodeSTO, sto.namaSTO, sto.keterangan, sto.idDatel, datel.namaDatel');
     $this->db->from('sto');
     $this->db->join('datel', 'sto.idDatel=datel.idDatel');
+    $this->db->order_by('sto.idSTO');
     if($id != null) {
       $this->db->where('idSTO', $id);
       }
