@@ -844,29 +844,7 @@
         format: "yyyy-mm-dd",
         autoclose: true
       });
-
-      // fetch_data('no');
-
-      // function fetch_data(is_date_search, start_date='', end_date='')
-      // {
-      //   var dataTable = $('#tabelFilter').DataTable({
-      //   "processing" : true,
-      //   "serverSide" : true,
-      //   "sScrollY": "35em", //scroll tambahan y
-      //   "sScrollX": "100%", //scroll tambahan x
-      //   "bScrollCollapse": true,
-      //   "order" : [],
-      //   "ajax" : {
-      //     url:"<?= base_url() ?>index.php/Admin/FilterDate",
-      //     type:"POST",
-      //     data:{
-      //     start_date:start_date, end_date:end_date
-      //     }
-
-      //   }
-      //   });
-      // }
-
+      
       $('#search').click(function() {
         var start_date = $('#start_date').val();
         var end_date = $('#end_date').val();
@@ -891,6 +869,135 @@
             "sScrollY": "35em", //scroll tambahan y
             "sScrollX": "100%", //scroll tambahan x
             "bScrollCollapse": true,
+            "columnDefs": [{
+              "width": "5px",
+              "targets": 0
+              },
+              {
+                "width": "150px",
+                "targets": 1
+              },
+              {
+                "width": "30px",
+                "targets": 2
+              },
+              {
+                "width": "150px",
+                "targets": 3
+              },
+              {
+                "width": "110px",
+                "targets": 4
+              },
+              {
+                "width": "100px",
+                "targets": 5
+              },
+              {
+                "width": "100px",
+                "targets": 6
+              },
+              {
+                "width": "100px",
+                "targets": 7
+              },
+              {
+                "width": "130px",
+                "targets": 8
+              },
+              {
+                "width": "70px",
+                "targets": 9
+              },
+              {
+                "width": "100px",
+                "targets": 10
+              },
+              {
+                "width": "110px",
+                "targets": 11
+              },
+              {
+                "width": "130px",
+                "targets": 12
+              },
+              {
+                "width": "120px",
+                "targets": 13
+              },
+              {
+                "width": "35px",
+                "targets": 14
+              },
+              {
+                "width": "80px",
+                "targets": 15
+              },
+              {
+                "width": "35px",
+                "targets": 16
+              },
+              {
+                "width": "90px",
+                "targets": 17
+              },
+              {
+                "width": "100px",
+                "targets": 18
+              },
+              {
+                "width": "100px",
+                "targets": 19
+              },
+              {
+                "width": "160px",
+                "targets": 20
+              },
+              {
+                "width": "120px",
+                "targets": 21
+              },
+              {
+                "width": "185px",
+                "targets": 22
+              },
+              {
+                "width": "75px",
+                "targets": 23
+              },
+              {
+                "width": "45px",
+                "targets": 24
+              },
+              {
+                "width": "170px",
+                "targets": 25
+              },
+              {
+                "width": "150px",
+                "targets": 26
+              },
+              {
+                "width": "120px",
+                "targets": 27
+              },
+              {
+                "width": "80px",
+                "targets": 28
+              },
+              {
+                "width": "130px",
+                "targets": 29
+              },
+              {
+                "width": "100px",
+                "targets": 30
+              },
+              {
+                "width": "120px",
+                "targets": 31
+              }
+            ],  
             "ajax": {
               "url": "<?= base_url() ?>index.php/Admin/filterDate", // URL file untuk proses select datanya
               "type": "POST",
@@ -1134,9 +1241,6 @@
     }
   </script>
   
-
- 
-
 </body>
 
 </html>
