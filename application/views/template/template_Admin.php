@@ -839,6 +839,23 @@
         ],
       });
 
+    $('.showHideColumn').on('click', function() {
+        var tableColumn = tabel.column($(this).attr('data-columnindex'));
+        tableColumn.visible(!tableColumn.visible());
+    });
+
+    $("#checkall").change(function() {
+      $("input:checkbox").prop("checked", $(this).prop("checked"))
+    });
+
+    // $('input[type="checkbox"].minimal-red').iCheck({
+    //   checkboxClass: 'icheckbox_minimal-red'
+    // });
+
+    // $('input[type="checkbox"].flat-red').iCheck({
+    //   checkboxClass: 'icheckbox_flat-red'
+    // });
+
       $('.input-daterange').datepicker({
         todayBtn: 'linked',
         format: "yyyy-mm-dd",
