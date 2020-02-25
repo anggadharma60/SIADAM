@@ -584,7 +584,7 @@
 
   <script type="text/javascript" language="javascript">
     $(document).ready(function() {
-      var tabel = $('#tableFilter').DataTable({
+      var tabelFilter = $('#tableFilter').DataTable({
         "processing": true,
         "serverSide": true,
         "ordering": true, // Set true agar bisa di sorting
@@ -844,17 +844,34 @@
         tableColumn.visible(!tableColumn.visible());
     });
 
-    $("#checkall").change(function() {
-      $("input:checkbox").prop("checked", $(this).prop("checked"))
+    $("#but_checkall").click(function() {
+      $.each($('input[type="checkbox"]:not(:checked)').prop('checked', true));
+      
+      $.each($('input[type="checkbox"]:not(:disabled)').prop('checked', false));
     });
+    
+    //Tambahan
+    $('#but_showhide').click(function(){
+     var checked_arr = [];var unchecked_arr = [];
 
-    // $('input[type="checkbox"].minimal-red').iCheck({
-    //   checkboxClass: 'icheckbox_minimal-red'
-    // });
+     // Read all checked checkboxes
+     $.each($('input[type="checkbox"]:checked'), function (key, value) {
+        checked_arr.push(this.value);
+     });
 
-    // $('input[type="checkbox"].flat-red').iCheck({
-    //   checkboxClass: 'icheckbox_flat-red'
-    // });
+     // Read all unchecked checkboxes
+     $.each($('input[type="checkbox"]:not(:checked)'), function (key, value) {
+        unchecked_arr.push(this.value);
+     });
+
+     // Hide the checked columns
+     tabelFilter.columns(checked_arr).visible(true);
+
+     // Show the unchecked columns
+     tabelFilter.columns(unchecked_arr).visible(false);
+  });
+
+    
 
       $('.input-daterange').datepicker({
         todayBtn: 'linked',
