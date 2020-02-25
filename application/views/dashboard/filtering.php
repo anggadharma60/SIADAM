@@ -173,14 +173,15 @@
                         <p>Amija</p>
 
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='0'
+                            class="minimal-red">
                         </label>
                         <label>
                             ONDESK
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='1' class="minimal-red">
                         </label>
                         <label>
                             ONSITE
@@ -191,35 +192,35 @@
                         <div>
                             <p>UIM Non-Connectivity</p>
                             <label>
-                                <input type="checkbox" class="minimal-red">
+                                <input type="checkbox" name='hide_columns[]' value='2' class="minimal-red">
                             </label>
                             <label>
                                 ODP - ONT
                             </label>
                             <br>
                             <label>
-                                <input type="checkbox" class="minimal-red">
+                                <input type="checkbox" name='hide_columns[]' value='3' class="minimal-red">
                             </label>
                             <label>
                                 RFS
                             </label>
                             <br>
                             <label>
-                                <input type="checkbox" class="minimal-red">
+                                <input type="checkbox" name='hide_columns[]' value='4' class="minimal-red">
                             </label>
                             <label>
                                 NOTE
                             </label>
                             <br>
                             <label>
-                                <input type="checkbox" class="minimal-red">
+                                <input type="checkbox" name='hide_columns[]' value='5' class="minimal-red">
                             </label>
                             <label>
                                 TANGGAL UPDATE UIM
                             </label>
                             <br>
                             <label>
-                                <input type="checkbox" class="minimal-red">
+                                <input type="checkbox" name='hide_columns[]' value='6' class="minimal-red">
                             </label>
                             <label>
                                 UPDATER UIM
@@ -232,91 +233,91 @@
                             <p>ODP</p>
                         </div>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='7' class="minimal-red">
                         </label>
                         <label>
                             NAMA ODP
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='8' class="minimal-red">
                         </label>
                         <label>
                             NOTE
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='9' class="minimal-red">
                         </label>
                         <label>
                             QR ODP
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='10' class="minimal-red">
                         </label>
                         <label>
                             KOORDINAT ODP
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='11' class="minimal-red">
                         </label>
                         <label>
                             TOTAL IN ODP
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='12' class="minimal-red">
                         </label>
                         <label>
                             KAPASITAS ODP
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='13' class="minimal-red">
                         </label>
                         <label>
                             PORT
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='14' class="minimal-red">
                         </label>
                         <label>
                             STATUS
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='15' class="minimal-red">
                         </label>
                         <label>
                             ONU
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='16' class="minimal-red">
                         </label>
                         <label>
                             SN
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='17' class="minimal-red">
                         </label>
                         <label>
                             SERVICE
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='18' class="minimal-red">
                         </label>
                         <label>
                             QR DROPCORE
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='19' class="minimal-red">
                         </label>
                         <label>
                             NO URUT DROPCORE
@@ -329,14 +330,14 @@
                             <p>OLT</p>
                         </div>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='20' class="minimal-red">
                         </label>
                         <label>
                             NAMA OLT (IP OLT)
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='21' class="minimal-red">
                         </label>
                         <label>
                             PORT OLT
@@ -348,21 +349,21 @@
                             <p>Out Splitter</p>
                         </div>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='22' class="minimal-red">
                         </label>
                         <label>
                             PORT OUT SPLITTER
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='23' class="minimal-red">
                         </label>
                         <label>
                             QR OUT SPLITTER
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='24' class="minimal-red">
                         </label>
                         <label>
                             FLAG OLT & PORT
@@ -374,7 +375,7 @@
                             <p>UIM Connectivity</p>
                         </div>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='25' class="minimal-red">
                         </label>
                         <label>
                             CONNECTIVITY ODP TO OLT
@@ -386,28 +387,28 @@
                             <p>Update Dava</p>
                         </div>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='26' class="minimal-red">
                         </label>
                         <label>
                             QR ODP
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='27' class="minimal-red">
                         </label>
                         <label>
                             QR OUT SPLITTER
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='28' class="minimal-red">
                         </label>
                         <label>
                             QR DROPCORE
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='29' class="minimal-red">
                         </label>
                         <label>
                             UPDATER DAVA
