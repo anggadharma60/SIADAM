@@ -9,7 +9,7 @@
     </ol>
 </section>
 <?php $data = json_decode($chart);
-// print_r($data->total);
+    // print_r($data->total);
 ?>
 
 <!-- Main content -->
@@ -62,33 +62,28 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- /.box-body -->
+                
+            <!-- /.box-body -->
             </div>
-            <!-- /.box -->
+             <!-- /.box -->
         </div>
     </div>
-    <?php
-    for ($i = 0; $i < $totalSTO; $i++) { ?>
-        <?php
-        if ($i % 2 == 1) { ?>
-            <div class="row">
+    <?php 
+        for($i=0;$i<$totalSTO;$i++) { ?>
+            <?php 
+            if($i%2==1) {?>
+                <div class="row">
 
-            <?php } ?>
+            <?php }?>
             <div class="col-md-6">
-                <div class="box box-danger">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><?= $data->namaSTO[$i] ?></h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </div>
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><?=$namaSTO[$i]?></h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
                     </div>
-                    <div class="box-body">
-                        <canvas id="<?= $i ?>" style="height:250px"></canvas>
-                    </div>
-                    <!-- /.box-body -->
                 </div>
                 <div class="box-body text-center">
                 
@@ -119,11 +114,12 @@
                     </label>
                 </div>
             <!-- /.box-body -->
-                <!-- /.box -->
             </div>
-            <?php
-            if ($i % 2 == 1) { ?>
-            </div>
+             <!-- /.box -->
+        </div>
+            <?php 
+            if($i%2==1) {?>
+                </div>
 
             <?php }?>
       <?php  } ?>
@@ -131,15 +127,12 @@
     
     </section>    
     <script>
-        var chart = JSON.parse('<?php echo $chart ?>');
+ 
+        var chart = JSON.parse('<?php echo $chart?>');
         var n;
         var m;
-<<<<<<< HEAD
         
         
-=======
-
->>>>>>> 2a9ce3133ae1350618323b90d03f665c0cac6b54
         var config = new Array();
         for(n=0;n<chart.totalSTO;n++){
             // console.log(chart.total[n]);
@@ -180,19 +173,24 @@
                 }
             };
 
-
+		
         }
 
         var ctx = new Array();
         window.onload = function() {
-            for (m = 0; m < chart.totalSTO; m++) {
+            for(m=0;m<chart.totalSTO;m++){
                 ctx[m] = document.getElementById(m).getContext('2d');
-                // ctx[1] = document.getElementById(1).getContext('2d');
+            // ctx[1] = document.getElementById(1).getContext('2d');
                 window.myDoughnut = new Chart(ctx[m], config[m]);
-                // window.myDoughnut = new Chart(ctx[1], config[2]);
+            // window.myDoughnut = new Chart(ctx[1], config[2]);
             }
 
+            
+		};
+		
 
-        };
-    </script>
-</section>
+
+
+	</script>
+
+
