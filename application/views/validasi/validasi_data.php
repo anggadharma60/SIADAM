@@ -13,8 +13,16 @@
   <?php $this->view('messages') ?>
   <div class="box">
     <div class="box-header">
+<?php
+      $admin = $this->fungsi->user_login()->status == 'Admin';
+      $ondesk = $this->fungsi->user_login()->status == 'Ondesk';
+      
+      $hddaman = $this->fungsi->user_login()->status == 'HD Daman';
+      $daman = $this->fungsi->user_login()->status == 'Daman'; ?>
       <h3 class="box-title">Data Validasi</h3>
+      <?php if ($admin || $ondesk || $hddaman || $daman) { ?>
       <div class="pull-right">
+      <?php if($this->fungsi->user_login()->status == 'Admin') { ?>
         <a href="<?= site_url('Admin/deleteAllValidasi')?>">
         <button onclick="return confirm('Apakah Anda Yakin ingin menghapus semua Data?')" class="btn btn-danger btn-flat">
           <i class="fa fa-trash"></i> Delete All
@@ -29,6 +37,44 @@
         <a href="<?= site_url('Admin/addValidasi')?>" class="btn btn-primary btn-flat">
           <i class="fa fa-user-plus"></i> Create
         </a>
+        <?php } ?>
+        <?php if($this->fungsi->user_login()->status == 'Ondesk') { ?>
+        <a href="<?= site_url('Ondesk/deleteAllValidasi')?>">
+        <button onclick="return confirm('Apakah Anda Yakin ingin menghapus semua Data?')" class="btn btn-danger btn-flat">
+          <i class="fa fa-trash"></i> Delete All
+          </button>
+        </a>
+        <a href="<?= site_url('Ondesk/exportValidasi')?>" class="btn btn-danger btn-flat">
+          <i class="fa fa-upload  "></i> Export
+        </a>
+        <a href="<?= site_url('Ondesk/uploadValidasi')?>" class="btn btn-success btn-flat">
+          <i class="fa fa-download"></i> Import
+        </a>
+        <a href="<?= site_url('Ondesk/addValidasi')?>" class="btn btn-primary btn-flat">
+          <i class="fa fa-user-plus"></i> Create
+        </a>        
+        <?php } ?>
+        <?php if($this->fungsi->user_login()->status == 'HD Daman') { ?>
+        <a href="<?= site_url('HDDaman/deleteAllValidasi')?>">
+        <button onclick="return confirm('Apakah Anda Yakin ingin menghapus semua Data?')" class="btn btn-danger btn-flat">
+          <i class="fa fa-trash"></i> Delete All
+          </button>
+        </a>
+        <a href="<?= site_url('HDDaman/uploadValidasi')?>" class="btn btn-success btn-flat">
+          <i class="fa fa-download"></i> Import
+        </a>
+        <a href="<?= site_url('HDDaman/addValidasi')?>" class="btn btn-primary btn-flat">
+          <i class="fa fa-user-plus"></i> Create
+        </a>
+        <a href="<?= site_url('HDDaman/exportValidasi')?>" class="btn btn-danger btn-flat">
+          <i class="fa fa-upload  "></i> Export
+        </a>
+      <?php  } ?>
+
+    
+        <?php } ?>
+      
+      
       </div>
     </div>
     <div class="box-body table-responsive">

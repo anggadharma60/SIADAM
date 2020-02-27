@@ -33,12 +33,12 @@ class Ondesk extends CI_Controller
 	{
 		parent::__construct();
 		check_not_login();
-		//check Ondesk buat fungsi_helper
+		//check admin buat fungsi_helper
 		check_ondesk();
 		// check_daman();
 		// check_hddaman();
 		// check_ondesk();
-		// check_onsite();
+		// check_ondesk();
 		// check_dava();
 
 		$this->load->model('Datel_model');
@@ -1559,8 +1559,8 @@ class Ondesk extends CI_Controller
 		$data['row'] = $this->Validasi_model->getDataValidasi();
 		$this->form_validation->set_rules('tanggal_pelurusan', 'TANGGAL PELURUSAN', 'required|max_length[20]|trim');
 		$this->form_validation->set_rules('idOndeks', 'ONDESK', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('idOnsite1', 'ONSITE 1', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('idOnsite2', 'ONSITE 2', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('idOndesk1', 'ONSITE 1', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('idOndesk2', 'ONSITE 2', 'required|max_length[20]|trim');
 		$this->form_validation->set_rules('idODP', 'NAMA ODP', 'required|max_length[20]|trim');
 		$this->form_validation->set_rules('noteODP', 'NOTE', 'required|max_length[20]|trim');
 		$this->form_validation->set_rules('QRODP', 'QR ODP', 'required|max_length[20]|trim');
@@ -1616,8 +1616,8 @@ class Ondesk extends CI_Controller
 		$data['row'] = $this->Validasi_model->getDataValidasi();
 		$this->form_validation->set_rules('tanggal_pelurusan', 'TANGGAL PELURUSAN', 'required|max_length[20]|trim');
 		$this->form_validation->set_rules('idOndeks', 'ONDESK', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('idOnsite1', 'ONSITE 1', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('idOnsite2', 'ONSITE 2', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('idOndesk1', 'ONSITE 1', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('idOndesk2', 'ONSITE 2', 'required|max_length[20]|trim');
 		$this->form_validation->set_rules('idODP', 'NAMA ODP', 'required|max_length[20]|trim');
 		$this->form_validation->set_rules('noteODP', 'NOTE', 'required|max_length[20]|trim');
 		$this->form_validation->set_rules('QRODP', 'QR ODP', 'required|max_length[20]|trim');

@@ -16,9 +16,16 @@
     <div class="box-header">
       <h3 class="box-title">Tambah Validasi</h3>
       <div class="pull-right">
+      <?php if($this->fungsi->user_login()->status == 'Admin') { ?>
         <a href="<?= site_url('Admin/viewListValidasi') ?>" class="btn btn-danger btn-flat">
           <i class="fa fa-undo"></i> Back
         </a>
+        <?php } ?>
+        <?php if($this->fungsi->user_login()->status == 'Ondesk') { ?>
+        <a href="<?= site_url('Ondesk/viewListValidasi')?>" class="btn btn-danger btn-flat">
+          <i class="fa fa-undo"></i> Back
+        </a>
+        <?php } ?>
       </div>
     </div>
     <div class="box-body">

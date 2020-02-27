@@ -17,7 +17,9 @@
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap datepicker -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-  <!-- iCheck for checkboxes and radio inputs -->
+  <!--  chart -->
+  <!-- <script src="<?= base_url() ?>chart.js/Chart.min.js"></script> -->
+    <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/iCheck/all.css">
   <!-- Data Tables -->
   <link rel="stylesheet" type="text/css" href="<?php echo base_url('datatables/lib/css/dataTables.bootstrap.min.css') ?>" />
@@ -39,8 +41,6 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
   <!-- <script src="<?php echo base_url() ?>assets/js/jquery-3.3.1.js"></script> -->
-
-
 
   <style>
     #load {
@@ -64,12 +64,17 @@
       opacity: 0.6;
       background-size: 8%;
     }
+    canvas {
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
   </style>
 
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,200i,300,300i,400,400i,500,500i,600i,700i&display=swap" rel="stylesheet">
 
-</head>
+  </head>
 
 <body class="hold-transition skin-blue-light sidebar-mini">
   <div id="load">loading...</div>
@@ -78,7 +83,7 @@
 
     <header class="main-header">
       <!-- Logo -->
-      <a href="<?= base_url('Admin') ?>" class="logo">
+      <a href="<?= base_url('Onsite') ?>" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini">
           <img src="<?= base_url() ?>assets/dist/img/50x50.png" class="user-image" alt="User Image">
@@ -162,49 +167,27 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header"></li>
-          <li class="treeview">
-            <a href="<?= site_url('dashboard') ?>">
-              <i class="fa fa-bar-chart"></i> <span>Dashboard</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href="<?= site_url('Onsite/filtering') ?>"><i class="fa fa-filter fa-fw mr-3"></i> Filtering</a></li>
-              <li><a href="<?= site_url('Onsite/chart') ?>"><i class="fa fa-pie-chart fa-fw mr-3"></i> Chart</a></li>
-            </ul>
-          </li>
+
           <li>
             <a href="<?= site_url('Onsite/viewListValidasi') ?>">
-              <i class="fa fa-cog"></i> <span>Kelola Data Validasi</span>
+              <i class="fa fa-cog"></i>
+              <span>Kelola Data Validasi</span>
               <span class="pull-right-container"></span>
             </a>
           </li>
-          <li class="treeview">
-            <a href="#">
+          <li>
+            <a href="<?= site_url('Onsite/viewListODP') ?>">
               <i class="fa fa-microchip"></i>
               <span>Kelola Data ODP</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+              <span class="pull-right-container"></span>
             </a>
-            <ul class="treeview-menu">
-              <li><a href="<?= site_url('Onsite/viewListODP') ?>"><i class="fa fa-cube fa-fw mr-3"></i> Data ODP</a></li>
-              <li><a href="#"><i class="fa fa-sitemap fa-fw mr-3"></i> Data Port ODP</a></li>
-            </ul>
           </li>
-          <li class="treeview">
-            <a href="#">
+          <li>
+            <a href="<?= site_url('Onsite/getOLT') ?>">
               <i class="fa fa-database"></i>
               <span>Kelola Data OLT</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+              <span class="pull-right-container"></span>
             </a>
-            <ul class="treeview-menu">
-              <li><a href="<?= site_url('Onsite/getOLT') ?>"><i class="fa fa-clone fa-fw mr-3"></i> Data OLT</a></li>
-              <li><a href="#"><i class="fa fa-codepen fa-fw mr-3"></i> Data Port Out Splitter</a></li>
-            </ul>
           </li>
         </ul>
       </section>
@@ -253,9 +236,11 @@
   <script src="<?= base_url() ?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
   <!-- bootstrap datepicker -->
   <script src="<?= base_url() ?>assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <!--  chart -->
+  <script src="<?= base_url() ?>chart.js/Chart.bundle.min.js"></script>
   <!-- iCheck 1.0.1 -->
   <script src="<?= base_url() ?>assets/plugins/iCheck/icheck.min.js"></script>
-
+ 
 
   <script>
     var tabel = null;
@@ -419,7 +404,7 @@
         "sScrollX": "100%", //scroll tambahan x
         "bScrollCollapse": true,
         "ajax": {
-          "url": "<?= base_url() ?>index.php/Admin/loadDataValidasi", // URL file untuk proses select datanya
+          "url": "<?= base_url() ?>index.php/Onsite/loadDataValidasi", // URL file untuk proses select datanya
           "type": "POST"
         },
         "deferRender": true,
@@ -526,8 +511,8 @@
           {
             "render": function(data, type, row) { // Tampilkan kolom aksi
               var html = "<div class='text-center'>" +
-                "<a href='<?= site_url() ?>Admin/editValidasi/" + row.id + "' class='btn btn-primary btn-xs'><i class='fa fa-pencil'></i></a> " +
-                " <a href='<?= site_url() ?>Admin/deleteValidasi/" + row.id + "' onclick='return confirm(\"Anda yakin?\");' class='btn btn-danger btn-xs'><i class='fa fa-trash'></i></a> " +
+                "<a href='<?= site_url() ?>Onsite/editValidasi/" + row.id + "' class='btn btn-primary btn-xs'><i class='fa fa-pencil'></i></a> " +
+                " <a href='<?= site_url() ?>Onsite/deleteValidasi/" + row.id + "' onclick='return confirm(\"Anda yakin?\");' class='btn btn-danger btn-xs'><i class='fa fa-trash'></i></a> " +
                 "</div>";
 
               return html
@@ -540,7 +525,7 @@
 
   <script type="text/javascript" language="javascript">
     $(document).ready(function() {
-      var tabel = $('#tableFilter').DataTable({
+      var tabelFilter = $('#tableFilter').DataTable({
         "processing": true,
         "serverSide": true,
         "ordering": true, // Set true agar bisa di sorting
@@ -688,7 +673,7 @@
           }
         ],
         "ajax": {
-          "url": "<?= base_url() ?>index.php/Admin/loadDataValidasi", // URL file untuk proses select datanya
+          "url": "<?= base_url() ?>index.php/Onsite/loadDataValidasi", // URL file untuk proses select datanya
           "type": "POST"
         },
         "deferRender": true,
@@ -795,34 +780,46 @@
         ],
       });
 
+    $('.showHideColumn').on('click', function() {
+        var tableColumn = tabel.column($(this).attr('data-columnindex'));
+        tableColumn.visible(!tableColumn.visible());
+    });
+
+    $("#but_checkall").click(function() {
+      $.each($('input[type="checkbox"]:not(:checked)').prop('checked', true));
+      
+      $.each($('input[type="checkbox"]:not(:disabled)').prop('checked', false));
+    });
+    
+    //Tambahan
+    $('#but_showhide').click(function(){
+     var checked_arr = [];var unchecked_arr = [];
+
+     // Read all checked checkboxes
+     $.each($('input[type="checkbox"]:checked'), function (key, value) {
+        checked_arr.push(this.value);
+     });
+
+     // Read all unchecked checkboxes
+     $.each($('input[type="checkbox"]:not(:checked)'), function (key, value) {
+        unchecked_arr.push(this.value);
+     });
+
+     // Hide the checked columns
+     tabelFilter.columns(checked_arr).visible(true);
+
+     // Show the unchecked columns
+     tabelFilter.columns(unchecked_arr).visible(false);
+  });
+
+    
+
       $('.input-daterange').datepicker({
         todayBtn: 'linked',
         format: "yyyy-mm-dd",
         autoclose: true
       });
-
-      // fetch_data('no');
-
-      // function fetch_data(is_date_search, start_date='', end_date='')
-      // {
-      //   var dataTable = $('#tabelFilter').DataTable({
-      //   "processing" : true,
-      //   "serverSide" : true,
-      //   "sScrollY": "35em", //scroll tambahan y
-      //   "sScrollX": "100%", //scroll tambahan x
-      //   "bScrollCollapse": true,
-      //   "order" : [],
-      //   "ajax" : {
-      //     url:"<?= base_url() ?>index.php/Admin/FilterDate",
-      //     type:"POST",
-      //     data:{
-      //     start_date:start_date, end_date:end_date
-      //     }
-
-      //   }
-      //   });
-      // }
-
+      
       $('#search').click(function() {
         var start_date = $('#start_date').val();
         var end_date = $('#end_date').val();
@@ -847,8 +844,137 @@
             "sScrollY": "35em", //scroll tambahan y
             "sScrollX": "100%", //scroll tambahan x
             "bScrollCollapse": true,
+            "columnDefs": [{
+              "width": "5px",
+              "targets": 0
+              },
+              {
+                "width": "150px",
+                "targets": 1
+              },
+              {
+                "width": "30px",
+                "targets": 2
+              },
+              {
+                "width": "150px",
+                "targets": 3
+              },
+              {
+                "width": "110px",
+                "targets": 4
+              },
+              {
+                "width": "100px",
+                "targets": 5
+              },
+              {
+                "width": "100px",
+                "targets": 6
+              },
+              {
+                "width": "100px",
+                "targets": 7
+              },
+              {
+                "width": "130px",
+                "targets": 8
+              },
+              {
+                "width": "70px",
+                "targets": 9
+              },
+              {
+                "width": "100px",
+                "targets": 10
+              },
+              {
+                "width": "110px",
+                "targets": 11
+              },
+              {
+                "width": "130px",
+                "targets": 12
+              },
+              {
+                "width": "120px",
+                "targets": 13
+              },
+              {
+                "width": "35px",
+                "targets": 14
+              },
+              {
+                "width": "80px",
+                "targets": 15
+              },
+              {
+                "width": "35px",
+                "targets": 16
+              },
+              {
+                "width": "90px",
+                "targets": 17
+              },
+              {
+                "width": "100px",
+                "targets": 18
+              },
+              {
+                "width": "100px",
+                "targets": 19
+              },
+              {
+                "width": "160px",
+                "targets": 20
+              },
+              {
+                "width": "120px",
+                "targets": 21
+              },
+              {
+                "width": "185px",
+                "targets": 22
+              },
+              {
+                "width": "75px",
+                "targets": 23
+              },
+              {
+                "width": "45px",
+                "targets": 24
+              },
+              {
+                "width": "170px",
+                "targets": 25
+              },
+              {
+                "width": "150px",
+                "targets": 26
+              },
+              {
+                "width": "120px",
+                "targets": 27
+              },
+              {
+                "width": "80px",
+                "targets": 28
+              },
+              {
+                "width": "130px",
+                "targets": 29
+              },
+              {
+                "width": "100px",
+                "targets": 30
+              },
+              {
+                "width": "120px",
+                "targets": 31
+              }
+            ],  
             "ajax": {
-              "url": "<?= base_url() ?>index.php/Admin/filterDate", // URL file untuk proses select datanya
+              "url": "<?= base_url() ?>index.php/Onsite/filterDate", // URL file untuk proses select datanya
               "type": "POST",
               data: {
                 start_date: start_date,
@@ -992,7 +1118,7 @@
         "sScrollX": "100%", //scroll tambahan x
         "bScrollCollapse": true,
         "ajax": {
-          "url": "<?= base_url() ?>index.php/Admin/loadDataODP", // URL file untuk proses select datanya
+          "url": "<?= base_url() ?>index.php/Onsite/loadDataODP", // URL file untuk proses select datanya
           "type": "POST"
         },
         "deferRender": true,
@@ -1063,8 +1189,8 @@
           {
             "render": function(data, type, row) { // Tampilkan kolom aksi
               var html = "<div class='text-center'>" +
-                "<a href='<?= site_url() ?>Admin/editODP/" + row.idODP + "' class='btn btn-primary btn-xs'><i class='fa fa-pencil'></i></a> " +
-                " <a href='<?= site_url() ?>Admin/deleteODP/" + row.idODP + "' onclick='return confirm(\"Anda yakin?\");' class='btn btn-danger btn-xs'><i class='fa fa-trash'></i></a> " +
+                "<a href='<?= site_url() ?>Onsite/editODP/" + row.idODP + "' class='btn btn-primary btn-xs'><i class='fa fa-pencil'></i></a> " +
+                " <a href='<?= site_url() ?>Onsite/deleteODP/" + row.idODP + "' onclick='return confirm(\"Anda yakin?\");' class='btn btn-danger btn-xs'><i class='fa fa-trash'></i></a> " +
                 "</div>";
 
               return html
@@ -1089,148 +1215,7 @@
       $("#loading").fadeOut();
     }
   </script>
-
-  <!-- 
-    $(document).ready(function() {
-
-      load_data();
-
-      function load_data() {
-        $.ajax({
-          url: "<?php echo base_url(); ?>excel_import/fetch",
-          method: "POST",
-          success: function(data) {
-            $('#customer_data').html(data);
-          }
-        })
-      }
   
-      $('#import_form').on('submit', function(event) {
-        event.preventDefault();
-        $.ajax({
-          url: "<?php echo base_url(); ?>excel_import/import",
-          method: "POST",
-          data: new FormData(this),
-          contentType: false,
-          cache: false,
-          processData: false,
-          success: function(data) {
-            $('#file').val('');
-            load_data();
-            alert(data);
-          }
-        })
-      });
-
-    });
-
-     //-------------
-    //- PIE CHART -
-    //-------------
-    // Get context with jQuery - using jQuery's .get() method.
-    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-    var pieChart       = new Chart(pieChartCanvas)
-    var PieData        = [
-      {
-        value    : 700,
-        color    : '#f56954',
-        highlight: '#f56954',
-        label    : 'Chrome'
-      },
-      {
-        value    : 500,
-        color    : '#00a65a',
-        highlight: '#00a65a',
-        label    : 'IE'
-      },
-      {
-        value    : 400,
-        color    : '#f39c12',
-        highlight: '#f39c12',
-        label    : 'FireFox'
-      },
-      {
-        value    : 600,
-        color    : '#00c0ef',
-        highlight: '#00c0ef',
-        label    : 'Safari'
-      },
-      {
-        value    : 300,
-        color    : '#3c8dbc',
-        highlight: '#3c8dbc',
-        label    : 'Opera'
-      },
-      {
-        value    : 100,
-        color    : '#d2d6de',
-        highlight: '#d2d6de',
-        label    : 'Navigator'
-      }
-    ]
-    var pieOptions     = {
-      //Boolean - Whether we should show a stroke on each segment
-      segmentShowStroke    : true,
-      //String - The colour of each segment stroke
-      segmentStrokeColor   : '#fff',
-      //Number - The width of each segment stroke
-      segmentStrokeWidth   : 2,
-      //Number - The percentage of the chart that we cut out of the middle
-      percentageInnerCutout: 50, // This is 0 for Pie charts
-      //Number - Amount of animation steps
-      animationSteps       : 100,
-      //String - Animation easing effect
-      animationEasing      : 'easeOutBounce',
-      //Boolean - Whether we animate the rotation of the Doughnut
-      animateRotate        : true,
-      //Boolean - Whether we animate scaling the Doughnut from the centre
-      animateScale         : false,
-      //Boolean - whether to make the chart responsive to window resizing
-      responsive           : true,
-      // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-      maintainAspectRatio  : true,
-      //String - A legend template
-      legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
-    }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    pieChart.Doughnut(PieData, pieOptions)
-
-  </script> -->
-  <!--  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-  <script type="text/javascript">
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var chart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: [
-          <?php
-          if (count($graph) > 0) {
-            foreach ($graph as $data) {
-              echo "'" . $data->provinsi . "',";
-            }
-          }
-          ?>
-        ],
-        datasets: [{
-            label: 'Jumlah Penduduk',
-            backgroundColor: '#ADD8E6',
-            borderColor: '##93C3D2',
-            data: [
-              <?php
-              if (count($graph) > 0) {
-                foreach ($graph as $data) {
-                  echo $data->jumlah . ", ";
-                }
-              }
-              ?>
-            ]
-        }]
-    },
-});
- 
-  </script> -->
-
 </body>
 
 </html>
