@@ -279,7 +279,7 @@
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" name='hide_columns[]' value='14' class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='14' class="minimal-red" checked disabled>
                         </label>
                         <label>
                             PORT
@@ -293,7 +293,7 @@
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" name='hide_columns[]' value='16' class="minimal-red" checked disabled>
+                            <input type="checkbox" name='hide_columns[]' value='16' class="minimal-red">
                         </label>
                         <label>
                             ONU
@@ -353,14 +353,14 @@
                             <p>Out Splitter</p>
                         </div>
                         <label>
-                            <input type="checkbox" name='hide_columns[]' value='12' class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='12' class="minimal-red" checked disabled>
                         </label>
                         <label>
                             PORT OUT SPLITTER
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox" name='hide_columns[]' value='13' class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='13' class="minimal-red" checked disabled>
                         </label>
                         <label>
                             QR OUT SPLITTER
@@ -379,8 +379,8 @@
                             <p>UIM Connectivity</p>
                         </div>
                         <label>
-                            <input type="checkbox" name='hide_columns[]' value='22' class="minimal-red">
-                        </label>
+                            <input type="checkbox" name='hide_columns[]' value='22' class="minimal-red" checked disabled>
+                        </label> 
                         <label>
                             CONNECTIVITY ODP TO OLT
                         </label>
