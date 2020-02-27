@@ -1620,7 +1620,8 @@ class Admin extends CI_Controller
 	public function addValidasi()
 	{
 		$data['row'] = $this->Validasi_model->getDataValidasi();
-		$this->form_validation->set_rules('tanggal_pelurusan', 'TANGGAL PELURUSAN', 'required|trim');
+		$this->form_validation->set_rules('tanggal_pelurusan', 'Tanggal Pelurusan', 'required|trim');
+		$this->form_validation->set_rules('updateDateUIM', 'Tanggal Update UIM', 'required|trim');
 		$this->form_validation->set_rules('ondesk', 'Ondesk', 'required|trim');
 		$this->form_validation->set_rules('onsite1', 'Onsite ', 'required|trim');
 		$this->form_validation->set_rules('onsite2', 'Onsite ', 'trim');

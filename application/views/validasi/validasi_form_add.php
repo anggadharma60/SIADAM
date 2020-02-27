@@ -26,7 +26,7 @@
     ?>
      <!--end box header  -->
     <div class="box-body table-responsive">
-      <form method="post" action="">
+      <form id="validasi" method="post" action="">
         <!-- Input ODP -->
         <div class="col-md-12">
           <fieldset>
@@ -41,6 +41,18 @@
                             <input type="text" name="tanggal_pelurusan" id="taggal_pelurusan" class="form-control pull-right" value="<?= set_value('tanggal_pelurusan')?>" readonly=""/>
                         </div>
                     <?= form_error('tanggal_pelurusan') ?>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group <?= form_error('updateDateUIM') ? 'has-error' : null ?>">
+                    <label>Tanggal Update UIM *</label>
+                    <div class="input-group input-daterange">
+                            <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" name="updateDateUIM" id="updateDateUIM" class="form-control pull-right" value="<?= set_value('updateDateUIM')?>" readonly=""/>
+                        </div>
+                    <?= form_error('updateDateUIM') ?>
               </div>
             </div>
             <div class="row"></div>
@@ -153,7 +165,7 @@
             <div class="col-md-3">
               <div class="form-group">
                 <br>
-                <input class="btn btn-success btn-flat" type="submit" value="TAMBAH" name="submit" style="margin-top:5px;height:33px;width:100%;">
+                <input class="btn btn-success btn-flat" id="btn-add" type="submit" value="TAMBAH" name="submit" style="margin-top:5px;height:33px;width:100%;">
               </div>
             </div>
           </fieldset>

@@ -305,7 +305,19 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" />
 
  
+  <script>
+    $(document).ready(function() {
 
+      $('.input-daterange').datepicker({
+        todayBtn: 'linked',
+        format: "yyyy-mm-dd",
+        autoclose: true
+      });
+      console.log($('.input-daterange'));
+
+    });
+     
+  </script>
   <script>
     var tabel = null;
 

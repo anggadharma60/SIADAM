@@ -2,6 +2,7 @@
 
 $(document).ready(function () {
     load();
+    
 });
 
 function load() {
@@ -40,7 +41,7 @@ function createControll(NoOfRec) {
                     "<th> ODP - ONT </th>"+
                     "<th> RFS </th>"+
                     "<th> Note </th>"+
-                    "<th> Tanggal Update UIM </th>"+
+                    // "<th> Tanggal Update UIM </th>"+
                     "<th> Updater UIM </th>"+
                     "<th> QR Out Splitter </th>"+
                     "<th> QR Dropcore </th>"+
@@ -94,9 +95,9 @@ function createControll(NoOfRec) {
                     "<td>"+
                         "<textarea class='form-control' id='noteHDDaman' name='noteHDDaman[]' rows='2' style='resize:none;width:225px'></textarea>"+
                     "</td>"+
-                    "<td>"+
-                        "<input type='text' class='form-control' id='updateDateUIM' name='updateDateUIM[]' value='' style='width:225px' />"+
-                    "</td>"+
+                    // "<td>"+
+                    //     "<input type='text' class='form-control' id='updateDateUIM' name='updateDateUIM[]' value='' style='width:225px' />"+
+                    // "</td>"+
                     "<td>"+
                         "<input type='text' class='form-control' id='updaterUIM' name='updaterUIM[]' value='' style='width:225px' />"+
                     "</td>"+
@@ -111,11 +112,12 @@ function createControll(NoOfRec) {
                     "</td>"+
                 "</tr>";
             
-                console.log(i);
+               
                 
     }           
     tbl += "</tbody>"+"</table>";
 
     $("#AddControll").append(tbl);
+    
    
 }
