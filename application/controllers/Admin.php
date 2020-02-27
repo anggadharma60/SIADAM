@@ -1638,7 +1638,7 @@ class Admin extends CI_Controller
 		
 		
 		$this->form_validation->set_rules('portOutSplitter', 'Port Out Splitter', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('QROutSplitter', 'QR OUT SPLITTER', 'required|trim');
+		$this->form_validation->set_rules('QROutSplitter', 'QR Out Splitter', 'required|trim');
 		$this->form_validation->set_rules('portODP', 'PORT', 'trim');
 		$this->form_validation->set_rules('statusportODP', 'QR ODP', 'required|max_length[20]|trim');
 		// $this->form_validation->set_rules('status', 'STATUS', 'max_length[50]required|trim');

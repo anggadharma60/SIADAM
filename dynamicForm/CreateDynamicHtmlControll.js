@@ -56,7 +56,7 @@ function createControll(NoOfRec) {
                         "<input type='text' class='form-control' id='portOutSplitter' name='portOutSplitter[]' value='"+i+"' readonly style='text-align:center;'/>"+
                     "</td>"+
                     "<td>"+
-                        "<input type='text' class='form-control' id='outsplitter' name='outsplitter[]' value='' style='width:225px' />"+
+                        "<input type='text' class='form-control' id='QROutSplitterr' name='QROutSplitter[]' value='' style='width:225px' />"+
                     "</td>"+
                     "<td>"+
                         "<input type='text' class='form-control' id='port' name='port[]' value='"+i+"' readonly style='width:50px;text-align:center;'  />"+
@@ -65,49 +65,49 @@ function createControll(NoOfRec) {
                         "<input type='text' class='form-control' id='status' name='status[]' value='' style='width:225px' />"+
                     "</td>"+
                     "<td>"+
-                        "<input type='text' class='form-control' id='onu' name='onu[]' value='' style='width:225px' />"+
+                        "<input type='text' class='form-control' id='ONU' name='ONU[]' value='' style='width:225px' />"+
                     "</td>"+
                     "<td>"+
-                        "<input type='text' class='form-control' id='sn' name='serialnumber[]' value='' style='width:225px' />"+
+                        "<input type='text' class='form-control' id='serialNumber' name='serialNumber[]' value='' style='width:225px' />"+
                     "</td>"+
                     "<td>"+
                         "<input type='text' class='form-control' id='service' name='service[]' value='' style='width:225px' />"+
                     "</td>"+
                     "<td>"+
-                        "<input type='text' class='form-control' id='dropcore' name='dropcore[]' value='' style='width:225px' />"+
+                        "<input type='text' class='form-control' id='QRDropCore' name='QRDropCore[]' value='' style='width:225px' />"+
                     "</td>"+
                     "<td>"+
-                        "<textarea class='form-control' id='noteurut' name='noteurut[]' rows='2' style='resize:none;width:225px'></textarea>"+
+                        "<textarea class='form-control' id='noteUrut' name='noteUrut[]' rows='2' style='resize:none;width:225px'></textarea>"+
                     "</td>"+
                     "<td>"+
-                        "<input type='text' class='form-control' id='flag' name='flag[]' value='' style='width:225px' />"+
+                        "<input type='text' class='form-control' id='flagOLTPort' name='flagOLTPort[]' value='' style='width:225px' />"+
                     "</td>"+
                     "<td>"+
-                        "<input type='text' class='form-control' id='odptoolt' name='odptoolt[]' value='' style='width:225px' />"+
+                        "<input type='text' class='form-control' id='ODPtoOLT' name='ODPtoOLT[]' value='' style='width:225px' />"+
                     "</td>"+
                     "<td>"+
-                        "<input type='text' class='form-control' id='odptont' name='odptont[]' value='' style='width:225px' />"+
+                        "<input type='text' class='form-control' id='ODPtoONT' name='ODPtoONT[]' value='' style='width:225px' />"+
                     "</td>"+
                     "<td>"+
-                        "<input type='text' class='form-control' id='rfs' name='rfs[]' value='' style='width:225px' />"+
+                        "<input type='text' class='form-control' id='RFS' name='RFS[]' value='' style='width:225px' />"+
                     "</td>"+
                     "<td>"+
-                        "<textarea class='form-control' id='notehddaman' name='notehaddaman[]' rows='2' style='resize:none;width:225px'></textarea>"+
+                        "<textarea class='form-control' id='noteHDDaman' name='noteHDDaman[]' rows='2' style='resize:none;width:225px'></textarea>"+
                     "</td>"+
                     "<td>"+
-                        "<input type='text' class='form-control' id='updateuim' name='updateuim[]' value='' style='width:225px' />"+
+                        "<input type='text' class='form-control' id='updateDateUIM' name='updateDateUIM[]' value='' style='width:225px' />"+
                     "</td>"+
                     "<td>"+
-                        "<input type='text' class='form-control' id='updateruim' name='updateruim[]' value='' style='width:225px' />"+
+                        "<input type='text' class='form-control' id='updaterUIM' name='updaterUIM[]' value='' style='width:225px' />"+
                     "</td>"+
                     "<td>"+
-                        "<textarea class='form-control' id='noteqros' name='noteqros[]' rows='2' style='resize:none;width:225px'></textarea>"+
+                        "<textarea class='form-control' id='noteQROutSplitter' name='noteQROutSplitter[]' rows='2' style='resize:none;width:225px'></textarea>"+
                     "</td>"+
                     "<td>"+
-                        "<textarea class='form-control' id='noteqrdc' name='noteqrdc[]' rows='2' style='resize:none;width:225px'></textarea>"+
+                        "<textarea class='form-control' id='noteQRDropCore' name='noteQRDropCore[]' rows='2' style='resize:none;width:225px'></textarea>"+
                     "</td>"+
                     "<td>"+
-                        "<input type='text' class='form-control' id='updaterdava' name='updaterdava[]' value='' style='width:225px' />"+
+                        "<input type='text' class='form-control' id='updaterDava' name='updaterDava[]' value='' style='width:225px' />"+
                     "</td>"+
                 "</tr>";
             
