@@ -1620,19 +1620,24 @@ class Admin extends CI_Controller
 	public function addValidasi()
 	{
 		$data['row'] = $this->Validasi_model->getDataValidasi();
-		$this->form_validation->set_rules('tanggal_pelurusan', 'TANGGAL PELURUSAN', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('idOndeks', 'ONDESK', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('idOnsite1', 'ONSITE 1', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('idOnsite2', 'ONSITE 2', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('idODP', 'NAMA ODP', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('noteODP', 'NOTE', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('QRODP', 'QR ODP', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('koordinatODP', 'KOORDINAT ODP', 'max_length[50]required|trim');
-		$this->form_validation->set_rules('hostname', 'NAMA OLT (IP OLT)', 'max_length[20]|trim');
-		$this->form_validation->set_rules('portOLT', 'PORT OLT', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('totalIn', 'TOTAL IN ODP', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('kapasitasODP', 'KAPASITAS ODP', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('portOutSplitter', 'PORT OUT SPLITTER', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('tanggal_pelurusan', 'TANGGAL PELURUSAN', 'required|trim');
+		$this->form_validation->set_rules('ondesk', 'Ondesk', 'required|trim');
+		$this->form_validation->set_rules('onsite1', 'Onsite ', 'required|trim');
+		$this->form_validation->set_rules('onsite2', 'Onsite ', 'trim');
+		$this->form_validation->set_rules('namaODP', 'Nama ODP', 'required|trim');
+		$this->form_validation->set_rules('noteODP', 'Note ODP', 'max_length[20]|trim');
+		$this->form_validation->set_rules('QRODP', 'QR ODP', 'max_length[16]|trim');
+		$this->form_validation->set_rules('koordinatODP', 'Koordinat ODP', 'max_length[35]|trim');
+		$this->form_validation->set_rules('noteQRODP', 'QR ODP', 'max_length[45]|trim');
+		$this->form_validation->set_rules('totalIn', 'Total IN', 'numeric|trim');
+		$this->form_validation->set_rules('kapasitasODP', 'Kapasitas', 'required|numeric|max_length[2]|trim');
+
+		
+		$this->form_validation->set_rules('namaOLT', 'Nama OLT', 'required|max_length[16]|trim');
+		$this->form_validation->set_rules('portOLT', 'Port OLT', 'required|max_length[12]|trim');
+		
+		
+		$this->form_validation->set_rules('portOutSplitter', 'Port Out Splitter', 'required|max_length[20]|trim');
 		$this->form_validation->set_rules('QROutSplitter', 'QR OUT SPLITTER', 'required|trim');
 		$this->form_validation->set_rules('portODP', 'PORT', 'trim');
 		$this->form_validation->set_rules('statusportODP', 'QR ODP', 'required|max_length[20]|trim');
@@ -1649,7 +1654,7 @@ class Admin extends CI_Controller
 		$this->form_validation->set_rules('noteHDDaman', 'NOTE', 'required|max_length[20]|trim');
 		$this->form_validation->set_rules('updateDataUIM', 'TANGGAL UPDATE UIM', 'required|max_length[20]|trim');
 		$this->form_validation->set_rules('updaterUIM', 'UPDATER UIM', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('noteQRODP', 'QR ODP', 'required|max_length[20]|trim');
+		
 		$this->form_validation->set_rules('noteQROutSplitter', 'QR OUT SPLITTER', 'required|max_length[20]|trim');
 		$this->form_validation->set_rules('noteQRDropCore', 'QR DROPCORE', 'required|max_length[20]|trim');
 		$this->form_validation->set_rules('updaterDava', 'UPDATER DAVA', 'required|max_length[20]|trim');
@@ -1657,6 +1662,7 @@ class Admin extends CI_Controller
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
+		$this->form_validation->set_message('numeric','%s berisi angka' );
 		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
 		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
 

@@ -297,8 +297,13 @@
   <script src="<?= base_url() ?>assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
   <!--  chart -->
   <script src="<?= base_url() ?>chart.js/Chart.bundle.min.js"></script>
+  <!-- dynamic form -->
+  <script src="<?= base_url() ?>dynamicForm/CreateDynamicHtmlControll.js"></script>
   <!-- iCheck 1.0.1 -->
   <script src="<?= base_url() ?>assets/plugins/iCheck/icheck.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" />
+
  
 
   <script>
@@ -1274,7 +1279,11 @@
       $("#loading").fadeOut();
     }
   </script>
-  
+  <script>
+$(function() {
+  $('.selectpicker').selectpicker();
+});
+</script>
 </body>
 
 </html>
