@@ -31,6 +31,16 @@
             <i class="fa fa-undo"></i> Back
           </a>
         <?php  } ?>
+        <?php if ($this->fungsi->user_login()->status == 'SDI') { ?>
+          <a href="<?= site_url('SDI/viewListValidasi') ?>" class="btn btn-danger btn-flat">
+            <i class="fa fa-undo"></i> Back
+          </a>
+        <?php } ?>
+        <?php if ($this->fungsi->user_login()->status == 'Dava') { ?>
+          <a href="<?= site_url('Dava/viewListValidasi') ?>" class="btn btn-danger btn-flat">
+            <i class="fa fa-undo"></i> Back
+          </a>
+        <?php } ?>
       </div>
     </div>
     <div class="box-body">
