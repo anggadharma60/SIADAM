@@ -4,7 +4,7 @@
         <!-- <small>Control Panel</small> -->
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-pie-chart"></i></a></li>
+        <li><i class="fa fa-pie-chart"></i></<i></li>
         <li class="active">Chart</li>
     </ol>
 </section>

@@ -9,7 +9,7 @@
     <h1>
         Filtering </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-filter"></i></a></li>
+        <li><i class="fa fa-filter"></i></a></li>
         <li class="active">Filtering</li>
     </ol>
 </section>
@@ -22,16 +22,31 @@
         <div class="box-header">
             <h3 class="box-title">Filtering</h3>
             <div class="pull-right">
-                <a onclick="Custom()" class="btn btn-danger btn-flat">
+                <a onclick="Custom()" class="btn btn-success btn-flat">
                     Show/Hide
                 </a>
                 <?php if($this->fungsi->user_login()->status == 'Admin') { ?>
-                <a href="<?= site_url('Admin/exportValidasi') ?>" class="btn btn-danger btn-flat">
+                <a href="<?= site_url('Admin/exportValidasi') ?>" class="btn btn-warning btn-flat">
                     <i class="fa fa-upload  "></i> Export
                 </a>
                 <?php } ?>
                 <?php if($this->fungsi->user_login()->status == 'Ondesk') { ?>
-                <a href="<?= site_url('Ondesk/exportValidasi') ?>" class="btn btn-danger btn-flat">
+                <a href="<?= site_url('Ondesk/exportValidasi') ?>" class="btn btn-warning btn-flat">
+                    <i class="fa fa-upload  "></i> Export
+                </a>
+                <?php } ?>
+                <?php if($this->fungsi->user_login()->status == 'HD Daman') { ?>
+                <a href="<?= site_url('HDDaman/exportValidasi') ?>" class="btn btn-warning btn-flat">
+                    <i class="fa fa-upload  "></i> Export
+                </a>
+                <?php } ?>
+                <?php if($this->fungsi->user_login()->status == 'SDI') { ?>
+                <a href="<?= site_url('SDI/exportValidasi') ?>" class="btn btn-warning btn-flat">
+                    <i class="fa fa-upload  "></i> Export
+                </a>
+                <?php } ?>
+                <?php if($this->fungsi->user_login()->status == 'Dava') { ?>
+                <a href="<?= site_url('Dava/exportValidasi') ?>" class="btn btn-warning btn-flat">
                     <i class="fa fa-upload  "></i> Export
                 </a>
                 <?php } ?>
@@ -60,7 +75,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <input type="button" name="search" id="search" value="Search" class="btn btn-info" />
+                    <input type="button" name="search" id="search" value="Search" class="btn btn-danger" />
                 </div>
             </div>
             <!-- <div class="input-group">

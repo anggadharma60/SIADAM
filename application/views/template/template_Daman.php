@@ -167,14 +167,14 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header"></li>
-          <li class="treeview">
+          <li class="active treeview">
             <a href="<?= site_url('dashboard') ?>">
               <i class="fa fa-bar-chart"></i> <span>Dashboard</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
-            <ul class="treeview-menu">
+            <ul class="treeview-menu" >
               <li><a href="<?= site_url('Daman/filtering') ?>"><i class="fa fa-filter fa-fw mr-3"></i> Filtering</a></li>
               <li><a href="<?= site_url('Daman/chart') ?>"><i class="fa fa-pie-chart fa-fw mr-3"></i> Chart</a></li>
             </ul>

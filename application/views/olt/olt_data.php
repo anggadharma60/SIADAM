@@ -31,12 +31,12 @@
                         </a>
                     <?php } ?>
                     <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
-                        <a href="<?= site_url('Admin/exportOLT') ?>" class="btn btn-danger btn-flat">
+                        <a href="<?= site_url('Admin/exportOLT') ?>" class="btn btn-warning btn-flat">
                             <i class="fa fa-upload  "></i> Export
                         </a>
                     <?php } ?>
                     <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
-                        <a href="<?= site_url('Ondesk/exportOLT') ?>" class="btn btn-danger btn-flat">
+                        <a href="<?= site_url('Ondesk/exportOLT') ?>" class="btn btn-warning btn-flat">
                             <i class="fa fa-upload  "></i> Export
                         </a>
                     <?php } ?>
@@ -74,7 +74,9 @@
                         <th>ID Logical Device</th>
                         <th>STO</th>
                         <th>Specification OLT</th>
-                        <th>Actions</th>
+                        <?php if ($this->fungsi->user_login()->status == 'Admin' || $this->fungsi->user_login()->status == 'Ondesk' || $this->fungsi->user_login()->status == 'HD Daman' || $this->fungsi->user_login()->status == 'SDI') { ?>
+                            <th>Actions</th>
+                        <?php } ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -89,10 +91,7 @@
                             <td><?= $data->namaSpecOLT ?></td>
                             <td class="text-center" width="10%">
                                 <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
-                                    <form action="<?= site_url('Admin/deleteOLT') ?>" method="post">detailOLT
-                                        <a href="<?= site_url('Admin/detailOLT/' . $data->idOLT) ?>" class="btn btn-default btn-xs">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
+                                    <form action="<?= site_url('Admin/deleteOLT') ?>" method="post">
                                         <a href="<?= site_url('Admin/editOLT/' . $data->idOLT) ?>" class="btn btn-primary btn-xs">
                                             <i class="fa fa-pencil"></i>
                                         </a>
@@ -104,9 +103,6 @@
                                 <?php } ?>
                                 <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
                                     <form action="<?= site_url('Ondesk/deleteOLT') ?>" method="post">
-                                        <a href="<?= site_url('Ondesk/detailOLT/' . $data->idOLT) ?>" class="btn btn-default btn-xs">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
                                         <a href="<?= site_url('Ondesk/editOLT/' . $data->idOLT) ?>" class="btn btn-primary btn-xs">
                                             <i class="fa fa-pencil"></i>
                                         </a>
@@ -130,7 +126,9 @@
                         <th>ID Logical Device</th>
                         <th>STO</th>
                         <th>Specification OLT</th>
-                        <th>Actions</th>
+                        <?php if ($this->fungsi->user_login()->status == 'Admin' || $this->fungsi->user_login()->status == 'Ondesk' || $this->fungsi->user_login()->status == 'HD Daman' || $this->fungsi->user_login()->status == 'SDI') { ?>
+                            <th>Actions</th>
+                        <?php } ?>
                     </tr>
                 </tfoot>
             </table>

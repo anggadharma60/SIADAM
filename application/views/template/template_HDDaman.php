@@ -168,7 +168,7 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header"></li>
-          <li class="treeview">
+          <li class="active treeview">
             <a href="<?= site_url('dashboard') ?>">
               <i class="fa fa-bar-chart"></i> <span>Dashboard</span>
               <span class="pull-right-container">
@@ -1213,7 +1213,11 @@
       $("#loading").fadeOut();
     }
   </script>
-
+  <script>
+    $(function() {
+      $('.selectpicker').selectpicker();
+    });
+  </script>
 </body>
 
 </html>

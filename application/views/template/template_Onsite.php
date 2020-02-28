@@ -511,8 +511,7 @@
           {
             "render": function(data, type, row) { // Tampilkan kolom aksi
               var html = "<div class='text-center'>" +
-                "<a href='<?= site_url() ?>Onsite/editValidasi/" + row.id + "' class='btn btn-primary btn-xs'><i class='fa fa-pencil'></i></a> " +
-                " <a href='<?= site_url() ?>Onsite/deleteValidasi/" + row.id + "' onclick='return confirm(\"Anda yakin?\");' class='btn btn-danger btn-xs'><i class='fa fa-trash'></i></a> " +
+                
                 "</div>";
 
               return html
@@ -1189,8 +1188,7 @@
           {
             "render": function(data, type, row) { // Tampilkan kolom aksi
               var html = "<div class='text-center'>" +
-                "<a href='<?= site_url() ?>Onsite/editODP/" + row.idODP + "' class='btn btn-primary btn-xs'><i class='fa fa-pencil'></i></a> " +
-                " <a href='<?= site_url() ?>Onsite/deleteODP/" + row.idODP + "' onclick='return confirm(\"Anda yakin?\");' class='btn btn-danger btn-xs'><i class='fa fa-trash'></i></a> " +
+                
                 "</div>";
 
               return html
