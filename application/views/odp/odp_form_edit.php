@@ -16,9 +16,16 @@
         <div class="box-header">
             <h3 class="box-title">Edit ODP</h3>
             <div class="pull-right">
+                <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
                 <a href="<?= site_url('Admin/viewListODP') ?>" class="btn btn-danger btn-flat">
                     <i class="fa fa-undo"></i> Back
                 </a>
+                <?php } ?>
+                <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
+                <a href="<?= site_url('Ondesk/viewListODP') ?>" class="btn btn-danger btn-flat">
+                    <i class="fa fa-undo"></i> Back
+                </a>
+                <?php } ?>
             </div>
         </div>
         <div class="box-body">
@@ -108,7 +115,7 @@
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-success btn-flat">
-                                <i class="fa fa-paper-plane"></i> Simpan
+                                <i></i> Simpan
                             </button>
                             <button type="reset" class="btn btn-flat">Reset</button>
                         </div>

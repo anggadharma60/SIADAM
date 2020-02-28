@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
   <!--  chart -->
   <!-- <script src="<?= base_url() ?>chart.js/Chart.min.js"></script> -->
-    <!-- iCheck for checkboxes and radio inputs -->
+  <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/iCheck/all.css">
   <!-- Data Tables -->
   <link rel="stylesheet" type="text/css" href="<?php echo base_url('datatables/lib/css/dataTables.bootstrap.min.css') ?>" />
@@ -64,11 +64,12 @@
       opacity: 0.6;
       background-size: 8%;
     }
+
     canvas {
-		-moz-user-select: none;
-		-webkit-user-select: none;
-		-ms-user-select: none;
-	}
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+    }
   </style>
 
   <!-- Google Font -->
@@ -185,44 +186,21 @@
               <span class="pull-right-container"></span>
             </a>
           </li>
-          <li class="treeview">
-            <a href="#">
-              <i class="fa fa-tasks"></i>
-              <span>Validasi</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href="#"><i class="fa fa-user-o fa-fw mr-3"></i> Validasi SDI</a></li>
-              <li><a href="#"><i class="fa fa-user fa-fw mr-3"></i> Validasi HD Daman</a></li>
-            </ul>
-          </li>
-          <li class="treeview">
-            <a href="#">
+          <li>
+            <a href="<?= site_url('Admin/viewListODP') ?>">
               <i class="fa fa-microchip"></i>
               <span>Kelola Data ODP</span>
               <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
-            <ul class="treeview-menu">
-              <li><a href="<?= site_url('Admin/viewListODP') ?>"><i class="fa fa-cube fa-fw mr-3"></i> Data ODP</a></li>
-              <li><a href="#"><i class="fa fa-sitemap fa-fw mr-3"></i> Data Port ODP</a></li>
-            </ul>
           </li>
-          <li class="treeview">
-            <a href="#">
+          <li>
+            <a href="<?= site_url('Admin/getOLT') ?>">
               <i class="fa fa-database"></i>
               <span>Kelola Data OLT</span>
               <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
-            <ul class="treeview-menu">
-              <li><a href="<?= site_url('Admin/getOLT') ?>"><i class="fa fa-clone fa-fw mr-3"></i> Data OLT</a></li>
-              <li><a href="#"><i class="fa fa-codepen fa-fw mr-3"></i> Data Port Out Splitter</a></li>
-            </ul>
           </li>
           <li class="treeview">
             <a href="#">
@@ -302,7 +280,8 @@
   <!-- iCheck 1.0.1 -->
   <script src="<?= base_url() ?>assets/plugins/iCheck/icheck.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" />
+
 
  
   <script>
@@ -856,46 +835,47 @@
         ],
       });
 
-    $('.showHideColumn').on('click', function() {
+      $('.showHideColumn').on('click', function() {
         var tableColumn = tabel.column($(this).attr('data-columnindex'));
         tableColumn.visible(!tableColumn.visible());
-    });
+      });
 
-    $("#but_checkall").click(function() {
-      $.each($('input[type="checkbox"]:not(:checked)').prop('checked', true));
-      
-      $.each($('input[type="checkbox"]:not(:disabled)').prop('checked', false));
-    });
-    
-    //Tambahan
-    $('#but_showhide').click(function(){
-     var checked_arr = [];var unchecked_arr = [];
+      $("#but_checkall").click(function() {
+        $.each($('input[type="checkbox"]:not(:checked)').prop('checked', true));
 
-     // Read all checked checkboxes
-     $.each($('input[type="checkbox"]:checked'), function (key, value) {
-        checked_arr.push(this.value);
-     });
+        $.each($('input[type="checkbox"]:not(:disabled)').prop('checked', false));
+      });
 
-     // Read all unchecked checkboxes
-     $.each($('input[type="checkbox"]:not(:checked)'), function (key, value) {
-        unchecked_arr.push(this.value);
-     });
+      //Tambahan
+      $('#but_showhide').click(function() {
+        var checked_arr = [];
+        var unchecked_arr = [];
 
-     // Hide the checked columns
-     tabelFilter.columns(checked_arr).visible(true);
+        // Read all checked checkboxes
+        $.each($('input[type="checkbox"]:checked'), function(key, value) {
+          checked_arr.push(this.value);
+        });
 
-     // Show the unchecked columns
-     tabelFilter.columns(unchecked_arr).visible(false);
-  });
+        // Read all unchecked checkboxes
+        $.each($('input[type="checkbox"]:not(:checked)'), function(key, value) {
+          unchecked_arr.push(this.value);
+        });
 
-    
+        // Hide the checked columns
+        tabelFilter.columns(checked_arr).visible(true);
+
+        // Show the unchecked columns
+        tabelFilter.columns(unchecked_arr).visible(false);
+      });
+
+
 
       $('.input-daterange').datepicker({
         todayBtn: 'linked',
         format: "yyyy-mm-dd",
         autoclose: true
       });
-      
+
       $('#search').click(function() {
         var start_date = $('#start_date').val();
         var end_date = $('#end_date').val();
@@ -921,8 +901,8 @@
             "sScrollX": "100%", //scroll tambahan x
             "bScrollCollapse": true,
             "columnDefs": [{
-              "width": "5px",
-              "targets": 0
+                "width": "5px",
+                "targets": 0
               },
               {
                 "width": "150px",
@@ -1048,7 +1028,7 @@
                 "width": "120px",
                 "targets": 31
               }
-            ],  
+            ],
             "ajax": {
               "url": "<?= base_url() ?>index.php/Admin/filterDate", // URL file untuk proses select datanya
               "type": "POST",
@@ -1292,10 +1272,10 @@
     }
   </script>
   <script>
-$(function() {
-  $('.selectpicker').selectpicker();
-});
-</script>
+    $(function() {
+      $('.selectpicker').selectpicker();
+    });
+  </script>
 </body>
 
 </html>

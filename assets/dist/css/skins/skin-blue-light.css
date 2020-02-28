@@ -64,6 +64,7 @@ body {
   background: linear-gradient(90deg, rgba(194,25,46,1) 0%, rgba(236,30,55,1) 100%, rgba(239,70,91,1) 100%);
   color: #ffffff;
   border-bottom: 0 solid transparent;
+  position: fixed;
 }
 /* kalo ditempelin */
 .skin-blue-light .main-header .logo:hover {

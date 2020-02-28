@@ -16,9 +16,31 @@
         <div class="box-header">
             <h3 class="box-title">Edit Valadasi</h3>
             <div class="pull-right">
-                <a href="<?= site_url('Admin/viewListODP') ?>" class="btn btn-danger btn-flat">
-                    <i class="fa fa-undo"></i> Back
-                </a>
+                <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
+                    <a href="<?= site_url('Admin/viewListValidasi') ?>" class="btn btn-danger btn-flat">
+                        <i class="fa fa-undo"></i> Back
+                    </a>
+                <?php } ?>
+                <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
+                    <a href="<?= site_url('Ondesk/viewListValidasi') ?>" class="btn btn-danger btn-flat">
+                        <i class="fa fa-undo"></i> Back
+                    </a>
+                <?php } ?>
+                <?php if ($this->fungsi->user_login()->status == 'HD Daman') { ?>
+                    <a href="<?= site_url('HDDaman/viewListValidasi') ?>" class="btn btn-danger btn-flat">
+                        <i class="fa fa-undo"></i> Back
+                    </a>
+                <?php  } ?>
+                <?php if ($this->fungsi->user_login()->status == 'SDI') { ?>
+                    <a href="<?= site_url('SDI/viewListValidasi') ?>" class="btn btn-danger btn-flat">
+                        <i class="fa fa-undo"></i> Back
+                    </a>
+                <?php } ?>
+                <?php if ($this->fungsi->user_login()->status == 'Dava') { ?>
+                    <a href="<?= site_url('Dava/viewListValidasi') ?>" class="btn btn-danger btn-flat">
+                        <i class="fa fa-undo"></i> Back
+                    </a>
+                <?php } ?>
             </div>
         </div>
         <div class="box-body">

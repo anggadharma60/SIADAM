@@ -3,7 +3,8 @@
     Kelola Data Validasi
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-location-arrow"></i></a></li>
+    <li><i class="fa fa-cog"></i></li<i>
+    </li>
     <li class="active">Validasi</li>
   </ol>
 </section>
@@ -13,23 +14,98 @@
   <?php $this->view('messages') ?>
   <div class="box">
     <div class="box-header">
+      <?php
+      $admin = $this->fungsi->user_login()->status == 'Admin';
+      $ondesk = $this->fungsi->user_login()->status == 'Ondesk';
+      $hddaman = $this->fungsi->user_login()->status == 'HD Daman';
+      $sdi = $this->fungsi->user_login()->status == 'SDI';
+      $dava = $this->fungsi->user_login()->status == 'Dava';
+      $daman = $this->fungsi->user_login()->status == 'Daman'; ?>
       <h3 class="box-title">Data Validasi</h3>
-      <div class="pull-right">
-        <a href="<?= site_url('Admin/deleteAllValidasi')?>">
-        <button onclick="return confirm('Apakah Anda Yakin ingin menghapus semua Data?')" class="btn btn-danger btn-flat">
-          <i class="fa fa-trash"></i> Delete All
-          </button>
-        </a>
-        <a href="<?= site_url('Admin/exportValidasi')?>" class="btn btn-danger btn-flat">
-          <i class="fa fa-upload  "></i> Export
-        </a>
-        <a href="<?= site_url('Admin/uploadValidasi')?>" class="btn btn-success btn-flat">
-          <i class="fa fa-download"></i> Import
-        </a>
-        <a href="<?= site_url('Admin/addValidasi')?>" class="btn btn-primary btn-flat">
-          <i class="fa fa-user-plus"></i> Create
-        </a>
-      </div>
+      <?php if ($admin || $ondesk || $hddaman || $daman || $sdi || $dava) { ?>
+        <div class="pull-right">
+          <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
+            <a href="<?= site_url('Admin/deleteAllValidasi') ?>">
+              <button onclick="return confirm('Apakah Anda Yakin ingin menghapus semua Data?')" class="btn btn-danger btn-flat">
+                <i class="fa fa-trash"></i> Delete All
+              </button>
+            </a>
+            <a href="<?= site_url('Admin/exportValidasi') ?>" class="btn btn-info btn-flat">
+              <i class="fa fa-upload  "></i> Export
+            </a>
+            <a href="<?= site_url('Admin/uploadValidasi') ?>" class="btn btn-success btn-flat">
+              <i class="fa fa-download"></i> Import
+            </a>
+            <a href="<?= site_url('Admin/addValidasi') ?>" class="btn btn-primary btn-flat">
+              <i class="fa fa-user-plus"></i> Create
+            </a>
+          <?php } ?>
+          <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
+            <a href="<?= site_url('Ondesk/deleteAllValidasi') ?>">
+              <button onclick="return confirm('Apakah Anda Yakin ingin menghapus semua Data?')" class="btn btn-danger btn-flat">
+                <i class="fa fa-trash"></i> Delete All
+              </button>
+            </a>
+            <a href="<?= site_url('Ondesk/exportValidasi') ?>" class="btn btn-info btn-flat">
+              <i class="fa fa-upload  "></i> Export
+            </a>
+            <a href="<?= site_url('Ondesk/uploadValidasi') ?>" class="btn btn-success btn-flat">
+              <i class="fa fa-download"></i> Import
+            </a>
+            <a href="<?= site_url('Ondesk/addValidasi') ?>" class="btn btn-primary btn-flat">
+              <i class="fa fa-user-plus"></i> Create
+            </a>
+          <?php } ?>
+          <?php if ($this->fungsi->user_login()->status == 'HD Daman') { ?>
+            <a href="<?= site_url('HDDaman/deleteAllValidasi') ?>">
+              <button onclick="return confirm('Apakah Anda Yakin ingin menghapus semua Data?')" class="btn btn-danger btn-flat">
+                <i class="fa fa-trash"></i> Delete All
+              </button>
+            </a>
+            <a href="<?= site_url('HDDaman/exportValidasi') ?>" class="btn btn-info btn-flat">
+              <i class="fa fa-upload  "></i> Export
+            </a>
+            <a href="<?= site_url('HDDaman/uploadValidasi') ?>" class="btn btn-success btn-flat">
+              <i class="fa fa-download"></i> Import
+            </a>
+            <a href="<?= site_url('HDDaman/addValidasi') ?>" class="btn btn-primary btn-flat">
+              <i class="fa fa-user-plus"></i> Create
+            </a>
+          <?php  } ?>
+          <?php if ($this->fungsi->user_login()->status == 'SDI') { ?>
+            <a href="<?= site_url('SDI/deleteAllValidasi') ?>">
+              <button onclick="return confirm('Apakah Anda Yakin ingin menghapus semua Data?')" class="btn btn-danger btn-flat">
+                <i class="fa fa-trash"></i> Delete All
+              </button>
+            </a>
+            <a href="<?= site_url('SDI/exportValidasi') ?>" class="btn btn-info btn-flat">
+              <i class="fa fa-upload  "></i> Export
+            </a>
+            <a href="<?= site_url('SDI/uploadValidasi') ?>" class="btn btn-success btn-flat">
+              <i class="fa fa-download"></i> Import
+            </a>
+            <a href="<?= site_url('SDI/addValidasi') ?>" class="btn btn-primary btn-flat">
+              <i class="fa fa-user-plus"></i> Create
+            </a>
+          <?php  } ?>
+          <?php if ($this->fungsi->user_login()->status == 'Dava') { ?>
+            <a href="<?= site_url('Dava/deleteAllValidasi') ?>">
+              <button onclick="return confirm('Apakah Anda Yakin ingin menghapus semua Data?')" class="btn btn-danger btn-flat">
+                <i class="fa fa-trash"></i> Delete All
+              </button>
+            </a>
+            <a href="<?= site_url('Dava/exportValidasi') ?>" class="btn btn-info btn-flat">
+              <i class="fa fa-upload  "></i> Export
+            </a>
+            <a href="<?= site_url('Dava/uploadValidasi') ?>" class="btn btn-success btn-flat">
+              <i class="fa fa-download"></i> Import
+            </a>
+            <a href="<?= site_url('Dava/addValidasi') ?>" class="btn btn-primary btn-flat">
+              <i class="fa fa-user-plus"></i> Create
+            </a>
+          <?php  } ?>
+        </div>
+      <?php } ?>
     </div>
     <div class="box-body table-responsive">
       <!-- id="table1" buat searching pagination dan row -->
@@ -72,7 +148,7 @@
           </tr>
         </thead>
         <tbody>
-        
+
         </tbody>
         <tfoot>
           <tr>
@@ -115,5 +191,3 @@
     </div>
   </div>
 </section>
-
-

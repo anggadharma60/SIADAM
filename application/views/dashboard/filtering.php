@@ -1,15 +1,15 @@
 <style>
-    .input-group-addon{
+    .input-group-addon {
         width: ;
     }
 </style>
-    
+
 
 <section class="content-header">
     <h1>
         Filtering </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-filter"></i></a></li>
+        <li><i class="fa fa-filter"></i></a></li>
         <li class="active">Filtering</li>
     </ol>
 </section>
@@ -22,14 +22,34 @@
         <div class="box-header">
             <h3 class="box-title">Filtering</h3>
             <div class="pull-right">
-                <a onclick="Custom()" class="btn btn-danger btn-flat">
-                        Show/Hide
+                <a onclick="Custom()" class="btn btn-success btn-flat">
+                    Show/Hide
                 </a>
-                <a href="<?= site_url('Admin/exportValidasi')?>" class="btn btn-danger btn-flat">
+                <?php if($this->fungsi->user_login()->status == 'Admin') { ?>
+                <a href="<?= site_url('Admin/exportValidasi') ?>" class="btn btn-warning btn-flat">
                     <i class="fa fa-upload  "></i> Export
                 </a>
-                
-                
+                <?php } ?>
+                <?php if($this->fungsi->user_login()->status == 'Ondesk') { ?>
+                <a href="<?= site_url('Ondesk/exportValidasi') ?>" class="btn btn-warning btn-flat">
+                    <i class="fa fa-upload  "></i> Export
+                </a>
+                <?php } ?>
+                <?php if($this->fungsi->user_login()->status == 'HD Daman') { ?>
+                <a href="<?= site_url('HDDaman/exportValidasi') ?>" class="btn btn-warning btn-flat">
+                    <i class="fa fa-upload  "></i> Export
+                </a>
+                <?php } ?>
+                <?php if($this->fungsi->user_login()->status == 'SDI') { ?>
+                <a href="<?= site_url('SDI/exportValidasi') ?>" class="btn btn-warning btn-flat">
+                    <i class="fa fa-upload  "></i> Export
+                </a>
+                <?php } ?>
+                <?php if($this->fungsi->user_login()->status == 'Dava') { ?>
+                <a href="<?= site_url('Dava/exportValidasi') ?>" class="btn btn-warning btn-flat">
+                    <i class="fa fa-upload  "></i> Export
+                </a>
+                <?php } ?>
             </div>
         </div>
         <!-- Date range -->
@@ -40,22 +60,22 @@
                     <div class="col-md-4">
                         <div class="input-group">
                             <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
+                                <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" name="start_date" id="start_date" class="form-control pull-right" readonly=""/>
+                            <input type="text" name="start_date" id="start_date" class="form-control pull-right" readonly="" />
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
                             <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
+                                <i class="fa fa-calendar"></i>
                             </div>
                             <input type="text" name="end_date" id="end_date" class="form-control pull-right" readonly="" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <input type="button" name="search" id="search" value="Search" class="btn btn-info" />
+                    <input type="button" name="search" id="search" value="Search" class="btn btn-danger" />
                 </div>
             </div>
             <!-- <div class="input-group">
@@ -75,7 +95,7 @@
                     </a>
                 </div>
             </div> -->
-            <!-- /.input group -->
+        <!-- /.input group -->
         <!-- </div> -->
         <!-- /.form group -->
         <div class="box-body table-responsive">
@@ -173,8 +193,7 @@
                         <p>Amija</p>
 
                         <label>
-                            <input type="checkbox" name='hide_columns[]' value='2'
-                            class="minimal-red">
+                            <input type="checkbox" name='hide_columns[]' value='2' class="minimal-red">
                         </label>
                         <label>
                             ONDESK
@@ -436,51 +455,58 @@
     }
 </script>
 <script>
-    $(function () {
-    //Initialize Select2 Elements
-    $('.select2').select2()
+    $(function() {
+        //Initialize Select2 Elements
+        $('.select2').select2()
 
-    //Datemask dd/mm/yyyy
-    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-    //Datemask2 mm/dd/yyyy
-    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-    //Money Euro
-    $('[data-mask]').inputmask()
+        //Datemask dd/mm/yyyy
+        $('#datemask').inputmask('dd/mm/yyyy', {
+            'placeholder': 'dd/mm/yyyy'
+        })
+        //Datemask2 mm/dd/yyyy
+        $('#datemask2').inputmask('mm/dd/yyyy', {
+            'placeholder': 'mm/dd/yyyy'
+        })
+        //Money Euro
+        $('[data-mask]').inputmask()
 
-    //Date range picker
-    $('#reservation').daterangepicker()
-    //Date range picker with time picker
-    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
-    //Date range as a button
-    $('#daterange-btn').daterangepicker(
-      {
-        ranges   : {
-          'Today'       : [moment(), moment()],
-          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        },
-        startDate: moment().subtract(29, 'days'),
-        endDate  : moment()
-      },
-      function (start, end) {
-        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-      }
-    )
+        //Date range picker
+        $('#reservation').daterangepicker()
+        //Date range picker with time picker
+        $('#reservationtime').daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 30,
+            format: 'MM/DD/YYYY h:mm A'
+        })
+        //Date range as a button
+        $('#daterange-btn').daterangepicker({
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                startDate: moment().subtract(29, 'days'),
+                endDate: moment()
+            },
+            function(start, end) {
+                $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+            }
+        )
 
-    //Date picker
-    $('#datepicker').datepicker({
-      autoclose: true
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        })
+
+        $('#datepicker').datepicker({
+            autoclose: true
+        })
+
+        $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+            checkboxClass: 'icheckbox_minimal-red'
+        })
     })
-
-    $('#datepicker').datepicker({
-    autoclose: true
-    })
-
-    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-    checkboxClass: 'icheckbox_minimal-red'
-    })
-})
 </script>
