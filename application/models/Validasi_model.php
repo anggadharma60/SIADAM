@@ -31,8 +31,10 @@ class Validasi_model extends CI_Model {
 
   public function addDataValidasi($post)
     {
-        $params['tanggal_pelurusan'] = html_escape($post['tanggal_pelurusan']);
+        $params['tanggalPelurusan'] = html_escape($post['tanggal_pelurusan']);
+        $params['updateDateUIM'] = html_escape($post['updateDateUIM']);
         $params['ondesk'] = html_escape($post['ondesk']);
+        
         $params['onsite'] = html_escape($post['onsite']);
         $params['namaODP'] = html_escape($post['namaODP']);
         $params['noteODP'] = html_escape($post['noteODP']);

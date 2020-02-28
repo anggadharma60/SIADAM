@@ -21,9 +21,6 @@
           </a>
         </div>                                        
     </div>
-    <?php
-      print_r($this->input->post(null, TRUE));
-    ?>
      <!--end box header  -->
     <div class="box-body table-responsive">
       <form id="validasi" method="post" action="">
@@ -32,15 +29,15 @@
           <fieldset>
             <legend>Input Data</legend>
             <div class="col-md-3">
-              <div class="form-group <?= form_error('tanggal_pelurusan') ? 'has-error' : null ?>">
+              <div class="form-group <?= form_error('tanggalPelurusan') ? 'has-error' : null ?>">
                     <label>Tanggal Pelurusan *</label>
                     <div class="input-group input-daterange">
                             <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" name="tanggal_pelurusan" id="taggal_pelurusan" class="form-control pull-right" value="<?= set_value('tanggal_pelurusan')?>" readonly=""/>
+                            <input type="text" name="tanggalPelurusan" id="tanggalPelurusan" class="form-control pull-right" value="<?= set_value('tanggalPelurusan')?>" readonly=""/>
                         </div>
-                    <?= form_error('tanggal_pelurusan') ?>
+                    <?= form_error('tanggalPelurusan') ?>
               </div>
             </div>
             <div class="col-md-3">
@@ -103,12 +100,13 @@
             <div class="col-md-4">
               <div class="form-group <?= form_error('namaODP') ? 'has-error' : null ?>">
                 <label>Nama ODP *</label>
-                <select name="namaODP" value="<?= set_value('namaODP') ?>" class="form-control selectpicker ui-widget" data-live-search="true">
+                <input type="text" name="namaODP" value="<?= set_value('namaODP') ?>" class="form-control">
+                <!-- <select name="namaODP" value="<?= set_value('namaODP') ?>" class="form-control selectpicker ui-widget" data-live-search="true">
                   <option data-tokens=""></option>
                   <option data-tokens="china">China</option>
                   <option data-tokens="malayasia">Malayasia</option>
                   <option data-tokens="singapore">Singapore</option>
-                </select>
+                </select> -->
                 <?= form_error('namaODP') ?>
               </div>
             </div>
@@ -179,12 +177,13 @@
             <div class="col-md-8">
               <div class="form-group <?= form_error('namaOLT') ? 'has-error' : null ?>">
                 <label>Nama OLT *</label>
-                <select name="namaOLT'" value="<?= set_value('namaOLT') ?>" class="form-control selectpicker ui-widget" data-live-search="true">
+                <input type="text" name="namaOLT" value="<?= set_value('namaOLT') ?>" class="form-control">
+                <!-- <select name="namaOLT'" value="<?= set_value('namaOLT') ?>" class="form-control selectpicker ui-widget" data-live-search="true">
                   <option data-tokens=""></option>
                   <option data-tokens="china">China</option>
                   <option data-tokens="malayasia">Malayasia</option>
                   <option data-tokens="singapore">Singapore</option>
-                </select>
+                </select> -->
                 <?= form_error('namaOLT') ?>
               </div>
             </div>
