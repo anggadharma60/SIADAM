@@ -33,6 +33,7 @@
                 <div class="col-md-4 col-md-offset-4">
                     <?php //echo validation_errors() 
                     ?>
+                    
                     <form action="" method="post">
                         <div class="form-group <?= form_error('idNOSS') ? 'has-error' : null ?>">
                             <label>ID NOSS *</label>

@@ -40,7 +40,9 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-  <!-- <script src="<?php echo base_url() ?>assets/js/jquery-3.3.1.js"></script> -->
+    <!-- Select2 -->
+    <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/select2/dist/css/select2.min.css">
+ 
 
   <style>
     #load {
@@ -279,11 +281,12 @@
   <script src="<?= base_url() ?>dynamicForm/CreateDynamicHtmlControll.js"></script>
   <!-- iCheck 1.0.1 -->
   <script src="<?= base_url() ?>assets/plugins/iCheck/icheck.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" />
-
-
  
+ <!-- Select2 -->
+<script src="<?= base_url() ?>assets/bower_components/select2/dist/js/select2.full.min.js"></script>
+
+
+ <!-- datepicker -->
   <script>
     $(document).ready(function() {
 
@@ -292,11 +295,13 @@
         format: "yyyy-mm-dd",
         autoclose: true
       });
-      console.log($('.input-daterange'));
+      $('.select2').select2();
+     
 
     });
      
   </script>
+  <!-- table 1 -->
   <script>
     var tabel = null;
 
@@ -306,6 +311,7 @@
 
     });
   </script>
+  <!-- table validasi -->
   <script>
     var tabel = null;
 
@@ -577,7 +583,7 @@
       });
     });
   </script>
-
+<!-- filter -->
   <script type="text/javascript" language="javascript">
     $(document).ready(function() {
       var tabelFilter = $('#tableFilter').DataTable({
@@ -1149,7 +1155,7 @@
 
     });
   </script>
-
+<!-- table ODP -->
   <script>
     var tabel = null;
 
@@ -1256,7 +1262,7 @@
       });
     });
   </script>
-
+<!-- overlay -->
   <script>
     $(document).ready(function() {
       $("#load").fadeOut(500); //jika document html sudah siap maka fungsi ini akan dijalankan 500
@@ -1271,11 +1277,131 @@
       $("#loading").fadeOut();
     }
   </script>
-  <script>
-    $(function() {
-      $('.selectpicker').selectpicker();
+ <!-- auto complete  -->
+ <script>
+$(document).ready(function () {
+    load();
+  
+    $('body').on('focus',".input-daterange", function(){
+        $(this).datepicker({
+          todayBtn: 'linked',
+        format: "yyyy-mm-dd",
+        autoclose: true
+        });
+    }); 
+  
+    
+    $('body').on('focus',"#updaterUIM", function(){
+      
+        $(this).select2({
+            placeholder: "Select an option",
+            ajax: { 
+                url: "<?= base_url() ?>index.php/Admin/listHDDaman",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                 return {
+                   searchTerm: params.term // search term
+                 };
+                },
+               
+                processResults: function (response) { 
+                  return {
+                      results: $.map(response, function(obj) {
+                          return { id: obj.namaPegawai, text: obj.namaPegawai };
+                      })
+                  };
+                },
+                cache: true
+               }
+            
+        });
+        
     });
-  </script>
+
+    $('body').on('focus',"#updaterDava", function(){
+        $(this).select2({
+            placeholder: "Select an option",
+            ajax: { 
+                url: "<?= base_url() ?>index.php/Admin/listDava",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                 return {
+                   searchTerm: params.term // search term
+                 };
+                },
+               
+                processResults: function (response) { 
+                  return {
+                      results: $.map(response, function(obj) {
+                          return { id: obj.namaPegawai, text: obj.namaPegawai };
+                      })
+                  };
+                },
+                cache: true
+               }
+            
+        });       
+    }); 
+    
+    $("#namaODP").select2({
+        placeholder: "Select an option",
+        ajax: { 
+            url: "<?= base_url() ?>index.php/Admin/listNamaODP",
+            type: "post",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+              return {
+                searchTerm: params.term // search term
+              };
+            },
+            
+            processResults: function (response) { 
+              return {
+                  results: $.map(response, function(obj) {
+                      return { id: obj.namaODP, text: obj.namaODP };
+                  })
+              };
+            },
+            cache: true
+            }
+        
+    });       
+    $("#namaOLT").select2({
+        placeholder: "Select an option",
+        ajax: { 
+            url: "<?= base_url() ?>index.php/Admin/listNamaOLT",
+            type: "post",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+              return {
+                searchTerm: params.term // search term
+              };
+            },
+            
+            processResults: function (response) { 
+              return {
+                  results: $.map(response, function(obj) {
+                      return { id: obj.hostname, text: obj.hostname };
+                  })
+              };
+            },
+            cache: true
+            }
+        
+    });       
+    
+   
+});
+
+
+</script>
+
 </body>
 
 </html>

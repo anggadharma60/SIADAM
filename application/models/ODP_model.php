@@ -40,6 +40,8 @@ class ODP_model extends CI_Model
     return $query;
   }
 
+  
+
 public function filter($search, $limit, $start, $order_field, $order_ascdesc){
   $this->db->like('idODP', $search); // Untuk menambahkan query where LIKE
   $this->db->or_like('idNOSS', $search); // Untuk menambahkan query where OR LIKE
@@ -199,7 +201,19 @@ public function count_filter($search){
     return $query;
   }
 
- 
+  public function getNamaODP($searchTerm=""){
+    $this->db->select('namaODP');
+    $this->db->distinct('namaODP');
+    $this->db->from('rekap_data_odp');
+    if ($searchTerm != null) {
+      
+      $this->db->where("namaODP like '%".$searchTerm."%' ");
+    }
+    $this->db->limit(100,0); 
+    $query = $this->db->get();
+    return $query;
+  }
+
 
 
 

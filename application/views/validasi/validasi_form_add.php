@@ -8,7 +8,14 @@
     <li class="active">Validasi</li>
   </ol>
 </section>
+<?php
+ $dataOndesk = json_decode($ondesk);
+ $dataOnsite = json_decode($onsite);
 
+ 
+//  $post = $this->input->post(null, TRUE);
+// 			print_r($post);
+?>
 <!-- Main content -->
 <section class="content">
   <div class="box">
@@ -61,53 +68,29 @@
                     <?= form_error('tanggalPelurusan') ?>
               </div>
             </div>
-            <div class="col-md-3">
-              <div class="form-group <?= form_error('updateDateUIM') ? 'has-error' : null ?>">
-                    <label>Tanggal Update UIM *</label>
-                    <div class="input-group input-daterange">
-                            <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                            </div>
-                            <input type="text" name="updateDateUIM" id="updateDateUIM" class="form-control pull-right" value="<?= set_value('updateDateUIM')?>" readonly=""/>
-                        </div>
-                    <?= form_error('updateDateUIM') ?>
-              </div>
-            </div>
+            
             <div class="row"></div>
             <div class="col-md-4">
               <div class="form-group <?= form_error('ondesk') ? 'has-error' : null ?>">
                 <label>Ondesk *</label>
-                <select name="ondesk" value="<?= set_value('ondesk') ?>" class="form-control selectpicker" data-live-search="true">
-                  <option data-tokens=""></option>
-                  <option data-tokens="china">China</option>
-                  <option data-tokens="malayasia">Malayasia</option>
-                  <option data-tokens="singapore">Singapore</option>
-                </select>
+                <input type="text" id="ondesk" name="ondesk" value="<?= $dataOndesk->namaPegawai?>" class="form-control" readonly="" style="text-align:center;">
                 <?= form_error('ondesk') ?>
               </div>
             </div>
             <div class="col-md-4">
-              <div class="form-group <?= form_error('onsite1') ? 'has-error' : null ?>">
-                <label>Onsite 1 *</label>
-                <select name="onsite1" value="<?= set_value('onsite1') ?>" class="form-control selectpicker" data-live-search="true">
-                  <option data-tokens=""></option>
-                  <option data-tokens="china">China</option>
-                  <option data-tokens="malayasia">Malayasia</option>
-                  <option data-tokens="singapore">Singapore</option>
+              <div class="form-group <?= form_error('onsite') ? 'has-error' : null ?>">
+                <label>Onsite *</label>
+                <select name="onsite[]" class="form-control select2"  multiple="multiple" data-placeholder="Select Onsite"
+                        style="width: 100%;color:black;">
+                  <?php foreach($dataOnsite as $key => $ons) {?>
+                        <option value="<?=$ons->namaPegawai?>" 
+                        <?=set_value('onsite[0]') == $ons->namaPegawai ? "selected" : null?>
+                        <?=set_value('onsite[1]') == $ons->namaPegawai ? "selected" : null?>>
+                        <?=$ons->namaPegawai?>
+                        </option>
+                      <?php }?>
                 </select>
-                <?= form_error('onsite1') ?>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group <?= form_error('onsite2') ? 'has-error' : null ?>">
-                <label>Onsite 2 *</label>
-                <select name="onsite2" value="<?= set_value('onsite2') ?>" class="form-control selectpicker" data-live-search="true">
-                  <option data-tokens=""></option>
-                  <option data-tokens="china">China</option>
-                  <option data-tokens="malayasia">Malayasia</option>
-                  <option data-tokens="singapore">Singapore</option>
-                </select>
-                <?= form_error('onsite2') ?>
+                <?= form_error('onsite') ?>
               </div>
             </div>
           </fieldset>
@@ -121,13 +104,10 @@
             <div class="col-md-4">
               <div class="form-group <?= form_error('namaODP') ? 'has-error' : null ?>">
                 <label>Nama ODP *</label>
-                <input type="text" name="namaODP" value="<?= set_value('namaODP') ?>" class="form-control">
-                <!-- <select name="namaODP" value="<?= set_value('namaODP') ?>" class="form-control selectpicker ui-widget" data-live-search="true">
-                  <option data-tokens=""></option>
-                  <option data-tokens="china">China</option>
-                  <option data-tokens="malayasia">Malayasia</option>
-                  <option data-tokens="singapore">Singapore</option>
-                </select> -->
+                <select id="namaODP" name="namaODP" class="form-control select2"  data-placeholder="Select ODP"
+                        style="width: 100%;color:black;">
+                
+                </select>
                 <?= form_error('namaODP') ?>
               </div>
             </div>
@@ -184,7 +164,9 @@
             <div class="col-md-3">
               <div class="form-group">
                 <br>
-                <input class="btn btn-success btn-flat" id="btn-add" type="submit" value="TAMBAH" name="submit" style="margin-top:5px;height:33px;width:100%;">
+                <button class="btn btn-success btn-flat" id="btn-add" type="submit"  style="margin-top:5px;height:33px;width:100%;">
+                    <i class=""></i> Tambah
+                  </button>
               </div>
             </div>
           </fieldset>
@@ -198,13 +180,10 @@
             <div class="col-md-8">
               <div class="form-group <?= form_error('namaOLT') ? 'has-error' : null ?>">
                 <label>Nama OLT *</label>
-                <input type="text" name="namaOLT" value="<?= set_value('namaOLT') ?>" class="form-control">
-                <!-- <select name="namaOLT'" value="<?= set_value('namaOLT') ?>" class="form-control selectpicker ui-widget" data-live-search="true">
-                  <option data-tokens=""></option>
-                  <option data-tokens="china">China</option>
-                  <option data-tokens="malayasia">Malayasia</option>
-                  <option data-tokens="singapore">Singapore</option>
-                </select> -->
+                <select id="namaOLT" name="namaOLT" class="form-control select2"  data-placeholder="Select OLT"
+                        style="width: 100%;color:black;">
+                       
+                </select>
                 <?= form_error('namaOLT') ?>
               </div>
             </div>

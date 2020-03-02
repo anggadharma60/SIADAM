@@ -35,6 +35,40 @@ class Pegawai_model extends CI_Model
     return $query;
   }
 
+  public function getDataPegawaiStatus($status = null){
+    $this->db->select('idPegawai, namaPegawai, status');
+    $this->db->from('pegawai');
+    if ($status != null) {
+      $this->db->where('status', $status);
+    }
+    $query = $this->db->get();
+    return $query;
+  }
+  
+  public function getDataHDDaman($searchTerm=""){
+    $this->db->select('idPegawai, namaPegawai, status');
+    $this->db->from('pegawai');
+    $this->db->where('status', 'HD Daman');
+    if ($searchTerm != null) {
+      
+      $this->db->where("namaPegawai like '%".$searchTerm."%' ");
+    }
+    $query = $this->db->get();
+    return $query;
+  }
+
+  public function getDataDava($searchTerm=""){
+    $this->db->select('idPegawai, namaPegawai, status');
+    $this->db->from('pegawai');
+    $this->db->where('status', 'Dava');
+    if ($searchTerm != null) {
+      
+      $this->db->where("namaPegawai like '%".$searchTerm."%' ");
+    }
+    $query = $this->db->get();
+    return $query;
+  }
+
   public function getDataPegawai($id = null)
   {
     $this->db->from('pegawai');

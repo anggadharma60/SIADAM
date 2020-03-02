@@ -1617,29 +1617,64 @@ class Admin extends CI_Controller
 		}
 	}
 
+
+	public function listHDDaman(){
+		$searchTerm = $this->input->post('searchTerm');
+		$response = $this->Pegawai_model->getDataHDDaman($searchTerm)->result();
+		echo json_encode($response);
+	}
+
+	public function listDava(){
+		$searchTerm = $this->input->post('searchTerm');
+		$response = $this->Pegawai_model->getDataDava($searchTerm)->result();
+		echo json_encode($response);
+	}
+
+	public function listNamaODP(){
+		$searchTerm = $this->input->post('searchTerm');
+		$response = $this->ODP_model->getNamaODP($searchTerm)->result();
+		echo json_encode($response);
+		
+	}
+
+	public function listNamaOLT(){
+		$searchTerm = $this->input->post('searchTerm');
+		$response = $this->OLT_model->getNamaOLT($searchTerm)->result();
+		echo json_encode($response);
+		
+	}
+
 	public function addValidasi()
 	{
-		$data['row'] = $this->Validasi_model->getDataValidasi();
+		$ondesk = $this->Pegawai_model->getDataPegawai($this->session->userdata['idPegawai'])->row();
+		$onsite = $this->Pegawai_model->getDataPegawaiStatus("Onsite")->result();
+		$hostname = $this->OLT_model->getNamaOLT()->result();
+	
+		
+		
+		$data['ondesk'] = json_encode($ondesk);
+		$data['onsite'] = json_encode($onsite);
+		$data['hostname'] = json_encode($hostname);
+		
+		
 		$this->form_validation->set_rules('tanggalPelurusan', 'Tanggal Pelurusan', 'required|trim');
-		$this->form_validation->set_rules('updateDateUIM', 'Tanggal Update UIM', 'required|trim');
 		$this->form_validation->set_rules('ondesk', 'Ondesk', 'required|trim');
-		$this->form_validation->set_rules('onsite1', 'Onsite ', 'required|trim');
-		$this->form_validation->set_rules('onsite2', 'Onsite ', 'trim');
-		$this->form_validation->set_rules('namaODP', 'Nama ODP', 'required|trim');
-		$this->form_validation->set_rules('noteODP', 'Note ODP', 'max_length[20]|trim');
+		$this->form_validation->set_rules('onsite[]', 'Onsite ', 'required|trim');
+		$this->form_validation->set_rules('namaODP', 'Nama ODP', 'required|max_length[40]|trim');
+		$this->form_validation->set_rules('noteODP', 'Note ODP', 'max_length[100]|trim');
 		$this->form_validation->set_rules('QRODP', 'QR ODP', 'max_length[16]|trim');
 		$this->form_validation->set_rules('koordinatODP', 'Koordinat ODP', 'max_length[35]|trim');
-		$this->form_validation->set_rules('noteQRODP', 'QR ODP', 'max_length[45]|trim');
-		$this->form_validation->set_rules('totalIn', 'Total IN', 'numeric|trim');
-		$this->form_validation->set_rules('kapasitasODP', 'Kapasitas', 'required|numeric|max_length[2]|trim');
+		$this->form_validation->set_rules('noteQRODP', 'QR ODP', 'max_length[100]|trim');
+		$this->form_validation->set_rules('totalIN', 'Total IN', 'numeric|max_length[2]||trim');
+		$this->form_validation->set_rules('kapasitasODP', 'Kapasitas', 'required|numeric|max_length[16]|trim');
 
 		
 		$this->form_validation->set_rules('namaOLT', 'Nama OLT', 'required|max_length[16]|trim');
-		$this->form_validation->set_rules('portOLT', 'Port OLT', 'required|max_length[12]|trim');
+		$this->form_validation->set_rules('portOLT', 'Port OLT', 'max_length[12]|trim');
 		
 		
 		// $this->form_validation->set_rules('portOutSplitter', 'Port Out Splitter', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('QROutSplitter', 'QR Out Splitter', 'required|trim');
+		// $this->form_validation->set_rules('QROutSplitter[]', 'QR Out Splitter', 'required|trim');
 		// $this->form_validation->set_rules('portODP', 'PORT', 'trim');
 		// $this->form_validation->set_rules('statusportODP', 'QR ODP', 'required|max_length[20]|trim');
 		// // $this->form_validation->set_rules('status', 'STATUS', 'max_length[50]required|trim');
@@ -1668,17 +1703,18 @@ class Admin extends CI_Controller
 		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
 
 		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
+		
 		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_Admin', 'validasi/Validasi_form_add');
+			
+			$this->template->load('template/template_Admin', 'validasi/Validasi_form_add', $data);
 		} else {
 			$post = $this->input->post(null, TRUE);
-			print_r($post);
-			// $this->Validasi_model->addDataValidasi($post);
+			
+			$this->Validasi_model->addDataValidasi($post);
 			if ($this->db->affected_rows() > 0) {
 				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			}
-			// redirect('Admin/viewListValidasi');
+			redirect('Admin/viewListValidasi');
 		}
 	}
 

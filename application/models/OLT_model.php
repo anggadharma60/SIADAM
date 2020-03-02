@@ -31,6 +31,20 @@ class OLT_model extends CI_Model
     $query = $this->db->get();
     return $query;
   }
+  
+  public function getNamaOLT($searchTerm=""){
+    $this->db->select('hostname');
+    $this->db->distinct('hostname');
+    $this->db->from('rekap_data_olt');
+    if ($searchTerm != null) {
+      
+      $this->db->where("hostname like '%".$searchTerm."%' ");
+    }
+    $this->db->limit(100,0); 
+    $query = $this->db->get();
+    return $query;
+  }
+
   public function view()
   {
     return $this->db->get('rekap_data_olt')->result(); // Tampilkan semua data yang ada di tabel
