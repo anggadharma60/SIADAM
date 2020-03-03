@@ -9,7 +9,7 @@
     </ol>
 </section>
 <?php $data = json_decode($chart);
-    // print_r($data->total);
+    // print_r($data);
 ?>
 
 <!-- Main content -->
@@ -93,18 +93,18 @@
                     <label>
                     <?php
                 
-                        if($data->total!=null){
+                        if(isset($data->total[$i])){
                             echo "Rekap Validasi :".$data->total[$i]."&emsp;&emsp;";
                         }else{
                             echo "Rekap Validasi :"."&emsp;&emsp;";
                         }
-                        if($data->totalODP !=null and $data->totalValidasi!=null){
+                        if(isset($data->totalODP[$i]) and isset($data->totalValidasi[$i])){
                             echo "Rekap ODP :".($data->grand_total[$i]-$data->total[$i])."&emsp;&emsp;";
                         }else{
                             echo "Rekap ODP :"."&emsp;&emsp;";
                         }
-                        if($data->grand_total!=null){
-                            echo "Total : ".$data->grand_total[$i]."&emsp;&emsp;";
+                        if(isset($data->grand_total[$i])){
+                            // echo "Total : ".$data->grand_total[$i]."&emsp;&emsp;";
                         }else{
                             echo "Total :"."&emsp;&emsp;";
                         }
