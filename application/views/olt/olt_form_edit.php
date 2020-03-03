@@ -17,12 +17,12 @@
       <h3 class="box-title">Edit OLT</h3>
       <div class="pull-right">
         <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
-          <a href="<?= site_url('Admin/viewListODP') ?>" class="btn btn-danger btn-flat">
+          <a href="<?= site_url('Admin/getOLT') ?>" class="btn btn-danger btn-flat">
             <i class="fa fa-undo"></i> Back
           </a>
         <?php } ?>
         <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
-          <a href="<?= site_url('Ondesk/viewListODP') ?>" class="btn btn-danger btn-flat">
+          <a href="<?= site_url('Ondesk/getOLT') ?>" class="btn btn-danger btn-flat">
             <i class="fa fa-undo"></i> Back
           </a>
         <?php } ?>

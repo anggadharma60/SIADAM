@@ -16,7 +16,7 @@
       <div class="box-header">
         <h3 class="box-title">Tambah Specification OLT</h3>
         <div class="pull-right">
-            <a href="<?=site_url('Admin/getDatel')?>" class="btn btn-danger btn-flat">
+            <a href="<?=site_url('Admin/getSpecOLT')?>" class="btn btn-danger btn-flat">
                 <i class="fa fa-undo"></i> Back 
             </a>
         </div>
@@ -24,7 +24,9 @@
       <div class="box-body">
          <div class="row">
              <div class="col-md-4 col-md-offset-4">
-                <?php //echo validation_errors() ?>
+             <?php print_r($this->input->post(null, TRUE)) ?>
+                <?php echo validation_errors() ?>
+                <form action="" method="post">
                     <div class="form-group <?=form_error('namaSpecOLT') ? 'has-error' : null ?>">
                         <label>Nama Specification OLT *</label>
                         <input type="text" name="namaSpecOLT" value="<?=set_value('namaSpecOLT')?>" class="form-control">
@@ -46,7 +48,7 @@
                         <?=form_error('keterangan')?>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-success btn-flat">
+                        <button name="submit" type="submit" class="btn btn-success btn-flat">
                             <i class=""></i> Tambah
                         </button>
                         <button type="reset" class="btn btn-flat">Reset</button>
