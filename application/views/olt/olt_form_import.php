@@ -53,7 +53,7 @@
           <form action="<?= site_url('Ondesk/importOLT') ?>" method="post" id="excel-upl" enctype="multipart/form-data">
             <p><label>Select Excel File</label>
               <br>
-              <a href="#" class="float-right btn-flat btn-xs btn-info">Download Format Data</a></br>
+              <a href="<?php echo base_url() . 'excel/SampleOLT.xlsx' ?>" class="float-right btn-flat btn-xs btn-info">Download Format Data</a></br>
               <p></p>
               <input type="file" name="fileURL" id="validatedCustomFile" required accept=".csv, .xls, .xlsx">
             </p>

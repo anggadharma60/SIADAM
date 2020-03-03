@@ -74,7 +74,7 @@
                         <th>ID Logical Device</th>
                         <th>STO</th>
                         <th>Specification OLT</th>
-                        <?php if ($this->fungsi->user_login()->status == 'Admin' || $this->fungsi->user_login()->status == 'Ondesk' || $this->fungsi->user_login()->status == 'HD Daman' || $this->fungsi->user_login()->status == 'SDI') { ?>
+                        <?php if($this->fungsi->user_login()->status == 'Admin' or $this->fungsi->user_login()->status == 'Ondesk' or $this->fungsi->user_login()->status == 'HD Daman' or $this->fungsi->user_login()->status or 'SDI') { ?>
                             <th>Actions</th>
                         <?php } ?>
                     </tr>
@@ -90,7 +90,7 @@
                             <td><?= $data->namaSTO ?></td>
                             <td><?= $data->namaSpecOLT ?></td>
                             <td class="text-center" width="10%">
-                                <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
+                                <!-- <?php if ($this->fungsi->user_login()->status == 'Admin') { ?> -->
                                     <form action="<?= site_url('Admin/deleteOLT') ?>" method="post">
                                         <a href="<?= site_url('Admin/editOLT/' . $data->idOLT) ?>" class="btn btn-primary btn-xs">
                                             <i class="fa fa-pencil"></i>
@@ -100,7 +100,7 @@
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
-                                <?php } ?>
+                                <!-- <?php } ?> -->
                                 <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
                                     <form action="<?= site_url('Ondesk/deleteOLT') ?>" method="post">
                                         <a href="<?= site_url('Ondesk/editOLT/' . $data->idOLT) ?>" class="btn btn-primary btn-xs">
@@ -126,7 +126,7 @@
                         <th>ID Logical Device</th>
                         <th>STO</th>
                         <th>Specification OLT</th>
-                        <?php if ($this->fungsi->user_login()->status == 'Admin' || $this->fungsi->user_login()->status == 'Ondesk' || $this->fungsi->user_login()->status == 'HD Daman' || $this->fungsi->user_login()->status == 'SDI') { ?>
+                        <?php if ($this->fungsi->user_login()->status == 'Admin' or $this->fungsi->user_login()->status == 'Ondesk' or $this->fungsi->user_login()->status == 'HD Daman' or $this->fungsi->user_login()->status == 'SDI') { ?>
                             <th>Actions</th>
                         <?php } ?>
                     </tr>
