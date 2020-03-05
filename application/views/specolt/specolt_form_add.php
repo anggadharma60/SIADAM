@@ -24,7 +24,7 @@
       <div class="box-body">
          <div class="row">
              <div class="col-md-4 col-md-offset-4">
-             <?php print_r($this->input->post(null, TRUE)) ?>
+             
                 <?php echo validation_errors() ?>
                 <form action="" method="post">
                     <div class="form-group <?=form_error('namaSpecOLT') ? 'has-error' : null ?>">

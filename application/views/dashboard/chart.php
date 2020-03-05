@@ -98,13 +98,13 @@
                         }else{
                             echo "Rekap Validasi :"."&emsp;&emsp;";
                         }
-                        if(isset($data->totalODP[$i]) and isset($data->totalValidasi[$i])){
+                        if(isset($data->grand_total[$i]) and isset($data->total[$i])){
                             echo "Rekap ODP :".($data->grand_total[$i]-$data->total[$i])."&emsp;&emsp;";
                         }else{
                             echo "Rekap ODP :"."&emsp;&emsp;";
                         }
                         if(isset($data->grand_total[$i])){
-                            // echo "Total : ".$data->grand_total[$i]."&emsp;&emsp;";
+                            echo "Total : ".$data->grand_total[$i]."&emsp;&emsp;";
                         }else{
                             echo "Total :"."&emsp;&emsp;";
                         }
