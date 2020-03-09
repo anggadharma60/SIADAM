@@ -370,7 +370,7 @@ class Validasi_model extends CI_Model {
               );
         
           }
-          print_r($fetchData);
+         
         }
 
 
@@ -605,6 +605,10 @@ class Validasi_model extends CI_Model {
     {
       $data = $this->varBatchImportValidasi;
       $this->db->insert_batch('rekap_data_validasi', $data);
+      if ($this->db->affected_rows() > 0) {
+        $this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
+      }
+      
     }
     
     public function jumlahRekapValidasi(){

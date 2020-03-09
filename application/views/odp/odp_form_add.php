@@ -30,8 +30,9 @@
         </div>
         <div class="box-body">
             <div class="row">
-                <div class="col-md-4 col-md-offset-4">
+                <div class="col-md-6 col-md-offset-3">
                     <?php //echo validation_errors() 
+                   
                     ?>
                     
                     <form action="" method="post">
@@ -45,10 +46,19 @@
                             <input type="text" name="indexODP" value="<?= set_value('indexODP') ?>" class="form-control">
                             <?= form_error('indexODP') ?>
                         </div>
-                        <div class="form-group <?= form_error('namaODP') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('namaODP[]') ? 'has-error' : null ?>">
                             <label>Nama ODP *</label>
-                            <input type="text" name="namaODP" value="<?= set_value('namaODP') ?>" class="form-control">
-                            <?= form_error('namaODP') ?>
+                            <!-- <input type="text" name="namaODP" value="<?= set_value('namaODP') ?>" class="form-control"> -->
+                            <div class="input-group">
+                                <input type="text" name="namaODP[]" value="<?= set_value('namaODP[0]') ?>" class="form-control" style="text-align:center" maxlength=3>
+                                <span type="text" class="input-group-addon">-</span>
+                                <input type="text" name="namaODP[]" value="<?= set_value('namaODP[1]') ?>" class="form-control" style="text-align:center" maxlength=3>
+                                <span class="input-group-addon">-</span>
+                                <input type="text" name="namaODP[]" value="<?= set_value('namaODP[2]') ?>" class="form-control" style="text-align:center" maxlength=3>
+                                <span class="input-group-addon">/</span>
+                                <input id="empat" type="text" name="namaODP[]" value="<?= set_value('namaODP[3]') ?>" class="form-control" style="text-align:center" maxlength=3 >
+                            </div>
+                            <?= form_error('namaODP[]') ?>
                         </div>
                         <div class="form-group <?= form_error('ftp') ? 'has-error' : null ?>">
                             <label>FTP *</label>

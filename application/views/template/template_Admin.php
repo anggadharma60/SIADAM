@@ -1398,10 +1398,17 @@ $(document).ready(function () {
     
    
 });
-
+</script>
+<!-- auto fill odp -->
+<script>
+  var el = document.getElementById('empat');
+  var updatetext = function(){
+  el.value = ('000' + el.value).slice(-3);
+    }
+  
+  el.addEventListener("mousemove", updatetext , false); 
 
 </script>
-
 </body>
 
 </html>
