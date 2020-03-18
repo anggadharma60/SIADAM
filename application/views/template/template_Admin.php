@@ -72,6 +72,8 @@
       -webkit-user-select: none;
       -ms-user-select: none;
     }
+    
+    
   </style>
 
   <!-- Google Font -->
@@ -1395,6 +1397,39 @@ $(document).ready(function () {
             }
         
     });       
+    
+   
+});
+</script>
+<!-- edit validasi -->
+<script>
+$(document).ready(function () {
+    load();
+    $("#validasiODP").select2({
+        placeholder: "Select an option",
+        ajax: { 
+            url: "<?= base_url() ?>index.php/Admin/listValidasi",
+            type: "post",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+              return {
+                searchTerm: params.term // search term
+              };
+            },
+            
+            processResults: function (response) { 
+              return {
+                  results: $.map(response, function(obj) {
+                      return { id: obj.namaODP, text: obj.namaODP };
+                  })
+              };
+            },
+            cache: true
+            }
+        
+    });       
+         
     
    
 });

@@ -29,6 +29,11 @@ class Validasi_model extends CI_Model {
     return $query;
   }
 
+public function getDataValidasiByID($id){
+  $query = $this->db->query('SELECT * FROM rekap_data_validasi WHERE namaODP=(SELECT namaODP FROM `rekap_data_validasi` WHERE id=1) AND tanggalPelurusan=(SELECT tanggalPelurusan FROM `rekap_data_validasi` WHERE id=1) ORDER BY `id` ASC');
+  return $query;
+}
+
   public function addDataValidasi($post)
     {      
         $tanggalPelurusan = html_escape($post['tanggalPelurusan']);   
@@ -619,6 +624,19 @@ class Validasi_model extends CI_Model {
       WHERE r.namaODP IN (SELECT DISTINCT namaODP FROM rekap_data_validasi)
       GROUP BY s.idSTO
       ORDER BY s.idSTO');
+      return $query;
+    }
+
+    public function getNamaValidasi($searchTerm=""){
+      $this->db->select('namaODP,tanggalPelurusan');
+      $this->db->distinct('namaODP,tanggalPelurusan');
+      $this->db->from('rekap_data_validasi');
+      if ($searchTerm != null) {
+        
+        $this->db->where("namaODP like '%".$searchTerm."%' ");
+      }
+      $this->db->limit(100,0); 
+      $query = $this->db->get();
       return $query;
     }
   

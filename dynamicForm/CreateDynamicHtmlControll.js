@@ -23,7 +23,7 @@ function createControll(NoOfRec) {
     var tbl = "";
     
     tbl = 
-            "<table class='table table-responsive table-bordered table-hover'>"+
+            "<table class='table table-responsive table-bordered table-hover' >"+
                 "<thead style='text-align:center'>"+
                     "<th> Port Out Splitter </th>"+
                     "<th> QR Out Splitter </th>"+
@@ -41,8 +41,8 @@ function createControll(NoOfRec) {
                     "<th> Note </th>"+
                     "<th> Tanggal Update UIM </th>"+
                     "<th> Updater UIM </th>"+
-                    "<th> QR Out Splitter </th>"+
-                    "<th> QR Dropcore </th>"+
+                    "<th> Note QR Out Splitter </th>"+
+                    "<th> Note QR Dropcore </th>"+
                     "<th> Updater Dava </th>"+
                 "</thead>"+
                 "<tbody>";
@@ -97,7 +97,7 @@ function createControll(NoOfRec) {
                         "<div class='input-group-addon'>"+
                         "<i class='fa fa-calendar'></i>"+
                         "</div>"+
-                        "<input type='text' name='updateDateUIM' id='updateDateUIM' class='form-control pull-right datepicker' value='' readonly='' style='width:175px'/>"+
+                        "<input type='text' name='updateDateUIM[]' id='updateDateUIM' class='form-control pull-right datepicker' value='' readonly='' style='width:175px'/>"+
                 "</div>"+
                 "</td>"+
                 "<td>"+
@@ -183,7 +183,30 @@ function createControll(NoOfRec) {
     "</tr>";
     }
                
-    tbl += "</tbody>"+"</table>";
+    tbl += 
+    "</tbody>"+
+    "<tfoot style='text-align:center'>"+
+        "<th> Port Out Splitter </th>"+
+        "<th> QR Out Splitter </th>"+
+        "<th> Port </th>"+
+        "<th> Status </th>"+
+        "<th> ONU </th>"+
+        "<th> SN </th>"+
+        "<th> Service </th>"+
+        "<th> QR Dropcore </th>"+
+        "<th> Note Urut </th>"+
+        "<th> Flag OLT & Port </th>"+
+        "<th> Connectivity ODP - OLT </th>"+
+        "<th> ODP - ONT </th>"+
+        "<th> RFS </th>"+
+        "<th> Note </th>"+
+        "<th> Tanggal Update UIM </th>"+
+        "<th> Updater UIM </th>"+
+        "<th> Note QR Out Splitter </th>"+
+        "<th> Note QR Dropcore </th>"+
+        "<th> Updater Dava </th>"+
+    "</tfoot>"+
+    "</table>";
     console.log(NoOfRec);
     $("#AddControll").append(tbl);  
 }

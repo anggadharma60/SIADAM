@@ -1,3 +1,4 @@
+
 <section class="content-header">
   <h1>
     Validasi
@@ -205,7 +206,7 @@
           <fieldset>
             <legend>Data Validasi</legend>
           </fieldset>
-          <div id="AddControll">
+          <div id="AddControll" class="box-body table-responsive" style="height:200px;overflow-y: auto;">
 
           </div>
         </div>
