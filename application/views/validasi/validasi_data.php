@@ -39,6 +39,9 @@
             <a href="<?= site_url('Admin/addValidasi') ?>" class="btn btn-primary btn-flat">
               <i class="fa fa-user-plus"></i> Create
             </a>
+            <a href="<?= site_url('Admin/test') ?>" class="btn btn-primary btn-flat">
+              <i class="fa fa-user-plus"></i> Edit
+            </a>
           <?php } ?>
           <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
             <a href="<?= site_url('Ondesk/deleteAllValidasi') ?>">

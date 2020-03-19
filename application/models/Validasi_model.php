@@ -31,6 +31,11 @@ class Validasi_model extends CI_Model
     return $query;
   }
 
+public function getDataValidasiByID($id){
+  $query = $this->db->query('SELECT * FROM rekap_data_validasi WHERE namaODP=(SELECT namaODP FROM `rekap_data_validasi` WHERE id=1) AND tanggalPelurusan=(SELECT tanggalPelurusan FROM `rekap_data_validasi` WHERE id=1) ORDER BY `id` ASC');
+  return $query;
+}
+
   public function addDataValidasi($post)
   {
     $tanggalPelurusan = html_escape($post['tanggalPelurusan']);
@@ -328,9 +333,171 @@ class Validasi_model extends CI_Model
             'noteQROutSplitter' => $noteQROutSplitter,
             'noteQRDropCore' => $noteQRDropCore,
             'updaterDava' => $updaterDava
-          );
-      }
-      print_r($fetchData);
+            );
+        }else{
+          for($n=0;$n<$kapasitasODP;$n++){
+                        
+            if(empty($post['portOutSplitter']))  {
+              $portOutSplitter = '';
+             
+            }else{
+              $portOutSplitter = html_escape($post['portOutSplitter'][$n]);
+              
+            } 
+            if(empty($post['QROutSplitter']))  {
+              $QROutSplitter = '';
+             
+            }else{
+              $QROutSplitter = html_escape($post['QROutSplitter'][$n]);
+              
+            }
+            if(empty($post['port']))  {
+              $portODP = '';
+             
+            }else{
+              $portODP = html_escape($post['port'][$n]);
+            }
+            if(empty($post['status'])) {
+              $statusPortODP  = '';
+             
+            }else{
+              $statusPortODP = html_escape($post['status'][$n]);
+            }
+            if(empty($post['ONU'])) {
+              $ONU   = '';
+             
+            }else{
+              $ONU = html_escape($post['ONU'][$n]);
+            } 
+            if(empty($post['serialNumber'])) {
+              $serialNumber   = '';
+             
+            }else{
+              $serialNumber = html_escape($post['serialNumber'][$n]);
+            }  
+            if(empty($post['service'])) {
+              $serviceNumber   = '';
+             
+            }else{
+              $serviceNumber = html_escape($post['service'][$n]);
+            }
+            if(empty($post['QRDropCore'])) {
+              $QRDropCore  = '';
+             
+            }else{
+              $QRDropCore = html_escape($post['QRDropCore'][$n]);
+            }
+            if(empty($post['noteUrut'])) {
+              $noteUrut  = '';
+             
+            }else{
+              $noteUrut = html_escape($post['noteUrut'][$n]);
+            }
+            if(empty($post['flagOLTPort'])) {
+              $flagOLTPort  = '';
+             
+            }else{
+              $flagOLTPort = html_escape($post['flagOLTPort'][$n]);
+            }             
+            if(empty($post['ODPtoOLT'])) {
+              $ODPtoOLT  = '';
+             
+            }else{
+              $ODPtoOLT = html_escape($post['ODPtoOLT'][$n]);
+            }
+            if(empty($post['ODPtoONT'])) {
+              $ODPtoONT  = '';
+             
+            }else{
+              $ODPtoONT = html_escape($post['ODPtoONT'][$n]);
+            }         
+            if(empty($post['RFS'])) {
+              $RFS  = '';
+             
+            }else{
+              $RFS = html_escape($post['RFS'][$n]);
+            }
+            if(empty($post['noteHDDaman'])) {
+              $noteHDDaman  = '';
+             
+            }else{
+              $noteHDDaman = html_escape($post['noteHDDaman'][$n]);
+            }
+            if(empty($post['updateDateUIM'])) {
+              $updateDateUIM  = '';
+             
+            }else{
+              $updateDateUIM = html_escape($post['updateDateUIM'][$n]);
+            }
+            if(empty($post['updaterUIM'])) {
+              $updaterUIM  = '';
+             
+            }else{
+              $updaterUIM = html_escape($post['updaterUIM'][$n]);
+            }
+            if(empty($post['noteQROutSplitter'])) {
+              $noteQROutSplitter  = '';
+             
+            }else{
+              $noteQROutSplitter = html_escape($post['noteQROutSplitter'][$n]);
+            }
+            if(empty($post['noteQRDropCore'])) {
+              $noteQRDropCore  = '';
+             
+            }else{
+              $noteQRDropCore= html_escape($post['noteQRDropCore'][$n]);
+            }
+            if(empty($post['updaterDava'])) {
+              $updaterDava  = '';
+             
+            }else{
+              $updaterDava = html_escape($post['updaterDava'][$n]);
+            }            
+            
+            
+            $fetchData[] = 
+            array('tanggalPelurusan' => $tanggalPelurusan, 
+              'ondesk' => $ondesk, 
+              'onsite' => $onsite, 
+              'namaODP' => $namaODP, 
+              'noteODP' => $noteODP,
+              'QRODP' => $QRODP,
+              'koordinatODP' => $koordinatODP,
+              'hostname' => $hostname,
+              'portOLT' => $portOLT,
+              'totalIN' => $totalIN,
+              'kapasitasODP' => $kapasitasODP,
+              'portOutSplitter' => $portOutSplitter,
+              'QRPortOutSplitter' => $QROutSplitter,
+              'portODP' => $portODP,
+              'statusPortODP' => $statusPortODP,
+              'ONU' => $ONU,
+              'serialNumber' => $serialNumber,
+              'serviceNumber' => $serviceNumber,
+              'QRDropCore' => $QRDropCore,
+              'noteUrut' => $noteUrut,
+              'flagOLTPort' => $flagOLTPort,
+              'ODPtoOLT' => $ODPtoOLT,
+              'ODPtoONT' => $ODPtoONT,
+              'RFS' => $RFS,
+              'noteHDDaman' => $noteHDDaman,
+              'updateDateUIM' => $updateDateUIM,
+              'updaterUIM' => $updaterUIM,
+              'noteQRODP' => $noteQRODP,
+              'noteQROutSplitter' => $noteQROutSplitter,
+              'noteQRDropCore' => $noteQRDropCore,
+              'updaterDava' => $updaterDava
+              );
+        
+          }
+         
+        }
+
+
+				$this->Validasi_model->setBatchImportValidasi($fetchData);
+        $this->Validasi_model->importDataValidasi();
+        
+        // $this->db->insert('rekap_data_validasi', $params);
     }
 
 
@@ -842,6 +1009,7 @@ class Validasi_model extends CI_Model
     $this->db->where('tanggalPelurusan>=', $start_date);
     $this->db->where('tanggalPelurusan<=', $end_date);
 
+<<<<<<< HEAD
     $this->db->from('rekap_data_validasi');
     return $this->db->get()->num_rows(); // Untuk menghitung jumlah data sesuai dengan filter pada textbox pencarian
   }
@@ -862,14 +1030,49 @@ class Validasi_model extends CI_Model
   public function jumlahRekapValidasi()
   {
     $query = $this->db->query('SELECT s.idSTO,s.namaSTO, COUNT(s.idSTO) as total
+=======
+    //import data to database
+    public function importDataValidasi()
+    {
+      $data = $this->varBatchImportValidasi;
+      $this->db->insert_batch('rekap_data_validasi', $data);
+      if ($this->db->affected_rows() > 0) {
+        $this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
+      }
+      
+    }
+    
+    public function jumlahRekapValidasi(){
+      $query = $this->db->query('SELECT s.idSTO,s.namaSTO, COUNT(s.idSTO) as total
+>>>>>>> d8a31280e8a772c330e9b69ed5abce7da58eba45
       FROM sto s
       JOIN rekap_data_odp r
       ON s.idSTO = r.idSTO
       WHERE r.namaODP IN (SELECT DISTINCT namaODP FROM rekap_data_validasi)
       GROUP BY s.idSTO
       ORDER BY s.idSTO');
+<<<<<<< HEAD
     return $query;
   }
+=======
+      return $query;
+    }
+
+    public function getNamaValidasi($searchTerm=""){
+      $this->db->select('namaODP,tanggalPelurusan');
+      $this->db->distinct('namaODP,tanggalPelurusan');
+      $this->db->from('rekap_data_validasi');
+      if ($searchTerm != null) {
+        
+        $this->db->where("namaODP like '%".$searchTerm."%' ");
+      }
+      $this->db->limit(100,0); 
+      $query = $this->db->get();
+      return $query;
+    }
+  
+  
+>>>>>>> d8a31280e8a772c330e9b69ed5abce7da58eba45
 
 
 

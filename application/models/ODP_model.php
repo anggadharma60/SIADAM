@@ -115,7 +115,14 @@ public function count_filter($search){
   {
     $params['idNOSS'] = html_escape($post['idNOSS']);
     $params['indexODP'] = html_escape($post['indexODP']);
-    $params['namaODP'] = html_escape($post['namaODP']);
+    $ODP = html_escape($post['namaODP']);
+    
+    $namaODP = html_escape(strtoupper($ODP[0]));
+    $namaODP .= '-' .(html_escape(strtoupper($ODP[1])));
+    $namaODP .= '-' .(html_escape(strtoupper($ODP[2])));
+    $namaODP .= '/' .(html_escape(($ODP[3])));
+   
+    $params['namaODP'] = html_escape($namaODP);
     $params['ftp'] = html_escape($post['ftp']);
     $params['latitude'] = html_escape($post['latitude']);
     $params['longitude'] = html_escape($post['longitude']);
@@ -133,6 +140,7 @@ public function count_filter($search){
     $datetime = mdate($format);
     $params['updateDate'] = html_escape($datetime);
     $this->db->insert('rekap_data_odp', $params);
+    
   }
 
   public function editDataODP($post)
@@ -189,6 +197,9 @@ public function count_filter($search){
   {
     $data = $this->varBatchImportODP;
     $this->db->insert_batch('rekap_data_odp', $data);
+    if ($this->db->affected_rows() > 0) {
+      $this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
+    }
   }
 
   public function jumlahRekapODP(){

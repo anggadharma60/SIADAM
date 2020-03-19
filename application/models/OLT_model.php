@@ -93,6 +93,9 @@ class OLT_model extends CI_Model
    {
      $data = $this->varBatchImportOLT;
      $this->db->insert_batch('rekap_data_olt', $data);
+     if ($this->db->affected_rows() > 0) {
+          $this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
+     }
    }
 
 
