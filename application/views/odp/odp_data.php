@@ -14,7 +14,11 @@
   <div class="box">
     <div class="box-header">
       <h3 class="box-title">Data ODP</h3>
-      <?php if ($this->fungsi->user_login()->status == 'Admin' || $this->fungsi->user_login()->status == 'Ondesk' || $this->fungsi->user_login()->status == 'HDDaman' || $this->fungsi->user_login()->status == 'SDI') { ?>
+      <?php if ($this->fungsi->user_login()->status == 'Admin' || $this->fungsi->user_login()->status == 'Ondesk' || $this->fungsi->user_login()->status == 'HD Daman' || 
+      $this->fungsi->user_login()->status == 'Onsite' || 
+      $this->fungsi->user_login()->status == 'Daman' ||
+      $this->fungsi->user_login()->status == 'Dava' ||  
+      $this->fungsi->user_login()->status == 'SDI') { ?>
         <div class="pull-right">
           <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
             <a href="<?= site_url('Admin/deleteAllODP') ?>">
@@ -23,43 +27,25 @@
               </button>
             </a>
           <?php } ?>
-          <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
-            <a href="<?= site_url('Ondesk/deleteAllODP') ?>">
-              <button onclick="return confirm('Apakah Anda Yakin ingin menghapus semua Data?')" class="btn btn-danger btn-flat">
-                <i class="fa fa-trash"></i> Delete All
-              </button>
-            </a>
-          <?php } ?>
+          
           <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
             <a href="<?= site_url('Admin/exportODP') ?>" class="btn btn-info btn-flat">
               <i class="fa fa-upload"></i> Export
             </a>
           <?php } ?>
-          <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
-            <a href="<?= site_url('Ondesk/exportODP') ?>" class="btn btn-info btn-flat">
-              <i class="fa fa-upload"></i> Export
-            </a>
-          <?php } ?>
+          
           <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
             <a href="<?= site_url('Admin/uploadODP') ?>" class="btn btn-success btn-flat">
               <i class="fa fa-download"></i> Import
             </a>
           <?php } ?>
-          <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
-            <a href="<?= site_url('Ondesk/uploadODP') ?>" class="btn btn-success btn-flat">
-              <i class="fa fa-download"></i> Import
-            </a>
-          <?php } ?>
+          
           <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
             <a href="<?= site_url('Admin/addODP') ?>" class="btn btn-primary btn-flat">
               <i class="fa fa-user-plus"></i> Create
             </a>
           <?php } ?>
-          <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
-            <a href="<?= site_url('Ondesk/addODP') ?>" class="btn btn-primary btn-flat">
-              <i class="fa fa-user-plus"></i> Create
-            </a>
-          <?php } ?>
+          
         </div>
       <?php  } ?>
     </div>
