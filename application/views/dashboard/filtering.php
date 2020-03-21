@@ -40,6 +40,11 @@
                     <i class="fa fa-upload  "></i> Export
                 </a>
                 <?php } ?>
+                <?php if($this->fungsi->user_login()->status == 'Daman') { ?>
+                <a href="<?= site_url('HDDaman/exportValidasi') ?>" class="btn btn-warning btn-flat">
+                    <i class="fa fa-upload  "></i> Export
+                </a>
+                <?php } ?>
                 <?php if($this->fungsi->user_login()->status == 'SDI') { ?>
                 <a href="<?= site_url('SDI/exportValidasi') ?>" class="btn btn-warning btn-flat">
                     <i class="fa fa-upload  "></i> Export

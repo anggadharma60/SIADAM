@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
   <!--  chart -->
   <!-- <script src="<?= base_url() ?>chart.js/Chart.min.js"></script> -->
-    <!-- iCheck for checkboxes and radio inputs -->
+  <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/iCheck/all.css">
   <!-- Data Tables -->
   <link rel="stylesheet" type="text/css" href="<?php echo base_url('datatables/lib/css/dataTables.bootstrap.min.css') ?>" />
@@ -40,7 +40,9 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-  <!-- <script src="<?php echo base_url() ?>assets/js/jquery-3.3.1.js"></script> -->
+    <!-- Select2 -->
+    <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/select2/dist/css/select2.min.css">
+ 
 
   <style>
     #load {
@@ -64,11 +66,12 @@
       opacity: 0.6;
       background-size: 8%;
     }
+
     canvas {
-		-moz-user-select: none;
-		-webkit-user-select: none;
-		-ms-user-select: none;
-	}
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+    }
   </style>
 
   <!-- Google Font -->
@@ -167,19 +170,64 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header"></li>
-          <li class="active treeview">
+          <li class="treeview">
             <a href="<?= site_url('dashboard') ?>">
               <i class="fa fa-bar-chart"></i> <span>Dashboard</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
-            <ul class="treeview-menu" >
+            <ul class="treeview-menu">
               <li><a href="<?= site_url('Daman/filtering') ?>"><i class="fa fa-filter fa-fw mr-3"></i> Filtering</a></li>
               <li><a href="<?= site_url('Daman/chart') ?>"><i class="fa fa-pie-chart fa-fw mr-3"></i> Chart</a></li>
             </ul>
           </li>
-          
+          <li>
+            <a href="<?= site_url('Daman/viewListValidasi') ?>">
+              <i class="fa fa-cog"></i> <span>Kelola Data Validasi</span>
+              <span class="pull-right-container"></span>
+            </a>
+          </li>
+          <li>
+            <a href="<?= site_url('Daman/viewListODP') ?>">
+              <i class="fa fa-microchip"></i>
+              <span>Kelola Data ODP</span>
+              <span class="pull-right-container">
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="<?= site_url('Daman/getOLT') ?>">
+              <i class="fa fa-database"></i>
+              <span>Kelola Data OLT</span>
+              <span class="pull-right-container">
+              </span>
+            </a>
+          </li>
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-archive"></i>
+              <span>Kelola Data Pendukung</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="<?= site_url('Daman/getRegional') ?>"><i class="fa fa-flag fa-fw mr-3"></i> Regional</a></li>
+              <li><a href="<?= site_url('Daman/getWitel') ?>"><i class="fa fa-map-marker fa-fw mr-3"></i> Witel</a></li>
+              <li><a href="<?= site_url('Daman/getDatel') ?>"><i class="fa fa-tag fa-fw mr-3"></i> Datel</a></li>
+              <li><a href="<?= site_url('Daman/getSTO') ?>"><i class="fa fa-location-arrow fa-fw mr-3"></i> STO</a></li>
+              <li><a href="<?= site_url('Daman/getSpecOLT') ?>"><i class="fa fa-wrench fa-fw mr-3"></i> Specification OLT</a></li>
+            </ul>
+          </li>
+          <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
+            <li class="header">SETTNGS</li>
+            <li><a href="<?= site_url('Daman/getPegawai') ?>">
+                <i class="fa fa-user-plus"></i> <span>Kelola Data Pegawai</span>
+                <span class="pull-right-container"></span>
+              </a>
+            </li>
+          <?php  } ?>
         </ul>
       </section>
       <!-- /.sidebar -->
@@ -216,7 +264,7 @@
   <script src="<?= base_url() ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <!-- SlimScroll -->
   <script src="<?= base_url() ?>assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-  <!-- AdminLTE App -->
+  <!-- OndesLTE App -->
   <script src="<?= base_url() ?>assets/dist/js/adminlte.min.js"></script>
   <script src="<?= base_url() ?>assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
   <script src="<?= base_url() ?>assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -229,10 +277,31 @@
   <script src="<?= base_url() ?>assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
   <!--  chart -->
   <script src="<?= base_url() ?>chart.js/Chart.bundle.min.js"></script>
+  <!-- dynamic form -->
+  <script src="<?= base_url() ?>dynamicForm/CreateDynamicHtmlControll.js"></script>
   <!-- iCheck 1.0.1 -->
   <script src="<?= base_url() ?>assets/plugins/iCheck/icheck.min.js"></script>
  
+ <!-- Select2 -->
+<script src="<?= base_url() ?>assets/bower_components/select2/dist/js/select2.full.min.js"></script>
 
+
+ <!-- datepicker -->
+  <script>
+    $(document).ready(function() {
+
+      $('.input-daterange').datepicker({
+        todayBtn: 'linked',
+        format: "yyyy-mm-dd",
+        autoclose: true
+      });
+      $('.select2').select2();
+     
+
+    });
+     
+  </script>
+  <!-- table 1 -->
   <script>
     var tabel = null;
 
@@ -242,6 +311,7 @@
 
     });
   </script>
+  <!-- table validasi -->
   <script>
     var tabel = null;
 
@@ -502,8 +572,8 @@
           {
             "render": function(data, type, row) { // Tampilkan kolom aksi
               var html = "<div class='text-center'>" +
-                "<a href='<?= site_url() ?>Daman/editValidasi/" + row.id + "' class='btn btn-primary btn-xs'><i class='fa fa-pencil'></i></a> " +
-                " <a href='<?= site_url() ?>Daman/deleteValidasi/" + row.id + "' onclick='return confirm(\"Anda yakin?\");' class='btn btn-danger btn-xs'><i class='fa fa-trash'></i></a> " +
+                "<a href='<?= site_url() ?>Daman/editValidasi/" + row.id + "' class='btn btn-primary btn-xs disabled'><i class='fa fa-pencil'></i></a> " +
+                " <a href='<?= site_url() ?>Daman/deleteValidasi/" + row.id + "' onclick='return confirm(\"Anda yakin?\");' class='btn btn-danger btn-xs disabled'><i class='fa fa-trash'></i></a> " +
                 "</div>";
 
               return html
@@ -513,7 +583,7 @@
       });
     });
   </script>
-
+<!-- filter -->
   <script type="text/javascript" language="javascript">
     $(document).ready(function() {
       var tabelFilter = $('#tableFilter').DataTable({
@@ -771,46 +841,47 @@
         ],
       });
 
-    $('.showHideColumn').on('click', function() {
+      $('.showHideColumn').on('click', function() {
         var tableColumn = tabel.column($(this).attr('data-columnindex'));
         tableColumn.visible(!tableColumn.visible());
-    });
+      });
 
-    $("#but_checkall").click(function() {
-      $.each($('input[type="checkbox"]:not(:checked)').prop('checked', true));
-      
-      $.each($('input[type="checkbox"]:not(:disabled)').prop('checked', false));
-    });
-    
-    //Tambahan
-    $('#but_showhide').click(function(){
-     var checked_arr = [];var unchecked_arr = [];
+      $("#but_checkall").click(function() {
+        $.each($('input[type="checkbox"]:not(:checked)').prop('checked', true));
 
-     // Read all checked checkboxes
-     $.each($('input[type="checkbox"]:checked'), function (key, value) {
-        checked_arr.push(this.value);
-     });
+        $.each($('input[type="checkbox"]:not(:disabled)').prop('checked', false));
+      });
 
-     // Read all unchecked checkboxes
-     $.each($('input[type="checkbox"]:not(:checked)'), function (key, value) {
-        unchecked_arr.push(this.value);
-     });
+      //Tambahan
+      $('#but_showhide').click(function() {
+        var checked_arr = [];
+        var unchecked_arr = [];
 
-     // Hide the checked columns
-     tabelFilter.columns(checked_arr).visible(true);
+        // Read all checked checkboxes
+        $.each($('input[type="checkbox"]:checked'), function(key, value) {
+          checked_arr.push(this.value);
+        });
 
-     // Show the unchecked columns
-     tabelFilter.columns(unchecked_arr).visible(false);
-  });
+        // Read all unchecked checkboxes
+        $.each($('input[type="checkbox"]:not(:checked)'), function(key, value) {
+          unchecked_arr.push(this.value);
+        });
 
-    
+        // Hide the checked columns
+        tabelFilter.columns(checked_arr).visible(true);
+
+        // Show the unchecked columns
+        tabelFilter.columns(unchecked_arr).visible(false);
+      });
+
+
 
       $('.input-daterange').datepicker({
         todayBtn: 'linked',
         format: "yyyy-mm-dd",
         autoclose: true
       });
-      
+
       $('#search').click(function() {
         var start_date = $('#start_date').val();
         var end_date = $('#end_date').val();
@@ -836,8 +907,8 @@
             "sScrollX": "100%", //scroll tambahan x
             "bScrollCollapse": true,
             "columnDefs": [{
-              "width": "5px",
-              "targets": 0
+                "width": "5px",
+                "targets": 0
               },
               {
                 "width": "150px",
@@ -963,7 +1034,7 @@
                 "width": "120px",
                 "targets": 31
               }
-            ],  
+            ],
             "ajax": {
               "url": "<?= base_url() ?>index.php/Daman/filterDate", // URL file untuk proses select datanya
               "type": "POST",
@@ -1084,7 +1155,7 @@
 
     });
   </script>
-
+<!-- table ODP -->
   <script>
     var tabel = null;
 
@@ -1180,8 +1251,8 @@
           {
             "render": function(data, type, row) { // Tampilkan kolom aksi
               var html = "<div class='text-center'>" +
-                "<a href='<?= site_url() ?>Daman/editODP/" + row.idODP + "' class='btn btn-primary btn-xs'><i class='fa fa-pencil'></i></a> " +
-                " <a href='<?= site_url() ?>Daman/deleteODP/" + row.idODP + "' onclick='return confirm(\"Anda yakin?\");' class='btn btn-danger btn-xs'><i class='fa fa-trash'></i></a> " +
+                "<a href='<?= site_url() ?>Daman/editODP/" + row.idODP + "' class='btn btn-primary btn-xs disabled'><i class='fa fa-pencil'></i></a> " +
+                " <a href='<?= site_url() ?>Daman/deleteODP/" + row.idODP + "' onclick='return confirm(\"Anda yakin?\");' class='btn btn-danger btn-xs disabled'><i class='fa fa-trash'></i></a> " +
                 "</div>";
 
               return html
@@ -1191,7 +1262,7 @@
       });
     });
   </script>
-
+<!-- overlay -->
   <script>
     $(document).ready(function() {
       $("#load").fadeOut(500); //jika document html sudah siap maka fungsi ini akan dijalankan 500
@@ -1206,7 +1277,131 @@
       $("#loading").fadeOut();
     }
   </script>
+ <!-- auto complete  -->
+ <script>
+$(document).ready(function () {
+    load();
   
+    $('body').on('focus',".input-daterange", function(){
+        $(this).datepicker({
+          todayBtn: 'linked',
+        format: "yyyy-mm-dd",
+        autoclose: true
+        });
+    }); 
+  
+    
+    $('body').on('focus',"#updaterUIM", function(){
+      
+        $(this).select2({
+            placeholder: "Select an option",
+            ajax: { 
+                url: "<?= base_url() ?>index.php/Daman/listHDDaman",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                 return {
+                   searchTerm: params.term // search term
+                 };
+                },
+               
+                processResults: function (response) { 
+                  return {
+                      results: $.map(response, function(obj) {
+                          return { id: obj.namaPegawai, text: obj.namaPegawai };
+                      })
+                  };
+                },
+                cache: true
+               }
+            
+        });
+        
+    });
+
+    $('body').on('focus',"#updaterDava", function(){
+        $(this).select2({
+            placeholder: "Select an option",
+            ajax: { 
+                url: "<?= base_url() ?>index.php/Daman/listDava",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                 return {
+                   searchTerm: params.term // search term
+                 };
+                },
+               
+                processResults: function (response) { 
+                  return {
+                      results: $.map(response, function(obj) {
+                          return { id: obj.namaPegawai, text: obj.namaPegawai };
+                      })
+                  };
+                },
+                cache: true
+               }
+            
+        });       
+    }); 
+    
+    $("#namaODP").select2({
+        placeholder: "Select an option",
+        ajax: { 
+            url: "<?= base_url() ?>index.php/Daman/listNamaODP",
+            type: "post",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+              return {
+                searchTerm: params.term // search term
+              };
+            },
+            
+            processResults: function (response) { 
+              return {
+                  results: $.map(response, function(obj) {
+                      return { id: obj.namaODP, text: obj.namaODP };
+                  })
+              };
+            },
+            cache: true
+            }
+        
+    });       
+    $("#namaOLT").select2({
+        placeholder: "Select an option",
+        ajax: { 
+            url: "<?= base_url() ?>index.php/Daman/listNamaOLT",
+            type: "post",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+              return {
+                searchTerm: params.term // search term
+              };
+            },
+            
+            processResults: function (response) { 
+              return {
+                  results: $.map(response, function(obj) {
+                      return { id: obj.hostname, text: obj.hostname };
+                  })
+              };
+            },
+            cache: true
+            }
+        
+    });       
+    
+   
+});
+
+
+</script>
+
 </body>
 
 </html>

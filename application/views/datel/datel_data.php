@@ -14,11 +14,21 @@
   <div class="box">
     <div class="box-header">
       <h3 class="box-title">Data Datel</h3>
-      <div class="pull-right">
-        <a href="<?= site_url('Admin/addDatel') ?>" class="btn btn-primary btn-flat">
-          <i class="fa fa-user-plus"></i> Create
-        </a>
-      </div>
+      <?php if (
+        $this->fungsi->user_login()->status == 'Admin' || $this->fungsi->user_login()->status == 'Ondesk' || $this->fungsi->user_login()->status == 'HD Daman' ||
+        $this->fungsi->user_login()->status == 'Onsite' ||
+        $this->fungsi->user_login()->status == 'Daman' ||
+        $this->fungsi->user_login()->status == 'DAVA' ||
+        $this->fungsi->user_login()->status == 'SDI'
+      ) { ?>
+        <div class="pull-right">
+          <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
+            <a href="<?= site_url('Admin/addDatel') ?>" class="btn btn-primary btn-flat">
+              <i class="fa fa-user-plus"></i> Create
+            </a>
+          <?php  } ?>
+        </div>
+      <?php  } ?>
     </div>
     <div class="box-body table-responsive">
       <!-- id="table1" buat searching pagination dan row -->
@@ -40,26 +50,95 @@
               <td style="width: 15%" ;><?= $data->namaDatel ?></td>
               <td><?= $data->keterangan ?></td>
               <td style="width: 11%" ;><?= $data->namaWitel ?></td>
-              <td class="text-center" width="10%">
-                <form action="<?= site_url('Admin/deleteDatel') ?>" method="post">
-                  <a href="<?= site_url('Admin/editDatel/' . $data->idDatel) ?>" class="btn btn-primary btn-xs">
-                    <i class="fa fa-pencil"></i>
-                  </a>
-                  <input type="hidden" name="idDatel" value="<?= $data->idDatel ?>">
-                  <button onclick="return confirm('Apakah Anda Yakin?')" class="btn btn-danger btn-xs">
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </form>
-              </td>
+                <td class="text-center" width="10%">
+                  <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
+                    <form action="<?= site_url('Admin/deleteDatel') ?>" method="post">
+                      <a href="<?= site_url('Admin/editDatel/' . $data->idDatel) ?>" class="btn btn-primary btn-xs">
+                        <i class="fa fa-pencil"></i>
+                      </a>
+                      <input type="hidden" name="idDatel" value="<?= $data->idDatel ?>">
+                      <button onclick="return confirm('Apakah Anda Yakin?')" class="btn btn-danger btn-xs">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </form>
+                  <?php  } ?>
+                  <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
+                    <form action="<?= site_url('Ondesk/deleteDatel') ?>" method="post">
+                      <a href="<?= site_url('Ondesk/editDatel/' . $data->idDatel) ?>" class="btn btn-primary btn-xs disabled">
+                        <i class="fa fa-pencil"></i>
+                      </a>
+                      <input type="hidden" name="idDatel" value="<?= $data->idDatel ?>">
+                      <button onclick="return confirm('Apakah Anda Yakin?')" class="btn btn-danger btn-xs" disabled>
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </form>
+                  <?php  } ?>
+                  <?php if ($this->fungsi->user_login()->status == 'Onsite') { ?>
+                    <form action="<?= site_url('Ondesk/deleteDatel') ?>" method="post">
+                      <a href="<?= site_url('Ondesk/editDatel/' . $data->idDatel) ?>" class="btn btn-primary btn-xs disabled">
+                        <i class="fa fa-pencil"></i>
+                      </a>
+                      <input type="hidden" name="idDatel" value="<?= $data->idDatel ?>">
+                      <button onclick="return confirm('Apakah Anda Yakin?')" class="btn btn-danger btn-xs" disabled>
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </form>
+                  <?php  } ?>
+                  <?php if ($this->fungsi->user_login()->status == 'Daman') { ?>
+                    <form action="<?= site_url('Daman/deleteDatel') ?>" method="post">
+                      <a href="<?= site_url('Daman/editDatel/' . $data->idDatel) ?>" class="btn btn-primary btn-xs disabled">
+                        <i class="fa fa-pencil"></i>
+                      </a>
+                      <input type="hidden" name="idDatel" value="<?= $data->idDatel ?>">
+                      <button onclick="return confirm('Apakah Anda Yakin?')" class="btn btn-danger btn-xs" disabled>
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </form>
+                  <?php  } ?>
+                  <?php if ($this->fungsi->user_login()->status == 'HD Daman') { ?>
+                    <form action="<?= site_url('Ondesk/deleteDatel') ?>" method="post">
+                      <a href="<?= site_url('Ondesk/editDatel/' . $data->idDatel) ?>" class="btn btn-primary btn-xs disabled">
+                        <i class="fa fa-pencil"></i>
+                      </a>
+                      <input type="hidden" name="idDatel" value="<?= $data->idDatel ?>">
+                      <button onclick="return confirm('Apakah Anda Yakin?')" class="btn btn-danger btn-xs" disabled>
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </form>
+                  <?php  } ?>
+                  <?php if ($this->fungsi->user_login()->status == 'Dava') { ?>
+                    <form action="<?= site_url('Ondesk/deleteDatel') ?>" method="post">
+                      <a href="<?= site_url('Ondesk/editDatel/' . $data->idDatel) ?>" class="btn btn-primary btn-xs disabled">
+                        <i class="fa fa-pencil"></i>
+                      </a>
+                      <input type="hidden" name="idDatel" value="<?= $data->idDatel ?>">
+                      <button onclick="return confirm('Apakah Anda Yakin?')" class="btn btn-danger btn-xs" disabled>
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </form>
+                  <?php  } ?>
+                  <?php if ($this->fungsi->user_login()->status == 'SDI') { ?>
+                    <form action="<?= site_url('Ondesk/deleteDatel') ?>" method="post">
+                      <a href="<?= site_url('Ondesk/editDatel/' . $data->idDatel) ?>" class="btn btn-primary btn-xs disabled">
+                        <i class="fa fa-pencil"></i>
+                      </a>
+                      <input type="hidden" name="idDatel" value="<?= $data->idDatel ?>">
+                      <button onclick="return confirm('Apakah Anda Yakin?')" class="btn btn-danger btn-xs" disabled>
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </form>
+                  <?php  } ?>
+
+                </td>
             </tr>
-          <?php
-          } ?>
+          <?php } ?>
         </tbody>
         <tfoot>
           <tr>
             <th>ID Datel</th>
             <th>Nama Datel</th>
             <th>Keterangan</th>
+            <th>Witel</th>
             <th>Actions</th>
           </tr>
         </tfoot>

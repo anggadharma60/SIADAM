@@ -40,7 +40,9 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-  <!-- <script src="<?php echo base_url() ?>assets/js/jquery-3.3.1.js"></script> -->
+    <!-- Select2 -->
+    <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/select2/dist/css/select2.min.css">
+ 
 
   <style>
     #load {
@@ -168,7 +170,7 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header"></li>
-          <li class="active treeview">
+          <li class="treeview">
             <a href="<?= site_url('dashboard') ?>">
               <i class="fa fa-bar-chart"></i> <span>Dashboard</span>
               <span class="pull-right-container">
@@ -186,6 +188,46 @@
               <span class="pull-right-container"></span>
             </a>
           </li>
+          <li>
+            <a href="<?= site_url('HDDaman/viewListODP') ?>">
+              <i class="fa fa-microchip"></i>
+              <span>Kelola Data ODP</span>
+              <span class="pull-right-container">
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="<?= site_url('HDDaman/getOLT') ?>">
+              <i class="fa fa-database"></i>
+              <span>Kelola Data OLT</span>
+              <span class="pull-right-container">
+              </span>
+            </a>
+          </li>
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-archive"></i>
+              <span>Kelola Data Pendukung</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="<?= site_url('HDDaman/getRegional') ?>"><i class="fa fa-flag fa-fw mr-3"></i> Regional</a></li>
+              <li><a href="<?= site_url('HDDaman/getWitel') ?>"><i class="fa fa-map-marker fa-fw mr-3"></i> Witel</a></li>
+              <li><a href="<?= site_url('HDDaman/getDatel') ?>"><i class="fa fa-tag fa-fw mr-3"></i> Datel</a></li>
+              <li><a href="<?= site_url('HDDaman/getSTO') ?>"><i class="fa fa-location-arrow fa-fw mr-3"></i> STO</a></li>
+              <li><a href="<?= site_url('HDDaman/getSpecOLT') ?>"><i class="fa fa-wrench fa-fw mr-3"></i> Specification OLT</a></li>
+            </ul>
+          </li>
+          <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
+            <li class="header">SETTNGS</li>
+            <li><a href="<?= site_url('HDDaman/getPegawai') ?>">
+                <i class="fa fa-user-plus"></i> <span>Kelola Data Pegawai</span>
+                <span class="pull-right-container"></span>
+              </a>
+            </li>
+          <?php  } ?>
         </ul>
       </section>
       <!-- /.sidebar -->
@@ -222,7 +264,7 @@
   <script src="<?= base_url() ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <!-- SlimScroll -->
   <script src="<?= base_url() ?>assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-  <!-- AdminLTE App -->
+  <!-- OndesLTE App -->
   <script src="<?= base_url() ?>assets/dist/js/adminlte.min.js"></script>
   <script src="<?= base_url() ?>assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
   <script src="<?= base_url() ?>assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -235,10 +277,31 @@
   <script src="<?= base_url() ?>assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
   <!--  chart -->
   <script src="<?= base_url() ?>chart.js/Chart.bundle.min.js"></script>
+  <!-- dynamic form -->
+  <script src="<?= base_url() ?>dynamicForm/CreateDynamicHtmlControll.js"></script>
   <!-- iCheck 1.0.1 -->
   <script src="<?= base_url() ?>assets/plugins/iCheck/icheck.min.js"></script>
+ 
+ <!-- Select2 -->
+<script src="<?= base_url() ?>assets/bower_components/select2/dist/js/select2.full.min.js"></script>
 
 
+ <!-- datepicker -->
+  <script>
+    $(document).ready(function() {
+
+      $('.input-daterange').datepicker({
+        todayBtn: 'linked',
+        format: "yyyy-mm-dd",
+        autoclose: true
+      });
+      $('.select2').select2();
+     
+
+    });
+     
+  </script>
+  <!-- table 1 -->
   <script>
     var tabel = null;
 
@@ -248,6 +311,7 @@
 
     });
   </script>
+  <!-- table validasi -->
   <script>
     var tabel = null;
 
@@ -519,7 +583,7 @@
       });
     });
   </script>
-
+<!-- filter -->
   <script type="text/javascript" language="javascript">
     $(document).ready(function() {
       var tabelFilter = $('#tableFilter').DataTable({
@@ -1091,7 +1155,7 @@
 
     });
   </script>
-
+<!-- table ODP -->
   <script>
     var tabel = null;
 
@@ -1187,8 +1251,8 @@
           {
             "render": function(data, type, row) { // Tampilkan kolom aksi
               var html = "<div class='text-center'>" +
-                "<a href='<?= site_url() ?>HDDaman/editODP/" + row.idODP + "' class='btn btn-primary btn-xs'><i class='fa fa-pencil'></i></a> " +
-                " <a href='<?= site_url() ?>HDDaman/deleteODP/" + row.idODP + "' onclick='return confirm(\"Anda yakin?\");' class='btn btn-danger btn-xs'><i class='fa fa-trash'></i></a> " +
+                "<a href='<?= site_url() ?>HDDaman/editODP/" + row.idODP + "' class='btn btn-primary btn-xs disabled'><i class='fa fa-pencil'></i></a> " +
+                " <a href='<?= site_url() ?>HDDaman/deleteODP/" + row.idODP + "' onclick='return confirm(\"Anda yakin?\");' class='btn btn-danger btn-xs disabled'><i class='fa fa-trash'></i></a> " +
                 "</div>";
 
               return html
@@ -1198,7 +1262,7 @@
       });
     });
   </script>
-
+<!-- overlay -->
   <script>
     $(document).ready(function() {
       $("#load").fadeOut(500); //jika document html sudah siap maka fungsi ini akan dijalankan 500
@@ -1213,11 +1277,131 @@
       $("#loading").fadeOut();
     }
   </script>
-  <script>
-    $(function() {
-      $('.selectpicker').selectpicker();
+ <!-- auto complete  -->
+ <script>
+$(document).ready(function () {
+    load();
+  
+    $('body').on('focus',".input-daterange", function(){
+        $(this).datepicker({
+          todayBtn: 'linked',
+        format: "yyyy-mm-dd",
+        autoclose: true
+        });
+    }); 
+  
+    
+    $('body').on('focus',"#updaterUIM", function(){
+      
+        $(this).select2({
+            placeholder: "Select an option",
+            ajax: { 
+                url: "<?= base_url() ?>index.php/HDDaman/listHDDaman",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                 return {
+                   searchTerm: params.term // search term
+                 };
+                },
+               
+                processResults: function (response) { 
+                  return {
+                      results: $.map(response, function(obj) {
+                          return { id: obj.namaPegawai, text: obj.namaPegawai };
+                      })
+                  };
+                },
+                cache: true
+               }
+            
+        });
+        
     });
-  </script>
+
+    $('body').on('focus',"#updaterDava", function(){
+        $(this).select2({
+            placeholder: "Select an option",
+            ajax: { 
+                url: "<?= base_url() ?>index.php/HDDaman/listDava",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                 return {
+                   searchTerm: params.term // search term
+                 };
+                },
+               
+                processResults: function (response) { 
+                  return {
+                      results: $.map(response, function(obj) {
+                          return { id: obj.namaPegawai, text: obj.namaPegawai };
+                      })
+                  };
+                },
+                cache: true
+               }
+            
+        });       
+    }); 
+    
+    $("#namaODP").select2({
+        placeholder: "Select an option",
+        ajax: { 
+            url: "<?= base_url() ?>index.php/HDDaman/listNamaODP",
+            type: "post",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+              return {
+                searchTerm: params.term // search term
+              };
+            },
+            
+            processResults: function (response) { 
+              return {
+                  results: $.map(response, function(obj) {
+                      return { id: obj.namaODP, text: obj.namaODP };
+                  })
+              };
+            },
+            cache: true
+            }
+        
+    });       
+    $("#namaOLT").select2({
+        placeholder: "Select an option",
+        ajax: { 
+            url: "<?= base_url() ?>index.php/HDDaman/listNamaOLT",
+            type: "post",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+              return {
+                searchTerm: params.term // search term
+              };
+            },
+            
+            processResults: function (response) { 
+              return {
+                  results: $.map(response, function(obj) {
+                      return { id: obj.hostname, text: obj.hostname };
+                  })
+              };
+            },
+            cache: true
+            }
+        
+    });       
+    
+   
+});
+
+
+</script>
+
 </body>
 
 </html>

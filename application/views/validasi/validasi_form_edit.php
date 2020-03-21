@@ -1,7 +1,7 @@
 <section class="content-header">
     <h1>
         Validasi
-        <small>Data Validasi</small>
+        <small>Edit Data Validasi</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i></a></li>
@@ -15,7 +15,7 @@
 <section class="content">
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">Edit Valadasi</h3>
+            <h3 class="box-title">Edit Validasi</h3>
             <div class="pull-right">
                 <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
                     <a href="<?= site_url('Admin/viewListValidasi') ?>" class="btn btn-danger btn-flat">
@@ -406,4 +406,6 @@
     <!-- end box -->
     
 
-</section>
+<script>
+    $
+</script>

@@ -33,7 +33,7 @@ class HDDaman extends CI_Controller
 	{
 		parent::__construct();
 		check_not_login();
-		//check HDDaman buat fungsi_helper
+		//check admin buat fungsi_helper
 		check_hddaman();
 		// check_daman();
 		// check_hddaman();
@@ -119,46 +119,46 @@ class HDDaman extends CI_Controller
 	{
 		$data['ODP'] = $this->ODP_model->jumlahRekapODP();
 		$ODP = $data['ODP'];
-		$data['idSTO'][]= null;
-		$data['kodeSTO']= null;
-		$data['namaSTO']= null;
-		$data['grand_total']=null;
-		$data['totalODP']=null;
-		$data['total']=null;
+		$data['idSTO'][] = null;
+		$data['kodeSTO'] = null;
+		$data['namaSTO'] = null;
+		$data['grand_total'] = null;
+		$data['totalODP'] = null;
+		$data['total'] = null;
 		$data['totalValidasi'] = null;
-		
-		if($ODP!=null){
-			foreach($ODP->result() as $rekapODP){
 
-				$data['idSTO'][]= $rekapODP->idSTO;
-				$data['kodeSTO'][]= $rekapODP->kodeSTO;
-				$data['namaSTO'][]= $rekapODP->namaSTO;
-				$data['grand_total'][]= $rekapODP->grand_total;
+		if ($ODP != null) {
+			foreach ($ODP->result() as $rekapODP) {
+
+				$data['idSTO'][] = $rekapODP->idSTO;
+				$data['kodeSTO'][] = $rekapODP->kodeSTO;
+				$data['namaSTO'][] = $rekapODP->namaSTO;
+				$data['grand_total'][] = $rekapODP->grand_total;
 				$data['totalODP'] += $rekapODP->grand_total;
-			}	
+			}
 		}
-	
+
 		$sto = $this->STO_model->getDataSTO();
 		$totalSTO = $sto->num_rows();
-		if ($totalSTO!=null){
+		if ($totalSTO != null) {
 			$data['totalSTO'] = $totalSTO;
 		}
-		if($sto != null){
-			foreach($sto->result() as $sto){
+		if ($sto != null) {
+			foreach ($sto->result() as $sto) {
 				$data['namaSTO'][] = $sto->namaSTO;
 			}
 		}
-		
+
 		// $data['totalODP'] = array_sum($data['grand_total']);
 		// $data['totalSTO'] = $ODP->num_rows();
-		
-		
+
+
 		// print_r($data['totalODP']->row());
 
 		$data['validasi'] = $this->Validasi_model->jumlahRekapValidasi()->result();
 		$validasi = $data['validasi'];
-		foreach($validasi as $rekapValidasi){
-			$data['total'][]= $rekapValidasi->total;
+		foreach ($validasi as $rekapValidasi) {
+			$data['total'][] = $rekapValidasi->total;
 			$data['totalValidasi'] += $rekapValidasi->total;
 		}
 		// $data['totalValidasi'] = array_sum($data['total']);
@@ -166,10 +166,10 @@ class HDDaman extends CI_Controller
 		// print_r($data['totalValidasi']->result());
 		$data['chart'] = json_encode($data);
 		// print_r($data['chart']);
-		
-		
+
+
 		$this->template->load('template/template_HDDaman', 'dashboard/chart', $data);
-		
+
 		// $this->template->load('template/template_HDDaman', 'dashboard/chart');
 	}
 
@@ -1617,61 +1617,101 @@ class HDDaman extends CI_Controller
 		}
 	}
 
+
+	public function listHDDaman()
+	{
+		$searchTerm = $this->input->post('searchTerm');
+		$response = $this->Pegawai_model->getDataHDDaman($searchTerm)->result();
+		echo json_encode($response);
+	}
+
+	public function listDava()
+	{
+		$searchTerm = $this->input->post('searchTerm');
+		$response = $this->Pegawai_model->getDataDava($searchTerm)->result();
+		echo json_encode($response);
+	}
+
+	public function listNamaODP()
+	{
+		$searchTerm = $this->input->post('searchTerm');
+		$response = $this->ODP_model->getNamaODP($searchTerm)->result();
+		echo json_encode($response);
+	}
+
+	public function listNamaOLT()
+	{
+		$searchTerm = $this->input->post('searchTerm');
+		$response = $this->OLT_model->getNamaOLT($searchTerm)->result();
+		echo json_encode($response);
+	}
+
 	public function addValidasi()
 	{
-		$data['row'] = $this->Validasi_model->getDataValidasi();
-		$this->form_validation->set_rules('tanggal_pelurusan', 'TANGGAL PELURUSAN', 'required|trim');
-		$this->form_validation->set_rules('ondesk', 'Ondesk', 'required|trim');
-		$this->form_validation->set_rules('onsite1', 'Onsite ', 'required|trim');
-		$this->form_validation->set_rules('onsite2', 'Onsite ', 'trim');
-		$this->form_validation->set_rules('namaODP', 'Nama ODP', 'required|trim');
-		$this->form_validation->set_rules('noteODP', 'Note ODP', 'max_length[20]|trim');
+		$ondesk = $this->Pegawai_model->getDataPegawai($this->session->userdata['idPegawai'])->row();
+		$onsite = $this->Pegawai_model->getDataPegawaiStatus("Onsite")->result();
+		$hostname = $this->OLT_model->getNamaOLT()->result();
+
+
+
+		$data['ondesk'] = json_encode($ondesk);
+		$data['onsite'] = json_encode($onsite);
+		$data['hostname'] = json_encode($hostname);
+
+
+		$this->form_validation->set_rules('tanggalPelurusan', 'Tanggal Pelurusan', 'required|trim');
+		$this->form_validation->set_rules('ondesk', 'HDDaman', 'required|trim');
+		$this->form_validation->set_rules('onsite[]', 'Onsite ', 'required|trim');
+		$this->form_validation->set_rules('namaODP', 'Nama ODP', 'required|max_length[40]|trim');
+		$this->form_validation->set_rules('noteODP', 'Note ODP', 'max_length[100]|trim');
 		$this->form_validation->set_rules('QRODP', 'QR ODP', 'max_length[16]|trim');
 		$this->form_validation->set_rules('koordinatODP', 'Koordinat ODP', 'max_length[35]|trim');
-		$this->form_validation->set_rules('noteQRODP', 'QR ODP', 'max_length[45]|trim');
-		$this->form_validation->set_rules('totalIn', 'Total IN', 'numeric|trim');
-		$this->form_validation->set_rules('kapasitasODP', 'Kapasitas', 'required|numeric|max_length[2]|trim');
+		$this->form_validation->set_rules('noteQRODP', 'QR ODP', 'max_length[100]|trim');
+		$this->form_validation->set_rules('totalIN', 'Total IN', 'numeric|max_length[2]||trim');
+		$this->form_validation->set_rules('kapasitasODP', 'Kapasitas', 'required|numeric|max_length[16]|trim');
 
-		
+
 		$this->form_validation->set_rules('namaOLT', 'Nama OLT', 'required|max_length[16]|trim');
-		$this->form_validation->set_rules('portOLT', 'Port OLT', 'required|max_length[12]|trim');
-		
-		
-		$this->form_validation->set_rules('portOutSplitter', 'Port Out Splitter', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('QROutSplitter', 'QR Out Splitter', 'required|trim');
-		$this->form_validation->set_rules('portODP', 'PORT', 'trim');
-		$this->form_validation->set_rules('statusportODP', 'QR ODP', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('status', 'STATUS', 'max_length[50]required|trim');
-		$this->form_validation->set_rules('ONU', 'ONU', 'max_length[15]|trim');
-		$this->form_validation->set_rules('serialNumber', 'SN', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('serviceNumber', 'SERVICE', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('QRDropCore', 'QR DROPCORE', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('noteDropcore', 'NOTE URUT DROPCORE', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('flagOLTPort', 'FLAG OLT & PORT', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('ODPtoOLT', 'CONNECTIVITY ODP TO OLT', 'trim');
-		$this->form_validation->set_rules('ODPtoONT', 'ODP - ONT', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('RFS', 'RFS', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('noteHDDaman', 'NOTE', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('updateDataUIM', 'TANGGAL UPDATE UIM', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('updaterUIM', 'UPDATER UIM', 'required|max_length[20]|trim');
-		
-		$this->form_validation->set_rules('noteQROutSplitter', 'QR OUT SPLITTER', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('noteQRDropCore', 'QR DROPCORE', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('updaterDava', 'UPDATER DAVA', 'required|max_length[20]|trim');
+		$this->form_validation->set_rules('portOLT', 'Port OLT', 'max_length[12]|trim');
+
+
+		// $this->form_validation->set_rules('portOutSplitter', 'Port Out Splitter', 'required|max_length[20]|trim');
+		// $this->form_validation->set_rules('QROutSplitter[]', 'QR Out Splitter', 'required|trim');
+		// $this->form_validation->set_rules('portODP', 'PORT', 'trim');
+		// $this->form_validation->set_rules('statusportODP', 'QR ODP', 'required|max_length[20]|trim');
+		// // $this->form_validation->set_rules('status', 'STATUS', 'max_length[50]required|trim');
+		// $this->form_validation->set_rules('ONU', 'ONU', 'max_length[15]|trim');
+		// $this->form_validation->set_rules('serialNumber', 'SN', 'required|max_length[20]|trim');
+		// $this->form_validation->set_rules('serviceNumber', 'SERVICE', 'required|max_length[20]|trim');
+		// $this->form_validation->set_rules('QRDropCore', 'QR DROPCORE', 'required|max_length[20]|trim');
+		// $this->form_validation->set_rules('noteDropcore', 'NOTE URUT DROPCORE', 'required|max_length[20]|trim');
+		// $this->form_validation->set_rules('flagOLTPort', 'FLAG OLT & PORT', 'required|max_length[20]|trim');
+		// $this->form_validation->set_rules('ODPtoOLT', 'CONNECTIVITY ODP TO OLT', 'trim');
+		// $this->form_validation->set_rules('ODPtoONT', 'ODP - ONT', 'required|max_length[20]|trim');
+		// $this->form_validation->set_rules('RFS', 'RFS', 'required|max_length[20]|trim');
+		// $this->form_validation->set_rules('noteHDDaman', 'NOTE', 'required|max_length[20]|trim');
+		// $this->form_validation->set_rules('updateDataUIM', 'TANGGAL UPDATE UIM', 'required|max_length[20]|trim');
+		// $this->form_validation->set_rules('updaterUIM', 'UPDATER UIM', 'required|max_length[20]|trim');
+
+		// $this->form_validation->set_rules('noteQROutSplitter', 'QR OUT SPLITTER', 'required|max_length[20]|trim');
+		// $this->form_validation->set_rules('noteQRDropCore', 'QR DROPCORE', 'required|max_length[20]|trim');
+		// $this->form_validation->set_rules('updaterDava', 'UPDATER DAVA', 'required|max_length[20]|trim');
 
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('numeric','%s berisi angka' );
+		$this->form_validation->set_message('numeric', '%s berisi angka');
 		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
 		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
 
 		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
 		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_HDDaman', 'validasi/Validasi_form_add');
+
+			$this->template->load('template/template_HDDaman', 'validasi/Validasi_form_add', $data);
 		} else {
 			$post = $this->input->post(null, TRUE);
+
 			$this->Validasi_model->addDataValidasi($post);
 			if ($this->db->affected_rows() > 0) {
 				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
@@ -1682,62 +1722,57 @@ class HDDaman extends CI_Controller
 
 	public function editValidasi($id)
 	{
-		$data['row'] = $this->Validasi_model->getDataValidasi();
-		$this->form_validation->set_rules('tanggal_pelurusan', 'TANGGAL PELURUSAN', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('idOndeks', 'ONDESK', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('idOnsite1', 'ONSITE 1', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('idOnsite2', 'ONSITE 2', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('idODP', 'NAMA ODP', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('noteODP', 'NOTE', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('QRODP', 'QR ODP', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('koordinatODP', 'KOORDINAT ODP', 'max_length[50]required|trim');
-		$this->form_validation->set_rules('hostname', 'NAMA OLT (IP OLT)', 'max_length[20]|trim');
-		$this->form_validation->set_rules('portOLT', 'PORT OLT', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('totalIn', 'TOTAL IN ODP', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('kapasitasODP', 'KAPASITAS ODP', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('portOutSplitter', 'PORT OUT SPLITTER', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('QROutSplitter', 'QR OUT SPLITTER', 'required|trim');
-		$this->form_validation->set_rules('portODP', 'PORT', 'trim');
-		$this->form_validation->set_rules('statusportODP', 'QR ODP', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('status', 'STATUS', 'max_length[50]required|trim');
-		$this->form_validation->set_rules('ONU', 'ONU', 'max_length[15]|trim');
-		$this->form_validation->set_rules('serialNumber', 'SN', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('serviceNumber', 'SERVICE', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('QRDropCore', 'QR DROPCORE', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('noteDropcore', 'NOTE URUT DROPCORE', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('flagOLTPort', 'FLAG OLT & PORT', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('ODPtoOLT', 'CONNECTIVITY ODP TO OLT', 'trim');
-		$this->form_validation->set_rules('ODPtoONT', 'ODP - ONT', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('RFS', 'RFS', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('noteHDDaman', 'NOTE', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('updateDataUIM', 'TANGGAL UPDATE UIM', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('updaterUIM', 'UPDATER UIM', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('noteQRODP', 'QR ODP', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('noteQROutSplitter', 'QR OUT SPLITTER', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('noteQRDropCore', 'QR DROPCORE', 'required|max_length[20]|trim');
-		$this->form_validation->set_rules('updaterDava', 'UPDATER DAVA', 'required|max_length[20]|trim');
+		$ondesk = $this->Pegawai_model->getDataPegawai($this->session->userdata['idPegawai'])->row();
+		$onsite = $this->Pegawai_model->getDataPegawaiStatus("Onsite")->result();
+		$hostname = $this->OLT_model->getNamaOLT()->result();
+		$edit = $this->Validasi_model->getDataDataValidasi($id);
+		
+		// $data['validasi'] =$this->db->query( "select id from rekap_data_validasi where id = $id");
+		// $coba = $data['validasi'];
+
+		// foreach ($coba as $id){
+		// 	$getid = $id->id;
+		// }
+
+
+		$data['ondesk'] = json_encode($ondesk);
+		$data['onsite'] = json_encode($onsite);
+		$data['hostname'] = json_encode($hostname);
+		$data['edit'] = json_encode($edit);
+
+
+		$this->form_validation->set_rules('tanggalPelurusan', 'Tanggal Pelurusan', 'required|trim');
+		$this->form_validation->set_rules('ondesk', 'HDDaman', 'required|trim');
+		$this->form_validation->set_rules('onsite[]', 'Onsite ', 'required|trim');
+		$this->form_validation->set_rules('namaODP', 'Nama ODP', 'required|max_length[40]|trim');
+		$this->form_validation->set_rules('noteODP', 'Note ODP', 'max_length[100]|trim');
+		$this->form_validation->set_rules('QRODP', 'QR ODP', 'max_length[16]|trim');
+		$this->form_validation->set_rules('koordinatODP', 'Koordinat ODP', 'max_length[35]|trim');
+		$this->form_validation->set_rules('noteQRODP', 'QR ODP', 'max_length[100]|trim');
+		$this->form_validation->set_rules('totalIN', 'Total IN', 'numeric|max_length[2]||trim');
+		$this->form_validation->set_rules('kapasitasODP', 'Kapasitas', 'required|numeric|max_length[16]|trim');
+
+
+		$this->form_validation->set_rules('namaOLT', 'Nama OLT', 'required|max_length[16]|trim');
+		$this->form_validation->set_rules('portOLT', 'Port OLT', 'max_length[12]|trim');
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
+		$this->form_validation->set_message('numeric', '%s berisi angka');
 		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
 		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
 
 		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
 		if ($this->form_validation->run() == FALSE) {
-			$query = $this->Validasi_model->getDataValidasi($id);
-			if ($query->num_rows() > 0) {
-				$data['row'] = $query->row();
-				$this->template->load('template/template_HDDaman', 'validasi/validasi_form_edit', $data);
-			} else {
-				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
-				redirect('HDDaman/viewListValidasi');
-			}
+
+			$this->template->load('template/template_HDDaman', 'validasi/Validasi_form_edit', $data);
 		} else {
 			$post = $this->input->post(null, TRUE);
-			$this->Validasi_model->editDataValidasi($post);
+
+			$this->Validasi_model->addDataValidasi($post);
 			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
+				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
 			}
 			redirect('HDDaman/viewListValidasi');
 		}
