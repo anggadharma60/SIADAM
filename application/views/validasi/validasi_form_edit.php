@@ -391,9 +391,17 @@
               </div>
         </div> -->
       </form>
+      <div class="col-md-12">
+          <fieldset>
+            <legend>Data Validasi</legend>
+          </fieldset>
+          <div id="AddControll" class="box-body table-responsive" style="height:200px;overflow-y: auto;">
 
+          </div>
+      </div>
     </div>
     <!-- end box body  -->
+    
     </div>
     <!-- end box -->
     
