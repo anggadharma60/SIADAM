@@ -30,7 +30,7 @@ class Validasi_model extends CI_Model {
   }
 
 public function getDataValidasiByID($id){
-  $query = $this->db->query('SELECT * FROM rekap_data_validasi WHERE namaODP=(SELECT namaODP FROM `rekap_data_validasi` WHERE id=1) AND tanggalPelurusan=(SELECT tanggalPelurusan FROM `rekap_data_validasi` WHERE id=1) ORDER BY `id` ASC');
+  $query = $this->db->query('SELECT * FROM rekap_data_validasi WHERE namaODP=(SELECT namaODP FROM `rekap_data_validasi` WHERE id='.$id.') AND tanggalPelurusan=(SELECT tanggalPelurusan FROM `rekap_data_validasi` WHERE id='.$id.') ORDER BY `id` ASC');
   return $query;
 }
 

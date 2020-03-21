@@ -39,9 +39,6 @@
             <a href="<?= site_url('Admin/addValidasi') ?>" class="btn btn-primary btn-flat">
               <i class="fa fa-user-plus"></i> Create
             </a>
-            <a href="<?= site_url('Admin/test') ?>" class="btn btn-primary btn-flat">
-              <i class="fa fa-user-plus"></i> Edit
-            </a>
           <?php } ?>
           <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
             <a href="<?= site_url('Ondesk/deleteAllValidasi') ?>">
@@ -115,12 +112,12 @@
       <table class="table table-bordered table-striped" border="1" cellpadding="8" id="tableValidasi">
         <thead>
           <tr>
-            <th>ID</th>
+          <th>ID</th>
             <th>TANGGAL PELURUSAN</th>
             <th>ONDESK</th>
             <th>ONSITE</th>
             <th>NAMA ODP</th>
-            <th>NOTE</th>
+            <th>NOTE ODP</th>
             <th>QR ODP</th>
             <th>KOORDINAT ODP</th>
             <th>NAMA OLT (IP OLT)</th>
@@ -140,12 +137,12 @@
             <th>CONNECTIVITY ODP TO OLT</th>
             <th>ODP - ONT</th>
             <th>RFS</th>
-            <th>NOTE</th>
+            <th>NOTE HD Daman</th>
             <th>TANGGAL UPDATE UIM</th>
             <th>UPDATER UIM</th>
-            <th>QR ODP</th>
-            <th>QR OUT SPLITTER</th>
-            <th>QR DROPCORE</th>
+            <th>Note QR ODP</th>
+            <th>Note QR OUT SPLITTER</th>
+            <th>Note QR DROPCORE</th>
             <th>UPDATER DAVA</th>
             <th>Actions</th>
           </tr>
@@ -160,7 +157,7 @@
             <th>ONDESK</th>
             <th>ONSITE</th>
             <th>NAMA ODP</th>
-            <th>NOTE</th>
+            <th>NOTE ODP</th>
             <th>QR ODP</th>
             <th>KOORDINAT ODP</th>
             <th>NAMA OLT (IP OLT)</th>
@@ -180,12 +177,12 @@
             <th>CONNECTIVITY ODP TO OLT</th>
             <th>ODP - ONT</th>
             <th>RFS</th>
-            <th>NOTE</th>
+            <th>NOTE HD Daman</th>
             <th>TANGGAL UPDATE UIM</th>
             <th>UPDATER UIM</th>
-            <th>QR ODP</th>
-            <th>QR OUT SPLITTER</th>
-            <th>QR DROPCORE</th>
+            <th>Note QR ODP</th>
+            <th>Note QR OUT SPLITTER</th>
+            <th>Note QR DROPCORE</th>
             <th>UPDATER DAVA</th>
             <th>Actions</th>
           </tr>

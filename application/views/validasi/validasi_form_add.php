@@ -105,9 +105,8 @@
             <div class="col-md-4">
               <div class="form-group <?= form_error('namaODP') ? 'has-error' : null ?>">
                 <label>Nama ODP *</label>
-                <select id="namaODP" name="namaODP" class="form-control select2"  data-placeholder="Select ODP"
-                        style="width: 100%;color:black;">
-                
+                <select id="namaODP" name="namaODP" class="form-control select2" data-placeholder="Select ODP" style="width: 100%;color:black;">
+                    <option value="<?=set_value('namaODP')?>"><?=set_value('namaODP')?></option>
                 </select>
                 <?= form_error('namaODP') ?>
               </div>
@@ -181,9 +180,8 @@
             <div class="col-md-8">
               <div class="form-group <?= form_error('namaOLT') ? 'has-error' : null ?>">
                 <label>Nama OLT *</label>
-                <select id="namaOLT" name="namaOLT" class="form-control select2"  data-placeholder="Select OLT"
-                        style="width: 100%;color:black;">
-                       
+                <select id="namaOLT" name="namaOLT" class="form-control select2"  data-placeholder="Select OLT" style="width: 100%;color:black;">
+                        <option value="<?=set_value('namaOLT')?>"><?=set_value('namaOLT')?></option>
                 </select>
                 <?= form_error('namaOLT') ?>
               </div>
