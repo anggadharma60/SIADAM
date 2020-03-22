@@ -158,7 +158,7 @@
             <div class="col-md-3">
               <div class="form-group">
                 <br>
-                <input class="btn btn-primary btn-flat" type="button" value="GENERATE" id="btnNoOfRec" style="margin-top:5px;height:33px;width:100%;" />
+                <input class="btn btn-primary btn-flat" type="button" value="Generate" id="btnNoOfRec" style="margin-top:5px;height:33px;width:100%;" />
               </div>
             </div>
             <div class="col-md-3">

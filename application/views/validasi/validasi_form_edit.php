@@ -8,9 +8,9 @@
         <li class="active">Validasi</li>
     </ol>
 </section>
-<?php
+<!-- <?php
     print_r($this->input->post(null, TRUE));
-?>
+?> -->
 <!-- Main content -->
 <section class="content">
     <div class="box">
@@ -58,7 +58,7 @@
                             <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" name="tanggalPelurusan" id="tanggalPelurusan" class="form-control pull-right" value="<?= $this->input->post('tanggalPelurusan') ?? $row->row(0)->tanggalPelurusan ?>" readonly="" disabled/>
+                            <input type="text" name="tanggalPelurusan" id="tanggalPelurusan" class="form-control pull-right" value="<?= $this->input->post('tanggalPelurusan') ?? $row->row(0)->tanggalPelurusan ?>" readonly=""/>
                         </div>
                     <?= form_error('tanggalPelurusan') ?>
               </div>
@@ -144,21 +144,22 @@
             <div class="col-md-3">
               <div class="form-group <?= form_error('kapasitasODP') ? 'has-error' : null ?>">
                 <label>Kapasitas</label>
-                <input id="txtNoOfRec" type="text" name="kapasitasODP" value="<?= $this->input->post('kapasitasODP') ?? $row->row(0)->kapasitasODP?>" class="form-control" readonly style="text-align:center;">
+                <input id="kapasitasODP" type="text" name="kapasitasODP" value="<?= $this->input->post('kapasitasODP') ?? $row->row(0)->kapasitasODP?>" class="form-control" readonly style="text-align:center;">
                 <?= form_error('kapasitasODP') ?>
               </div>
             </div>
             <div class="col-md-3">
-              <div class="form-group">
-                <br>
-                <input class="btn btn-primary btn-flat" type="button" value="GENERATE" id="btnNoOfRec" style="margin-top:5px;height:33px;width:100%;" />
+              <div class="form-group <?= form_error('jumlahPort') ? 'has-error' : null ?>">
+                <label>Jumlah Port</label>
+                <input id="jumlahPort" type="text" name="jumlahPort" value="<?= $row->num_rows()?>" class="form-control" readonly style="text-align:center;">
+                <?= form_error('jumlahPort') ?>
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
                 <br>
                 <button class="btn btn-success btn-flat" id="btn-add" type="submit"  style="margin-top:5px;height:33px;width:100%;">
-                    <i class=""></i> Tambah
+                    <i class=""></i> Simpan
                   </button>
               </div>
             </div>
@@ -227,10 +228,12 @@
                        <?php $no=0;
                        foreach($row->result() as $key=>$data){?>
                         <tr>
+
                             <td>
-                                <div class="form-group <?= form_error('portOutSplitter') ? 'has-error' : null ?>">
-                                    <input type="text" class="form-control" id="portOutSplitter" name="portOutSplitter[]" value="<?= $this->input->post('portOutSplitter[$no]') ?? $data->portOutSplitter?>" readonly style="text-align:center;"/>
-                                    <?= form_error('portOutSplitter') ?>
+                                <div class="form-group <?= form_error('portOutSplitter[]') ? 'has-error' : null ?>">
+                                    <input type="hidden" class="form-control" id="id" name="id[]" value="<?=  $data->id?>" style="text-align:center;"/>
+                                    <input type="text" class="form-control" id="portOutSplitter" name="portOutSplitter[]" value="<?= $this->input->post('portOutSplitter['.$no.']') ?? $data->portOutSplitter?>" style="text-align:center;"/>
+                                    <?= form_error('portOutSplitter[]') ?>
                                 </div>
                             </td>
                             <td>
@@ -241,7 +244,7 @@
                             </td>
                             <td>
                                 <div class="form-group <?= form_error('port') ? 'has-error' : null ?>">
-                                    <input type="text" class="form-control" id="port" name="port[]" value="<?= $this->input->post('port['.$no.']') ?? $data->portODP?>" readonly style="width:50px;text-align:center;"/>
+                                    <input type="text" class="form-control" id="port" name="port[]" value="<?= $this->input->post('port['.$no.']') ?? $data->portODP?>" style="width:50px;text-align:center;"/>
                                     <?= form_error('port') ?>
                                 </div>
                             </td>
@@ -390,15 +393,42 @@
 
               </div>
         </div> -->
-      </form>
-      <div class="col-md-12">
+        <div class="col-md-12">
           <fieldset>
-            <legend>Data Validasi</legend>
+            <legend></br>Tambah Port</legend>
           </fieldset>
-          <div id="AddControll" class="box-body table-responsive" style="height:200px;overflow-y: auto;">
-
+          <div class="col-md-3"></div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <br>
+              <input class="btn btn-primary btn-flat" type="button" value="Generate" id="btnNoOfRecEdit" style="margin-top:5px;height:33px;width:100%;" />
+            </div>
           </div>
-      </div>
+          <div class="col-md-2">
+            <div class="form-group <?= form_error('newPort') ? 'has-error' : null ?>">
+              <label>Kapasitas</label>
+              <input id="txtNoOfRec" type="text" name="newPort" value="<?= set_value('newPort') ?>" class="form-control" style="text-align:center;">
+              <?= form_error('newPort') ?>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <br>
+              <button class="btn btn-success btn-flat" id="btn-add" type="submit"  style="margin-top:5px;height:33px;width:100%;">
+                  <i class=""></i> Tambah
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          </div>
+            <div id="AddControllEdit" class="box-body table-responsive" style="height:200px;overflow-y: auto;">
+            </div>
+        </div>
+      </form>
+     
+      
+      
     </div>
     <!-- end box body  -->
     
@@ -407,5 +437,5 @@
     
 
 <script>
-    $
+    
 </script>
