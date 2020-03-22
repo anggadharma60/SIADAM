@@ -389,25 +389,35 @@ public function getDataValidasiByID($id){
     {
       // print_r($post);
       $tanggalPelurusan = html_escape($post['tanggalPelurusan']);   
-      // $ondesk = html_escape($post['ondesk']);
-      // $onsite = html_escape($post['onsite']);
+      
+      $ondesk = html_escape($post['ondesk']);
+      $onsite = html_escape($post['onsite']);
 
-      // $namaODP = html_escape($post['namaODP']);
-      // $QRODP = html_escape($post['QRODP']);
-      // $koordinatODP = html_escape($post['koordinatODP']);
-      // $noteODP = html_escape($post['noteODP']);
-      // $noteQRODP = html_escape($post['noteQRODP']);
-      // $totalIN = html_escape($post['totalIN']);
-      // $kapasitasODP = html_escape($post['kapasitasODP']);
-      // $hostname = html_escape($post['namaOLT']);
-      // $portOLT = html_escape($post['portOLT']);
+      $namaODP = html_escape($post['namaODP']);
+      $QRODP = html_escape($post['QRODP']);
+      $koordinatODP = html_escape($post['koordinatODP']);
+      $noteODP = html_escape($post['noteODP']);
+      $noteQRODP = html_escape($post['noteQRODP']);
+      $totalIN = html_escape($post['totalIN']);
+      $kapasitasODP = html_escape($post['kapasitasODP']);
+
+      $hostname = html_escape($post['namaOLT']);
+      $portOLT = html_escape($post['portOLT']);
       
       $jumlahPort = html_escape($post['jumlahPort']);
-      $temp = count($post);
-      print_r($jumlahPort);
-      print_r($temp);
-
-      if($kapasitasODP==0){
+      $temp = (int)html_escape($post['newPort'])+$jumlahPort;
+      // print_r($jumlahPort);
+      // print_r($temp);
+      echo '<br>';
+      //Update Section
+      for($n=0;$n<$jumlahPort;$n++){
+        if(empty($post['id']))  {
+          $id = '';
+         
+        }else{
+          $id = html_escape($post['id'][$n]);
+          
+        } 
         if(empty($post['portOutSplitter']))  {
           $portOutSplitter = '';
          
@@ -488,12 +498,6 @@ public function getDataValidasiByID($id){
         }else{
           $RFS = html_escape($post['RFS'][$n]);
         }
-        if(empty($post['RFS'])) {
-          $RFS  = '';
-         
-        }else{
-          $RFS = html_escape($post['RFS'][$n]);
-        }
         if(empty($post['noteHDDaman'])) {
           $noteHDDaman  = '';
          
@@ -524,209 +528,215 @@ public function getDataValidasiByID($id){
         }else{
           $noteQRDropCore= html_escape($post['noteQRDropCore'][$n]);
         }
-        if(empty($post['noteQRDropCore'])) {
+        if(empty($post['updaterDava'])) {
           $updaterDava  = '';
          
         }else{
           $updaterDava = html_escape($post['updaterDava'][$n]);
-        }            
-        
-        
+        }   
+
         $fetchData[] = 
-        array('tanggalPelurusan' => $tanggalPelurusan, 
-          'ondesk' => $ondesk, 
-          'onsite' => $onsite, 
-          'namaODP' => $namaODP, 
-          'noteODP' => $noteODP,
-          'QRODP' => $QRODP,
-          'koordinatODP' => $koordinatODP,
-          'hostname' => $hostname,
-          'portOLT' => $portOLT,
-          'totalIN' => $totalIN,
-          'kapasitasODP' => $kapasitasODP,
-          'portOutSplitter' => $portOutSplitter,
-          'QRPortOutSplitter' => $QROutSplitter,
-          'portODP' => $portODP,
-          'statusPortODP' => $statusPortODP,
-          'ONU' => $ONU,
-          'serialNumber' => $serialNumber,
-          'serviceNumber' => $serviceNumber,
-          'QRDropCore' => $QRDropCore,
-          'noteUrut' => $noteUrut,
-          'flagOLTPort' => $flagOLTPort,
-          'ODPtoOLT' => $ODPtoOLT,
-          'ODPtoONT' => $ODPtoONT,
-          'RFS' => $RFS,
-          'noteHDDaman' => $noteHDDaman,
-          'updateDateUIM' => $updateDateUIM,
-          'updaterUIM' => $updaterUIM,
-          'noteQRODP' => $noteQRODP,
-          'noteQROutSplitter' => $noteQROutSplitter,
-          'noteQRDropCore' => $noteQRDropCore,
-          'updaterDava' => $updaterDava
-          );
-      }else{
-        for($n=0;$n<$kapasitasODP;$n++){
-                      
-          if(empty($post['portOutSplitter']))  {
-            $portOutSplitter = '';
-           
-          }else{
-            $portOutSplitter = html_escape($post['portOutSplitter'][$n]);
-            
-          } 
-          if(empty($post['QROutSplitter']))  {
-            $QROutSplitter = '';
-           
-          }else{
-            $QROutSplitter = html_escape($post['QROutSplitter'][$n]);
-            
-          }
-          if(empty($post['port']))  {
-            $portODP = '';
-           
-          }else{
-            $portODP = html_escape($post['port'][$n]);
-          }
-          if(empty($post['status'])) {
-            $statusPortODP  = '';
-           
-          }else{
-            $statusPortODP = html_escape($post['status'][$n]);
-          }
-          if(empty($post['ONU'])) {
-            $ONU   = '';
-           
-          }else{
-            $ONU = html_escape($post['ONU'][$n]);
-          } 
-          if(empty($post['serialNumber'])) {
-            $serialNumber   = '';
-           
-          }else{
-            $serialNumber = html_escape($post['serialNumber'][$n]);
-          }  
-          if(empty($post['service'])) {
-            $serviceNumber   = '';
-           
-          }else{
-            $serviceNumber = html_escape($post['service'][$n]);
-          }
-          if(empty($post['QRDropCore'])) {
-            $QRDropCore  = '';
-           
-          }else{
-            $QRDropCore = html_escape($post['QRDropCore'][$n]);
-          }
-          if(empty($post['noteUrut'])) {
-            $noteUrut  = '';
-           
-          }else{
-            $noteUrut = html_escape($post['noteUrut'][$n]);
-          }
-          if(empty($post['flagOLTPort'])) {
-            $flagOLTPort  = '';
-           
-          }else{
-            $flagOLTPort = html_escape($post['flagOLTPort'][$n]);
-          }             
-          if(empty($post['ODPtoOLT'])) {
-            $ODPtoOLT  = '';
-           
-          }else{
-            $ODPtoOLT = html_escape($post['ODPtoOLT'][$n]);
-          }
-          if(empty($post['ODPtoONT'])) {
-            $ODPtoONT  = '';
-           
-          }else{
-            $ODPtoONT = html_escape($post['ODPtoONT'][$n]);
-          }         
-          if(empty($post['RFS'])) {
-            $RFS  = '';
-           
-          }else{
-            $RFS = html_escape($post['RFS'][$n]);
-          }
-          if(empty($post['noteHDDaman'])) {
-            $noteHDDaman  = '';
-           
-          }else{
-            $noteHDDaman = html_escape($post['noteHDDaman'][$n]);
-          }
-          if(empty($post['updateDateUIM'])) {
-            $updateDateUIM  = '';
-           
-          }else{
-            $updateDateUIM = html_escape($post['updateDateUIM'][$n]);
-          }
-          if(empty($post['updaterUIM'])) {
-            $updaterUIM  = '';
-           
-          }else{
-            $updaterUIM = html_escape($post['updaterUIM'][$n]);
-          }
-          if(empty($post['noteQROutSplitter'])) {
-            $noteQROutSplitter  = '';
-           
-          }else{
-            $noteQROutSplitter = html_escape($post['noteQROutSplitter'][$n]);
-          }
-          if(empty($post['noteQRDropCore'])) {
-            $noteQRDropCore  = '';
-           
-          }else{
-            $noteQRDropCore= html_escape($post['noteQRDropCore'][$n]);
-          }
-          if(empty($post['updaterDava'])) {
-            $updaterDava  = '';
-           
-          }else{
-            $updaterDava = html_escape($post['updaterDava'][$n]);
-          }            
-          
-          
-          $fetchData[] = 
-          array('tanggalPelurusan' => $tanggalPelurusan, 
-            'ondesk' => $ondesk, 
-            'onsite' => $onsite, 
-            'namaODP' => $namaODP, 
-            'noteODP' => $noteODP,
-            'QRODP' => $QRODP,
-            'koordinatODP' => $koordinatODP,
-            'hostname' => $hostname,
-            'portOLT' => $portOLT,
-            'totalIN' => $totalIN,
-            'kapasitasODP' => $kapasitasODP,
-            'portOutSplitter' => $portOutSplitter,
-            'QRPortOutSplitter' => $QROutSplitter,
-            'portODP' => $portODP,
-            'statusPortODP' => $statusPortODP,
-            'ONU' => $ONU,
-            'serialNumber' => $serialNumber,
-            'serviceNumber' => $serviceNumber,
-            'QRDropCore' => $QRDropCore,
-            'noteUrut' => $noteUrut,
-            'flagOLTPort' => $flagOLTPort,
-            'ODPtoOLT' => $ODPtoOLT,
-            'ODPtoONT' => $ODPtoONT,
-            'RFS' => $RFS,
-            'noteHDDaman' => $noteHDDaman,
-            'updateDateUIM' => $updateDateUIM,
-            'updaterUIM' => $updaterUIM,
-            'noteQRODP' => $noteQRODP,
-            'noteQROutSplitter' => $noteQROutSplitter,
-            'noteQRDropCore' => $noteQRDropCore,
-            'updaterDava' => $updaterDava
-            );
-      
-        }
-       
+            array('id' => $id,
+              'tanggalPelurusan' => $tanggalPelurusan, 
+              'ondesk' => $ondesk, 
+              'onsite' => $onsite, 
+              'namaODP' => $namaODP, 
+              'noteODP' => $noteODP,
+              'QRODP' => $QRODP,
+              'koordinatODP' => $koordinatODP,
+              'hostname' => $hostname,
+              'portOLT' => $portOLT,
+              'totalIN' => $totalIN,
+              'kapasitasODP' => $kapasitasODP,
+              'portOutSplitter' => $portOutSplitter,
+              'QRPortOutSplitter' => $QROutSplitter,
+              'portODP' => $portODP,
+              'statusPortODP' => $statusPortODP,
+              'ONU' => $ONU,
+              'serialNumber' => $serialNumber,
+              'serviceNumber' => $serviceNumber,
+              'QRDropCore' => $QRDropCore,
+              'noteUrut' => $noteUrut,
+              'flagOLTPort' => $flagOLTPort,
+              'ODPtoOLT' => $ODPtoOLT,
+              'ODPtoONT' => $ODPtoONT,
+              'RFS' => $RFS,
+              'noteHDDaman' => $noteHDDaman,
+              'updateDateUIM' => $updateDateUIM,
+              'updaterUIM' => $updaterUIM,
+              'noteQRODP' => $noteQRODP,
+              'noteQROutSplitter' => $noteQROutSplitter,
+              'noteQRDropCore' => $noteQRDropCore,
+              'updaterDava' => $updaterDava
+              );
       }
+      echo '<br>';
+     
+      // print_r(count($fetchData));
+      // print_r($id);
+      $id = html_escape($post['id']);
+      $this->db->update_batch('rekap_data_validasi', $fetchData, 'id');
+      $index=$n;
+     
+      for($n=$index;$n<$temp;$n++){
+        if(empty($post['portOutSplitter']))  {
+          $portOutSplitter = '';
+         
+        }else{
+          $portOutSplitter = html_escape($post['portOutSplitter'][$n]);
+          
+        } 
+        if(empty($post['QROutSplitter']))  {
+          $QROutSplitter = '';
+         
+        }else{
+          $QROutSplitter = html_escape($post['QROutSplitter'][$n]);
+          
+        }
+        if(empty($post['port']))  {
+          $portODP = '';
+         
+        }else{
+          $portODP = html_escape($post['port'][$n]);
+        }
+        if(empty($post['status'])) {
+          $statusPortODP  = '';
+         
+        }else{
+          $statusPortODP = html_escape($post['status'][$n]);
+        }
+        if(empty($post['ONU'])) {
+          $ONU   = '';
+         
+        }else{
+          $ONU = html_escape($post['ONU'][$n]);
+        } 
+        if(empty($post['serialNumber'])) {
+          $serialNumber   = '';
+         
+        }else{
+          $serialNumber = html_escape($post['serialNumber'][$n]);
+        }  
+        if(empty($post['service'])) {
+          $serviceNumber   = '';
+         
+        }else{
+          $serviceNumber = html_escape($post['service'][$n]);
+        }
+        if(empty($post['QRDropCore'])) {
+          $QRDropCore  = '';
+         
+        }else{
+          $QRDropCore = html_escape($post['QRDropCore'][$n]);
+        }
+        if(empty($post['noteUrut'])) {
+          $noteUrut  = '';
+         
+        }else{
+          $noteUrut = html_escape($post['noteUrut'][$n]);
+        }
+        if(empty($post['flagOLTPort'])) {
+          $flagOLTPort  = '';
+         
+        }else{
+          $flagOLTPort = html_escape($post['flagOLTPort'][$n]);
+        }             
+        if(empty($post['ODPtoOLT'])) {
+          $ODPtoOLT  = '';
+         
+        }else{
+          $ODPtoOLT = html_escape($post['ODPtoOLT'][$n]);
+        }
+        if(empty($post['ODPtoONT'])) {
+          $ODPtoONT  = '';
+         
+        }else{
+          $ODPtoONT = html_escape($post['ODPtoONT'][$n]);
+        }         
+        if(empty($post['RFS'])) {
+          $RFS  = '';
+         
+        }else{
+          $RFS = html_escape($post['RFS'][$n]);
+        }
+        if(empty($post['noteHDDaman'])) {
+          $noteHDDaman  = '';
+         
+        }else{
+          $noteHDDaman = html_escape($post['noteHDDaman'][$n]);
+        }
+        if(empty($post['updateDateUIM'])) {
+          $updateDateUIM  = '';
+         
+        }else{
+          $updateDateUIM = html_escape($post['updateDateUIM'][$n]);
+        }
+        if(!array_key_exists($n,$post['updaterUIM'])){
+          $updaterUIM  = '';
+          
+        }else{
+          $updaterUIM = html_escape($post['updaterUIM'][$n]);
+        }
+        
+        if(empty($post['noteQROutSplitter'])) {
+          $noteQROutSplitter  = '';
+         
+        }else{
+          $noteQROutSplitter = html_escape($post['noteQROutSplitter'][$n]);
+        }
+        if(empty($post['noteQRDropCore'])) {
+          $noteQRDropCore  = '';
+         
+        }else{
+          $noteQRDropCore= html_escape($post['noteQRDropCore'][$n]);
+        }
+        if(!array_key_exists($n,$post['updaterDava'])){
+          $updaterDava  = '';
+          
+        }else{
+          $updaterDava = html_escape($post['updaterDava'][$n]);
+        }
+        
 
-
-      $this->Validasi_model->setBatchImportValidasi($fetchData);
-      $this->Validasi_model->importDataValidasi();
+        $fetchDataAdd[] = 
+            array(
+              'tanggalPelurusan' => $tanggalPelurusan, 
+              'ondesk' => $ondesk, 
+              'onsite' => $onsite, 
+              'namaODP' => $namaODP, 
+              'noteODP' => $noteODP,
+              'QRODP' => $QRODP,
+              'koordinatODP' => $koordinatODP,
+              'hostname' => $hostname,
+              'portOLT' => $portOLT,
+              'totalIN' => $totalIN,
+              'kapasitasODP' => $kapasitasODP,
+              'portOutSplitter' => $portOutSplitter,
+              'QRPortOutSplitter' => $QROutSplitter,
+              'portODP' => $portODP,
+              'statusPortODP' => $statusPortODP,
+              'ONU' => $ONU,
+              'serialNumber' => $serialNumber,
+              'serviceNumber' => $serviceNumber,
+              'QRDropCore' => $QRDropCore,
+              'noteUrut' => $noteUrut,
+              'flagOLTPort' => $flagOLTPort,
+              'ODPtoOLT' => $ODPtoOLT,
+              'ODPtoONT' => $ODPtoONT,
+              'RFS' => $RFS,
+              'noteHDDaman' => $noteHDDaman,
+              'updateDateUIM' => $updateDateUIM,
+              'updaterUIM' => $updaterUIM,
+              'noteQRODP' => $noteQRODP,
+              'noteQROutSplitter' => $noteQROutSplitter,
+              'noteQRDropCore' => $noteQRDropCore,
+              'updaterDava' => $updaterDava
+              );
+      }
+      
+      
+      
+      $this->db->insert_batch('rekap_data_validasi', $fetchDataAdd);
     }
 
     public function deleteAllDataValidasi($table)

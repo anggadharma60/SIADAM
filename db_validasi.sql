@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2020 at 03:27 PM
+-- Generation Time: Mar 22, 2020 at 02:17 PM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -214,7 +214,16 @@ INSERT INTO `pegawai` (`idPegawai`, `namaPegawai`, `username`, `password`, `stat
 ('P0000020', 'Wahyu Septiawan', 'amija4', 'amija4', 'Ondesk'),
 ('P0000021', 'Bayu Iryanto', 'amija5', 'amija5', 'Onsite'),
 ('P0000022', 'Slamet Riyanto', 'amija6', 'amija6', 'Onsite'),
-('P0000023', 'Novan Ardhiansyah', 'amija7', 'amija7', 'Onsite');
+('P0000023', 'Novan Ardhiansyah', 'amija7', 'amija7', 'Onsite'),
+('P0000024', 'Dava', 'dava123', 'dava123', 'Dava'),
+('P0000025', 'SDI', 'sdi123', 'sdi123', 'SDI'),
+('P0000026', 'admin', 'admin', 'admin', 'Admin'),
+('P0000027', 'ondesk', 'ondesk', 'ondesk', 'Ondesk'),
+('P0000028', 'onsite', 'onsite', 'onsite', 'Onsite'),
+('P0000029', 'dava', 'dava', 'dava ', 'Dava'),
+('P0000030', 'hddaman', 'hddaman', 'hddaman', 'HD Daman'),
+('P0000031', 'daman', 'daman', 'daman', 'Daman'),
+('P0000032', 'sdi', 'sdi', 'sdi', 'SDI');
 
 --
 -- Triggers `pegawai`
@@ -253,8 +262,11 @@ CREATE TABLE `regional` (
 --
 
 INSERT INTO `regional` (`idRegional`, `namaRegional`, `keterangan`) VALUES
-('R0001', 'Semarang', NULL),
-('R0002', 'Bali', NULL);
+('R0002', 'd', ''),
+('R0003', 'fdsfds', ''),
+('R0004', 'fdsfdsf', ''),
+('R0005', 'fdsfdsfds', ''),
+('R0006', 'Semarang', '');
 
 --
 -- Triggers `regional`
@@ -397,28 +409,6 @@ CREATE TABLE `rekap_data_validasi` (
   `noteQRDropCore` varchar(45) DEFAULT NULL,
   `updaterDava` varchar(40) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Triggers `rekap_data_validasi`
---
-DELIMITER $$
-CREATE TRIGGER `auto_increment_validasi` BEFORE INSERT ON `rekap_data_validasi` FOR EACH ROW BEGIN
-	DECLARE lastindex INT;
-	DECLARE newindex INT;
-	SET lastindex = (SELECT COUNT(*) FROM `rekap_data_validasi`);
-	IF  lastindex = 0 THEN
-		SET newindex = 1;
-	ELSE
-		SET  newindex = lastindex + 1;  
-	END IF;
-    	IF(NEW.id IS NULL OR NEW.id = '' 
-        OR NEW.id > newindex OR NEW.id > 
-        newindex)	THEN 	
-    		SET NEW.id = newindex;
-    END IF;
-END
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -563,9 +553,9 @@ CREATE TABLE `witel` (
 --
 
 INSERT INTO `witel` (`idWitel`, `namaWitel`, `keterangan`, `idRegional`) VALUES
-('W0001', 'Semarang', '', 'R0001'),
-('W0002', 'Denpasar', '', 'R0002'),
-('W0003', 'Suramadu', '', 'R0001');
+('W0001', 'Semarang', '', NULL),
+('W0002', 'Denpasar', '', NULL),
+('W0003', 'Suramadu', '', NULL);
 
 --
 -- Triggers `witel`
@@ -658,6 +648,16 @@ ALTER TABLE `sto`
 ALTER TABLE `witel`
   ADD PRIMARY KEY (`idWitel`),
   ADD KEY `fk_regional` (`idRegional`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `rekap_data_validasi`
+--
+ALTER TABLE `rekap_data_validasi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables

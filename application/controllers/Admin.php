@@ -1859,10 +1859,10 @@ class Admin extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 
 			$this->Validasi_model->editDataValidasi($post);
-			// if ($this->db->affected_rows() > 0) {
-			// 	$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
-			// }
-			// redirect('Admin/viewListValidasi');
+			if ($this->db->affected_rows() > 0) {
+				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
+			}
+			redirect('Admin/viewListValidasi');
 		}
 	}
 

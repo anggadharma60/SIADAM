@@ -14,8 +14,7 @@
  $dataOnsite = json_decode($onsite);
 
  
-//  $post = $this->input->post(null, TRUE);
-// 			print_r($post);
+ 
 ?>
 <!-- Main content -->
 <section class="content">

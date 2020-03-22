@@ -58,7 +58,7 @@
                             <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" name="tanggalPelurusan" id="tanggalPelurusan" class="form-control pull-right" value="<?= $this->input->post('tanggalPelurusan') ?? $row->row(0)->tanggalPelurusan ?>" readonly=""/>
+                            <input type="text" name="tanggalPelurusan" id="tanggalPelurusan" class="form-control pull-right" value="<?=  $row->row(0)->tanggalPelurusan ?>"  readonly=""/>
                         </div>
                     <?= form_error('tanggalPelurusan') ?>
               </div>
@@ -144,7 +144,7 @@
             <div class="col-md-3">
               <div class="form-group <?= form_error('kapasitasODP') ? 'has-error' : null ?>">
                 <label>Kapasitas</label>
-                <input id="kapasitasODP" type="text" name="kapasitasODP" value="<?= $this->input->post('kapasitasODP') ?? $row->row(0)->kapasitasODP?>" class="form-control" readonly style="text-align:center;">
+                <input id="kapasitasODP" type="text" name="kapasitasODP" value="<?= $this->input->post('kapasitasODP') ?? $row->row(0)->kapasitasODP?>" class="form-control" style="text-align:center;">
                 <?= form_error('kapasitasODP') ?>
               </div>
             </div>
