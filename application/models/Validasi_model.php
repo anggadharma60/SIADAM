@@ -387,7 +387,7 @@ public function getDataValidasiByID($id){
 
     public function editDataValidasi($post)
     {
-      print_r($post);
+      // print_r($post);
       $tanggalPelurusan = html_escape($post['tanggalPelurusan']);   
       // $ondesk = html_escape($post['ondesk']);
       // $onsite = html_escape($post['onsite']);
