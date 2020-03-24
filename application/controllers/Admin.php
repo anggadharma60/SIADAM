@@ -797,15 +797,16 @@ class Admin extends CI_Controller
 		$sql_total = $this->ODP_model->count_all(); // Panggil fungsi count_all pada SiswaModel
 		$sql_data = $this->ODP_model->filter($search, $limit, $start, $order_field, $order_ascdesc); // Panggil fungsi filter pada SiswaModel
 		$sql_filter = $this->ODP_model->count_filter($search); // Panggil fungsi count_filter pada SiswaModel
-
+		
 		$callback = array(
 			'draw' => $_POST['draw'], // Ini dari datatablenya
 			'recordsTotal' => $sql_total,
 			'recordsFiltered' => $sql_filter,
 			'data' => $sql_data
 		);
-
+		
 		header('Content-Type: application/json');
+		
 		echo json_encode($callback); // Convert array $callback ke json
 	}
 

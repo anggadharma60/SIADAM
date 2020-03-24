@@ -75,7 +75,7 @@
                             <td><?= $data->namaSTO ?></td>
                             <td><?= $data->namaSpecOLT ?></td>
                             <td class="text-center" width="10%">
-                                <?php if ($this->fungsi->user_login()->status == 'Admin') { ?> -->
+                                <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
                                     <form action="<?= site_url('Admin/deleteOLT') ?>" method="post">
                                         <a href="<?= site_url('Admin/editOLT/' . $data->idOLT) ?>" class="btn btn-primary btn-xs">
                                             <i class="fa fa-pencil"></i>

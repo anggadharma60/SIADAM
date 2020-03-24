@@ -77,7 +77,7 @@
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody id="show_data">
+        <tbody>
 
         </tbody>
         <tfoot>
