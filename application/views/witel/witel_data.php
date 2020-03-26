@@ -15,10 +15,13 @@
     <div class="box-header">
       <h3 class="box-title">Data Witel</h3>
       <?php if (
-        $this->fungsi->user_login()->status == 'Admin' || $this->fungsi->user_login()->status == 'Ondesk' || $this->fungsi->user_login()->status == 'HD Daman' ||
+        $this->fungsi->user_login()->status == 'Admin' || 
+        $this->fungsi->user_login()->status == 'Ondesk' || 
+        $this->fungsi->user_login()->status == 'HD Daman' ||
         $this->fungsi->user_login()->status == 'Onsite' ||
         $this->fungsi->user_login()->status == 'Daman' ||
-        $this->fungsi->user_login()->status == 'DAVA' || $this->fungsi->user_login()->status == 'SDI'
+        $this->fungsi->user_login()->status == 'DAVA' || 
+        $this->fungsi->user_login()->status == 'SDI'
       ) { ?>
         <div class="pull-right">
           <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
