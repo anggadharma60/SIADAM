@@ -517,7 +517,7 @@
                           <input type="text" class="form-control" id="QROutSplitter" name="QROutSplitter[]" value="<?= $this->input->post('QROutSplitter[' . $no . ']') ?? $data->QRPortOutSplitter ?>" style="width:225px;text-align:center;" maxlength=16 />
                           <?= form_error('QROutSplitter') ?>
                         </div>
-                      </td>c  
+                      </td>
                       <td>
                         <div class="form-group <?= form_error('QRDropCore') ? 'has-error' : null ?>">
                           <input type="text" class="form-control" id="QRDropCore" name="QRDropCore[]" value="<?= $this->input->post('QRDropCore[' . $no . ']') ?? $data->QRDropCore ?>" style="width:225px;text-align:center;" maxlength=55 />

@@ -1733,13 +1733,13 @@ class Admin extends CI_Controller
 
 		$this->form_validation->set_rules('tanggalPelurusan', 'Tanggal Pelurusan', 'required|trim');
 		$this->form_validation->set_rules('ondesk', 'Ondesk', 'required|trim');
-		$this->form_validation->set_rules('onsite[]', 'Onsite ', 'required|trim');
+		$this->form_validation->set_rules('onsite', 'Onsite ', 'required|max_length[40]|trim');
 		$this->form_validation->set_rules('namaODP', 'Nama ODP', 'required|max_length[40]|trim');
 		$this->form_validation->set_rules('noteODP', 'Note ODP', 'max_length[100]|trim');
 		$this->form_validation->set_rules('QRODP', 'QR ODP', 'max_length[16]|trim');
 		$this->form_validation->set_rules('koordinatODP', 'Koordinat ODP', 'max_length[35]|trim');
 		$this->form_validation->set_rules('noteQRODP', 'QR ODP', 'max_length[100]|trim');
-		$this->form_validation->set_rules('totalIN', 'Total IN', 'numeric|max_length[2]||trim');
+		$this->form_validation->set_rules('totalIN', 'Total IN', 'numeric|max_length[2]|trim');
 		$this->form_validation->set_rules('kapasitasODP', 'Kapasitas', 'required|numeric|max_length[16]|trim');
 
 
@@ -1811,7 +1811,7 @@ class Admin extends CI_Controller
 		$this->form_validation->set_rules('QRODP', 'QR ODP', 'max_length[16]|trim');
 		$this->form_validation->set_rules('koordinatODP', 'Koordinat ODP', 'max_length[35]|trim');
 		$this->form_validation->set_rules('noteQRODP', 'QR ODP', 'max_length[100]|trim');
-		$this->form_validation->set_rules('totalIN', 'Total IN', 'numeric|max_length[2]||trim');
+		$this->form_validation->set_rules('totalIN', 'Total IN', 'numeric|max_length[2]|trim');
 		$this->form_validation->set_rules('kapasitasODP', 'Kapasitas', 'required|numeric|max_length[16]|trim');
 
 
