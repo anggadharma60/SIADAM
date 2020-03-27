@@ -14,7 +14,7 @@
  $dataOnsite = json_decode($onsite);
 
  
- 
+//  print_r($this->input->post(null, TRUE));
 ?>
 <!-- Main content -->
 <section class="content">
@@ -78,7 +78,7 @@
               </div>
             </div>
             <div class="col-md-4">
-              <div class="form-group <?= form_error('onsite') ? 'has-error' : null ?>">
+              <div class="form-group <?= form_error('onsite[]') ? 'has-error' : null ?>">
                 <label>Onsite *</label>
                 <select name="onsite[]" class="form-control select2"  multiple="multiple" data-placeholder="Select Onsite"
                         style="width: 100%;color:black;">
@@ -90,7 +90,7 @@
                         </option>
                       <?php }?>
                 </select>
-                <?= form_error('onsite') ?>
+                <?= form_error('onsite[]') ?>
               </div>
             </div>
           </fieldset>
