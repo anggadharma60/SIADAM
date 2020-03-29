@@ -1733,7 +1733,7 @@ class Admin extends CI_Controller
 
 		$this->form_validation->set_rules('tanggalPelurusan', 'Tanggal Pelurusan', 'required|trim');
 		$this->form_validation->set_rules('ondesk', 'Ondesk', 'required|trim');
-		$this->form_validation->set_rules('onsite', 'Onsite ', 'required|max_length[40]|trim');
+		$this->form_validation->set_rules('onsite[]', 'Onsite ', 'required|max_length[40]|trim');
 		$this->form_validation->set_rules('namaODP', 'Nama ODP', 'required|max_length[40]|trim');
 		$this->form_validation->set_rules('noteODP', 'Note ODP', 'max_length[100]|trim');
 		$this->form_validation->set_rules('QRODP', 'QR ODP', 'max_length[16]|trim');
@@ -1858,7 +1858,7 @@ class Admin extends CI_Controller
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
-
+			
 			$this->Validasi_model->editDataValidasi($post);
 			if ($this->db->affected_rows() > 0) {
 				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
