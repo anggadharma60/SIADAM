@@ -150,7 +150,7 @@
             <div class="col-md-3">
               <div class="form-group <?= form_error('kapasitasODP') ? 'has-error' : null ?>">
                 <label>Kapasitas</label>
-                <input id="txtNoOfRec" type="text" name="kapasitasODP" value="<?= set_value('kapasitasODP') ?>" class="form-control">
+                <input id="txtNoOfRec" type="text" name="kapasitasODP" value="<?= set_value('kapasitasODP') ?>" class="form-control" style="text-align:center;">
                 <?= form_error('kapasitasODP') ?>
               </div>
             </div>

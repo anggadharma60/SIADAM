@@ -572,132 +572,151 @@ public function getDataValidasiByID($id){
       }
       echo '<br>';
      
-      // print_r(count($fetchData));
-      // print_r($id);
       $id = html_escape($post['id']);
       $this->db->update_batch('rekap_data_validasi', $fetchData, 'id');
       $index=$n;
-     
+      $counter=0;
+    
+     if($index != $temp){
+      print_r("Tidak sama");
       for($n=$index;$n<$temp;$n++){
-        if(empty($post['portOutSplitter']))  {
+        
+        if(!array_key_exists($n,$post['portOutSplitter']))  {
           $portOutSplitter = '';
-         
+          
         }else{
           $portOutSplitter = html_escape($post['portOutSplitter'][$n]);
-          
+          $counter=1;
         } 
-        if(empty($post['QROutSplitter']))  {
+        if(!array_key_exists($n,$post['QROutSplitter']))  {
           $QROutSplitter = '';
          
         }else{
           $QROutSplitter = html_escape($post['QROutSplitter'][$n]);
-          
+          $counter=1;
         }
-        if(empty($post['port']))  {
+        if(!array_key_exists($n,$post['port']))  {
           $portODP = '';
          
         }else{
           $portODP = html_escape($post['port'][$n]);
+          $counter=1;
         }
-        if(empty($post['status'])) {
+        if(!array_key_exists($n,$post['status'])) {
           $statusPortODP  = '';
          
         }else{
           $statusPortODP = html_escape($post['status'][$n]);
+          $counter=1;
         }
-        if(empty($post['ONU'])) {
+        if(!array_key_exists($n,$post['ONU'])) {
           $ONU   = '';
          
         }else{
           $ONU = html_escape($post['ONU'][$n]);
+          $counter=1;
         } 
-        if(empty($post['serialNumber'])) {
+        if(!array_key_exists($n,$post['serialNumber'])) {
           $serialNumber   = '';
          
         }else{
           $serialNumber = html_escape($post['serialNumber'][$n]);
+          $counter=1;
         }  
-        if(empty($post['service'])) {
+        if(!array_key_exists($n,$post['service'])) {
           $serviceNumber   = '';
          
         }else{
           $serviceNumber = html_escape($post['service'][$n]);
+          $counter=1;
         }
-        if(empty($post['QRDropCore'])) {
+        if(!array_key_exists($n,$post['QRDropCore'])) {
           $QRDropCore  = '';
          
         }else{
           $QRDropCore = html_escape($post['QRDropCore'][$n]);
+          $counter=1;
         }
-        if(empty($post['noteUrut'])) {
+        if(!array_key_exists($n,$post['noteUrut'])) {
           $noteUrut  = '';
          
         }else{
           $noteUrut = html_escape($post['noteUrut'][$n]);
+          $counter=1;
         }
-        if(empty($post['flagOLTPort'])) {
+        if(!array_key_exists($n,$post['flagOLTPort'])) {
           $flagOLTPort  = '';
          
         }else{
           $flagOLTPort = html_escape($post['flagOLTPort'][$n]);
+          $counter=1;
         }             
-        if(empty($post['ODPtoOLT'])) {
+        if(!array_key_exists($n,$post['ODPtoOLT'])) {
           $ODPtoOLT  = '';
          
         }else{
           $ODPtoOLT = html_escape($post['ODPtoOLT'][$n]);
+          $counter=1;
         }
-        if(empty($post['ODPtoONT'])) {
+        if(!array_key_exists($n,$post['ODPtoONT'])) {
           $ODPtoONT  = '';
          
         }else{
           $ODPtoONT = html_escape($post['ODPtoONT'][$n]);
+          $counter=1;
         }         
-        if(empty($post['RFS'])) {
+        if(!array_key_exists($n,$post['RFS'])) {
           $RFS  = '';
          
         }else{
           $RFS = html_escape($post['RFS'][$n]);
+          $counter=1;
         }
-        if(empty($post['noteHDDaman'])) {
+        if(!array_key_exists($n,$post['noteHDDaman'])) {
           $noteHDDaman  = '';
          
         }else{
           $noteHDDaman = html_escape($post['noteHDDaman'][$n]);
+          $counter=1;
         }
-        if(empty($post['updateDateUIM'])) {
+        if(!array_key_exists($n,$post['updateDateUIM'])) {
           $updateDateUIM  = '';
          
         }else{
           $updateDateUIM = html_escape($post['updateDateUIM'][$n]);
+          $counter=1;
         }
         if(!array_key_exists($n,$post['updaterUIM'])){
           $updaterUIM  = '';
           
         }else{
           $updaterUIM = html_escape($post['updaterUIM'][$n]);
+          $counter=1;
         }
         
-        if(empty($post['noteQROutSplitter'])) {
+        if(!array_key_exists($n,$post['noteQROutSplitter'])) {
           $noteQROutSplitter  = '';
          
         }else{
           $noteQROutSplitter = html_escape($post['noteQROutSplitter'][$n]);
+          $counter=1;
         }
-        if(empty($post['noteQRDropCore'])) {
+        if(!array_key_exists($n,$post['noteQRDropCore'])) {
           $noteQRDropCore  = '';
          
         }else{
           $noteQRDropCore= html_escape($post['noteQRDropCore'][$n]);
+          $counter=1;
         }
         if(!array_key_exists($n,$post['updaterDava'])){
           $updaterDava  = '';
           
         }else{
           $updaterDava = html_escape($post['updaterDava'][$n]);
+          $counter=1;
+          
         }
         
-
         $fetchDataAdd[] = 
             array(
               'tanggalPelurusan' => $tanggalPelurusan, 
@@ -732,9 +751,13 @@ public function getDataValidasiByID($id){
               'noteQRDropCore' => $noteQRDropCore,
               'updaterDava' => $updaterDava
               );
-      }sdawasdawdasdweqdggyhss
+      }
+      if($counter==1){
+        $this->db->insert_batch('rekap_data_validasi', $fetchDataAdd);
+      }
+      
+     }
 
-      $this->db->insert_batch('rekap_data_validasi', $fetchDataAdd);
     }
 
     public function deleteAllDataValidasi($table)
