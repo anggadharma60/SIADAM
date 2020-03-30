@@ -186,100 +186,6 @@ class HDDaman extends CI_Controller
 		$this->template->load('template/template_HDDaman', 'pegawai/pegawai_data', $data);
 	}
 
-	public function addPegawai()
-	{
-		$this->form_validation->set_rules('namaPegawai', 'Nama', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[30]|trim');
-		$this->form_validation->set_rules('username', 'Username', 'required|alpha_numeric|is_unique[pegawai.username]|min_length[5]|max_length[20]|trim');
-		$this->form_validation->set_rules('password', 'Password', 'required|alpha_numeric|min_length[5]|max_length[16]|trim');
-		$this->form_validation->set_rules(
-			'passconf',
-			'Konfirmasi Password',
-			'required|matches[password]|alpha_numeric|min_length[5]|max_length[16]|trim',
-			array('matches' => '%s tidak sesuai dengan password')
-		);
-		$this->form_validation->set_rules('status', 'Status', 'required|trim');
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('regex_match', '{field} berisi karakter');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-		$this->form_validation->set_message('alpha_numeric_spaces', '{field} berisi karakter');
-		$this->form_validation->set_message('alpha_numeric', '{field} berisi karakter dan numerik');
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_HDDaman', 'pegawai/pegawai_form_add');
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->Pegawai_model->addDataPegawai($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
-			}
-			redirect('HDDaman/getPegawai');
-		}
-	}
-
-	public function editPegawai($id)
-	{
-		$this->form_validation->set_rules('namaPegawai', 'Nama', 'required|regex_match[/^[a-zA-Z ]+$/]|min_length[0]|max_length[30]|trim');
-		$this->form_validation->set_rules('username', 'Username', 'required|alpha_numeric|callback_username_check|min_length[5]|max_length[20]|trim');
-		if ($this->input->post('password')) {
-			$this->form_validation->set_rules('password', 'Password', 'alpha_numeric|min_length[5]|max_length[16]|trim');
-			$this->form_validation->set_rules(
-				'passconf',
-				'Konfirmasi Password',
-				'matches[password]|alpha_numeric|min_length[5]|max_length[16]|trim',
-				array('matches' => '%s tidak sesuai dengan password')
-			);
-		}
-		if ($this->input->post('passconf')) {
-			$this->form_validation->set_rules(
-				'passconf',
-				'Konfirmasi Password',
-				'matches[password]|alpha_numeric|min_length[5]|max_length[16]|trim',
-				array('matches' => '%s tidak sesuai dengan password')
-			);
-		}
-		$this->form_validation->set_rules('status', 'Status', 'required');
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('regex_match', '{field} berisi karakter');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-		$this->form_validation->set_message('alpha_numeric_spaces', '{field} berisi karakter');
-		$this->form_validation->set_message('alpha_numeric', '{field} berisi karakter dan numerik');
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$query = $this->pegawai_model->getDataPegawai($id);
-			if ($query->num_rows() > 0) {
-				$data['row'] = $query->row();
-				$this->template->load('template/template_HDDaman', 'pegawai/pegawai_form_edit', $data);
-			} else {
-				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
-				redirect('HDDaman/getPegawai');
-			}
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->Pegawai_model->editDataPegawai($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
-			}
-			redirect('HDDaman/getPegawai');
-		}
-	}
-
-	public function detailPegawai($id)
-	{
-		$detailPegawai = $this->Pegawai_model->detailDataPegawai($id);
-		$data['detailPegawai'] = $detailPegawai;
-		$this->template->load('template/template_HDDaman', 'pegawai/pegawai_form_detail', $data);
-	}
-
 	function username_check()
 	{
 		$post = $this->input->post(null, TRUE);
@@ -291,17 +197,6 @@ class HDDaman extends CI_Controller
 			return TRUE;
 		}
 	}
-
-	public function deletePegawai()
-	{
-		$id = $this->input->post('idPegawai');
-		$this->Pegawai_model->deleteDataPegawai($id);
-
-		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
-		}
-		redirect('HDDaman/getPegawai');
-	}
 	// End Menu Pegawai
 
 	// Start Menu Regional
@@ -309,66 +204,6 @@ class HDDaman extends CI_Controller
 	{
 		$data['row'] = $this->Regional_model->getDataRegional();
 		$this->template->load('template/template_HDDaman', 'regional/regional_data', $data);
-	}
-
-	public function addRegional()
-	{
-		$this->form_validation->set_rules('namaRegional', 'Nama Regional', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[20]|is_unique[regional.namaRegional]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('regex_match', '{field} berisi karakter dan numerik');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_HDDaman', 'regional/regional_form_add');
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->Regional_model->addDataRegional($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
-			}
-			redirect('HDDaman/getRegional');
-		}
-	}
-
-	public function editRegional($id)
-	{
-		$this->form_validation->set_rules('namaRegional', 'Nama Regional', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[20]|callback_regional_check|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|alpha_dash');
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('regex_match', '{field} berisi karakter');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-		$this->form_validation->set_message('alpha_dash', '{field} berisi karakter, simbol dan numerik');
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$query = $this->Regional_model->getDataRegional($id);
-
-			if ($query->num_rows() > 0) {
-				$data['row'] = $query->row();
-				$this->template->load('template/template_HDDaman', 'regional/regional_form_edit', $data);
-			} else {
-				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
-				redirect('HDDaman/getRegional');
-			}
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->Regional_model->editDataRegional($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
-			}
-			redirect('HDDaman/getRegional');
-		}
 	}
 
 	function regional_check()
@@ -382,17 +217,6 @@ class HDDaman extends CI_Controller
 			return TRUE;
 		}
 	}
-
-	public function deleteRegional()
-	{
-		$id = $this->input->post('idRegional');
-		$this->Regional_model->deleteDataRegional($id);
-
-		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
-		}
-		redirect('HDDaman/getRegional');
-	}
 	// End Menu Regional
 
 	// Start Menu Witel 
@@ -400,71 +224,6 @@ class HDDaman extends CI_Controller
 	{
 		$data['row'] = $this->Witel_model->getDataWitel();
 		$this->template->load('template/template_HDDaman', 'witel/witel_data', $data);
-	}
-
-	public function addWitel()
-	{
-		$data['row'] = $this->Regional_model->getDataRegional();
-		$this->form_validation->set_rules('namaWitel', 'Nama Witel', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[20]|is_unique[witel.namaWitel]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
-		$this->form_validation->set_rules('regional', 'Regional', 'required|trim');
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('regex_match', '{field} berisi karakter dan numerik');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_HDDaman', 'witel/witel_form_add', $data);
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->Witel_model->addDataWitel($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
-			}
-			redirect('HDDaman/getWitel');
-		}
-	}
-
-	public function editWitel($id)
-	{
-		$this->form_validation->set_rules('namaWitel', 'Nama Witel', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[20]|callback_witel_check|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
-		$this->form_validation->set_rules('regional', 'Regional', 'required|trim');
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('regex_match', '{field} berisi karakter');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$query = $this->Witel_model->getDataWitel($id);
-			if ($query->num_rows() > 0) {
-				$data['row'] = $query->row();
-				$query2 = $this->Regional_model->getDataRegionalSelect($data['row']->idRegional);
-				if ($query2->num_rows() > 0) {
-					$data['regional'] = $query2;
-				}
-				$this->template->load('template/template_HDDaman', 'witel/witel_form_edit', $data);
-			} else {
-				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
-				redirect('HDDaman/getWitel');
-			}
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->Witel_model->editDataWitel($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
-			}
-			redirect('HDDaman/getWitel');
-		}
 	}
 
 	function witel_check()
@@ -478,17 +237,6 @@ class HDDaman extends CI_Controller
 			return TRUE;
 		}
 	}
-
-	public function deleteWitel()
-	{
-		$id = $this->input->post('idWitel');
-		$this->Witel_model->deleteDataWitel($id);
-
-		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
-		}
-		redirect('HDDaman/getWitel');
-	}
 	// End Menu Witel
 
 	// Start Menu Datel
@@ -496,70 +244,6 @@ class HDDaman extends CI_Controller
 	{
 		$data['row'] = $this->Datel_model->getDataDatel();
 		$this->template->load('template/template_HDDaman', 'datel/datel_data', $data);
-	}
-
-	public function addDatel()
-	{
-		$data['row'] = $this->Witel_model->getDataWitel();
-		$this->form_validation->set_rules('namaDatel', 'Nama Datel', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[20]|is_unique[datel.namaDatel]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
-		$this->form_validation->set_rules('witel', 'Witel', 'required|trim');
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('regex_match', '{field} berisi karakter dan numerik');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_HDDaman', 'datel/datel_form_add', $data);
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->Datel_model->addDataDatel($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
-			}
-			redirect('HDDaman/getDatel');
-		}
-	}
-
-	public function editDatel($id)
-	{
-		$this->form_validation->set_rules('namaDatel', 'Nama Datel', 'required|regex_match[/^[a-zA-Z ]+$/]|callback_datel_check|max_length[20]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
-		$this->form_validation->set_rules('witel', 'Witel', 'required|trim');
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('regex_match', '{field} berisi karakter dan numerik');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$query = $this->Datel_model->getDataDatel($id);
-			if ($query->num_rows() > 0) {
-				$data['row'] = $query->row();
-				$query2 = $this->Witel_model->getDataWitelSelect($data['row']->idWitel);
-				if ($query2->num_rows() > 0) {
-					$data['witel'] = $query2;
-				}
-				$this->template->load('template/template_HDDaman', 'datel/datel_form_edit', $data);
-			} else {
-				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
-				redirect('HDDaman/getDatel');
-			}
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->Datel_model->editDataDatel($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
-			}
-			redirect('HDDaman/getDatel');
-		}
 	}
 
 	function datel_check()
@@ -574,91 +258,6 @@ class HDDaman extends CI_Controller
 		}
 	}
 
-	public function deleteDatel()
-	{
-		$id = $this->input->post('idDatel');
-		$this->Datel_model->deleteDataDatel($id);
-
-		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
-		}
-		redirect('HDDaman/getDatel');
-	}
-	// End Menu Datel
-
-	// Start Menu STO
-	public function getSTO()
-	{
-		$data['row'] = $this->STO_model->getDataSTO();
-		$this->template->load('template/template_HDDaman', 'sto/sto_data', $data);
-	}
-
-	public function addSTO()
-	{
-		$data['row'] = $this->Datel_model->getDataDatel();
-		$this->form_validation->set_rules('kodeSTO', 'Kode STO', 'required|min_length[3]|max_length[5]|is_unique[sto.kodeSTO]|regex_match[/^[A-Za-z]+$/]|trim');
-		$this->form_validation->set_rules('namaSTO', 'Nama STO', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[20]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
-		$this->form_validation->set_rules('datel', 'Datel', 'required|trim');
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('regex_match', '{field} tidak sesuai format');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_HDDaman', 'sto/sto_form_add', $data);
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->STO_model->addDataSTO($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');;
-			}
-			redirect('HDDaman/getSTO');
-		}
-	}
-
-	public function editSTO($id)
-	{
-		$this->form_validation->set_rules('kodeSTO', 'Kode STO', 'required|min_length[3]|max_length[5]|regex_match[/^[A-Za-z]+$/]|callback_sto_check|trim');
-		$this->form_validation->set_rules('namaSTO', 'Nama STO', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[20]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
-		$this->form_validation->set_rules('datel', 'Datel', 'required|trim');
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('regex_match', '{field} tidak sesuai format');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$query = $this->STO_model->getDataSTO($id);
-			if ($query->num_rows() > 0) {
-				$data['row'] = $query->row();
-				$query2 = $this->Datel_model->getDataDatelSelect($data['row']->idDatel);
-				if ($query2->num_rows() > 0) {
-					$data['datel'] = $query2;
-				}
-				$this->template->load('template/template_HDDaman', 'sto/sto_form_edit', $data);
-			} else {
-				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
-				redirect('HDDaman/getSTO');
-			}
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->STO_model->editDataSTO($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
-			}
-			redirect('HDDaman/getSTO');
-		}
-	}
-
 	function sto_check()
 	{
 		$post = $this->input->post(null, TRUE);
@@ -670,17 +269,6 @@ class HDDaman extends CI_Controller
 			return TRUE;
 		}
 	}
-
-	public function deleteSTO()
-	{
-		$id = $this->input->post('idSTO');
-		$this->STO_model->deleteDataSTO($id);
-
-		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
-		}
-		redirect('HDDaman/getSTO');
-	}
 	// End Menu STO
 
 	// Start Menu Specification OLT 
@@ -688,65 +276,6 @@ class HDDaman extends CI_Controller
 	{
 		$data['row'] = $this->SpecOLT_model->getDataSpecOLT();
 		$this->template->load('template/template_HDDaman', 'specolt/specolt_data', $data);
-	}
-
-	public function addSpecOLT()
-	{
-		$this->form_validation->set_rules('namaSpecOLT', 'Nama Specification OLT', 'required|max_length[50]|is_unique[specification_olt.namaSpecOLT]|trim');
-		$this->form_validation->set_rules('merekOLT', 'Merek OLT', 'max_length[20]|trim');
-		$this->form_validation->set_rules('typeOLT', 'Type OLT', 'max_length[20]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_HDDaman', 'specolt/specolt_form_add');
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->SpecOLT_model->addDataSpecOLT($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
-			}
-			redirect('HDDaman/getSpecOLT');
-		}
-	}
-
-	public function editSpecOLT($id)
-	{
-		$this->form_validation->set_rules('namaSpecOLT', 'Nama Specification OLT', 'required|max_length[50]|callback_spek_check|trim');
-		$this->form_validation->set_rules('merekOLT', 'Merek OLT', 'max_length[20]|trim');
-		$this->form_validation->set_rules('typeOLT', 'Type OLT', 'max_length[20]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$query = $this->SpecOLT_model->getDataSpecOLT($id);
-			if ($query->num_rows() > 0) {
-				$data['row'] = $query->row();
-				$this->template->load('template/template_HDDaman', 'specolt/specolt_form_edit', $data);
-			} else {
-				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
-				redirect('HDDaman/getSpecOLT');
-			}
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->SpecOLT_model->editDataSpecOLT($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
-			}
-			redirect('HDDaman/getSpecOLT');
-		}
 	}
 
 	function spek_check()
@@ -759,17 +288,6 @@ class HDDaman extends CI_Controller
 		} else {
 			return TRUE;
 		}
-	}
-
-	public function deleteSpecOLT()
-	{
-		$id = $this->input->post('idSpecOLT');
-		$this->SpecOLT_model->deleteDataSpecOLT($id);
-
-		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
-		}
-		redirect('HDDaman/getSpecOLT');
 	}
 	//End Spek OLT
 
@@ -809,117 +327,6 @@ class HDDaman extends CI_Controller
 		echo json_encode($callback); // Convert array $callback ke json
 	}
 
-	public function uploadODP()
-	{
-		$this->template->load('template/template_HDDaman', 'odp/odp_form_import');
-	}
-
-	//Fungsi file upload
-	public function importODP()
-	{
-		$data = array();
-		// Load form validation library
-
-		$this->form_validation->set_rules('fileURL', 'Upload File ODP', 'callback_checkFileValidation');
-		// If file uploaded
-
-		if (!empty($_FILES['fileURL']['name'])) {
-
-			// get file extension
-			$extension = pathinfo($_FILES['fileURL']['name'], PATHINFO_EXTENSION);
-
-			if ($extension == 'csv') {
-				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
-			} elseif ($extension == 'xlsx') {
-				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-			} else {
-				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
-			}
-			// file path
-			$spreadsheet = $reader->load($_FILES['fileURL']['tmp_name']);
-			$allDataInSheet = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
-			// array Count
-			$arrayCount = count($allDataInSheet);
-
-			$flag = 1;
-			// $createArray = array('NOSS_ID', 'ODP_INDEX', 'ODP_NAME', 'FTP', 'LATITUDE', 'LONGITUDE', 'CLUSNAME', 'CLUSTERSATATUS', 'AVAI', 'USED', 'RSV', 'RSK', 'IS_TOTAL', 'STO' , 'ODP_INFO', 'UPDATE_DATE');
-			// $makeArray = array('NOSS_ID' => 'NOSS_ID', 'ODP_INDEX' => 'ODP_INDEX', 'ODP_NAME' => 'ODP_NAME', 'FTP' => 'FTP', 'LATITUDE' => 'LATITUDE', 'LONGITUDE' => 'LONGITUDE', 'CLUSNAME' => 'CLUSNAME', 'CLUSTERSATATUS' => 'CLUSTERSATATUS', 'AVAI' => 'AVAI', 'USED' => 'USED', 'RSV' => 'RSV', 'RSK' => 'RSK', 'IS_TOTAL' => 'IS_TOTAL', 'STO' => 'STO' , 'ODP_INFO' => 'ODP_INFO', 'UPDATE_DATE' => 'UPDATE_DATE');
-			// $SheetDataKey = array();
-			// foreach ($allDataInSheet as $dataInSheet) {
-			//     foreach ($dataInSheet as $key => $value) {
-			//         if (in_array(trim($value), $createArray)) {
-			//             $value = preg_replace('/\s+/', '', $value);
-			//             $SheetDataKey[trim($value)] = $key;
-			//         } 
-			//     }
-			// }
-			// $dataDiff = array_diff_key($makeArray, $SheetDataKey);
-			// if (empty($dataDiff)) {
-			//     $flag = 1;
-			// }
-			// match excel sheet column
-			if ($flag == 1) {
-				for ($i = 2; $i <= $arrayCount; $i++) {
-					// $NOSS_ID = $SheetDataKey['NOSS_ID'];
-					// $ODP_INDEX = $SheetDataKey['ODP_INDEX'];
-					// $ODP_NAME = $SheetDataKey['ODP_NAME'];
-					// $FTP = $SheetDataKey['FTP'];
-					// $LATITUDE = $SheetDataKey['LATITUDE'];
-					// $LONGITUDE = $SheetDataKey['LONGITUDE'];
-					// $CLUSNAME = $SheetDataKey['CLUSNAME'];
-					// $CLUSTERSATATUS = $SheetDataKey['CLUSTERSATATUS'];
-					// $AVAI = $SheetDataKey['AVAI'];
-					// $USED = $SheetDataKey['USED'];
-					// $RSV = $SheetDataKey['RSV'];
-					// $RSK = $SheetDataKey['RSK'];
-					// $IS_TOTAL = $SheetDataKey['IS_TOTAL'];
-					// $STO = $SheetDataKey['STO'];
-					// $ODP_INFO = $SheetDataKey['ODP_INFO'];
-					// $UPDATE_DATE = $SheetDataKey['UPDATE_DATE'];
-
-					$NOSS_ID = filter_var(html_escape(trim($allDataInSheet[$i]['A'])), FILTER_SANITIZE_STRING);
-					$ODP_INDEX = filter_var(html_escape(trim($allDataInSheet[$i]['B'])), FILTER_SANITIZE_STRING);
-					$ODP_NAME  = filter_var(html_escape(trim($allDataInSheet[$i]['C'])), FILTER_SANITIZE_STRING);
-					$FTP = filter_var(html_escape(trim($allDataInSheet[$i]['E'])), FILTER_SANITIZE_STRING);
-					$LATITUDE = filter_var(html_escape(trim($allDataInSheet[$i]['F'])), FILTER_SANITIZE_STRING);
-					$LONGITUDE = filter_var(html_escape(trim($allDataInSheet[$i]['G'])), FILTER_SANITIZE_STRING);
-					$CLUSNAME = filter_var(html_escape(trim($allDataInSheet[$i]['H'])), FILTER_SANITIZE_STRING);
-					$CLUSTERSATATUS = filter_var(html_escape(trim($allDataInSheet[$i]['I'])), FILTER_SANITIZE_STRING);
-					$AVAI = filter_var(html_escape(trim($allDataInSheet[$i]['J'])), FILTER_SANITIZE_STRING);
-					$USED = filter_var(html_escape(trim($allDataInSheet[$i]['K'])), FILTER_SANITIZE_STRING);
-					$RSV = filter_var(html_escape(trim($allDataInSheet[$i]['L'])), FILTER_SANITIZE_STRING);
-					$RSK = filter_var(html_escape(trim($allDataInSheet[$i]['M'])), FILTER_SANITIZE_STRING);
-					$IS_TOTAL = filter_var(html_escape(trim($allDataInSheet[$i]['N'])), FILTER_SANITIZE_STRING);
-					$STO = filter_var(html_escape(trim($allDataInSheet[$i]['R'])), FILTER_SANITIZE_STRING);
-					$ODP_INFO = filter_var(html_escape(trim($allDataInSheet[$i]['T'])), FILTER_SANITIZE_STRING);
-					$UPDATE_DATE = filter_var(html_escape(trim($allDataInSheet[$i]['U'])), FILTER_SANITIZE_STRING);
-
-					$newSTO = $this->STO_model->getIDSTOByKode($STO);
-					$idSTO = $newSTO->idSTO;
-					$newDate = date("Y-m-d H:i", strtotime($UPDATE_DATE));
-
-					$fetchData[] = array('idNOSS' => $NOSS_ID, 'indexODP' => $ODP_INDEX, 'namaODP' => $ODP_NAME, 'ftp' => $FTP, 'latitude' => $LATITUDE, 'longitude' => $LONGITUDE, 'clusterName' => $CLUSNAME, 'clusterStatus' => $CLUSTERSATATUS, 'avai' => $AVAI, 'used' => $USED, 'rsv' => $RSV, 'rsk' => $RSK, 'total' => $IS_TOTAL, 'idSTO' => $idSTO, 'infoODP' => $ODP_INFO, 'updateDate' => $newDate);
-
-					// print_r($UPDATE_DATE);
-
-					// print_r($newDate);
-				}
-
-				// $data['data_odp'] = $fetchData;
-				$this->ODP_model->setBatchImportODP($fetchData);
-				$this->ODP_model->importDataODP();
-
-				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
-
-				redirect('HDDaman/viewListODP');
-			} else {
-
-				$this->session->set_flashdata('danger', 'Please import correct file, did not match excel sheet column');
-			}
-			redirect('HDDaman/viewListODP');
-		}
-	}
-
 	public function checkFileValidation($string)
 	{
 		$file_mimes = array(
@@ -948,90 +355,6 @@ class HDDaman extends CI_Controller
 		} else {
 			$this->form_validation->set_message('checkFileValidation', 'Please choose a file.');
 			return false;
-		}
-	}
-
-	public function addODP()
-	{
-		$data['row'] = $this->STO_model->getDataSTO();
-		$this->form_validation->set_rules('idNOSS', 'ID NOSS', 'required|is_unique[rekap_data_odp.idNOSS]|max_length[16]|trim');
-		$this->form_validation->set_rules('indexODP', 'Index ODP', 'required|is_unique[rekap_data_odp.indexODP]|max_length[20]|trim');
-		$this->form_validation->set_rules('namaODP', 'Nama ODP', 'required|is_unique[rekap_data_odp.namaODP]|max_length[20]|trim');
-		$this->form_validation->set_rules('ftp', 'FTP', 'required|max_length[8]|trim');
-		$this->form_validation->set_rules('latitude', 'Latitude', 'required|max_length[16]|trim');
-		$this->form_validation->set_rules('longitude', 'Longitude', 'required|max_length[16]|trim');
-		$this->form_validation->set_rules('clusterName', 'Cluster Name', 'max_length[50]required|trim');
-		$this->form_validation->set_rules('clusterStatus', 'Cluster Status', 'max_length[15]|trim');
-		$this->form_validation->set_rules('avai', 'Available', 'required|max_length[4]|trim');
-		$this->form_validation->set_rules('used', 'Used', 'required|max_length[4]|trim');
-		$this->form_validation->set_rules('rsv', 'RSV', 'required|max_length[4]|trim');
-		$this->form_validation->set_rules('rsk', 'RSK', 'required|max_length[4]|trim');
-		$this->form_validation->set_rules('STO', 'STO', 'required|trim');
-		$this->form_validation->set_rules('infoODP', 'Info ODP', 'trim');
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_HDDaman', 'odp/odp_form_add', $data);
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->ODP_model->addDataODP($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
-			}
-			redirect('HDDaman/viewListODP');
-		}
-	}
-
-	public function editODP($id)
-	{
-		$this->form_validation->set_rules('idNOSS', 'ID NOSS', 'max_length[16]|trim');
-		$this->form_validation->set_rules('indexODP', 'index ODP', 'max_length[20]|trim');
-		$this->form_validation->set_rules('namaODP', 'Nama ODP', 'max_length[20]|trim');
-		$this->form_validation->set_rules('ftp', 'FTP', 'required|max_length[8]|trim');
-		$this->form_validation->set_rules('latitude', 'Latitude', 'required|max_length[16]|trim');
-		$this->form_validation->set_rules('longitude', 'Longitude', 'required|max_length[16]|trim');
-		$this->form_validation->set_rules('clusterName', 'Cluster Name', 'max_length[50]required|trim');
-		$this->form_validation->set_rules('clusterStatus', 'Cluster Status', 'max_length[15]|trim');
-		$this->form_validation->set_rules('avai', 'Available', 'required|max_length[4]|trim');
-		$this->form_validation->set_rules('used', 'Used', 'required|max_length[4]|trim');
-		$this->form_validation->set_rules('rsv', 'RSV', 'required|max_length[4]|trim');
-		$this->form_validation->set_rules('rsk', 'RSK', 'required|max_length[4]|trim');
-		$this->form_validation->set_rules('STO', 'STO', 'trim');
-		$this->form_validation->set_rules('infoODP', 'Info ODP', 'trim');
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$query = $this->ODP_model->getDataODP($id);
-			if ($query->num_rows() > 0) {
-				$data['row'] = $query->row();
-				$query2 = $this->STO_model->getDataSTOSelect($data['row']->idSTO);
-				if ($query2->num_rows() > 0) {
-					$data['sto'] = $query2;
-				}
-				$this->template->load('template/template_HDDaman', 'odp/odp_form_edit', $data);
-			} else {
-				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
-				redirect('HDDaman/viewListODP');
-			}
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->ODP_model->editDataODP($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
-			}
-			redirect('HDDaman/viewListODP');
 		}
 	}
 
@@ -1071,105 +394,6 @@ class HDDaman extends CI_Controller
 		}
 	}
 
-	public function deleteODP($id)
-	{
-
-		$this->ODP_model->deleteDataODP($id);
-
-		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
-		}
-		redirect('HDDaman/viewListODP');
-	}
-
-	public function deleteAllODP()
-	{
-		// $this->exportODP();
-
-		$this->ODP_model->deleteAllDataODP();
-		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('danger', 'Semua data berhasil dihapus');
-		}
-		redirect('HDDaman/viewListODP');
-	}
-
-	public function exportODP()
-	{
-
-
-		// Create new Spreadsheet object
-		$spreadsheet = new Spreadsheet();
-
-		$Excel_writer = new Xlsx($spreadsheet);
-
-		foreach (range('A1', 'T1') as $test) {
-			$spreadsheet->getActiveSheet()->getColumnDimension($test)->setAutoSize(true);
-		}
-
-		$spreadsheet->setActiveSheetIndex(0);
-		$activeSheet = $spreadsheet->getActiveSheet();
-		$activeSheet->setCellValue('A1', 'NOSS_ID');
-		$activeSheet->setCellValue('B1', 'ODP_INDEX');
-		$activeSheet->setCellValue('C1', 'ODP_NAME');
-		$activeSheet->setCellValue('D1', 'ODP 3 DIGIT');
-		$activeSheet->setCellValue('E1', 'FTP');
-		$activeSheet->setCellValue('F1', 'LATITUDE');
-		$activeSheet->setCellValue('G1', 'LONGITUDE');
-		$activeSheet->setCellValue('H1', 'CLUSNAME');
-		$activeSheet->setCellValue('I1', 'CLUSTERSATATUS');
-		$activeSheet->setCellValue('J1', 'AVAI');
-		$activeSheet->setCellValue('K1', 'USED');
-		$activeSheet->setCellValue('L1', 'RSV');
-		$activeSheet->setCellValue('M1', 'RSK');
-		$activeSheet->setCellValue('N1', 'IS_TOTAL');
-		$activeSheet->setCellValue('O1', 'REGIONAL');
-		$activeSheet->setCellValue('P1', 'WITEL');
-		$activeSheet->setCellValue('Q1', 'DATEL');
-		$activeSheet->setCellValue('R1', 'STO');
-		$activeSheet->setCellValue('S1', 'STO_DESC');
-		$activeSheet->setCellValue('T1', 'ODP_INFO');
-		$activeSheet->setCellValue('U1', 'UPDATE_DATE');
-
-
-		// $query = $db->query("SELECT * FROM rekap_data_odp ORDER BY idODP DESC");
-		$query = $this->ODP_model->getDataODP()->result();
-		$i = 2;
-		foreach ($query as $row) {
-			$activeSheet->setCellValue('A' . $i, $row->idNOSS);
-			$activeSheet->setCellValue('B' . $i, $row->indexODP);
-			$activeSheet->setCellValue('C' . $i, $row->namaODP);
-			$activeSheet->setCellValue('D' . $i, $row->namaODP);
-			$activeSheet->setCellValue('E' . $i, $row->ftp);
-			$activeSheet->setCellValue('F' . $i, $row->latitude);
-			$activeSheet->setCellValue('G' . $i, $row->longitude);
-			$activeSheet->setCellValue('H' . $i, $row->clusterName);
-			$activeSheet->setCellValue('I' . $i, $row->clusterStatus);
-			$activeSheet->setCellValue('J' . $i, $row->avai);
-			$activeSheet->setCellValue('K' . $i, $row->used);
-			$activeSheet->setCellValue('L' . $i, $row->rsv);
-			$activeSheet->setCellValue('M' . $i, $row->rsk);
-			$activeSheet->setCellValue('N' . $i, $row->total);
-			$activeSheet->setCellValue('O' . $i, $row->namaRegional);
-			$activeSheet->setCellValue('P' . $i, $row->namaWitel);
-			$activeSheet->setCellValue('Q' . $i, $row->namaDatel);
-			$activeSheet->setCellValue('R' . $i, $row->kodeSTO);
-			$activeSheet->setCellValue('S' . $i, $row->namaSTO);
-			$activeSheet->setCellValue('T' . $i, $row->infoODP);
-
-			$newDate = date("d/m/Y H:i", strtotime($row->updateDate));
-			$activeSheet->setCellValue('U' . $i, $newDate);
-			$i++;
-		}
-
-		$filename = 'RekapODP.xlsx';
-
-
-		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		header('Content-Disposition: attachment;filename="' . $filename);
-		header('Cache-Control: max-age=0');
-
-		$Excel_writer->save('php://output');
-	}
 	// END ODP
 
 	// START OLT
@@ -1177,85 +401,6 @@ class HDDaman extends CI_Controller
 	{
 		$data['row'] = $this->OLT_model->getDataOLT();
 		$this->template->load('template/template_HDDaman', 'olt/olt_data', $data);
-	}
-
-	public function uploadOLT()
-	{
-		$this->template->load('template/template_HDDaman', 'olt/olt_form_import');
-	}
-
-	public function addOLT()
-	{
-		$data['sto'] = $this->STO_model->getDataSTO();
-		$data['spec'] = $this->SpecOLT_model->getDataSpecOLT();
-
-		$this->form_validation->set_rules('hostname', 'HOSTNAME', 'required|is_unique[rekap_data_olt.hostname]|trim');
-		$this->form_validation->set_rules('ipOLT', 'IP GPON', 'required|is_unique[rekap_data_olt.ipOLT]|trim');
-		$this->form_validation->set_rules('idLogicalDevice', 'ID Logical Device', 'required|is_unique[rekap_data_olt.idLogicalDevice]|trim');
-		$this->form_validation->set_rules('STO', 'STO', 'required|trim');
-		$this->form_validation->set_rules('SpecOLT', 'Specification OLT', 'required|trim');
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_HDDaman', 'olt/olt_form_add', $data);
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->OLT_model->addDataOLT($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
-			}
-			redirect('HDDaman/getOLT');
-		}
-	}
-
-	public function editOLT($id)
-	{
-
-		$this->form_validation->set_rules('hostname', 'HOSTNAME', 'trim');
-		$this->form_validation->set_rules('ipOLT', 'IP GPON', 'required|callback_ipolt_check|trim');
-		$this->form_validation->set_rules('idLogicalDevice', 'ID Logical Device', 'required|callback_idlogicaldevice_check|trim');
-		$this->form_validation->set_rules('STO', 'STO', 'trim');
-		$this->form_validation->set_rules('SpecOLT', 'Specification OLT', 'trim');
-
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$query = $this->OLT_model->getDataOLT($id);
-			if ($query->num_rows() > 0) {
-				$data['row'] = $query->row();
-				$query2 = $this->STO_model->getDataSTOSelect($data['row']->idSTO);
-				if ($query2->num_rows() > 0) {
-					$data['sto'] = $query2;
-				}
-				$query3 = $this->SpecOLT_model->getDataSpecOLTSelect($data['row']->idSpecOLT);
-				if ($query3->num_rows() > 0) {
-					$data['spec'] = $query3;
-				}
-				$this->template->load('template/template_HDDaman', 'olt/olt_form_edit', $data);
-			} else {
-				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
-				redirect('HDDaman/getOLT');
-			}
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->OLT_model->editDataOLT($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
-			}
-			redirect('HDDaman/getOLT');
-		}
 	}
 
 	function ipolt_check()
@@ -1282,158 +427,7 @@ class HDDaman extends CI_Controller
 		}
 	}
 
-	public function deleteOLT()
-	{
-		$id = $this->input->post('idOLT');
-		$this->OLT_model->deleteDataOLT($id);
 
-		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
-		}
-		redirect('HDDaman/getOLT');
-	}
-
-	public function deleteAllOLT()
-	{
-		// $this->exportODP();
-
-		$this->OLT_model->deleteAllDataOLT();
-		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('danger', 'Semua data berhasil dihapus');
-		}
-		redirect('HDDaman/getOLT');
-	}
-
-	//Fungsi file upload
-	public function importOLT()
-	{
-		$data = array();
-		// Load form validation library
-
-		$this->form_validation->set_rules('fileURL', 'Upload File OLT', 'callback_checkFileValidation');
-		// If file uploaded
-
-		if (!empty($_FILES['fileURL']['name'])) {
-
-			// get file extension
-			$extension = pathinfo($_FILES['fileURL']['name'], PATHINFO_EXTENSION);
-
-			if ($extension == 'csv') {
-				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
-			} elseif ($extension == 'xlsx') {
-				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-			} else {
-				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
-			}
-			// file path
-			$spreadsheet = $reader->load($_FILES['fileURL']['tmp_name']);
-			$allDataInSheet = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
-			// array Count
-			$arrayCount = count($allDataInSheet);
-
-			$flag = 1;
-			// $createArray = array('HOSTNAME BARU', 'IP GPON', 'STO', 'ID Logical Device', 'Specification');
-			// $makeArray = array('HOSTNAME BARU' => 'HOSTNAME BARU' , 'IP GPON' => 'IP GPON', 'STO' => 'STO', 'ID Logical Device' => 'ID Logical Device', 'Specification' => 'Specification' );
-			// $SheetDataKey = array();
-			// foreach ($allDataInSheet as $dataInSheet) {
-			//     foreach ($dataInSheet as $key => $value) {
-			//         if (in_array(trim($value), $createArray)) {
-
-			//             $SheetDataKey[trim($value)] = $key;
-			//         } 
-			//     }
-			// }
-			// $dataDiff = array_diff_key($makeArray, $SheetDataKey);
-			// if (empty($dataDiff)) {
-			//     $flag = 1;
-			// }
-			// match excel sheet column
-			if ($flag == 1) {
-				for ($i = 2; $i <= $arrayCount; $i++) {
-					// $HOSTNAMEBARU = $SheetDataKey['HOSTNAME BARU'];
-					// $IPGPON = $SheetDataKey['IP GPON'];
-					// $STO = $SheetDataKey['STO'];
-					// $IDLOGICALDEVICE = $SheetDataKey['ID Logical Device'];
-					// $SPECIFICATION = $SheetDataKey['Specification'];
-
-					$HOSTNAMEBARU = filter_var(html_escape(trim($allDataInSheet[$i]['B'])), FILTER_SANITIZE_STRING);
-					$IPGPON = filter_var(html_escape(trim($allDataInSheet[$i]['C'])), FILTER_SANITIZE_STRING);
-					$STO  = filter_var(html_escape(trim($allDataInSheet[$i]['D'])), FILTER_SANITIZE_STRING);
-					$IDLOGICALDEVICE = filter_var(html_escape(trim($allDataInSheet[$i]['H'])), FILTER_SANITIZE_STRING);
-					$SPECIFICATION = filter_var(html_escape(trim($allDataInSheet[$i]['I'])), FILTER_SANITIZE_STRING);
-
-					$newSTO = $this->STO_model->getIDSTOByName($STO);
-					$idSTO = $newSTO->idSTO;
-					if (!empty($SPECIFICATION) or $SPECIFICATION != null) {
-						$newSpecOLT = $this->SpecOLT_model->getIDSpecOLTByName($SPECIFICATION);
-						$idSpecOLT = $newSpecOLT->idSpecOLT;
-					}
-
-
-					$fetchData[] = array('hostname' => $HOSTNAMEBARU, 'ipOLT' => $IPGPON, 'idSTO' => $idSTO, 'idLogicalDevice' => $IDLOGICALDEVICE, 'idSpecOLT' => $idSpecOLT);
-				}
-
-
-				$this->OLT_model->setBatchImportOLT($fetchData);
-				$this->OLT_model->importDataOLT();
-				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
-			} else {
-				$this->session->set_flashdata('danger', 'Please import correct file, did not match excel sheet column');
-			}
-			// if ($this->db->affected_rows() > 0) {
-			// 		$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
-			// }
-			$data['row'] = $this->OLT_model->getDataOLT();
-			$this->template->load('template/template_HDDaman', 'olt/olt_data', $data);
-		}
-	}
-	public function exportOLT()
-	{
-		// Create new Spreadsheet object
-		$spreadsheet = new Spreadsheet();
-
-		$Excel_writer = new Xlsx($spreadsheet);
-
-		foreach (range('A1', 'I1') as $test) {
-			$spreadsheet->getActiveSheet()->getColumnDimension($test)->setAutoSize(true);
-		}
-
-		$spreadsheet->setActiveSheetIndex(0);
-		$activeSheet = $spreadsheet->getActiveSheet();
-		$activeSheet->setCellValue('A1', 'NO');
-		$activeSheet->setCellValue('B1', 'HOSTNAME BARU');
-		$activeSheet->setCellValue('C1', 'IP GPON');
-		$activeSheet->setCellValue('D1', 'STO');
-		$activeSheet->setCellValue('E1', 'Type OLT');
-		$activeSheet->setCellValue('F1', 'MERK');
-		$activeSheet->setCellValue('G1', 'ID Logical Device');
-		$activeSheet->setCellValue('H1', 'Name');
-		$activeSheet->setCellValue('I1', 'Specification');
-
-		// $query = $db->query("SELECT * FROM rekap_data_odp ORDER BY idODP DESC");
-		$query = $this->OLT_model->getDataOLT()->result();
-		$i = 2;
-		foreach ($query as $row) {
-			$activeSheet->setCellValue('A' . $i, $i - 1);
-			$activeSheet->setCellValue('B' . $i, $row->hostname);
-			$activeSheet->setCellValue('C' . $i, $row->ipOLT);
-			$activeSheet->setCellValue('D' . $i, $row->namaSTO);
-			$activeSheet->setCellValue('E' . $i, $row->typeOLT);
-			$activeSheet->setCellValue('F' . $i, $row->merekOLT);
-			$nama = $row->hostname . "(" . $row->ipOLT . ")";
-			$activeSheet->setCellValue('G' . $i, $row->idLogicalDevice);
-			$activeSheet->setCellValue('H' . $i, $nama);
-			$activeSheet->setCellValue('I' . $i, $row->namaSpecOLT);
-			$i++;
-		}
-
-		$filename = 'RekapOLT.xlsx';
-
-		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		header('Content-Disposition: attachment;filename="' . $filename);
-		header('Cache-Control: max-age=0');
-		$Excel_writer->save('php://output');
-	}
 	// END OLT
 
 	// Start Menu Kelola Validasi
@@ -1660,7 +654,7 @@ class HDDaman extends CI_Controller
 
 
 		$this->form_validation->set_rules('tanggalPelurusan', 'Tanggal Pelurusan', 'required|trim');
-		$this->form_validation->set_rules('ondesk', 'HDDaman', 'required|trim');
+		$this->form_validation->set_rules('ondesk', 'Ondesk', 'required|trim');
 		$this->form_validation->set_rules('onsite[]', 'Onsite ', 'required|trim');
 		$this->form_validation->set_rules('namaODP', 'Nama ODP', 'required|max_length[40]|trim');
 		$this->form_validation->set_rules('noteODP', 'Note ODP', 'max_length[100]|trim');
@@ -1673,30 +667,6 @@ class HDDaman extends CI_Controller
 
 		$this->form_validation->set_rules('namaOLT', 'Nama OLT', 'required|max_length[16]|trim');
 		$this->form_validation->set_rules('portOLT', 'Port OLT', 'max_length[12]|trim');
-
-
-		// $this->form_validation->set_rules('portOutSplitter', 'Port Out Splitter', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('QROutSplitter[]', 'QR Out Splitter', 'required|trim');
-		// $this->form_validation->set_rules('portODP', 'PORT', 'trim');
-		// $this->form_validation->set_rules('statusportODP', 'QR ODP', 'required|max_length[20]|trim');
-		// // $this->form_validation->set_rules('status', 'STATUS', 'max_length[50]required|trim');
-		// $this->form_validation->set_rules('ONU', 'ONU', 'max_length[15]|trim');
-		// $this->form_validation->set_rules('serialNumber', 'SN', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('serviceNumber', 'SERVICE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('QRDropCore', 'QR DROPCORE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('noteDropcore', 'NOTE URUT DROPCORE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('flagOLTPort', 'FLAG OLT & PORT', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('ODPtoOLT', 'CONNECTIVITY ODP TO OLT', 'trim');
-		// $this->form_validation->set_rules('ODPtoONT', 'ODP - ONT', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('RFS', 'RFS', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('noteHDDaman', 'NOTE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('updateDataUIM', 'TANGGAL UPDATE UIM', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('updaterUIM', 'UPDATER UIM', 'required|max_length[20]|trim');
-
-		// $this->form_validation->set_rules('noteQROutSplitter', 'QR OUT SPLITTER', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('noteQRDropCore', 'QR DROPCORE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('updaterDava', 'UPDATER DAVA', 'required|max_length[20]|trim');
-
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
@@ -1726,14 +696,6 @@ class HDDaman extends CI_Controller
 		$onsite = $this->Pegawai_model->getDataPegawaiStatus("Onsite")->result();
 		$hostname = $this->OLT_model->getNamaOLT()->result();
 		$edit = $this->Validasi_model->getDataDataValidasi($id);
-		
-		// $data['validasi'] =$this->db->query( "select id from rekap_data_validasi where id = $id");
-		// $coba = $data['validasi'];
-
-		// foreach ($coba as $id){
-		// 	$getid = $id->id;
-		// }
-
 
 		$data['ondesk'] = json_encode($ondesk);
 		$data['onsite'] = json_encode($onsite);
@@ -1742,7 +704,7 @@ class HDDaman extends CI_Controller
 
 
 		$this->form_validation->set_rules('tanggalPelurusan', 'Tanggal Pelurusan', 'required|trim');
-		$this->form_validation->set_rules('ondesk', 'HDDaman', 'required|trim');
+		$this->form_validation->set_rules('ondesk', 'Ondesk', 'required|trim');
 		$this->form_validation->set_rules('onsite[]', 'Onsite ', 'required|trim');
 		$this->form_validation->set_rules('namaODP', 'Nama ODP', 'required|max_length[40]|trim');
 		$this->form_validation->set_rules('noteODP', 'Note ODP', 'max_length[100]|trim');

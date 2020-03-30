@@ -179,106 +179,7 @@ class Ondesk extends CI_Controller
 	}
 	//End Dashboard
 
-	// Start Menu Pegawai 
-	public function getPegawai()
-	{
-		$data['row'] = $this->Pegawai_model->getDataPegawai();
-		$this->template->load('template/template_Ondesk', 'pegawai/pegawai_data', $data);
-	}
 
-	public function addPegawai()
-	{
-		$this->form_validation->set_rules('namaPegawai', 'Nama', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[30]|trim');
-		$this->form_validation->set_rules('username', 'Username', 'required|alpha_numeric|is_unique[pegawai.username]|min_length[5]|max_length[20]|trim');
-		$this->form_validation->set_rules('password', 'Password', 'required|alpha_numeric|min_length[5]|max_length[16]|trim');
-		$this->form_validation->set_rules(
-			'passconf',
-			'Konfirmasi Password',
-			'required|matches[password]|alpha_numeric|min_length[5]|max_length[16]|trim',
-			array('matches' => '%s tidak sesuai dengan password')
-		);
-		$this->form_validation->set_rules('status', 'Status', 'required|trim');
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('regex_match', '{field} berisi karakter');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-		$this->form_validation->set_message('alpha_numeric_spaces', '{field} berisi karakter');
-		$this->form_validation->set_message('alpha_numeric', '{field} berisi karakter dan numerik');
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->template->load('template/template_Ondesk', 'pegawai/pegawai_form_add');
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->Pegawai_model->addDataPegawai($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
-			}
-			redirect('Ondesk/getPegawai');
-		}
-	}
-
-	public function editPegawai($id)
-	{
-		$this->form_validation->set_rules('namaPegawai', 'Nama', 'required|regex_match[/^[a-zA-Z ]+$/]|min_length[0]|max_length[30]|trim');
-		$this->form_validation->set_rules('username', 'Username', 'required|alpha_numeric|callback_username_check|min_length[5]|max_length[20]|trim');
-		if ($this->input->post('password')) {
-			$this->form_validation->set_rules('password', 'Password', 'alpha_numeric|min_length[5]|max_length[16]|trim');
-			$this->form_validation->set_rules(
-				'passconf',
-				'Konfirmasi Password',
-				'matches[password]|alpha_numeric|min_length[5]|max_length[16]|trim',
-				array('matches' => '%s tidak sesuai dengan password')
-			);
-		}
-		if ($this->input->post('passconf')) {
-			$this->form_validation->set_rules(
-				'passconf',
-				'Konfirmasi Password',
-				'matches[password]|alpha_numeric|min_length[5]|max_length[16]|trim',
-				array('matches' => '%s tidak sesuai dengan password')
-			);
-		}
-		$this->form_validation->set_rules('status', 'Status', 'required');
-
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		$this->form_validation->set_message('regex_match', '{field} berisi karakter');
-		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
-		$this->form_validation->set_message('alpha_numeric_spaces', '{field} berisi karakter');
-		$this->form_validation->set_message('alpha_numeric', '{field} berisi karakter dan numerik');
-
-		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$query = $this->pegawai_model->getDataPegawai($id);
-			if ($query->num_rows() > 0) {
-				$data['row'] = $query->row();
-				$this->template->load('template/template_Ondesk', 'pegawai/pegawai_form_edit', $data);
-			} else {
-				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
-				redirect('Ondesk/getPegawai');
-			}
-		} else {
-			$post = $this->input->post(null, TRUE);
-			$this->Pegawai_model->editDataPegawai($post);
-			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
-			}
-			redirect('Ondesk/getPegawai');
-		}
-	}
-
-	public function detailPegawai($id)
-	{
-		$detailPegawai = $this->Pegawai_model->detailDataPegawai($id);
-		$data['detailPegawai'] = $detailPegawai;
-		$this->template->load('template/template_Ondesk', 'pegawai/pegawai_form_detail', $data);
-	}
 
 	function username_check()
 	{
@@ -292,17 +193,7 @@ class Ondesk extends CI_Controller
 		}
 	}
 
-	public function deletePegawai()
-	{
-		$id = $this->input->post('idPegawai');
-		$this->Pegawai_model->deleteDataPegawai($id);
 
-		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
-		}
-		redirect('Ondesk/getPegawai');
-	}
-	// End Menu Pegawai
 
 	// Start Menu Regional
 	public function getRegional()
@@ -797,16 +688,16 @@ class Ondesk extends CI_Controller
 		$sql_total = $this->ODP_model->count_all(); // Panggil fungsi count_all pada SiswaModel
 		$sql_data = $this->ODP_model->filter($search, $limit, $start, $order_field, $order_ascdesc); // Panggil fungsi filter pada SiswaModel
 		$sql_filter = $this->ODP_model->count_filter($search); // Panggil fungsi count_filter pada SiswaModel
-		
+
 		$callback = array(
 			'draw' => $_POST['draw'], // Ini dari datatablenya
 			'recordsTotal' => $sql_total,
 			'recordsFiltered' => $sql_filter,
 			'data' => $sql_data
 		);
-		
+
 		header('Content-Type: application/json');
-		
+
 		echo json_encode($callback); // Convert array $callback ke json
 	}
 
@@ -843,19 +734,19 @@ class Ondesk extends CI_Controller
 			$arrayCount = count($allDataInSheet);
 
 			$flag = 0;
-			$createArray = array('NOSS_ID', 'ODP_INDEX', 'ODP 3 DIGIT', 'FTP', 'LATITUDE', 'LONGITUDE', 'CLUSNAME', 'CLUSTERSATATUS', 'AVAI', 'USED', 'RSV', 'RSK', 'IS_TOTAL', 'STO' , 'ODP_INFO', 'UPDATE_DATE');
-			$makeArray = array('NOSS_ID' => 'NOSS_ID', 'ODP_INDEX' => 'ODP_INDEX', 'ODP 3 DIGIT' => 'ODP 3 DIGIT', 'FTP' => 'FTP', 'LATITUDE' => 'LATITUDE', 'LONGITUDE' => 'LONGITUDE', 'CLUSNAME' => 'CLUSNAME', 'CLUSTERSATATUS' => 'CLUSTERSATATUS', 'AVAI' => 'AVAI', 'USED' => 'USED', 'RSV' => 'RSV', 'RSK' => 'RSK', 'IS_TOTAL' => 'IS_TOTAL', 'STO' => 'STO' , 'ODP_INFO' => 'ODP_INFO', 'UPDATE_DATE' => 'UPDATE_DATE');
+			$createArray = array('NOSS_ID', 'ODP_INDEX', 'ODP 3 DIGIT', 'FTP', 'LATITUDE', 'LONGITUDE', 'CLUSNAME', 'CLUSTERSATATUS', 'AVAI', 'USED', 'RSV', 'RSK', 'IS_TOTAL', 'STO', 'ODP_INFO', 'UPDATE_DATE');
+			$makeArray = array('NOSS_ID' => 'NOSS_ID', 'ODP_INDEX' => 'ODP_INDEX', 'ODP 3 DIGIT' => 'ODP 3 DIGIT', 'FTP' => 'FTP', 'LATITUDE' => 'LATITUDE', 'LONGITUDE' => 'LONGITUDE', 'CLUSNAME' => 'CLUSNAME', 'CLUSTERSATATUS' => 'CLUSTERSATATUS', 'AVAI' => 'AVAI', 'USED' => 'USED', 'RSV' => 'RSV', 'RSK' => 'RSK', 'IS_TOTAL' => 'IS_TOTAL', 'STO' => 'STO', 'ODP_INFO' => 'ODP_INFO', 'UPDATE_DATE' => 'UPDATE_DATE');
 			$SheetDataKey = array();
 			foreach ($allDataInSheet as $dataInSheet) {
-			    foreach ($dataInSheet as $key => $value) {
-			        if (in_array(trim($value), $createArray)) {
-			            $SheetDataKey[trim($value)] = $key;
-			        } 
-			    }
+				foreach ($dataInSheet as $key => $value) {
+					if (in_array(trim($value), $createArray)) {
+						$SheetDataKey[trim($value)] = $key;
+					}
+				}
 			}
 			$dataDiff = array_diff_key($makeArray, $SheetDataKey);
 			if (empty($dataDiff)) {
-			    $flag = 1;
+				$flag = 1;
 			}
 			print_r($SheetDataKey);
 			// match excel sheet column
@@ -889,41 +780,19 @@ class Ondesk extends CI_Controller
 					$AVAI = filter_var(html_escape(trim($allDataInSheet[$i][$AVAI])), FILTER_SANITIZE_STRING);
 					$USED = filter_var(html_escape(trim($allDataInSheet[$i][$USED])), FILTER_SANITIZE_STRING);
 					$RSV = filter_var(html_escape(trim($allDataInSheet[$i][$RSV])), FILTER_SANITIZE_STRING);
-					$RSK = filter_var(html_escape(trim($allDataInSheet[$i][$RSK ])), FILTER_SANITIZE_STRING);
+					$RSK = filter_var(html_escape(trim($allDataInSheet[$i][$RSK])), FILTER_SANITIZE_STRING);
 					$IS_TOTAL = filter_var(html_escape(trim($allDataInSheet[$i][$IS_TOTAL])), FILTER_SANITIZE_STRING);
 					$STO = filter_var(html_escape(trim($allDataInSheet[$i][$STO])), FILTER_SANITIZE_STRING);
 					$ODP_INFO = filter_var(html_escape(trim($allDataInSheet[$i][$ODP_INFO])), FILTER_SANITIZE_STRING);
 					$UPDATE_DATE = filter_var(html_escape(trim($allDataInSheet[$i][$UPDATE_DATE])), FILTER_SANITIZE_STRING);
-
-					// $NOSS_ID = filter_var(html_escape(trim($allDataInSheet[$i]['A'])), FILTER_SANITIZE_STRING);
-					// $ODP_INDEX = filter_var(html_escape(trim($allDataInSheet[$i]['B'])), FILTER_SANITIZE_STRING);
-					// $ODP_NAME  = filter_var(html_escape(trim($allDataInSheet[$i]['D'])), FILTER_SANITIZE_STRING);
-					// $FTP = filter_var(html_escape(trim($allDataInSheet[$i]['E'])), FILTER_SANITIZE_STRING);
-					// $LATITUDE = filter_var(html_escape(trim($allDataInSheet[$i]['F'])), FILTER_SANITIZE_STRING);
-					// $LONGITUDE = filter_var(html_escape(trim($allDataInSheet[$i]['G'])), FILTER_SANITIZE_STRING);
-					// $CLUSNAME = filter_var(html_escape(trim($allDataInSheet[$i]['H'])), FILTER_SANITIZE_STRING);
-					// $CLUSTERSATATUS = filter_var(html_escape(trim($allDataInSheet[$i]['I'])), FILTER_SANITIZE_STRING);
-					// $AVAI = filter_var(html_escape(trim($allDataInSheet[$i]['J'])), FILTER_SANITIZE_STRING);
-					// $USED = filter_var(html_escape(trim($allDataInSheet[$i]['K'])), FILTER_SANITIZE_STRING);
-					// $RSV = filter_var(html_escape(trim($allDataInSheet[$i]['L'])), FILTER_SANITIZE_STRING);
-					// $RSK = filter_var(html_escape(trim($allDataInSheet[$i]['M'])), FILTER_SANITIZE_STRING);
-					// $IS_TOTAL = filter_var(html_escape(trim($allDataInSheet[$i]['N'])), FILTER_SANITIZE_STRING);
-					// $STO = filter_var(html_escape(trim($allDataInSheet[$i]['R'])), FILTER_SANITIZE_STRING);
-					// $ODP_INFO = filter_var(html_escape(trim($allDataInSheet[$i]['T'])), FILTER_SANITIZE_STRING);
-					// $UPDATE_DATE = filter_var(html_escape(trim($allDataInSheet[$i]['U'])), FILTER_SANITIZE_STRING);
 
 					$newSTO = $this->STO_model->getIDSTOByKode($STO);
 					$idSTO = $newSTO->idSTO;
 					$newDate = date("Y-m-d H:i", strtotime($UPDATE_DATE));
 
 					$fetchData[] = array('idNOSS' => $NOSS_ID, 'indexODP' => $ODP_INDEX, 'namaODP' => $ODP_NAME, 'ftp' => $FTP, 'latitude' => $LATITUDE, 'longitude' => $LONGITUDE, 'clusterName' => $CLUSNAME, 'clusterStatus' => $CLUSTERSATATUS, 'avai' => $AVAI, 'used' => $USED, 'rsv' => $RSV, 'rsk' => $RSK, 'total' => $IS_TOTAL, 'idSTO' => $idSTO, 'infoODP' => $ODP_INFO, 'updateDate' => $newDate);
-
-					// print_r($UPDATE_DATE);
-
-					// print_r($newDate);
 				}
 
-				// $data['data_odp'] = $fetchData;
 				$this->ODP_model->setBatchImportODP($fetchData);
 				$this->ODP_model->importDataODP();
 
@@ -1349,23 +1218,22 @@ class Ondesk extends CI_Controller
 
 			$flag = 0;
 			$createArray = array('HOSTNAME BARU', 'IP GPON', 'STO', 'ID Logical Device', 'Specification');
-			$makeArray = array('HOSTNAME BARU' => 'HOSTNAME BARU' , 'IP GPON' => 'IP GPON', 'STO' => 'STO', 'ID Logical Device' => 'ID Logical Device', 'Specification' => 'Specification' );
+			$makeArray = array('HOSTNAME BARU' => 'HOSTNAME BARU', 'IP GPON' => 'IP GPON', 'STO' => 'STO', 'ID Logical Device' => 'ID Logical Device', 'Specification' => 'Specification');
 			$SheetDataKey = array();
 			foreach ($allDataInSheet as $dataInSheet) {
-			    foreach ($dataInSheet as $key => $value) {
-			        if (in_array(trim($value), $createArray)) {
+				foreach ($dataInSheet as $key => $value) {
+					if (in_array(trim($value), $createArray)) {
 
 						$SheetDataKey[trim($value)] = $key;
-						
-			        } 
-			    }
+					}
+				}
 			}
-			
+
 			$dataDiff = array_diff_key($makeArray, $SheetDataKey);
 			if (empty($dataDiff)) {
-			    $flag = 1;
+				$flag = 1;
 			}
-			
+
 			// match excel sheet column
 			if ($flag == 1) {
 				for ($i = 2; $i <= $arrayCount; $i++) {
@@ -1380,12 +1248,6 @@ class Ondesk extends CI_Controller
 					$STO  = filter_var(html_escape(trim($allDataInSheet[$i][$STO])), FILTER_SANITIZE_STRING);
 					$IDLOGICALDEVICE = filter_var(html_escape(trim($allDataInSheet[$i][$IDLOGICALDEVICE])), FILTER_SANITIZE_STRING);
 					$SPECIFICATION = filter_var(html_escape(trim($allDataInSheet[$i][$SPECIFICATION])), FILTER_SANITIZE_STRING);
-
-					// $HOSTNAMEBARU = filter_var(html_escape(trim($allDataInSheet[$i]['B'])), FILTER_SANITIZE_STRING);
-					// $IPGPON = filter_var(html_escape(trim($allDataInSheet[$i]['C'])), FILTER_SANITIZE_STRING);
-					// $STO  = filter_var(html_escape(trim($allDataInSheet[$i]['D'])), FILTER_SANITIZE_STRING);
-					// $IDLOGICALDEVICE = filter_var(html_escape(trim($allDataInSheet[$i]['H'])), FILTER_SANITIZE_STRING);
-					// $SPECIFICATION = filter_var(html_escape(trim($allDataInSheet[$i]['I'])), FILTER_SANITIZE_STRING);
 
 					$newSTO = $this->STO_model->getIDSTOByName($STO);
 					$idSTO = $newSTO->idSTO;
@@ -1403,7 +1265,7 @@ class Ondesk extends CI_Controller
 			} else {
 				$this->session->set_flashdata('danger', 'Format tidak sesuai, harap download format yang ditentukan');
 			}
-			
+
 			// $data['row'] = $this->OLT_model->getDataOLT();
 			redirect('Ondesk/getOLT');
 		}
@@ -1527,23 +1389,23 @@ class Ondesk extends CI_Controller
 
 			$flag = 0;
 
-			$createArray = array('TANGGAL PELURUSAN', 'ONDESK', 'ONSITE', 'NAMAODP', 'NOTE', 'QR ODP', 'KOORDINAT ODP', 'NAMA OLT (IP OLT)', 'PORT OLT', 'TOTAL IN ODP', 'KAPASITAS ODP', 'PORT OUT SPLITTER', 'QR OUT SPLITTER', 'PORT' , 'STATUS', 'ONU', 'SN', 'SERVICE', 'QR DROPCORE','NOTE URUT DROPCORE', 'FLAG OLT & PORT', 'CONNECTIVITY ODP TO OLT', 'ODP - ONT', 'RFS', 'TANGGAL UPDATE UIM', 'UPDATER UIM', 'UPDATER DAVA');
-			$makeArray = array('TANGGAL PELURUSAN' => 'TANGGAL PELURUSAN', 'ONDESK' => 'ONDESK', 'ONSITE' => 'ONSITE', 'NAMAODP' => 'NAMAODP', 'NOTE' => 'NOTE', 'QR ODP' => 'QR ODP', 'KOORDINAT ODP' => 'KOORDINAT ODP', 'NAMA OLT (IP OLT)' => 'NAMA OLT (IP OLT)', 'PORT OLT' => 'PORT OLT', 'TOTAL IN ODP' => 'TOTAL IN ODP', 'KAPASITAS ODP' =>'KAPASITAS ODP', 'PORT OUT SPLITTER' => 'PORT OUT SPLITTER', 'QR OUT SPLITTER' => 'QR OUT SPLITTER', 'PORT' => 'PORT' , 'STATUS' => 'STATUS', 'ONU' => 'ONU', 'SN' => 'SN', 'SERVICE' => 'SERVICE', 'QR DROPCORE' => 'QR DROPCORE','NOTE URUT DROPCORE' => 'NOTE URUT DROPCORE', 'FLAG OLT & PORT' => 'FLAG OLT & PORT', 'CONNECTIVITY ODP TO OLT' => 'CONNECTIVITY ODP TO OLT', 'ODP - ONT' => 'ODP - ONT', 'RFS' => 'RFS', 'TANGGAL UPDATE UIM' => 'TANGGAL UPDATE UIM', 'UPDATER UIM' => 'UPDATER UIM', 'UPDATER DAVA' => 'UPDATER DAVA');
+			$createArray = array('TANGGAL PELURUSAN', 'ONDESK', 'ONSITE', 'NAMAODP', 'NOTE', 'QR ODP', 'KOORDINAT ODP', 'NAMA OLT (IP OLT)', 'PORT OLT', 'TOTAL IN ODP', 'KAPASITAS ODP', 'PORT OUT SPLITTER', 'QR OUT SPLITTER', 'PORT', 'STATUS', 'ONU', 'SN', 'SERVICE', 'QR DROPCORE', 'NOTE URUT DROPCORE', 'FLAG OLT & PORT', 'CONNECTIVITY ODP TO OLT', 'ODP - ONT', 'RFS', 'TANGGAL UPDATE UIM', 'UPDATER UIM', 'UPDATER DAVA');
+			$makeArray = array('TANGGAL PELURUSAN' => 'TANGGAL PELURUSAN', 'ONDESK' => 'ONDESK', 'ONSITE' => 'ONSITE', 'NAMAODP' => 'NAMAODP', 'NOTE' => 'NOTE', 'QR ODP' => 'QR ODP', 'KOORDINAT ODP' => 'KOORDINAT ODP', 'NAMA OLT (IP OLT)' => 'NAMA OLT (IP OLT)', 'PORT OLT' => 'PORT OLT', 'TOTAL IN ODP' => 'TOTAL IN ODP', 'KAPASITAS ODP' => 'KAPASITAS ODP', 'PORT OUT SPLITTER' => 'PORT OUT SPLITTER', 'QR OUT SPLITTER' => 'QR OUT SPLITTER', 'PORT' => 'PORT', 'STATUS' => 'STATUS', 'ONU' => 'ONU', 'SN' => 'SN', 'SERVICE' => 'SERVICE', 'QR DROPCORE' => 'QR DROPCORE', 'NOTE URUT DROPCORE' => 'NOTE URUT DROPCORE', 'FLAG OLT & PORT' => 'FLAG OLT & PORT', 'CONNECTIVITY ODP TO OLT' => 'CONNECTIVITY ODP TO OLT', 'ODP - ONT' => 'ODP - ONT', 'RFS' => 'RFS', 'TANGGAL UPDATE UIM' => 'TANGGAL UPDATE UIM', 'UPDATER UIM' => 'UPDATER UIM', 'UPDATER DAVA' => 'UPDATER DAVA');
 			$SheetDataKey = array();
 			foreach ($allDataInSheet as $dataInSheet) {
 				foreach ($dataInSheet as $key => $value) {
 					if (in_array(trim($value), $createArray)) {
 						$SheetDataKey[trim($value)] = $key;
-					} 
+					}
 				}
 			}
-			
-			
+
+
 			$dataDiff = array_diff_key($makeArray, $SheetDataKey);
 			if (empty($dataDiff)) {
 				$flag = 1;
 			}
-			
+
 
 			// match excel sheet column
 			if ($flag == 1) {
@@ -1561,14 +1423,14 @@ class Ondesk extends CI_Controller
 					$KAPASITAS = $SheetDataKey['KAPASITAS ODP'];
 					$PORT_OUT_SPLITTER = $SheetDataKey['PORT OUT SPLITTER'];
 					$QR_OUT_SPLITTER = $SheetDataKey['QR OUT SPLITTER'];
-					$PORT_ODP= $SheetDataKey['PORT'];
+					$PORT_ODP = $SheetDataKey['PORT'];
 					$STATUS = $SheetDataKey['STATUS'];
 					$ONU = $SheetDataKey['ONU'];
 					$SN = $SheetDataKey['SN'];
 					$SERVICE = $SheetDataKey['SERVICE'];
 					$QR_DROPCORE = $SheetDataKey['QR DROPCORE'];
 					$NOTE_URUT_DROPCORE = $SheetDataKey['NOTE URUT DROPCORE'];
-					$FLAG_OLT_PORT= $SheetDataKey['FLAG OLT & PORT'];
+					$FLAG_OLT_PORT = $SheetDataKey['FLAG OLT & PORT'];
 					$CONNECTIVITY_ODP_TO_OLT = $SheetDataKey['CONNECTIVITY ODP TO OLT'];
 					$ODP_ONT = $SheetDataKey['ODP - ONT'];
 					$RFS = $SheetDataKey['RFS'];
@@ -1581,14 +1443,14 @@ class Ondesk extends CI_Controller
 					$UPDATER_DAVA = $SheetDataKey['UPDATER DAVA'];
 
 
-					
+
 
 					$TANGGAL_PELURUSAN = filter_var(html_escape(trim($allDataInSheet[$i][$TANGGAL_PELURUSAN])), FILTER_SANITIZE_STRING);
 					$ONDESK = filter_var(html_escape(trim($allDataInSheet[$i][$ONDESK])), FILTER_SANITIZE_STRING);
 					$ONSITE = filter_var(html_escape(trim($allDataInSheet[$i][$ONSITE])), FILTER_SANITIZE_STRING);
 					$NAMA_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$NAMA_ODP])), FILTER_SANITIZE_STRING);
 					$NOTE_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$NOTE_ODP])), FILTER_SANITIZE_STRING);
-					$QR_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$QR_ODP ])), FILTER_SANITIZE_STRING);
+					$QR_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$QR_ODP])), FILTER_SANITIZE_STRING);
 					$KOORDINAT_ODP  = filter_var(html_escape(trim($allDataInSheet[$i][$KOORDINAT_ODP])), FILTER_SANITIZE_STRING);
 					$NAMA_OLT = filter_var(html_escape(trim($allDataInSheet[$i][$NAMA_OLT])), FILTER_SANITIZE_STRING);
 					$PORT_OLT = filter_var(html_escape(trim($allDataInSheet[$i][$PORT_OLT])), FILTER_SANITIZE_STRING);
@@ -1614,39 +1476,7 @@ class Ondesk extends CI_Controller
 					$NOTE_QR_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i]['AC'])), FILTER_SANITIZE_STRING);
 					$NOTE_QR_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i]['AD'])), FILTER_SANITIZE_STRING);
 					$UPDATER_DAVA = filter_var(html_escape(trim($allDataInSheet[$i][$UPDATER_DAVA])), FILTER_SANITIZE_STRING);
-
-					// $TANGGAL_PELURUSAN = filter_var(html_escape(trim($allDataInSheet[$i]['A'])), FILTER_SANITIZE_STRING);
-					// $ONDESK = filter_var(html_escape(trim($allDataInSheet[$i]['B'])), FILTER_SANITIZE_STRING);
-					// $ONSITE = filter_var(html_escape(trim($allDataInSheet[$i]['C'])), FILTER_SANITIZE_STRING);
-					// $NAMA_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['D'])), FILTER_SANITIZE_STRING);
-					// $NOTE_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['E'])), FILTER_SANITIZE_STRING);
-					// $QR_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['F'])), FILTER_SANITIZE_STRING);
-					// $KOORDINAT_ODP  = filter_var(html_escape(trim($allDataInSheet[$i]['G'])), FILTER_SANITIZE_STRING);
-					// $NAMA_OLT = filter_var(html_escape(trim($allDataInSheet[$i]['H'])), FILTER_SANITIZE_STRING);
-					// $PORT_OLT = filter_var(html_escape(trim($allDataInSheet[$i]['I'])), FILTER_SANITIZE_STRING);
-					// $TOTAL_IN_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['J'])), FILTER_SANITIZE_STRING);
-					// $KAPASITAS = filter_var(html_escape(trim($allDataInSheet[$i]['K'])), FILTER_SANITIZE_STRING);
-					// $PORT_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i]['L'])), FILTER_SANITIZE_STRING);
-					// $QR_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i]['M'])), FILTER_SANITIZE_STRING);
-					// $PORT_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['N'])), FILTER_SANITIZE_STRING);
-					// $STATUS = filter_var(html_escape(trim($allDataInSheet[$i]['O'])), FILTER_SANITIZE_STRING);
-					// $ONU = filter_var(html_escape(trim($allDataInSheet[$i]['P'])), FILTER_SANITIZE_STRING);
-					// $SN = filter_var(html_escape(trim($allDataInSheet[$i]['Q'])), FILTER_SANITIZE_STRING);
-					// $SERVICE = filter_var(html_escape(trim($allDataInSheet[$i]['R'])), FILTER_SANITIZE_STRING);
-					// $QR_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i]['S'])), FILTER_SANITIZE_STRING);
-					// $NOTE_URUT_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i]['T'])), FILTER_SANITIZE_STRING);
-					// $FLAG_OLT_PORT = filter_var(html_escape(trim($allDataInSheet[$i]['U'])), FILTER_SANITIZE_STRING);
-					// $CONNECTIVITY_ODP_TO_OLT = filter_var(html_escape(trim($allDataInSheet[$i]['V'])), FILTER_SANITIZE_STRING);
-					// $ODP_ONT = filter_var(html_escape(trim($allDataInSheet[$i]['W'])), FILTER_SANITIZE_STRING);
-					// $RFS = filter_var(html_escape(trim($allDataInSheet[$i]['X'])), FILTER_SANITIZE_STRING);
-					// $NOTE_HD_DAMAN = filter_var(html_escape(trim($allDataInSheet[$i]['Y'])), FILTER_SANITIZE_STRING);
-					// $TANGGAL_UPDATE_UIM = filter_var(html_escape(trim($allDataInSheet[$i]['Z'])), FILTER_SANITIZE_STRING);
-					// $UPDATER_UIM = filter_var(html_escape(trim($allDataInSheet[$i]['AA'])), FILTER_SANITIZE_STRING);
-					// $NOTE_QR_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['AB'])), FILTER_SANITIZE_STRING);
-					// $NOTE_QR_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i]['AC'])), FILTER_SANITIZE_STRING);
-					// $NOTE_QR_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i]['AD'])), FILTER_SANITIZE_STRING);
-					// $UPDATER_DAVA = filter_var(html_escape(trim($allDataInSheet[$i]['AE'])), FILTER_SANITIZE_STRING);
-
+				
 					$newDateA = date("Y-m-d", strtotime($TANGGAL_PELURUSAN));
 					if ($TANGGAL_UPDATE_UIM != "" or $TANGGAL_UPDATE_UIM != null) {
 						$newDateB = date("Y-m-d", strtotime($TANGGAL_UPDATE_UIM));
@@ -1654,31 +1484,31 @@ class Ondesk extends CI_Controller
 						$newDateB = "";
 					}
 
-					$ODP = explode("/",$NAMA_ODP);
+					$ODP = explode("/", $NAMA_ODP);
 					$temp = strlen($ODP[1]);
-					$kode ="";
-					if($temp ==1){
-						$kode.= "00".$ODP[1];
+					$kode = "";
+					if ($temp == 1) {
+						$kode .= "00" . $ODP[1];
 					}
-					if($temp ==2){
-						$kode.= "0".$ODP[1];
+					if ($temp == 2) {
+						$kode .= "0" . $ODP[1];
 					}
-					if($temp ==3){
+					if ($temp == 3) {
 						$kode = $ODP[1];
 					}
 
-					$NAMA_ODP = $ODP[0]."/".$kode;
-					
+					$NAMA_ODP = $ODP[0] . "/" . $kode;
+
 
 					$fetchData[] = array('tanggalPelurusan' => $newDateA, 'ondesk' => $ONDESK, 'onsite' => $ONSITE, 'namaODP' => $NAMA_ODP, 'noteODP' => $NOTE_ODP, 'QRODP' => $QR_ODP, 'koordinatODP' => $KOORDINAT_ODP, 'hostname' => $NAMA_OLT, 'portOLT' => $PORT_OLT, 'totalIN' => $TOTAL_IN_ODP, 'kapasitasODP' => $KAPASITAS, 'portOutSplitter' => $PORT_OUT_SPLITTER, 'QRPortOutSplitter' => $QR_OUT_SPLITTER, 'portODP' => $PORT_ODP, 'statusPortODP' => $STATUS, 'ONU' => $ONU, 'serialNumber' => $SN, 'serviceNumber' => $SERVICE, 'QRDropCore' => $QR_DROPCORE, 'noteUrut' => $NOTE_URUT_DROPCORE, 'flagOLTPort' => $FLAG_OLT_PORT, 'ODPtoOLT' => $CONNECTIVITY_ODP_TO_OLT, 'ODPtoONT' => $ODP_ONT, 'RFS' => $RFS, 'noteHDDaman' => $NOTE_HD_DAMAN, 'updateDateUIM' => $newDateB, 'updaterUIM' => $UPDATER_UIM, 'noteQRODP' => $NOTE_QR_ODP, 'noteQROutSplitter' => $NOTE_QR_OUT_SPLITTER, 'noteQRDropCore' => $NOTE_QR_DROPCORE, 'updaterDava' => $UPDATER_DAVA);
 				}
 
 
-				
+
 				$this->Validasi_model->setBatchImportValidasi($fetchData);
 				$this->Validasi_model->importDataValidasi();
 
-				
+
 
 				redirect('Ondesk/viewListValidasi');
 			} else {
@@ -1742,33 +1572,8 @@ class Ondesk extends CI_Controller
 		$this->form_validation->set_rules('totalIN', 'Total IN', 'numeric|max_length[2]||trim');
 		$this->form_validation->set_rules('kapasitasODP', 'Kapasitas', 'required|numeric|max_length[16]|trim');
 
-
 		$this->form_validation->set_rules('namaOLT', 'Nama OLT', 'required|max_length[16]|trim');
 		$this->form_validation->set_rules('portOLT', 'Port OLT', 'max_length[12]|trim');
-
-
-		// $this->form_validation->set_rules('portOutSplitter', 'Port Out Splitter', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('QROutSplitter[]', 'QR Out Splitter', 'required|trim');
-		// $this->form_validation->set_rules('portODP', 'PORT', 'trim');
-		// $this->form_validation->set_rules('statusportODP', 'QR ODP', 'required|max_length[20]|trim');
-		// // $this->form_validation->set_rules('status', 'STATUS', 'max_length[50]required|trim');
-		// $this->form_validation->set_rules('ONU', 'ONU', 'max_length[15]|trim');
-		// $this->form_validation->set_rules('serialNumber', 'SN', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('serviceNumber', 'SERVICE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('QRDropCore', 'QR DROPCORE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('noteDropcore', 'NOTE URUT DROPCORE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('flagOLTPort', 'FLAG OLT & PORT', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('ODPtoOLT', 'CONNECTIVITY ODP TO OLT', 'trim');
-		// $this->form_validation->set_rules('ODPtoONT', 'ODP - ONT', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('RFS', 'RFS', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('noteHDDaman', 'NOTE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('updateDataUIM', 'TANGGAL UPDATE UIM', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('updaterUIM', 'UPDATER UIM', 'required|max_length[20]|trim');
-
-		// $this->form_validation->set_rules('noteQROutSplitter', 'QR OUT SPLITTER', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('noteQRDropCore', 'QR DROPCORE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('updaterDava', 'UPDATER DAVA', 'required|max_length[20]|trim');
-
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
@@ -1792,58 +1597,15 @@ class Ondesk extends CI_Controller
 		}
 	}
 
-	// public function listValidasi(){
-	// 	$searchTerm = $this->input->post('searchTerm');
-	// 	$response = $this->Validasi_model->getNamaValidasi($searchTerm)->result();
-	// 	echo json_encode($response);
-	// }
-
-	
-
 	public function editValidasi($id)
 	{
-		
-		// $this->form_validation->set_rules('tanggalPelurusan', 'Tanggal Pelurusan', 'required|trim');
-		// $this->form_validation->set_rules('ondesk', 'Ondesk', 'required|trim');
-		// $this->form_validation->set_rules('onsite[]', 'Onsite ', 'required|trim');
-		// $this->form_validation->set_rules('namaODP', 'Nama ODP', 'required|max_length[40]|trim');
 		$this->form_validation->set_rules('noteODP', 'Note ODP', 'max_length[100]|trim');
 		$this->form_validation->set_rules('QRODP', 'QR ODP', 'max_length[16]|trim');
 		$this->form_validation->set_rules('koordinatODP', 'Koordinat ODP', 'max_length[35]|trim');
 		$this->form_validation->set_rules('noteQRODP', 'QR ODP', 'max_length[100]|trim');
 		$this->form_validation->set_rules('totalIN', 'Total IN', 'numeric|max_length[2]||trim');
 		$this->form_validation->set_rules('kapasitasODP', 'Kapasitas', 'required|numeric|max_length[16]|trim');
-
-
-		// $this->form_validation->set_rules('namaOLT', 'Nama OLT', 'required|max_length[16]|trim');
 		$this->form_validation->set_rules('portOLT', 'Port OLT', 'max_length[12]|trim');
-
-		// $this->form_validation->set_rules('portOutSplitter', 'PORT OUT SPLITTER', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('QROutSplitter', 'QR OUT SPLITTER', 'required|trim');
-		// $this->form_validation->set_rules('portODP', 'PORT', 'trim');
-		// $this->form_validation->set_rules('statusportODP', 'QR ODP', 'required|max_length[20]|trim');
-		// // $this->form_validation->set_rules('status', 'STATUS', 'max_length[50]required|trim');
-		// $this->form_validation->set_rules('ONU', 'ONU', 'max_length[15]|trim');
-		// $this->form_validation->set_rules('serialNumber', 'SN', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('serviceNumber', 'SERVICE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('QRDropCore', 'QR DROPCORE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('noteDropcore', 'NOTE URUT DROPCORE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('flagOLTPort', 'FLAG OLT & PORT', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('ODPtoOLT', 'CONNECTIVITY ODP TO OLT', 'trim');
-		// $this->form_validation->set_rules('ODPtoONT', 'ODP - ONT', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('RFS', 'RFS', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('noteHDDaman', 'NOTE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('updateDataUIM', 'TANGGAL UPDATE UIM', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('updaterUIM', 'UPDATER UIM', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('noteQRODP', 'QR ODP', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('noteQROutSplitter', 'QR OUT SPLITTER', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('noteQRDropCore', 'QR DROPCORE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('updaterDava', 'UPDATER DAVA', 'required|max_length[20]|trim');
-
-		// $this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		// $this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		// $this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		// $this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
 
 		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 

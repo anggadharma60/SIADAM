@@ -25,35 +25,30 @@
                 <a onclick="Custom()" class="btn btn-success btn-flat">
                     Show/Hide
                 </a>
-                <?php if($this->fungsi->user_login()->status == 'Admin') { ?>
-                <a href="<?= site_url('Admin/exportValidasi') ?>" class="btn btn-warning btn-flat">
-                    <i class="fa fa-upload  "></i> Export
-                </a>
+                <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
+                    <a href="<?= site_url('Admin/exportValidasi') ?>" class="btn btn-warning btn-flat">
+                        <i class="fa fa-upload  "></i> Export
+                    </a>
                 <?php } ?>
-                <?php if($this->fungsi->user_login()->status == 'Ondesk') { ?>
-                <a href="<?= site_url('Ondesk/exportValidasi') ?>" class="btn btn-warning btn-flat">
-                    <i class="fa fa-upload  "></i> Export
-                </a>
+                <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
+                    <a href="<?= site_url('Ondesk/exportValidasi') ?>" class="btn btn-warning btn-flat">
+                        <i class="fa fa-upload  "></i> Export
+                    </a>
                 <?php } ?>
-                <?php if($this->fungsi->user_login()->status == 'HD Daman') { ?>
-                <a href="<?= site_url('HDDaman/exportValidasi') ?>" class="btn btn-warning btn-flat">
-                    <i class="fa fa-upload  "></i> Export
-                </a>
+                <?php if ($this->fungsi->user_login()->status == 'HD Daman') { ?>
+                    <a href="<?= site_url('HDDaman/exportValidasi') ?>" class="btn btn-warning btn-flat">
+                        <i class="fa fa-upload  "></i> Export
+                    </a>
                 <?php } ?>
-                <?php if($this->fungsi->user_login()->status == 'Daman') { ?>
-                <a href="<?= site_url('HDDaman/exportValidasi') ?>" class="btn btn-warning btn-flat">
-                    <i class="fa fa-upload  "></i> Export
-                </a>
+                <?php if ($this->fungsi->user_login()->status == 'SDI') { ?>
+                    <a href="<?= site_url('SDI/exportValidasi') ?>" class="btn btn-warning btn-flat">
+                        <i class="fa fa-upload  "></i> Export
+                    </a>
                 <?php } ?>
-                <?php if($this->fungsi->user_login()->status == 'SDI') { ?>
-                <a href="<?= site_url('SDI/exportValidasi') ?>" class="btn btn-warning btn-flat">
-                    <i class="fa fa-upload  "></i> Export
-                </a>
-                <?php } ?>
-                <?php if($this->fungsi->user_login()->status == 'Dava') { ?>
-                <a href="<?= site_url('Dava/exportValidasi') ?>" class="btn btn-warning btn-flat">
-                    <i class="fa fa-upload  "></i> Export
-                </a>
+                <?php if ($this->fungsi->user_login()->status == 'Dava') { ?>
+                    <a href="<?= site_url('Dava/exportValidasi') ?>" class="btn btn-warning btn-flat">
+                        <i class="fa fa-upload  "></i> Export
+                    </a>
                 <?php } ?>
             </div>
         </div>
@@ -400,7 +395,7 @@
                         </div>
                         <label>
                             <input type="checkbox" name='hide_columns[]' value='22' class="minimal-red" checked disabled>
-                        </label> 
+                        </label>
                         <label>
                             CONNECTIVITY ODP TO OLT
                         </label>

@@ -8,9 +8,6 @@
     <li class="active">Validasi</li>
   </ol>
 </section>
-<!-- <?php
-      print_r($this->input->post(null, TRUE));
-      ?> -->
 <!-- Main content -->
 <section class="content">
   <div class="box">

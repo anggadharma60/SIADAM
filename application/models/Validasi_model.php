@@ -732,10 +732,8 @@ public function getDataValidasiByID($id){
               'noteQRDropCore' => $noteQRDropCore,
               'updaterDava' => $updaterDava
               );
-      }
-      
-      
-      
+      }sdawasdawdasdweqdggyhss
+
       $this->db->insert_batch('rekap_data_validasi', $fetchDataAdd);
     }
 
