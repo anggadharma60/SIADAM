@@ -1736,14 +1736,14 @@ class Admin extends CI_Controller
 		$this->form_validation->set_rules('namaODP', 'Nama ODP', 'required|max_length[40]|trim');
 		$this->form_validation->set_rules('noteODP', 'Note ODP', 'max_length[100]|trim');
 		$this->form_validation->set_rules('QRODP', 'QR ODP', 'max_length[16]|trim');
-		$this->form_validation->set_rules('koordinatODP', 'Koordinat ODP', 'max_length[35]|trim');
+		$this->form_validation->set_rules('koordinatODP', 'Koordinat ODP', 'max_length[35]|regex_match[/^[0-9_.,-]/]|trim');
 		$this->form_validation->set_rules('noteQRODP', 'QR ODP', 'max_length[100]|trim');
 		$this->form_validation->set_rules('totalIN', 'Total IN', 'numeric|max_length[2]|trim');
 		$this->form_validation->set_rules('kapasitasODP', 'Kapasitas', 'required|numeric|max_length[16]|trim');
 
 
 		$this->form_validation->set_rules('namaOLT', 'Nama OLT', 'required|max_length[16]|trim');
-		$this->form_validation->set_rules('portOLT', 'Port OLT', 'max_length[12]|trim');
+		$this->form_validation->set_rules('portOLT', 'Port OLT', 'max_length[12]|regex_match[/^[0-9_.,-\/]/]|trim');
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
@@ -1757,15 +1757,15 @@ class Admin extends CI_Controller
 
 			$this->template->load('template/template_Admin', 'validasi/Validasi_form_add', $data);
 		} 
-		// else {
-		// 	$post = $this->input->post(null, TRUE);
+		else {
+			$post = $this->input->post(null, TRUE);
 
-		// 	$this->Validasi_model->addDataValidasi($post);
-		// 	if ($this->db->affected_rows() > 0) {
-		// 		$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
-		// 	}
-		// 	redirect('Admin/viewListValidasi');
-		// }
+			$this->Validasi_model->addDataValidasi($post);
+			if ($this->db->affected_rows() > 0) {
+				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
+			}
+			redirect('Admin/viewListValidasi');
+		}
 	}
 
 	public function editValidasi($id)
@@ -1775,14 +1775,19 @@ class Admin extends CI_Controller
 		// $this->form_validation->set_rules('onsite[]', 'Onsite ', 'required|trim');
 		// $this->form_validation->set_rules('namaODP', 'Nama ODP', 'required|max_length[40]|trim');
 		$this->form_validation->set_rules('noteODP', 'Note ODP', 'max_length[100]|trim');
-		$this->form_validation->set_rules('QRODP', 'QR ODP', 'max_length[16]|trim');
-		$this->form_validation->set_rules('koordinatODP', 'Koordinat ODP', 'max_length[35]|trim');
+
+		$this->form_validation->set_rules('QRODP', 'QR ODP', 'max_length[12]|alpha_numeric|trim');
+
+		$this->form_validation->set_rules('koordinatODP', 'Koordinat ODP', 'max_length[35]|regex_match[/^[0-9.,-]/]|trim');
+
+
 		$this->form_validation->set_rules('noteQRODP', 'QR ODP', 'max_length[100]|trim');
 		$this->form_validation->set_rules('totalIN', 'Total IN', 'numeric|max_length[2]|trim');
 		$this->form_validation->set_rules('kapasitasODP', 'Kapasitas', 'required|numeric|max_length[16]|trim');
 
 		// $this->form_validation->set_rules('namaOLT', 'Nama OLT', 'required|max_length[16]|trim');
-		$this->form_validation->set_rules('portOLT', 'Port OLT', 'max_length[12]|trim');
+	
+		$this->form_validation->set_rules('portOLT', 'Port OLT', 'max_length[12]|regex_match[/^[0-9.,-\/]/]|trim');
 
 		// $this->form_validation->set_rules('portOutSplitter', 'PORT OUT SPLITTER', 'required|max_length[20]|trim');
 		// $this->form_validation->set_rules('QROutSplitter', 'QR OUT SPLITTER', 'required|trim');
@@ -1806,10 +1811,13 @@ class Admin extends CI_Controller
 		// $this->form_validation->set_rules('noteQRDropCore', 'QR DROPCORE', 'required|max_length[20]|trim');
 		// $this->form_validation->set_rules('updaterDava', 'UPDATER DAVA', 'required|max_length[20]|trim');
 
-		// $this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
-		// $this->form_validation->set_message('min_length', '%s minimal %s karakter');
-		// $this->form_validation->set_message('max_length', '%s maksimal %s karakter');
-		// $this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
+		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
+		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
+		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
+		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
+		$this->form_validation->set_message('regex_match', '{field} tidak sesuai');
+		$this->form_validation->set_message('alpha_numeric', '{field} berisi karakter dan numerik');
+		$this->form_validation->set_message('numeric', '%s hanya untuk bilangan numerik');
 
 		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
@@ -1827,7 +1835,7 @@ class Admin extends CI_Controller
 			
 			$this->Validasi_model->editDataValidasi($post);
 			if ($this->db->affected_rows() > 0) {
-				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
+				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
 			redirect('Admin/viewListValidasi');
 		}
