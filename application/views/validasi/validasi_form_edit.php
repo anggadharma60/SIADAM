@@ -147,7 +147,7 @@
             </div>
             <div class="col-md-3">
               <div class="form-group <?= form_error('jumlahPort') ? 'has-error' : null ?>">
-                <label>Jumlah Port</label>
+                <label>Jumlah Data</label>
                 <input id="jumlahPort" type="text" name="jumlahPort" value="<?= $row->num_rows() ?>" class="form-control" readonly style="text-align:center;">
                 <?= form_error('jumlahPort') ?>
               </div>
@@ -270,9 +270,9 @@
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('QROutSplitter') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('QROutSplitter[' . $no . ']') ? 'has-error' : null ?>">
                           <input type="text" class="form-control" id="QROutSplitter" name="QROutSplitter[]" value="<?= $this->input->post('QROutSplitter[' . $no . ']') ?? $data->QRPortOutSplitter ?>" style="width:225px;text-align:center;" maxlength=16 />
-                          <?= form_error('QROutSplitter') ?>
+                          <?= form_error('QROutSplitter[' . $no . ']') ?>
                         </div>
                       </td>
                       <td>
@@ -624,7 +624,7 @@
           </div>
           <div class="col-md-2">
             <div class="form-group <?= form_error('newPort') ? 'has-error' : null ?>">
-              <label>Kapasitas</label>
+              <label>Jumlah Data Baru</label>
               <input id="txtNoOfRec" type="text" name="newPort" value="<?= set_value('newPort') ?>" class="form-control" style="text-align:center;">
               <?= form_error('newPort') ?>
             </div>

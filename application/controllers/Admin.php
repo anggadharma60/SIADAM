@@ -1813,60 +1813,7 @@ class Admin extends CI_Controller
 		// $this->form_validation->set_rules('updaterDava', 'UPDATER DAVA', 'max_length[30]|alpha|trim');
 
 
-		// 	function gen_validate($gen){
-		//     foreach($gen as $key=>$value){
-		//         if($gen[$key]==null || $gen[$key]==false){
-		//         $this->form_validation->set_message('gen_validate', 'The gen field is Required.');
-		//             return FALSE;
-		//         }
-		//         }
-		//     return TRUE;
-		// }
-			$portOutSplitter = $this->input->post('portOutSplitter');
-			$QROutSplitter  = $this->input->post('QROutSplitter');
-			$portODP = $this->input->post('portODP');
-			$statusportODP = $this->input->post('statusportODP');
-			$status = $this->input->post('status');
-			$ONU = $this->input->post('ONU');
-			$serialNumber = $this->input->post('serialNumber');
-			$serviceNumber = $this->input->post('serviceNumber');
-			$QRDropCore = $this->input->post('QRDropCore');
-			$noteDropcore = $this->input->post('noteDropcore');
-			$flagOLTPort = $this->input->post('flagOLTPort');
-			$ODPtoOLT = $this->input->post('ODPtoOLT');
-			$ODPtoONT = $this->input->post('ODPtoONT');
-			$RFS = $this->input->post('RFS');
-			$noteHDDaman = $this->input->post('noteHDDaman');
-			$updateDataUIM = $this->input->post('updateDataUIM');
-			$updaterUIM = $this->input->post('updaterUIM');
-			$noteQRODP = $this->input->post('noteQRODP');
-			$noteQROutSplitter = $this->input->post('noteQROutSplitter');
-			$noteQRDropCore = $this->input->post('noteQRDropCore');
-			$updaterDava = $this->input->post('updaterDava');
-
-			foreach ($portOutSplitter as $ind => $val) {
-				$pos = $portOutSplitter[$ind];
-				$dept = $QROutSplitter[$ind];
-				$po  = $portODP[$ind];
-				$spo = $statusportODP[$ind];
-				$st = $status[$ind];
-				$onu = $ONU[$ind];
-				$srn = $serialNumber[$ind];
-				$svn = $serviceNumber[$ind];
-				$qrdc = $QRDropCore[$ind];
-				$ndc = $noteDropcore[$ind];
-				$fot = $flagOLTPort[$ind];
-				$otl = $ODPtoOLT[$ind];
-				$otn = $ODPtoONT[$ind];
-				$rfs = $RFS[$ind];
-				$nhd = $noteHDDaman[$ind];
-				$udu = $updateDataUIM[$ind];
-				$uu = $updaterUIM[$ind];
-				$nqro = $noteQRODP[$ind];
-				$nqros = $noteQROutSplitter[$ind];
-				$nqrdc = $noteQRDropCore[$ind];
-				$ud = $updaterDava[$ind];
-
+			
 		$this->form_validation->set_rules('portOutSplitter[".$ind."]', 'PORT OUT SPLITTER', 'max_length[5]|numeric|trim');
 		$this->form_validation->set_rules('QROutSplitter[".$ind."]', 'QR OUT SPLITTER', 'max_length[16]|alpha_numeric|trim');
 		$this->form_validation->set_rules('portODP[".$ind."]', 'PORT', 'max_length[5]|numeric|trim');
@@ -1961,43 +1908,47 @@ class Admin extends CI_Controller
 
 // }
 
-for ($i = 0; $i < 18; $i++) { 
-	$this->form_validation->set_rules('portOutSplitter', 'PORT OUT SPLITTER', 'max_length[5]|numeric|trim');
+// for ($i = 0; $i < 18; $i++) { 
+// 	$this->form_validation->set_rules('portOutSplitter', 'PORT OUT SPLITTER', 'max_length[5]|numeric|trim');
 
 
-	echo set_rules('portOutSplitter', 'PORT OUT SPLITTER', 'max_length[5]|numeric|trim');
+	
 
-	$this->form_validation->set_rules('portOutSplitter', 'PORT OUT SPLITTER', 'max_length[5]|numeric|trim');
-	$this->form_validation->set_rules('QROutSplitter', 'QR OUT SPLITTER', 'max_length[16]|alpha_numeric|trim');
-	$this->form_validation->set_rules('portODP', 'PORT', 'max_length[5]|numeric|trim');
-	$this->form_validation->set_rules('statusportODP', 'QR ODP', 'max_length[20]|trim');
-	$this->form_validation->set_rules('status', 'STATUS', 'max_length[20]|trim');
-	$this->form_validation->set_rules('ONU', 'ONU', 'max_length[15]|trim');
-	$this->form_validation->set_rules('serialNumber', 'SN', 'max_length[30]|trim');
-	$this->form_validation->set_rules('serviceNumber', 'SERVICE', 'max_length[20]|trim');
-	$this->form_validation->set_rules('QRDropCore', 'QR DROPCORE', 'max_length[20]|trim');
-	$this->form_validation->set_rules('noteDropcore', 'NOTE URUT DROPCORE', 'max_length[30]|trim');
-	$this->form_validation->set_rules('flagOLTPort', 'FLAG OLT & PORT', 'max_length[30]|alpha|trim');
-	$this->form_validation->set_rules('ODPtoOLT', 'CONNECTIVITY ODP TO OLT', 'max_length[16]|trim');
-	$this->form_validation->set_rules('ODPtoONT', 'ODP - ONT', 'max_length[16]|trim');
-	$this->form_validation->set_rules('RFS', 'RFS', 'max_length[30]|trim');
-	$this->form_validation->set_rules('noteHDDaman', 'NOTE', 'max_length[20]|trim');
-	$this->form_validation->set_rules('updateDataUIM', 'TANGGAL UPDATE UIM', 'max_length[20]|trim');
-	$this->form_validation->set_rules('updaterUIM', 'UPDATER UIM', 'max_length[20]|alpha|trim');
-	$this->form_validation->set_rules('noteQRODP', 'QR ODP', 'max_length[30]|trim');
-	$this->form_validation->set_rules('noteQROutSplitter', 'QR OUT SPLITTER', 'max_length[30]|trim');
-	$this->form_validation->set_rules('noteQRDropCore', 'QR DROPCORE', 'max_length[30]|trim');
-	$this->form_validation->set_rules('updaterDava', 'UPDATER DAVA', 'max_length[30]|alpha|trim');
-	}
-
-	// for($i = 0; $i < count($portOutSplitter); $i++) { // echo form_error("portOutSplitter[".$i."]"); // echo form_error("QROutSplitter[".$i."]"); // echo form_error("portODP[".$i."]"); // echo form_error("statusportODP[".$i."]"); // echo form_error("status[".$i."]"); // echo form_error("ONU[".$i."]"); // echo form_error("serialNumber[".$i."]"); // echo form_error("serviceNumber[".$i."]"); // echo form_error("QRDropCore[".$i."]"); // echo form_error("noteDropcore[".$i."]"); // echo form_error("flagOLTPort[".$i."]"); // echo form_error("ODPtoOLT[".$i."]"); // echo form_error("ODPtoONT[".$i."]"); // echo form_error("RFS[".$i."]"); // echo form_error("noteHDDaman[".$i."]"); // echo form_error("updateDataUIM[".$i."]"); // echo form_error("updaterUIM[".$i."]"); // echo form_error("noteQRODP[".$i."]"); // echo form_error("noteQROutSplitter[".$i."]"); // echo form_error("noteQRDropCore[".$i."]"); // echo form_error("updaterDava[".$i."]"); // } $this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
+// 	$this->form_validation->set_rules('portOutSplitter', 'PORT OUT SPLITTER', 'max_length[5]|numeric|trim');
+// 	$this->form_validation->set_rules('QROutSplitter', 'QR OUT SPLITTER', 'max_length[16]|alpha_numeric|trim');
+// 	$this->form_validation->set_rules('portODP', 'PORT', 'max_length[5]|numeric|trim');
+// 	$this->form_validation->set_rules('statusportODP', 'QR ODP', 'max_length[20]|trim');
+// 	$this->form_validation->set_rules('status', 'STATUS', 'max_length[20]|trim');
+// 	$this->form_validation->set_rules('ONU', 'ONU', 'max_length[15]|trim');
+// 	$this->form_validation->set_rules('serialNumber', 'SN', 'max_length[30]|trim');
+// 	$this->form_validation->set_rules('serviceNumber', 'SERVICE', 'max_length[20]|trim');
+// 	$this->form_validation->set_rules('QRDropCore', 'QR DROPCORE', 'max_length[20]|trim');
+// 	$this->form_validation->set_rules('noteDropcore', 'NOTE URUT DROPCORE', 'max_length[30]|trim');
+// 	$this->form_validation->set_rules('flagOLTPort', 'FLAG OLT & PORT', 'max_length[30]|alpha|trim');
+// 	$this->form_validation->set_rules('ODPtoOLT', 'CONNECTIVITY ODP TO OLT', 'max_length[16]|trim');
+// 	$this->form_validation->set_rules('ODPtoONT', 'ODP - ONT', 'max_length[16]|trim');
+// 	$this->form_validation->set_rules('RFS', 'RFS', 'max_length[30]|trim');
+// 	$this->form_validation->set_rules('noteHDDaman', 'NOTE', 'max_length[20]|trim');
+// 	$this->form_validation->set_rules('updateDataUIM', 'TANGGAL UPDATE UIM', 'max_length[20]|trim');
+// 	$this->form_validation->set_rules('updaterUIM', 'UPDATER UIM', 'max_length[20]|alpha|trim');
+// 	$this->form_validation->set_rules('noteQRODP', 'QR ODP', 'max_length[30]|trim');
+// 	$this->form_validation->set_rules('noteQROutSplitter', 'QR OUT SPLITTER', 'max_length[30]|trim');
+// 	$this->form_validation->set_rules('noteQRDropCore', 'QR DROPCORE', 'max_length[30]|trim');
+// 	$this->form_validation->set_rules('updaterDava', 'UPDATER DAVA', 'max_length[30]|alpha|trim');
+// 	}
+		print_r($this->input->post(null, TRUE));
+		$jumlah= $this->input->post('jumlahPort');
+		
+		for($i=0;$i<$jumlah;$i++){
+			$this->form_validation->set_rules('QROutSplitter['.$i.']', 'QR OUT SPLITTER', 'max_length[16]|alpha_numeric|trim');
+		}
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
 		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
 		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
 		$this->form_validation->set_message('regex_match', '{field} tidak sesuai');
 		$this->form_validation->set_message('alpha_numeric', '{field} berisi karakter dan numerik');
 		$this->form_validation->set_message('numeric', '%s hanya untuk bilangan numerik');
-
+		
 		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
 		if ($this->form_validation->run() == FALSE) {

@@ -578,7 +578,7 @@ public function getDataValidasiByID($id){
       $counter=0;
     
      if($index != $temp){
-      print_r("Tidak sama");
+      // print_r("Tidak sama");
       for($n=$index;$n<$temp;$n++){
         
         if(!array_key_exists($n,$post['portOutSplitter']))  {
