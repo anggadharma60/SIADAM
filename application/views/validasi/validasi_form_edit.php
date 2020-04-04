@@ -265,85 +265,85 @@
                       <td>
                         <div class="form-group <?= form_error('portOutSplitter[]') ? 'has-error' : null ?>">
                           <input type="hidden" class="form-control" id="id" name="id[]" value="<?= $data->id ?>" style="text-align:center;" />
-                          <input type="text" class="form-control" id="portOutSplitter" name="portOutSplitter[]" value="<?= $this->input->post('portOutSplitter[' . $no . ']') ?? $data->portOutSplitter ?>" style="text-align:center;" />
+                          <input type="text" class="form-control" id="portOutSplitter" name="portOutSplitter[]" value="<?= $this->input->post('portOutSplitter['.$no.']') ?? $data->portOutSplitter ?>" style="text-align:center;" />
                           <?= form_error('portOutSplitter[]') ?>
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('QROutSplitter[' . $no . ']') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="QROutSplitter" name="QROutSplitter[]" value="<?= $this->input->post('QROutSplitter[' . $no . ']') ?? $data->QRPortOutSplitter ?>" style="width:225px;text-align:center;" maxlength=16 />
-                          <?= form_error('QROutSplitter[' . $no . ']') ?>
+                        <div class="form-group <?= form_error('QROutSplitter['.$no.']') ? 'has-error' : null ?>">
+                          <input type="text" class="form-control" id="QROutSplitter" name="QROutSplitter[]" value="<?= $this->input->post('QROutSplitter['.$no.']') ?? $data->QRPortOutSplitter ?>" style="width:225px;text-align:center;" maxlength=16 />
+                          <?= form_error('QROutSplitter['.$no.']') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('port') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="port" name="port[]" value="<?= $this->input->post('port[' . $no . ']') ?? $data->portODP ?>" style="width:50px;text-align:center;" />
+                          <input type="text" class="form-control" id="port" name="port[]" value="<?= $this->input->post('port['.$no.']') ?? $data->portODP ?>" style="width:50px;text-align:center;" />
                           <?= form_error('port') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('status') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="status" name="status[]" value="<?= $this->input->post('status[' . $no . ']') ?? $data->statusPortODP ?>" style="width:225px;text-align:center;" maxlength=35 />
+                          <input type="text" class="form-control" id="status" name="status[]" value="<?= $this->input->post('status['.$no.']') ?? $data->statusPortODP ?>" style="width:225px;text-align:center;" maxlength=35 />
                           <?= form_error('status') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('ONU') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="ONU" name="ONU[]" value="<?= $this->input->post('ONU[' . $no . ']') ?? $data->ONU ?>" style="width:225px;text-align:center;" maxlength=30 />
+                          <input type="text" class="form-control" id="ONU" name="ONU[]" value="<?= $this->input->post('ONU['.$no.']') ?? $data->ONU ?>" style="width:225px;text-align:center;" maxlength=30 />
                           <?= form_error('ONU') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('serialNumber') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="serialNumber" name="serialNumber[]" value="<?= $this->input->post('serialNumber[' . $no . ']') ?? $data->serialNumber ?>" style="width:225px;text-align:center;" maxlength=55 />
+                          <input type="text" class="form-control" id="serialNumber" name="serialNumber[]" value="<?= $this->input->post('serialNumber['.$no.']') ?? $data->serialNumber ?>" style="width:225px;text-align:center;" maxlength=55 />
                           <?= form_error('serialNumber') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('service') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="service" name="service[]" value="<?= $this->input->post('service[' . $no . ']') ?? $data->serviceNumber ?>" style="width:225px;text-align:center;" maxlength=55 />
+                          <input type="text" class="form-control" id="service" name="service[]" value="<?= $this->input->post('service['.$no.']') ?? $data->serviceNumber ?>" style="width:225px;text-align:center;" maxlength=55 />
                           <?= form_error('service') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('QRDropCore') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="QRDropCore" name="QRDropCore[]" value="<?= $this->input->post('QRDropCore[' . $no . ']') ?? $data->QRDropCore ?>" style="width:225px;text-align:center;" maxlength=55 />
+                          <input type="text" class="form-control" id="QRDropCore" name="QRDropCore[]" value="<?= $this->input->post('QRDropCore['.$no.']') ?? $data->QRDropCore ?>" style="width:225px;text-align:center;" maxlength=55 />
                           <?= form_error('QRDropCore') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('noteUrut') ? 'has-error' : null ?>">
-                          <textarea style="width:225px;resize:none" name="noteUrut[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteUrut[' . $no . ']') ?? $data->noteUrut ?></textarea>
+                          <textarea style="width:225px;resize:none" name="noteUrut[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteUrut['.$no.']') ?? $data->noteUrut ?></textarea>
                           <?= form_error('noteUrut') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('flagOLTPort') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="flagOLTPort" name="flagOLTPort[]" value="<?= $this->input->post('flagOLTPort[' . $no . ']') ?? $data->flagOLTPort ?>" style="width:225px;text-align:center;" maxlength=40 />
+                          <input type="text" class="form-control" id="flagOLTPort" name="flagOLTPort[]" value="<?= $this->input->post('flagOLTPort['.$no.']') ?? $data->flagOLTPort ?>" style="width:225px;text-align:center;" maxlength=40 />
                           <?= form_error('flagOLTPort') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('ODPtoOLT') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="ODPtoOLT" name="ODPtoOLT[]" value="<?= $this->input->post('ODPtoOLT[' . $no . ']') ?? $data->ODPtoOLT ?>" style="width:225px;text-align:center;" maxlength=40 />
+                          <input type="text" class="form-control" id="ODPtoOLT" name="ODPtoOLT[]" value="<?= $this->input->post('ODPtoOLT['.$no.']') ?? $data->ODPtoOLT ?>" style="width:225px;text-align:center;" maxlength=40 />
                           <?= form_error('ODPtoOLT') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('ODPtoONT') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="ODPtoONT" name="ODPtoONT[]" value="<?= $this->input->post('ODPtoONT[' . $no . ']') ?? $data->ODPtoONT ?>" style="width:225px;text-align:center;" maxlength=40 />
+                          <input type="text" class="form-control" id="ODPtoONT" name="ODPtoONT[]" value="<?= $this->input->post('ODPtoONT['.$no.']') ?? $data->ODPtoONT ?>" style="width:225px;text-align:center;" maxlength=40 />
                           <?= form_error('ODPtoONT') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('RFS') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="RFS" name="RFS[]" value="<?= $this->input->post('RFS[' . $no . ']') ?? $data->RFS ?>" style="width:225px;text-align:center;" maxlength=40 />
+                          <input type="text" class="form-control" id="RFS" name="RFS[]" value="<?= $this->input->post('RFS['.$no.']') ?? $data->RFS ?>" style="width:225px;text-align:center;" maxlength=40 />
                           <?= form_error('RFS') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('noteHDDaman') ? 'has-error' : null ?>">
-                          <textarea style="width:225px;resize:none" name="noteHDDaman[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteHDDaman[' . $no . ']') ?? $data->noteHDDaman ?></textarea>
+                          <textarea style="width:225px;resize:none" name="noteHDDaman[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteHDDaman['.$no.']') ?? $data->noteHDDaman ?></textarea>
                           <?= form_error('noteHDDaman') ?>
                         </div>
                       </td>
@@ -353,14 +353,14 @@
                             <div class="input-group-addon">
                               <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" name="updateDateUIM[]" id="updateDateUIM" class="form-control pull-right" value="<?= $this->input->post('updateDateUIM[' . $no . ']') ?? $data->updateDateUIM ?>" readonly="" style="width:175px" />
+                            <input type="text" name="updateDateUIM[]" id="updateDateUIM" class="form-control pull-right" value="<?= $this->input->post('updateDateUIM['.$no.']') ?? $data->updateDateUIM ?>" readonly="" style="width:175px" />
                           </div>
                           <?= form_error('updateDateUIM') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('updaterUIM') ? 'has-error' : null ?>">
-                          <select class="form-control" id="updaterUIM" name="updaterUIM[]" value="<?= $this->input->post('updaterUIM[' . $no . ']') ?? $data->updaterUIM ?>" style="width:225px">
+                          <select class="form-control" id="updaterUIM" name="updaterUIM[]" value="<?= $this->input->post('updaterUIM['.$no.']') ?? $data->updaterUIM ?>" style="width:225px">
                             <option value="<?= $data->updaterUIM ?>" selected="selected"><?= $data->updaterUIM ?></option>
                           </select>
                           <?= form_error('updaterUIM') ?>
@@ -368,19 +368,19 @@
                       </td>
                       <td>
                         <div class="form-group <?= form_error('noteQROutSplitter') ? 'has-error' : null ?>">
-                          <textarea style="width:225px;resize:none" name="noteQROutSplitter[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteQROutSplitter[' . $no . ']') ?? $data->noteQROutSplitter ?></textarea>
+                          <textarea style="width:225px;resize:none" name="noteQROutSplitter[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteQROutSplitter['.$no.']') ?? $data->noteQROutSplitter ?></textarea>
                           <?= form_error('noteQROutSplitter') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('noteQRDropCore') ? 'has-error' : null ?>">
-                          <textarea style="width:225px;resize:none" name="noteQRDropCore[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteQRDropCore[' . $no . ']') ?? $data->noteQRDropCore ?></textarea>
+                          <textarea style="width:225px;resize:none" name="noteQRDropCore[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteQRDropCore['.$no.']') ?? $data->noteQRDropCore ?></textarea>
                           <?= form_error('noteQRDropCore') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('updaterDava') ? 'has-error' : null ?>">
-                          <select class="form-control" id="updaterDava" name="updaterDava[]" value="<?= $this->input->post('updaterDava[' . $no . ']') ?? $data->updaterDava ?>" style="width:225px">
+                          <select class="form-control" id="updaterDava" name="updaterDava[]" value="<?= $this->input->post('updaterDava['.$no.']') ?? $data->updaterDava ?>" style="width:225px">
                             <option value="<?= $data->updaterDava ?>" selected="selected"><?= $data->updaterDava ?></option>
                           </select>
                           <?= form_error('updaterDava') ?>
@@ -393,61 +393,61 @@
                       <td>
                         <div class="form-group <?= form_error('portOutSplitter[]') ? 'has-error' : null ?>">
                           <input type="hidden" class="form-control" id="id" name="id[]" value="<?= $data->id ?>" style="text-align:center;" />
-                          <input type="text" class="form-control" id="portOutSplitter" name="portOutSplitter[]" value="<?= $this->input->post('portOutSplitter[' . $no . ']') ?? $data->portOutSplitter ?>" style="text-align:center;" />
+                          <input type="text" class="form-control" id="portOutSplitter" name="portOutSplitter[]" value="<?= $this->input->post('portOutSplitter['.$no.']') ?? $data->portOutSplitter ?>" style="text-align:center;" />
                           <?= form_error('portOutSplitter[]') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('QROutSplitter') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="QROutSplitter" name="QROutSplitter[]" value="<?= $this->input->post('QROutSplitter[' . $no . ']') ?? $data->QRPortOutSplitter ?>" style="width:225px;text-align:center;" maxlength=16 />
+                          <input type="text" class="form-control" id="QROutSplitter" name="QROutSplitter[]" value="<?= $this->input->post('QROutSplitter['.$no.']') ?? $data->QRPortOutSplitter ?>" style="width:225px;text-align:center;" maxlength=16 />
                           <?= form_error('QROutSplitter') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('port') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="port" name="port[]" value="<?= $this->input->post('port[' . $no . ']') ?? $data->portODP ?>" style="width:50px;text-align:center;" />
+                          <input type="text" class="form-control" id="port" name="port[]" value="<?= $this->input->post('port['.$no.']') ?? $data->portODP ?>" style="width:50px;text-align:center;" />
                           <?= form_error('port') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('status') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="status" name="status[]" value="<?= $this->input->post('status[' . $no . ']') ?? $data->statusPortODP ?>" style="width:225px;text-align:center;" maxlength=35 />
+                          <input type="text" class="form-control" id="status" name="status[]" value="<?= $this->input->post('status['.$no.']') ?? $data->statusPortODP ?>" style="width:225px;text-align:center;" maxlength=35 />
                           <?= form_error('status') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('ONU') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="ONU" name="ONU[]" value="<?= $this->input->post('ONU[' . $no . ']') ?? $data->ONU ?>" style="width:225px;text-align:center;" maxlength=30 />
+                          <input type="text" class="form-control" id="ONU" name="ONU[]" value="<?= $this->input->post('ONU['.$no.']') ?? $data->ONU ?>" style="width:225px;text-align:center;" maxlength=30 />
                           <?= form_error('ONU') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('serialNumber') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="serialNumber" name="serialNumber[]" value="<?= $this->input->post('serialNumber[' . $no . ']') ?? $data->serialNumber ?>" style="width:225px;text-align:center;" maxlength=55 />
+                          <input type="text" class="form-control" id="serialNumber" name="serialNumber[]" value="<?= $this->input->post('serialNumber['.$no.']') ?? $data->serialNumber ?>" style="width:225px;text-align:center;" maxlength=55 />
                           <?= form_error('serialNumber') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('service') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="service" name="service[]" value="<?= $this->input->post('service[' . $no . ']') ?? $data->serviceNumber ?>" style="width:225px;text-align:center;" maxlength=55 />
+                          <input type="text" class="form-control" id="service" name="service[]" value="<?= $this->input->post('service['.$no.']') ?? $data->serviceNumber ?>" style="width:225px;text-align:center;" maxlength=55 />
                           <?= form_error('service') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('QRDropCore') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="QRDropCore" name="QRDropCore[]" value="<?= $this->input->post('QRDropCore[' . $no . ']') ?? $data->QRDropCore ?>" style="width:225px;text-align:center;" maxlength=55 />
+                          <input type="text" class="form-control" id="QRDropCore" name="QRDropCore[]" value="<?= $this->input->post('QRDropCore['.$no.']') ?? $data->QRDropCore ?>" style="width:225px;text-align:center;" maxlength=55 />
                           <?= form_error('QRDropCore') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('noteUrut') ? 'has-error' : null ?>">
-                          <textarea style="width:225px;resize:none" name="noteUrut[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteUrut[' . $no . ']') ?? $data->noteUrut ?></textarea>
+                          <textarea style="width:225px;resize:none" name="noteUrut[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteUrut['.$no.']') ?? $data->noteUrut ?></textarea>
                           <?= form_error('noteUrut') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('flagOLTPort') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="flagOLTPort" name="flagOLTPort[]" value="<?= $this->input->post('flagOLTPort[' . $no . ']') ?? $data->flagOLTPort ?>" style="width:225px;text-align:center;" maxlength=40 />
+                          <input type="text" class="form-control" id="flagOLTPort" name="flagOLTPort[]" value="<?= $this->input->post('flagOLTPort['.$no.']') ?? $data->flagOLTPort ?>" style="width:225px;text-align:center;" maxlength=40 />
                           <?= form_error('flagOLTPort') ?>
                         </div>
                       </td>
@@ -457,19 +457,19 @@
                     <tr>
                       <td>
                         <div class="form-group <?= form_error('ODPtoONT') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="ODPtoONT" name="ODPtoONT[]" value="<?= $this->input->post('ODPtoONT[' . $no . ']') ?? $data->ODPtoONT ?>" style="width:225px;text-align:center;" maxlength=40 />
+                          <input type="text" class="form-control" id="ODPtoONT" name="ODPtoONT[]" value="<?= $this->input->post('ODPtoONT['.$no.']') ?? $data->ODPtoONT ?>" style="width:225px;text-align:center;" maxlength=40 />
                           <?= form_error('ODPtoONT') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('RFS') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="RFS" name="RFS[]" value="<?= $this->input->post('RFS[' . $no . ']') ?? $data->RFS ?>" style="width:225px;text-align:center;" maxlength=40 />
+                          <input type="text" class="form-control" id="RFS" name="RFS[]" value="<?= $this->input->post('RFS['.$no.']') ?? $data->RFS ?>" style="width:225px;text-align:center;" maxlength=40 />
                           <?= form_error('RFS') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('noteHDDaman') ? 'has-error' : null ?>">
-                          <textarea style="width:225px;resize:none" name="noteHDDaman[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteHDDaman[' . $no . ']') ?? $data->noteHDDaman ?></textarea>
+                          <textarea style="width:225px;resize:none" name="noteHDDaman[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteHDDaman['.$no.']') ?? $data->noteHDDaman ?></textarea>
                           <?= form_error('noteHDDaman') ?>
                         </div>
                       </td>
@@ -479,19 +479,19 @@
                     <tr>
                       <td>
                         <div class="form-group <?= form_error('ODPtoONT') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="ODPtoONT" name="ODPtoONT[]" value="<?= $this->input->post('ODPtoONT[' . $no . ']') ?? $data->ODPtoONT ?>" style="width:225px;text-align:center;" maxlength=40 />
+                          <input type="text" class="form-control" id="ODPtoONT" name="ODPtoONT[]" value="<?= $this->input->post('ODPtoONT['.$no.']') ?? $data->ODPtoONT ?>" style="width:225px;text-align:center;" maxlength=40 />
                           <?= form_error('ODPtoONT') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('RFS') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="RFS" name="RFS[]" value="<?= $this->input->post('RFS[' . $no . ']') ?? $data->RFS ?>" style="width:225px;text-align:center;" maxlength=40 />
+                          <input type="text" class="form-control" id="RFS" name="RFS[]" value="<?= $this->input->post('RFS['.$no.']') ?? $data->RFS ?>" style="width:225px;text-align:center;" maxlength=40 />
                           <?= form_error('RFS') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('noteHDDaman') ? 'has-error' : null ?>">
-                          <textarea style="width:225px;resize:none" name="noteHDDaman[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteHDDaman[' . $no . ']') ?? $data->noteHDDaman ?></textarea>
+                          <textarea style="width:225px;resize:none" name="noteHDDaman[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteHDDaman['.$no.']') ?? $data->noteHDDaman ?></textarea>
                           <?= form_error('noteHDDaman') ?>
                         </div>
                       </td>
@@ -501,7 +501,7 @@
                     <tr>
                       <td>
                         <div class="form-group <?= form_error('ODPtoOLT') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="ODPtoOLT" name="ODPtoOLT[]" value="<?= $this->input->post('ODPtoOLT[' . $no . ']') ?? $data->ODPtoOLT ?>" style="width:225px;text-align:center;" maxlength=40 />
+                          <input type="text" class="form-control" id="ODPtoOLT" name="ODPtoOLT[]" value="<?= $this->input->post('ODPtoOLT['.$no.']') ?? $data->ODPtoOLT ?>" style="width:225px;text-align:center;" maxlength=40 />
                           <?= form_error('ODPtoOLT') ?>
                         </div>
                       </td>
@@ -511,25 +511,25 @@
                     <tr>
                       <td>
                         <div class="form-group <?= form_error('QROutSplitter') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="QROutSplitter" name="QROutSplitter[]" value="<?= $this->input->post('QROutSplitter[' . $no . ']') ?? $data->QRPortOutSplitter ?>" style="width:225px;text-align:center;" maxlength=16 />
+                          <input type="text" class="form-control" id="QROutSplitter" name="QROutSplitter[]" value="<?= $this->input->post('QROutSplitter['.$no.']') ?? $data->QRPortOutSplitter ?>" style="width:225px;text-align:center;" maxlength=16 />
                           <?= form_error('QROutSplitter') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('QRDropCore') ? 'has-error' : null ?>">
-                          <input type="text" class="form-control" id="QRDropCore" name="QRDropCore[]" value="<?= $this->input->post('QRDropCore[' . $no . ']') ?? $data->QRDropCore ?>" style="width:225px;text-align:center;" maxlength=55 />
+                          <input type="text" class="form-control" id="QRDropCore" name="QRDropCore[]" value="<?= $this->input->post('QRDropCore['.$no.']') ?? $data->QRDropCore ?>" style="width:225px;text-align:center;" maxlength=55 />
                           <?= form_error('QRDropCore') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('noteQROutSplitter') ? 'has-error' : null ?>">
-                          <textarea style="width:225px;resize:none" name="noteQROutSplitter[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteQROutSplitter[' . $no . ']') ?? $data->noteQROutSplitter ?></textarea>
+                          <textarea style="width:225px;resize:none" name="noteQROutSplitter[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteQROutSplitter['.$no.']') ?? $data->noteQROutSplitter ?></textarea>
                           <?= form_error('noteQROutSplitter') ?>
                         </div>
                       </td>
                       <td>
                         <div class="form-group <?= form_error('noteQRDropCore') ? 'has-error' : null ?>">
-                          <textarea style="width:225px;resize:none" name="noteQRDropCore[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteQRDropCore[' . $no . ']') ?? $data->noteQRDropCore ?></textarea>
+                          <textarea style="width:225px;resize:none" name="noteQRDropCore[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteQRDropCore['.$no.']') ?? $data->noteQRDropCore ?></textarea>
                           <?= form_error('noteQRDropCore') ?>
                         </div>
                       </td>
