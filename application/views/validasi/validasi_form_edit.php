@@ -263,10 +263,10 @@
                   <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
                     <tr>
                       <td>
-                        <div class="form-group <?= form_error('portOutSplitter[]') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('portOutSplitter['.$no.']') ? 'has-error' : null ?>">
                           <input type="hidden" class="form-control" id="id" name="id[]" value="<?= $data->id ?>" style="text-align:center;" />
                           <input type="text" class="form-control" id="portOutSplitter" name="portOutSplitter[]" value="<?= $this->input->post('portOutSplitter['.$no.']') ?? $data->portOutSplitter ?>" style="text-align:center;" maxlength=10 />
-                          <?= form_error('portOutSplitter[]') ?>
+                          <?= form_error('portOutSplitter['.$no.']') ?>
                         </div>
                       </td>
                       <td>
