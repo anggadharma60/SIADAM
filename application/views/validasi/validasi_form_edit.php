@@ -276,79 +276,79 @@
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('port') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('port['.$no.']') ? 'has-error' : null ?>">
                           <input type="text" class="form-control" id="port" name="port[]" value="<?= $this->input->post('port['.$no.']') ?? $data->portODP ?>" style="width:50px;text-align:center;" maxlength=10 />
                           <?= form_error('port['.$no.']') ?>
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('status') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('status['.$no.']') ? 'has-error' : null ?>">
                           <input type="text" class="form-control" id="status" name="status[]" value="<?= $this->input->post('status['.$no.']') ?? $data->statusPortODP ?>" style="width:225px;text-align:center;" maxlength=35 />
                           <?= form_error('status['.$no.']') ?>
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('ONU') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('ONU['.$no.']') ? 'has-error' : null ?>">
                           <input type="text" class="form-control" id="ONU" name="ONU[]" value="<?= $this->input->post('ONU['.$no.']') ?? $data->ONU ?>" style="width:225px;text-align:center;" maxlength=30 />
                           <?= form_error('ONU['.$no.']') ?>
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('serialNumber') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('serialNumber['.$no.']') ? 'has-error' : null ?>">
                           <input type="text" class="form-control" id="serialNumber" name="serialNumber[]" value="<?= $this->input->post('serialNumber['.$no.']') ?? $data->serialNumber ?>" style="width:225px;text-align:center;" maxlength=55 />
                           <?= form_error('serialNumber['.$no.']') ?>
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('service') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('service['.$no.']') ? 'has-error' : null ?>">
                           <input type="text" class="form-control" id="service" name="service[]" value="<?= $this->input->post('service['.$no.']') ?? $data->serviceNumber ?>" style="width:225px;text-align:center;" maxlength=55 />
                           <?= form_error('service['.$no.']') ?>
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('QRDropCore') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('QRDropCore['.$no.']') ? 'has-error' : null ?>">
                           <input type="text" class="form-control" id="QRDropCore" name="QRDropCore[]" value="<?= $this->input->post('QRDropCore['.$no.']') ?? $data->QRDropCore ?>" style="width:225px;text-align:center;" maxlength=40 />
                           <?= form_error('QRDropCore['.$no.']') ?>
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('noteUrut') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('noteUrut['.$no.']') ? 'has-error' : null ?>">
                           <textarea style="width:225px;resize:none" name="noteUrut[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteUrut['.$no.']') ?? $data->noteUrut ?></textarea>
                           <?= form_error('noteUrut['.$no.']') ?>
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('flagOLTPort') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('flagOLTPort['.$no.']') ? 'has-error' : null ?>">
                           <input type="text" class="form-control" id="flagOLTPort" name="flagOLTPort[]" value="<?= $this->input->post('flagOLTPort['.$no.']') ?? $data->flagOLTPort ?>" style="width:225px;text-align:center;" maxlength=40 />
                           <?= form_error('flagOLTPort['.$no.']') ?>
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('ODPtoOLT') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('ODPtoOLT['.$no.']') ? 'has-error' : null ?>">
                           <input type="text" class="form-control" id="ODPtoOLT" name="ODPtoOLT[]" value="<?= $this->input->post('ODPtoOLT['.$no.']') ?? $data->ODPtoOLT ?>" style="width:225px;text-align:center;" maxlength=40 />
                           <?= form_error('ODPtoOLT['.$no.']') ?>
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('ODPtoONT') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('ODPtoONT['.$no.']') ? 'has-error' : null ?>">
                           <input type="text" class="form-control" id="ODPtoONT" name="ODPtoONT[]" value="<?= $this->input->post('ODPtoONT['.$no.']') ?? $data->ODPtoONT ?>" style="width:225px;text-align:center;" maxlength=40 />
                           <?= form_error('ODPtoONT['.$no.']') ?>
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('RFS') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('RFS['.$no.']') ? 'has-error' : null ?>">
                           <input type="text" class="form-control" id="RFS" name="RFS[]" value="<?= $this->input->post('RFS['.$no.']') ?? $data->RFS ?>" style="width:225px;text-align:center;" maxlength=40 />
                           <?= form_error('RFS['.$no.']') ?>
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('noteHDDaman') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('noteHDDaman['.$no.']') ? 'has-error' : null ?>">
                           <textarea style="width:225px;resize:none" name="noteHDDaman[]" class="form-control" rows="2" maxlength=100><?= $this->input->post('noteHDDaman['.$no.']') ?? $data->noteHDDaman ?></textarea>
                           <?= form_error('noteHDDaman['.$no.']') ?>
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('updateDateUIM') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('updateDateUIM['.$no.']') ? 'has-error' : null ?>">
                           <div class="input-group input-daterange">
                             <div class="input-group-addon">
                               <i class="fa fa-calendar"></i>
@@ -359,7 +359,7 @@
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('updaterUIM') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('updaterUIM['.$no.']') ? 'has-error' : null ?>">
                           <select class="form-control" id="updaterUIM" name="updaterUIM[]" value="<?= $this->input->post('updaterUIM['.$no.']') ?? $data->updaterUIM ?>" style="width:225px">
                             <option value="<?= $data->updaterUIM ?>" selected="selected"><?= $data->updaterUIM ?></option>
                           </select>
@@ -367,19 +367,19 @@
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('noteQROutSplitter') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('noteQROutSplitter['.$no.']') ? 'has-error' : null ?>">
                           <textarea style="width:225px;resize:none" name="noteQROutSplitter[]" class="form-control" rows="2" maxlength=45><?= $this->input->post('noteQROutSplitter['.$no.']') ?? $data->noteQROutSplitter ?></textarea>
                           <?= form_error('noteQROutSplitter['.$no.']') ?>
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('noteQRDropCore') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('noteQRDropCore['.$no.']') ? 'has-error' : null ?>">
                           <textarea style="width:225px;resize:none" name="noteQRDropCore[]" class="form-control" rows="2" maxlength=45><?= $this->input->post('noteQRDropCore['.$no.']') ?? $data->noteQRDropCore ?></textarea>
                           <?= form_error('noteQRDropCore['.$no.']') ?>
                         </div>
                       </td>
                       <td>
-                        <div class="form-group <?= form_error('updaterDava') ? 'has-error' : null ?>">
+                        <div class="form-group <?= form_error('updaterDava['.$no.']') ? 'has-error' : null ?>">
                           <select class="form-control" id="updaterDava" name="updaterDava[]" value="<?= $this->input->post('updaterDava['.$no.']') ?? $data->updaterDava ?>" style="width:225px">
                             <option value="<?= $data->updaterDava ?>" selected="selected"><?= $data->updaterDava ?></option>
                           </select>
