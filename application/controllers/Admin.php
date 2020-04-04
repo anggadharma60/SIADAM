@@ -1840,9 +1840,9 @@ class Admin extends CI_Controller
 		$jumlah = $this->input->post('jumlahPort');
 
 		for ($i = 0; $i < $jumlah; $i++) {
-			$this->form_validation->set_rules('portOutSplitter['.$i.']', 'PORT OUT SPLITTER', 'max_length[10]|numeric|trim');
-			$this->form_validation->set_rules('QROutSplitter['.$i.']', 'QR OUT SPLITTER', 'max_length[16]|alpha_numeric|trim');
-			$this->form_validation->set_rules('portODP['.$i.']', 'PORT', 'max_length[10]|numeric|trim');
+			$this->form_validation->set_rules('portOutSplitter['.$i.']', 'PORT OUT SPLITTER', 'max_length[10]|trim');
+			$this->form_validation->set_rules('QROutSplitter['.$i.']', 'QR OUT SPLITTER', 'max_length[16]|trim');
+			$this->form_validation->set_rules('portODP['.$i.']', 'PORT', 'max_length[10]|trim');
 			// $this->form_validation->set_rules('statusportODP['.$i.']', 'QR ODP', 'max_length[35]|trim');
 			$this->form_validation->set_rules('status['.$i.']', 'STATUS', 'max_length[35]|trim');
 			$this->form_validation->set_rules('ONU['.$i.']', 'ONU', 'max_length[30]|trim');
@@ -1860,7 +1860,7 @@ class Admin extends CI_Controller
 			$this->form_validation->set_rules('noteQRODP['.$i.']', 'QR ODP', 'max_length[45]|trim');
 			$this->form_validation->set_rules('noteQROutSplitter['.$i.']', 'QR OUT SPLITTER', 'max_length[45]|trim');
 			$this->form_validation->set_rules('noteQRDropCore['.$i.']', 'QR DROPCORE', 'max_length[45]|trim');
-			$this->form_validation->set_rules('updaterDava['.$i.']', 'UPDATER DAVA', 'max_length[40]|alpha|trim');	
+			$this->form_validation->set_rules('updaterDava['.$i.']', 'UPDATER DAVA', 'max_length[40]|trim');	
 		}
 
 	
