@@ -1788,54 +1788,6 @@ class Admin extends CI_Controller
 
 		$this->form_validation->set_rules('portOLT', 'Port OLT', 'max_length[12]|regex_match[/^[0-9.,-\/]/]|trim');
 
-
-
-		// $this->form_validation->set_rules('portOutSplitter', 'PORT OUT SPLITTER', 'max_length[5]|numeric|trim');
-		// $this->form_validation->set_rules('QROutSplitter', 'QR OUT SPLITTER', 'max_length[16]|alpha_numeric|trim');
-		// $this->form_validation->set_rules('portODP', 'PORT', 'max_length[5]|numeric|trim');
-		// $this->form_validation->set_rules('statusportODP', 'QR ODP', 'max_length[20]|trim');
-		// $this->form_validation->set_rules('status', 'STATUS', 'max_length[20]|trim');
-		// $this->form_validation->set_rules('ONU', 'ONU', 'max_length[15]|trim');
-		// $this->form_validation->set_rules('serialNumber', 'SN', 'max_length[30]|trim');
-		// $this->form_validation->set_rules('serviceNumber', 'SERVICE', 'max_length[20]|trim');
-		// $this->form_validation->set_rules('QRDropCore', 'QR DROPCORE', 'max_length[20]|trim');
-		// $this->form_validation->set_rules('noteDropcore', 'NOTE URUT DROPCORE', 'max_length[30]|trim');
-		// $this->form_validation->set_rules('flagOLTPort', 'FLAG OLT & PORT', 'max_length[30]|alpha|trim');
-		// $this->form_validation->set_rules('ODPtoOLT', 'CONNECTIVITY ODP TO OLT', 'max_length[16]|trim');
-		// $this->form_validation->set_rules('ODPtoONT', 'ODP - ONT', 'max_length[16]|trim');
-		// $this->form_validation->set_rules('RFS', 'RFS', 'max_length[30]|trim');
-		// $this->form_validation->set_rules('noteHDDaman', 'NOTE', 'max_length[20]|trim');
-		// $this->form_validation->set_rules('updateDataUIM', 'TANGGAL UPDATE UIM', 'max_length[20]|trim');
-		// $this->form_validation->set_rules('updaterUIM', 'UPDATER UIM', 'max_length[20]|alpha|trim');
-		// $this->form_validation->set_rules('noteQRODP', 'QR ODP', 'max_length[30]|trim');
-		// $this->form_validation->set_rules('noteQROutSplitter', 'QR OUT SPLITTER', 'max_length[30]|trim');
-		// $this->form_validation->set_rules('noteQRDropCore', 'QR DROPCORE', 'max_length[30]|trim');
-		// $this->form_validation->set_rules('updaterDava', 'UPDATER DAVA', 'max_length[30]|alpha|trim');
-
-
-
-		// $this->form_validation->set_rules('portOutSplitter[".$ind."]', 'PORT OUT SPLITTER', 'max_length[5]|numeric|trim');
-		// $this->form_validation->set_rules('QROutSplitter[".$ind."]', 'QR OUT SPLITTER', 'max_length[16]|alpha_numeric|trim');
-		// $this->form_validation->set_rules('portODP[".$ind."]', 'PORT', 'max_length[5]|numeric|trim');
-		// $this->form_validation->set_rules('statusportODP[".$ind."]', 'QR ODP', 'max_length[20]|trim');
-		// $this->form_validation->set_rules('status[".$ind."]', 'STATUS', 'max_length[20]|trim');
-		// $this->form_validation->set_rules('ONU[".$ind."]', 'ONU', 'max_length[15]|trim');
-		// $this->form_validation->set_rules('serialNumber[".$ind."]', 'SN', 'max_length[30]|trim');
-		// $this->form_validation->set_rules('serviceNumber[".$ind."]', 'SERVICE', 'max_length[20]|trim');
-		// $this->form_validation->set_rules('QRDropCore[".$ind."]', 'QR DROPCORE', 'max_length[20]|trim');
-		// $this->form_validation->set_rules('noteDropcore[".$ind."]', 'NOTE URUT DROPCORE', 'max_length[30]|trim');
-		// $this->form_validation->set_rules('flagOLTPort[".$ind."]', 'FLAG OLT & PORT', 'max_length[30]|alpha|trim');
-		// $this->form_validation->set_rules('ODPtoOLT[".$ind."]', 'CONNECTIVITY ODP TO OLT', 'max_length[16]|trim');
-		// $this->form_validation->set_rules('ODPtoONT[".$ind."]', 'ODP - ONT', 'max_length[16]|trim');
-		// $this->form_validation->set_rules('RFS[".$ind."]', 'RFS', 'max_length[30]|trim');
-		// $this->form_validation->set_rules('noteHDDaman[".$ind."]', 'NOTE', 'max_length[20]|trim');
-		// $this->form_validation->set_rules('updateDataUIM[".$ind."]', 'TANGGAL UPDATE UIM', 'max_length[20]|trim');
-		// $this->form_validation->set_rules('updaterUIM[".$ind."]', 'UPDATER UIM', 'max_length[20]|alpha|trim');
-		// $this->form_validation->set_rules('noteQRODP[".$ind."]', 'QR ODP', 'max_length[30]|trim');
-		// $this->form_validation->set_rules('noteQROutSplitter[".$ind."]', 'QR OUT SPLITTER', 'max_length[30]|trim');
-		// $this->form_validation->set_rules('noteQRDropCore[".$ind."]', 'QR DROPCORE', 'max_length[30]|trim');
-		// $this->form_validation->set_rules('updaterDava[".$ind."]', 'UPDATER DAVA', 'max_length[30]|alpha|trim');
-
 		// print_r($this->input->post(null, TRUE));
 		$jumlah = $this->input->post('jumlahPort');
 
@@ -1843,7 +1795,7 @@ class Admin extends CI_Controller
 			$this->form_validation->set_rules('portOutSplitter['.$i.']', 'PORT OUT SPLITTER', 'max_length[10]|trim');
 			$this->form_validation->set_rules('QROutSplitter['.$i.']', 'QR OUT SPLITTER', 'max_length[16]|trim');
 			$this->form_validation->set_rules('portODP['.$i.']', 'PORT', 'max_length[10]|trim');
-			// $this->form_validation->set_rules('statusportODP['.$i.']', 'QR ODP', 'max_length[35]|trim');
+		// 	// $this->form_validation->set_rules('statusportODP['.$i.']', 'QR ODP', 'max_length[35]|trim');
 			$this->form_validation->set_rules('status['.$i.']', 'STATUS', 'max_length[35]|trim');
 			$this->form_validation->set_rules('ONU['.$i.']', 'ONU', 'max_length[30]|trim');
 			$this->form_validation->set_rules('serialNumber['.$i.']', 'SN', 'max_length[55]|trim');
@@ -1857,7 +1809,7 @@ class Admin extends CI_Controller
 			$this->form_validation->set_rules('noteHDDaman['.$i.']', 'NOTE', 'max_length[100]|trim');
 			$this->form_validation->set_rules('updateDataUIM['.$i.']', 'TANGGAL UPDATE UIM', 'trim');
 			$this->form_validation->set_rules('updaterUIM['.$i.']', 'UPDATER UIM', 'max_length[40]|trim');
-			$this->form_validation->set_rules('noteQRODP['.$i.']', 'QR ODP', 'max_length[45]|trim');
+			// $this->form_validation->set_rules('noteQRODP['.$i.']', 'QR ODP', 'max_length[45]|trim');
 			$this->form_validation->set_rules('noteQROutSplitter['.$i.']', 'QR OUT SPLITTER', 'max_length[45]|trim');
 			$this->form_validation->set_rules('noteQRDropCore['.$i.']', 'QR DROPCORE', 'max_length[45]|trim');
 			$this->form_validation->set_rules('updaterDava['.$i.']', 'UPDATER DAVA', 'max_length[40]|trim');	

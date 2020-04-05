@@ -699,7 +699,7 @@ class SDI extends CI_Controller
 		// $this->form_validation->set_rules('namaODP', 'Nama ODP', 'required|max_length[40]|trim');
 		$this->form_validation->set_rules('noteODP', 'Note ODP', 'max_length[100]|trim');
 
-		$this->form_validation->set_rules('QRODP', 'QR ODP', 'max_length[12]|alpha_numeric|trim');
+		$this->form_validation->set_rules('QRODP', 'QR ODP', 'max_length[16]|alpha_numeric|trim');
 
 		$this->form_validation->set_rules('koordinatODP', 'Koordinat ODP', 'max_length[35]|regex_match[/^[0-9.,-]/]|trim');
 
@@ -709,32 +709,37 @@ class SDI extends CI_Controller
 		$this->form_validation->set_rules('kapasitasODP', 'Kapasitas', 'required|numeric|max_length[16]|trim');
 
 		// $this->form_validation->set_rules('namaOLT', 'Nama OLT', 'required|max_length[16]|trim');
-	
+
 		$this->form_validation->set_rules('portOLT', 'Port OLT', 'max_length[12]|regex_match[/^[0-9.,-\/]/]|trim');
 
-		// $this->form_validation->set_rules('portOutSplitter', 'PORT OUT SPLITTER', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('QROutSplitter', 'QR OUT SPLITTER', 'required|trim');
-		// $this->form_validation->set_rules('portODP', 'PORT', 'trim');
-		// $this->form_validation->set_rules('statusportODP', 'QR ODP', 'required|max_length[20]|trim');
-		// // $this->form_validation->set_rules('status', 'STATUS', 'max_length[50]required|trim');
-		// $this->form_validation->set_rules('ONU', 'ONU', 'max_length[15]|trim');
-		// $this->form_validation->set_rules('serialNumber', 'SN', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('serviceNumber', 'SERVICE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('QRDropCore', 'QR DROPCORE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('noteDropcore', 'NOTE URUT DROPCORE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('flagOLTPort', 'FLAG OLT & PORT', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('ODPtoOLT', 'CONNECTIVITY ODP TO OLT', 'trim');
-		// $this->form_validation->set_rules('ODPtoONT', 'ODP - ONT', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('RFS', 'RFS', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('noteHDDaman', 'NOTE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('updateDataUIM', 'TANGGAL UPDATE UIM', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('updaterUIM', 'UPDATER UIM', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('noteQRODP', 'QR ODP', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('noteQROutSplitter', 'QR OUT SPLITTER', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('noteQRDropCore', 'QR DROPCORE', 'required|max_length[20]|trim');
-		// $this->form_validation->set_rules('updaterDava', 'UPDATER DAVA', 'required|max_length[20]|trim');
+		// print_r($this->input->post(null, TRUE));
+		$jumlah = $this->input->post('jumlahPort');
 
-		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
+		for ($i = 0; $i < $jumlah; $i++) {
+			$this->form_validation->set_rules('portOutSplitter['.$i.']', 'PORT OUT SPLITTER', 'max_length[10]|trim');
+			$this->form_validation->set_rules('QROutSplitter['.$i.']', 'QR OUT SPLITTER', 'max_length[16]|trim');
+			$this->form_validation->set_rules('portODP['.$i.']', 'PORT', 'max_length[10]|trim');
+		// 	// $this->form_validation->set_rules('statusportODP['.$i.']', 'QR ODP', 'max_length[35]|trim');
+			$this->form_validation->set_rules('status['.$i.']', 'STATUS', 'max_length[35]|trim');
+			$this->form_validation->set_rules('ONU['.$i.']', 'ONU', 'max_length[30]|trim');
+			$this->form_validation->set_rules('serialNumber['.$i.']', 'SN', 'max_length[55]|trim');
+			$this->form_validation->set_rules('serviceNumber['.$i.']', 'SERVICE', 'max_length[55]|trim');
+			$this->form_validation->set_rules('QRDropCore['.$i.']', 'QR DROPCORE', 'max_length[40]|trim');
+			$this->form_validation->set_rules('noteDropcore['.$i.']', 'NOTE URUT DROPCORE', 'max_length[100]|trim');
+			$this->form_validation->set_rules('flagOLTPort['.$i.']', 'FLAG OLT & PORT', 'max_length[40]|trim');
+			$this->form_validation->set_rules('ODPtoOLT['.$i.']', 'CONNECTIVITY ODP TO OLT', 'max_length[40]|trim');
+			$this->form_validation->set_rules('ODPtoONT['.$i.']', 'ODP - ONT', 'max_length[40]|trim');
+			$this->form_validation->set_rules('RFS['.$i.']', 'RFS', 'max_length[40]|trim');
+			$this->form_validation->set_rules('noteHDDaman['.$i.']', 'NOTE', 'max_length[100]|trim');
+			$this->form_validation->set_rules('updateDataUIM['.$i.']', 'TANGGAL UPDATE UIM', 'trim');
+			$this->form_validation->set_rules('updaterUIM['.$i.']', 'UPDATER UIM', 'max_length[40]|trim');
+			// $this->form_validation->set_rules('noteQRODP['.$i.']', 'QR ODP', 'max_length[45]|trim');
+			$this->form_validation->set_rules('noteQROutSplitter['.$i.']', 'QR OUT SPLITTER', 'max_length[45]|trim');
+			$this->form_validation->set_rules('noteQRDropCore['.$i.']', 'QR DROPCORE', 'max_length[45]|trim');
+			$this->form_validation->set_rules('updaterDava['.$i.']', 'UPDATER DAVA', 'max_length[40]|trim');	
+		}
+
+	
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
 		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
 		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
@@ -755,7 +760,7 @@ class SDI extends CI_Controller
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
-			
+
 			$this->Validasi_model->editDataValidasi($post);
 			if ($this->db->affected_rows() > 0) {
 				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
@@ -763,6 +768,7 @@ class SDI extends CI_Controller
 			redirect('SDI/viewListValidasi');
 		}
 	}
+
 
 	public function deleteAllValidasi()
 	{
