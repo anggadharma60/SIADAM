@@ -498,91 +498,127 @@ class Dava extends CI_Controller
 			// array Count
 			$arrayCount = count($allDataInSheet);
 
-			$flag = 1;
+			$flag = 0;
 
-			//    $createArray = array('TANGGAL_PELURUSAN', 'ONDESK', 'ONSITE', 'NAMA_ODP', 'NOTE_ODP', 'QR_ODP', 'KOORDINAT_ODP', 'NAMA_OLT', 'PORT_OLT', 'TOTAL_IN_ODP', 'KAPASITAS', 'PORT_OUT_SPLITTER', 'QR_OUT_SPLITTER', 'PORT_ODP' , 'STATUS', 'ONU', 'SN', 'SERVICE', 'QR_DROPCORE','NOTE_URUT_DROPCORE', 'FLAG_OLT_PORT', 'CONNECTIVITY_ODP_TO_OLT', 'ODP_ONT', 'RFS', 'NOTE_HD_DAMAN', 'TANGGAL_UPDATE_UIM', 'UPDATER_UIM', 'NOTE_QR_ODP', 'NOTE_QR_OUT_SPLITTER', 'NOTE_QR_DROPCORE', 'UPDATER_DAVA');
-			//    $makeArray = array('TANGGAL_PELURUSAN' => 'TANGGAL_PELURUSAN', 'ONDESK' => 'ONDESK', 'ONSITE' => 'ONSITE', 'NAMA_ODP' => 'NAMA_ODP', 'NOTE_ODP' => 'NOTE_ODP', 'QR_ODP' => 'QR_ODP', 'KOORDINAT_ODP' => 'KOORDINAT_ODP', 'NAMA_OLT' => 'NAMA_OLT', 'PORT_OLT' => 'PORT_OLT', 'TOTAL_IN_ODP' => 'TOTAL_IN_ODP', 'KAPASITAS' =>'KAPASITAS', 'PORT_OUT_SPLITTER' => 'PORT_OUT_SPLITTER', 'QR_OUT_SPLITTER' => 'QR_OUT_SPLITTER', 'PORT_ODP' => 'PORT_ODP' , 'STATUS' => 'STATUS', 'ONU' => 'ONU', 'SN' => 'SN', 'SERVICE' => 'SERVICE', 'QR_DROPCORE' => 'QR_DROPCORE','NOTE_URUT_DROPCORE' => 'NOTE_URUT_DROPCORE', 'FLAG_OLT_PORT' => 'FLAG_OLT_PORT', 'CONNECTIVITY_ODP_TO_OLT' => 'CONNECTIVITY_ODP_TO_OLT', 'ODP_ONT' => 'ODP_ONT', 'RFS' => 'RFS', 'NOTE_HD_DAMAN' => 'NOTE_HD_DAMAN', 'TANGGAL_UPDATE_UIM' => 'TANGGAL_UPDATE_UIM', 'UPDATER_UIM' => 'UPDATER_UIM', 'NOTE_QR_ODP' => 'NOTE_QR_ODP', 'NOTE_QR_OUT_SPLITTER' => 'NOTE_QR_OUT_SPLITTER', 'NOTE_QR_DROPCORE' => 'NOTE_QR_DROPCORE', 'UPDATER_DAVA' => 'UPDATER_DAVA');
-			//    $SheetDataKey = array();
-			//    foreach ($allDataInSheet as $dataInSheet) {
-			// 	   foreach ($dataInSheet as $key => $value) {
-			// 		   if (in_array(trim($value), $createArray)) {
-			// 			   $value = preg_replace('/\s+/', '', $value);
-			// 			   $SheetDataKey[trim($value)] = $key;
-			// 		   } 
-			// 	   }
-			//    }
-			//    $dataDiff = array_diff_key($makeArray, $SheetDataKey);
-			//    if (empty($dataDiff)) {
-			// 	   $flag = 1;
-			//    }
+			$createArray = array('TANGGAL PELURUSAN', 'ONDESK', 'ONSITE', 'NAMAODP', 'NOTE', 'KOORDINAT ODP', 'NAMA OLT (IP OLT)', 'PORT OLT', 'TOTAL IN ODP', 'KAPASITAS ODP', 'PORT OUT SPLITTER', 'PORT', 'STATUS', 'ONU', 'SN', 'SERVICE', 'QR DROPCORE', 'NOTE URUT DROPCORE', 'FLAG OLT & PORT', 'CONNECTIVITY ODP TO OLT', 'ODP - ONT', 'RFS', 'TANGGAL UPDATE UIM', 'UPDATER UIM', 'UPDATER DAVA');
+			$makeArray = array('TANGGAL PELURUSAN' => 'TANGGAL PELURUSAN', 'ONDESK' => 'ONDESK', 'ONSITE' => 'ONSITE', 'NAMAODP' => 'NAMAODP', 'NOTE' => 'NOTE', 'KOORDINAT ODP' => 'KOORDINAT ODP', 'NAMA OLT (IP OLT)' => 'NAMA OLT (IP OLT)', 'PORT OLT' => 'PORT OLT', 'TOTAL IN ODP' => 'TOTAL IN ODP', 'KAPASITAS ODP' => 'KAPASITAS ODP', 'PORT OUT SPLITTER' => 'PORT OUT SPLITTER', 'PORT' => 'PORT', 'STATUS' => 'STATUS', 'ONU' => 'ONU', 'SN' => 'SN', 'SERVICE' => 'SERVICE', 'NOTE URUT DROPCORE' => 'NOTE URUT DROPCORE', 'FLAG OLT & PORT' => 'FLAG OLT & PORT', 'CONNECTIVITY ODP TO OLT' => 'CONNECTIVITY ODP TO OLT', 'ODP - ONT' => 'ODP - ONT', 'RFS' => 'RFS', 'TANGGAL UPDATE UIM' => 'TANGGAL UPDATE UIM', 'UPDATER UIM' => 'UPDATER UIM', 'UPDATER DAVA' => 'UPDATER DAVA');
+			$SheetDataKey = array();
+			foreach ($allDataInSheet as $dataInSheet) {
+				foreach ($dataInSheet as $key => $value) {
+					if (in_array(trim($value), $createArray)) {
+						$SheetDataKey[trim($value)] = $key;
+					}
+				}
+			}
+
+
+			$dataDiff = array_diff_key($makeArray, $SheetDataKey);
+			if (empty($dataDiff)) {
+				$flag = 1;
+			}
+			
 
 			// match excel sheet column
 			if ($flag == 1) {
 				for ($i = 4; $i <= $arrayCount; $i++) {
+					$TANGGAL_PELURUSAN = $SheetDataKey['TANGGAL PELURUSAN'];
+					$ONDESK = $SheetDataKey['ONDESK'];
+					$ONSITE = $SheetDataKey['ONSITE'];
+					$NAMA_ODP = $SheetDataKey['NAMAODP'];
+					$NOTE_ODP = $SheetDataKey['NOTE'];
+					// $QR_ODP = $SheetDataKey['QR ODP'];
+					$KOORDINAT_ODP = $SheetDataKey['KOORDINAT ODP'];
+					$NAMA_OLT = $SheetDataKey['NAMA OLT (IP OLT)'];
+					$PORT_OLT = $SheetDataKey['PORT OLT'];
+					$TOTAL_IN_ODP = $SheetDataKey['TOTAL IN ODP'];
+					$KAPASITAS = $SheetDataKey['KAPASITAS ODP'];
+					$PORT_OUT_SPLITTER = $SheetDataKey['PORT OUT SPLITTER'];
+					// $QR_OUT_SPLITTER = $SheetDataKey['QR OUT SPLITTER'];
+					$PORT_ODP = $SheetDataKey['PORT'];
+					$STATUS = $SheetDataKey['STATUS'];
+					$ONU = $SheetDataKey['ONU'];
+					$SN = $SheetDataKey['SN'];
+					$SERVICE = $SheetDataKey['SERVICE'];
+					// $QR_DROPCORE = $SheetDataKey['QR DROPCORE'];
+					$NOTE_URUT_DROPCORE = $SheetDataKey['NOTE URUT DROPCORE'];
+					$FLAG_OLT_PORT = $SheetDataKey['FLAG OLT & PORT'];
+					$CONNECTIVITY_ODP_TO_OLT = $SheetDataKey['CONNECTIVITY ODP TO OLT'];
+					$ODP_ONT = $SheetDataKey['ODP - ONT'];
+					$RFS = $SheetDataKey['RFS'];
+					// $NOTE_HD_DAMAN = $SheetDataKey['Y'];
+					$TANGGAL_UPDATE_UIM = $SheetDataKey['TANGGAL UPDATE UIM'];
+					$UPDATER_UIM = $SheetDataKey['UPDATER UIM'];
+					// $NOTE_QR_ODP = $SheetDataKey['AB'];
+					// $NOTE_QR_OUT_SPLITTER = $SheetDataKey['AC'];
+					// $NOTE_QR_DROPCORE = $SheetDataKey['AD'];
+					$UPDATER_DAVA = $SheetDataKey['UPDATER DAVA'];
 
-					//    $TANGGAL_PELURUSAN = $SheetDataKey['A'];
-					//    $ONDESK = $SheetDataKey['B'];
-					//    $ONSITE = $SheetDataKey['C'];
-					//    $NAMA_ODP = $SheetDataKey['D'];
-					//    $NOTE_ODP = $SheetDataKey['E'];
-					//    $QR_ODP = $SheetDataKey['F'];
-					//    $KOORDINAT_ODP = $SheetDataKey['G'];
-					//    $NAMA_OLT = $SheetDataKey['H'];
-					//    $PORT_OLT = $SheetDataKey['I'];
-					//    $TOTAL_IN_ODP = $SheetDataKey['J'];
-					//    $KAPASITAS = $SheetDataKey['K'];
-					//    $PORT_OUT_SPLITTER = $SheetDataKey['L'];
-					//    $QR_OUT_SPLITTER = $SheetDataKey['M'];
-					//    $PORT_ODP= $SheetDataKey['N'];
-					//    $STATUS = $SheetDataKey['O'];
-					//    $ONU = $SheetDataKey['P'];
-					//    $SN = $SheetDataKey['Q'];
-					//    $SERVICE = $SheetDataKey['R'];
-					//    $QR_DROPCORE = $SheetDataKey['S'];
-					//    $NOTE_URUT_DROPCORE = $SheetDataKey['T'];
-					//    $FLAG_OLT_PORT= $SheetDataKey['U'];
-					//    $CONNECTIVITY_ODP_TO_OLT = $SheetDataKey['VT'];
-					//    $ODP_ONT = $SheetDataKey['W'];
-					//    $RFS = $SheetDataKey['X'];
-					//    $NOTE_HD_DAMAN = $SheetDataKey['Y'];
-					//    $TANGGAL_UPDATE_UIM = $SheetDataKey['Z'];
-					//    $UPDATER_UIM = $SheetDataKey['AA'];
-					//    $NOTE_QR_ODP = $SheetDataKey['AB'];
-					//    $NOTE_QR_OUT_SPLITTER = $SheetDataKey['AC'];
-					//    $NOTE_QR_DROPCORE = $SheetDataKey['AD'];
-					//    $UPDATER_DAVA = $SheetDataKey['AE'];
 
-					$TANGGAL_PELURUSAN = filter_var(html_escape(trim($allDataInSheet[$i]['A'])), FILTER_SANITIZE_STRING);
-					$ONDESK = filter_var(html_escape(trim($allDataInSheet[$i]['B'])), FILTER_SANITIZE_STRING);
-					$ONSITE = filter_var(html_escape(trim($allDataInSheet[$i]['C'])), FILTER_SANITIZE_STRING);
-					$NAMA_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['D'])), FILTER_SANITIZE_STRING);
-					$NOTE_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['E'])), FILTER_SANITIZE_STRING);
+
+
+					$TANGGAL_PELURUSAN = filter_var(html_escape(trim($allDataInSheet[$i][$TANGGAL_PELURUSAN])), FILTER_SANITIZE_STRING);
+					$ONDESK = filter_var(html_escape(trim($allDataInSheet[$i][$ONDESK])), FILTER_SANITIZE_STRING);
+					$ONSITE = filter_var(html_escape(trim($allDataInSheet[$i][$ONSITE])), FILTER_SANITIZE_STRING);
+					$NAMA_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$NAMA_ODP])), FILTER_SANITIZE_STRING);
+					$NOTE_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$NOTE_ODP])), FILTER_SANITIZE_STRING);
 					$QR_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['F'])), FILTER_SANITIZE_STRING);
-					$KOORDINAT_ODP  = filter_var(html_escape(trim($allDataInSheet[$i]['G'])), FILTER_SANITIZE_STRING);
-					$NAMA_OLT = filter_var(html_escape(trim($allDataInSheet[$i]['H'])), FILTER_SANITIZE_STRING);
-					$PORT_OLT = filter_var(html_escape(trim($allDataInSheet[$i]['I'])), FILTER_SANITIZE_STRING);
-					$TOTAL_IN_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['J'])), FILTER_SANITIZE_STRING);
-					$KAPASITAS = filter_var(html_escape(trim($allDataInSheet[$i]['K'])), FILTER_SANITIZE_STRING);
-					$PORT_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i]['L'])), FILTER_SANITIZE_STRING);
+					$KOORDINAT_ODP  = filter_var(html_escape(trim($allDataInSheet[$i][$KOORDINAT_ODP])), FILTER_SANITIZE_STRING);
+					$NAMA_OLT = filter_var(html_escape(trim($allDataInSheet[$i][$NAMA_OLT])), FILTER_SANITIZE_STRING);
+					$PORT_OLT = filter_var(html_escape(trim($allDataInSheet[$i][$PORT_OLT])), FILTER_SANITIZE_STRING);
+					$TOTAL_IN_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$TOTAL_IN_ODP])), FILTER_SANITIZE_STRING);
+					$KAPASITAS = filter_var(html_escape(trim($allDataInSheet[$i][$KAPASITAS])), FILTER_SANITIZE_STRING);
+					$PORT_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i][$PORT_OUT_SPLITTER])), FILTER_SANITIZE_STRING);
 					$QR_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i]['M'])), FILTER_SANITIZE_STRING);
-					$PORT_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['N'])), FILTER_SANITIZE_STRING);
-					$STATUS = filter_var(html_escape(trim($allDataInSheet[$i]['O'])), FILTER_SANITIZE_STRING);
-					$ONU = filter_var(html_escape(trim($allDataInSheet[$i]['P'])), FILTER_SANITIZE_STRING);
-					$SN = filter_var(html_escape(trim($allDataInSheet[$i]['Q'])), FILTER_SANITIZE_STRING);
-					$SERVICE = filter_var(html_escape(trim($allDataInSheet[$i]['R'])), FILTER_SANITIZE_STRING);
+					$PORT_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$PORT_ODP])), FILTER_SANITIZE_STRING);
+					$STATUS = filter_var(html_escape(trim($allDataInSheet[$i][$STATUS])), FILTER_SANITIZE_STRING);
+					$ONU = filter_var(html_escape(trim($allDataInSheet[$i][$ONU])), FILTER_SANITIZE_STRING);
+					$SN = filter_var(html_escape(trim($allDataInSheet[$i][$SN])), FILTER_SANITIZE_STRING);
+					$SERVICE = filter_var(html_escape(trim($allDataInSheet[$i][$SERVICE])), FILTER_SANITIZE_STRING);
 					$QR_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i]['S'])), FILTER_SANITIZE_STRING);
-					$NOTE_URUT_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i]['T'])), FILTER_SANITIZE_STRING);
-					$FLAG_OLT_PORT = filter_var(html_escape(trim($allDataInSheet[$i]['U'])), FILTER_SANITIZE_STRING);
-					$CONNECTIVITY_ODP_TO_OLT = filter_var(html_escape(trim($allDataInSheet[$i]['V'])), FILTER_SANITIZE_STRING);
-					$ODP_ONT = filter_var(html_escape(trim($allDataInSheet[$i]['W'])), FILTER_SANITIZE_STRING);
-					$RFS = filter_var(html_escape(trim($allDataInSheet[$i]['X'])), FILTER_SANITIZE_STRING);
+					$NOTE_URUT_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i][$NOTE_URUT_DROPCORE])), FILTER_SANITIZE_STRING);
+					$FLAG_OLT_PORT = filter_var(html_escape(trim($allDataInSheet[$i][$FLAG_OLT_PORT])), FILTER_SANITIZE_STRING);
+					$CONNECTIVITY_ODP_TO_OLT = filter_var(html_escape(trim($allDataInSheet[$i][$CONNECTIVITY_ODP_TO_OLT])), FILTER_SANITIZE_STRING);
+					$ODP_ONT = filter_var(html_escape(trim($allDataInSheet[$i][$ODP_ONT])), FILTER_SANITIZE_STRING);
+					$RFS = filter_var(html_escape(trim($allDataInSheet[$i][$RFS])), FILTER_SANITIZE_STRING);
 					$NOTE_HD_DAMAN = filter_var(html_escape(trim($allDataInSheet[$i]['Y'])), FILTER_SANITIZE_STRING);
-					$TANGGAL_UPDATE_UIM = filter_var(html_escape(trim($allDataInSheet[$i]['Z'])), FILTER_SANITIZE_STRING);
-					$UPDATER_UIM = filter_var(html_escape(trim($allDataInSheet[$i]['AA'])), FILTER_SANITIZE_STRING);
+					$TANGGAL_UPDATE_UIM = filter_var(html_escape(trim($allDataInSheet[$i][$TANGGAL_UPDATE_UIM])), FILTER_SANITIZE_STRING);
+					$UPDATER_UIM = filter_var(html_escape(trim($allDataInSheet[$i][$UPDATER_UIM])), FILTER_SANITIZE_STRING);
 					$NOTE_QR_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['AB'])), FILTER_SANITIZE_STRING);
 					$NOTE_QR_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i]['AC'])), FILTER_SANITIZE_STRING);
 					$NOTE_QR_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i]['AD'])), FILTER_SANITIZE_STRING);
-					$UPDATER_DAVA = filter_var(html_escape(trim($allDataInSheet[$i]['AE'])), FILTER_SANITIZE_STRING);
+					$UPDATER_DAVA = filter_var(html_escape(trim($allDataInSheet[$i][$UPDATER_DAVA])), FILTER_SANITIZE_STRING);
+
+					// $TANGGAL_PELURUSAN = filter_var(html_escape(trim($allDataInSheet[$i]['A'])), FILTER_SANITIZE_STRING);
+					// $ONDESK = filter_var(html_escape(trim($allDataInSheet[$i]['B'])), FILTER_SANITIZE_STRING);
+					// $ONSITE = filter_var(html_escape(trim($allDataInSheet[$i]['C'])), FILTER_SANITIZE_STRING);
+					// $NAMA_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['D'])), FILTER_SANITIZE_STRING);
+					// $NOTE_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['E'])), FILTER_SANITIZE_STRING);
+					// $QR_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['F'])), FILTER_SANITIZE_STRING);
+					// $KOORDINAT_ODP  = filter_var(html_escape(trim($allDataInSheet[$i]['G'])), FILTER_SANITIZE_STRING);
+					// $NAMA_OLT = filter_var(html_escape(trim($allDataInSheet[$i]['H'])), FILTER_SANITIZE_STRING);
+					// $PORT_OLT = filter_var(html_escape(trim($allDataInSheet[$i]['I'])), FILTER_SANITIZE_STRING);
+					// $TOTAL_IN_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['J'])), FILTER_SANITIZE_STRING);
+					// $KAPASITAS = filter_var(html_escape(trim($allDataInSheet[$i]['K'])), FILTER_SANITIZE_STRING);
+					// $PORT_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i]['L'])), FILTER_SANITIZE_STRING);
+					// $QR_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i]['M'])), FILTER_SANITIZE_STRING);
+					// $PORT_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['N'])), FILTER_SANITIZE_STRING);
+					// $STATUS = filter_var(html_escape(trim($allDataInSheet[$i]['O'])), FILTER_SANITIZE_STRING);
+					// $ONU = filter_var(html_escape(trim($allDataInSheet[$i]['P'])), FILTER_SANITIZE_STRING);
+					// $SN = filter_var(html_escape(trim($allDataInSheet[$i]['Q'])), FILTER_SANITIZE_STRING);
+					// $SERVICE = filter_var(html_escape(trim($allDataInSheet[$i]['R'])), FILTER_SANITIZE_STRING);
+					// $QR_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i]['S'])), FILTER_SANITIZE_STRING);
+					// $NOTE_URUT_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i]['T'])), FILTER_SANITIZE_STRING);
+					// $FLAG_OLT_PORT = filter_var(html_escape(trim($allDataInSheet[$i]['U'])), FILTER_SANITIZE_STRING);
+					// $CONNECTIVITY_ODP_TO_OLT = filter_var(html_escape(trim($allDataInSheet[$i]['V'])), FILTER_SANITIZE_STRING);
+					// $ODP_ONT = filter_var(html_escape(trim($allDataInSheet[$i]['W'])), FILTER_SANITIZE_STRING);
+					// $RFS = filter_var(html_escape(trim($allDataInSheet[$i]['X'])), FILTER_SANITIZE_STRING);
+					// $NOTE_HD_DAMAN = filter_var(html_escape(trim($allDataInSheet[$i]['Y'])), FILTER_SANITIZE_STRING);
+					// $TANGGAL_UPDATE_UIM = filter_var(html_escape(trim($allDataInSheet[$i]['Z'])), FILTER_SANITIZE_STRING);
+					// $UPDATER_UIM = filter_var(html_escape(trim($allDataInSheet[$i]['AA'])), FILTER_SANITIZE_STRING);
+					// $NOTE_QR_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['AB'])), FILTER_SANITIZE_STRING);
+					// $NOTE_QR_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i]['AC'])), FILTER_SANITIZE_STRING);
+					// $NOTE_QR_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i]['AD'])), FILTER_SANITIZE_STRING);
+					// $UPDATER_DAVA = filter_var(html_escape(trim($allDataInSheet[$i]['AE'])), FILTER_SANITIZE_STRING);
 
 					$newDateA = date("Y-m-d", strtotime($TANGGAL_PELURUSAN));
 					if ($TANGGAL_UPDATE_UIM != "" or $TANGGAL_UPDATE_UIM != null) {
@@ -591,23 +627,39 @@ class Dava extends CI_Controller
 						$newDateB = "";
 					}
 
+					$ODP = explode("/", $NAMA_ODP);
+					$temp = strlen($ODP[1]);
+					$kode = "";
+					if ($temp == 1) {
+						$kode .= "00" . $ODP[1];
+					}
+					if ($temp == 2) {
+						$kode .= "0" . $ODP[1];
+					}
+					if ($temp == 3) {
+						$kode = $ODP[1];
+					}
+
+					$NAMA_ODP = $ODP[0] . "/" . $kode;
+
 
 					$fetchData[] = array('tanggalPelurusan' => $newDateA, 'ondesk' => $ONDESK, 'onsite' => $ONSITE, 'namaODP' => $NAMA_ODP, 'noteODP' => $NOTE_ODP, 'QRODP' => $QR_ODP, 'koordinatODP' => $KOORDINAT_ODP, 'hostname' => $NAMA_OLT, 'portOLT' => $PORT_OLT, 'totalIN' => $TOTAL_IN_ODP, 'kapasitasODP' => $KAPASITAS, 'portOutSplitter' => $PORT_OUT_SPLITTER, 'QRPortOutSplitter' => $QR_OUT_SPLITTER, 'portODP' => $PORT_ODP, 'statusPortODP' => $STATUS, 'ONU' => $ONU, 'serialNumber' => $SN, 'serviceNumber' => $SERVICE, 'QRDropCore' => $QR_DROPCORE, 'noteUrut' => $NOTE_URUT_DROPCORE, 'flagOLTPort' => $FLAG_OLT_PORT, 'ODPtoOLT' => $CONNECTIVITY_ODP_TO_OLT, 'ODPtoONT' => $ODP_ONT, 'RFS' => $RFS, 'noteHDDaman' => $NOTE_HD_DAMAN, 'updateDateUIM' => $newDateB, 'updaterUIM' => $UPDATER_UIM, 'noteQRODP' => $NOTE_QR_ODP, 'noteQROutSplitter' => $NOTE_QR_OUT_SPLITTER, 'noteQRDropCore' => $NOTE_QR_DROPCORE, 'updaterDava' => $UPDATER_DAVA);
 				}
 
 
-				//print_r($fetchData);
+				;
 				$this->Validasi_model->setBatchImportValidasi($fetchData);
 				$this->Validasi_model->importDataValidasi();
 
-				$this->session->set_flashdata('danger', 'Data berhasil ditambahkan');
+
 
 				redirect('Dava/viewListValidasi');
 			} else {
 
-				$this->session->set_flashdata('danger', 'Please import correct file, did not match excel sheet column');
+				$this->session->set_flashdata('danger', 'Format tidak sesuai, harap download format yang ditentukan');
 			}
 			redirect('Dava/viewListValidasi');
+			
 		}
 	}
 

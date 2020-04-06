@@ -1389,8 +1389,8 @@ class Ondesk extends CI_Controller
 
 			$flag = 0;
 
-			$createArray = array('TANGGAL PELURUSAN', 'ONDESK', 'ONSITE', 'NAMAODP', 'NOTE', 'QR ODP', 'KOORDINAT ODP', 'NAMA OLT (IP OLT)', 'PORT OLT', 'TOTAL IN ODP', 'KAPASITAS ODP', 'PORT OUT SPLITTER', 'QR OUT SPLITTER', 'PORT', 'STATUS', 'ONU', 'SN', 'SERVICE', 'QR DROPCORE', 'NOTE URUT DROPCORE', 'FLAG OLT & PORT', 'CONNECTIVITY ODP TO OLT', 'ODP - ONT', 'RFS', 'TANGGAL UPDATE UIM', 'UPDATER UIM', 'UPDATER DAVA');
-			$makeArray = array('TANGGAL PELURUSAN' => 'TANGGAL PELURUSAN', 'ONDESK' => 'ONDESK', 'ONSITE' => 'ONSITE', 'NAMAODP' => 'NAMAODP', 'NOTE' => 'NOTE', 'QR ODP' => 'QR ODP', 'KOORDINAT ODP' => 'KOORDINAT ODP', 'NAMA OLT (IP OLT)' => 'NAMA OLT (IP OLT)', 'PORT OLT' => 'PORT OLT', 'TOTAL IN ODP' => 'TOTAL IN ODP', 'KAPASITAS ODP' => 'KAPASITAS ODP', 'PORT OUT SPLITTER' => 'PORT OUT SPLITTER', 'QR OUT SPLITTER' => 'QR OUT SPLITTER', 'PORT' => 'PORT', 'STATUS' => 'STATUS', 'ONU' => 'ONU', 'SN' => 'SN', 'SERVICE' => 'SERVICE', 'QR DROPCORE' => 'QR DROPCORE', 'NOTE URUT DROPCORE' => 'NOTE URUT DROPCORE', 'FLAG OLT & PORT' => 'FLAG OLT & PORT', 'CONNECTIVITY ODP TO OLT' => 'CONNECTIVITY ODP TO OLT', 'ODP - ONT' => 'ODP - ONT', 'RFS' => 'RFS', 'TANGGAL UPDATE UIM' => 'TANGGAL UPDATE UIM', 'UPDATER UIM' => 'UPDATER UIM', 'UPDATER DAVA' => 'UPDATER DAVA');
+			$createArray = array('TANGGAL PELURUSAN', 'ONDESK', 'ONSITE', 'NAMAODP', 'NOTE', 'KOORDINAT ODP', 'NAMA OLT (IP OLT)', 'PORT OLT', 'TOTAL IN ODP', 'KAPASITAS ODP', 'PORT OUT SPLITTER', 'PORT', 'STATUS', 'ONU', 'SN', 'SERVICE', 'QR DROPCORE', 'NOTE URUT DROPCORE', 'FLAG OLT & PORT', 'CONNECTIVITY ODP TO OLT', 'ODP - ONT', 'RFS', 'TANGGAL UPDATE UIM', 'UPDATER UIM', 'UPDATER DAVA');
+			$makeArray = array('TANGGAL PELURUSAN' => 'TANGGAL PELURUSAN', 'ONDESK' => 'ONDESK', 'ONSITE' => 'ONSITE', 'NAMAODP' => 'NAMAODP', 'NOTE' => 'NOTE', 'KOORDINAT ODP' => 'KOORDINAT ODP', 'NAMA OLT (IP OLT)' => 'NAMA OLT (IP OLT)', 'PORT OLT' => 'PORT OLT', 'TOTAL IN ODP' => 'TOTAL IN ODP', 'KAPASITAS ODP' => 'KAPASITAS ODP', 'PORT OUT SPLITTER' => 'PORT OUT SPLITTER', 'PORT' => 'PORT', 'STATUS' => 'STATUS', 'ONU' => 'ONU', 'SN' => 'SN', 'SERVICE' => 'SERVICE', 'NOTE URUT DROPCORE' => 'NOTE URUT DROPCORE', 'FLAG OLT & PORT' => 'FLAG OLT & PORT', 'CONNECTIVITY ODP TO OLT' => 'CONNECTIVITY ODP TO OLT', 'ODP - ONT' => 'ODP - ONT', 'RFS' => 'RFS', 'TANGGAL UPDATE UIM' => 'TANGGAL UPDATE UIM', 'UPDATER UIM' => 'UPDATER UIM', 'UPDATER DAVA' => 'UPDATER DAVA');
 			$SheetDataKey = array();
 			foreach ($allDataInSheet as $dataInSheet) {
 				foreach ($dataInSheet as $key => $value) {
@@ -1405,7 +1405,7 @@ class Ondesk extends CI_Controller
 			if (empty($dataDiff)) {
 				$flag = 1;
 			}
-
+			
 
 			// match excel sheet column
 			if ($flag == 1) {
@@ -1415,20 +1415,20 @@ class Ondesk extends CI_Controller
 					$ONSITE = $SheetDataKey['ONSITE'];
 					$NAMA_ODP = $SheetDataKey['NAMAODP'];
 					$NOTE_ODP = $SheetDataKey['NOTE'];
-					$QR_ODP = $SheetDataKey['QR ODP'];
+					// $QR_ODP = $SheetDataKey['QR ODP'];
 					$KOORDINAT_ODP = $SheetDataKey['KOORDINAT ODP'];
 					$NAMA_OLT = $SheetDataKey['NAMA OLT (IP OLT)'];
 					$PORT_OLT = $SheetDataKey['PORT OLT'];
 					$TOTAL_IN_ODP = $SheetDataKey['TOTAL IN ODP'];
 					$KAPASITAS = $SheetDataKey['KAPASITAS ODP'];
 					$PORT_OUT_SPLITTER = $SheetDataKey['PORT OUT SPLITTER'];
-					$QR_OUT_SPLITTER = $SheetDataKey['QR OUT SPLITTER'];
+					// $QR_OUT_SPLITTER = $SheetDataKey['QR OUT SPLITTER'];
 					$PORT_ODP = $SheetDataKey['PORT'];
 					$STATUS = $SheetDataKey['STATUS'];
 					$ONU = $SheetDataKey['ONU'];
 					$SN = $SheetDataKey['SN'];
 					$SERVICE = $SheetDataKey['SERVICE'];
-					$QR_DROPCORE = $SheetDataKey['QR DROPCORE'];
+					// $QR_DROPCORE = $SheetDataKey['QR DROPCORE'];
 					$NOTE_URUT_DROPCORE = $SheetDataKey['NOTE URUT DROPCORE'];
 					$FLAG_OLT_PORT = $SheetDataKey['FLAG OLT & PORT'];
 					$CONNECTIVITY_ODP_TO_OLT = $SheetDataKey['CONNECTIVITY ODP TO OLT'];
@@ -1450,20 +1450,20 @@ class Ondesk extends CI_Controller
 					$ONSITE = filter_var(html_escape(trim($allDataInSheet[$i][$ONSITE])), FILTER_SANITIZE_STRING);
 					$NAMA_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$NAMA_ODP])), FILTER_SANITIZE_STRING);
 					$NOTE_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$NOTE_ODP])), FILTER_SANITIZE_STRING);
-					$QR_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$QR_ODP])), FILTER_SANITIZE_STRING);
+					$QR_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['F'])), FILTER_SANITIZE_STRING);
 					$KOORDINAT_ODP  = filter_var(html_escape(trim($allDataInSheet[$i][$KOORDINAT_ODP])), FILTER_SANITIZE_STRING);
 					$NAMA_OLT = filter_var(html_escape(trim($allDataInSheet[$i][$NAMA_OLT])), FILTER_SANITIZE_STRING);
 					$PORT_OLT = filter_var(html_escape(trim($allDataInSheet[$i][$PORT_OLT])), FILTER_SANITIZE_STRING);
 					$TOTAL_IN_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$TOTAL_IN_ODP])), FILTER_SANITIZE_STRING);
 					$KAPASITAS = filter_var(html_escape(trim($allDataInSheet[$i][$KAPASITAS])), FILTER_SANITIZE_STRING);
 					$PORT_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i][$PORT_OUT_SPLITTER])), FILTER_SANITIZE_STRING);
-					$QR_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i][$QR_OUT_SPLITTER])), FILTER_SANITIZE_STRING);
+					$QR_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i]['M'])), FILTER_SANITIZE_STRING);
 					$PORT_ODP = filter_var(html_escape(trim($allDataInSheet[$i][$PORT_ODP])), FILTER_SANITIZE_STRING);
 					$STATUS = filter_var(html_escape(trim($allDataInSheet[$i][$STATUS])), FILTER_SANITIZE_STRING);
 					$ONU = filter_var(html_escape(trim($allDataInSheet[$i][$ONU])), FILTER_SANITIZE_STRING);
 					$SN = filter_var(html_escape(trim($allDataInSheet[$i][$SN])), FILTER_SANITIZE_STRING);
 					$SERVICE = filter_var(html_escape(trim($allDataInSheet[$i][$SERVICE])), FILTER_SANITIZE_STRING);
-					$QR_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i][$QR_DROPCORE])), FILTER_SANITIZE_STRING);
+					$QR_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i]['S'])), FILTER_SANITIZE_STRING);
 					$NOTE_URUT_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i][$NOTE_URUT_DROPCORE])), FILTER_SANITIZE_STRING);
 					$FLAG_OLT_PORT = filter_var(html_escape(trim($allDataInSheet[$i][$FLAG_OLT_PORT])), FILTER_SANITIZE_STRING);
 					$CONNECTIVITY_ODP_TO_OLT = filter_var(html_escape(trim($allDataInSheet[$i][$CONNECTIVITY_ODP_TO_OLT])), FILTER_SANITIZE_STRING);
@@ -1476,7 +1476,39 @@ class Ondesk extends CI_Controller
 					$NOTE_QR_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i]['AC'])), FILTER_SANITIZE_STRING);
 					$NOTE_QR_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i]['AD'])), FILTER_SANITIZE_STRING);
 					$UPDATER_DAVA = filter_var(html_escape(trim($allDataInSheet[$i][$UPDATER_DAVA])), FILTER_SANITIZE_STRING);
-				
+
+					// $TANGGAL_PELURUSAN = filter_var(html_escape(trim($allDataInSheet[$i]['A'])), FILTER_SANITIZE_STRING);
+					// $ONDESK = filter_var(html_escape(trim($allDataInSheet[$i]['B'])), FILTER_SANITIZE_STRING);
+					// $ONSITE = filter_var(html_escape(trim($allDataInSheet[$i]['C'])), FILTER_SANITIZE_STRING);
+					// $NAMA_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['D'])), FILTER_SANITIZE_STRING);
+					// $NOTE_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['E'])), FILTER_SANITIZE_STRING);
+					// $QR_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['F'])), FILTER_SANITIZE_STRING);
+					// $KOORDINAT_ODP  = filter_var(html_escape(trim($allDataInSheet[$i]['G'])), FILTER_SANITIZE_STRING);
+					// $NAMA_OLT = filter_var(html_escape(trim($allDataInSheet[$i]['H'])), FILTER_SANITIZE_STRING);
+					// $PORT_OLT = filter_var(html_escape(trim($allDataInSheet[$i]['I'])), FILTER_SANITIZE_STRING);
+					// $TOTAL_IN_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['J'])), FILTER_SANITIZE_STRING);
+					// $KAPASITAS = filter_var(html_escape(trim($allDataInSheet[$i]['K'])), FILTER_SANITIZE_STRING);
+					// $PORT_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i]['L'])), FILTER_SANITIZE_STRING);
+					// $QR_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i]['M'])), FILTER_SANITIZE_STRING);
+					// $PORT_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['N'])), FILTER_SANITIZE_STRING);
+					// $STATUS = filter_var(html_escape(trim($allDataInSheet[$i]['O'])), FILTER_SANITIZE_STRING);
+					// $ONU = filter_var(html_escape(trim($allDataInSheet[$i]['P'])), FILTER_SANITIZE_STRING);
+					// $SN = filter_var(html_escape(trim($allDataInSheet[$i]['Q'])), FILTER_SANITIZE_STRING);
+					// $SERVICE = filter_var(html_escape(trim($allDataInSheet[$i]['R'])), FILTER_SANITIZE_STRING);
+					// $QR_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i]['S'])), FILTER_SANITIZE_STRING);
+					// $NOTE_URUT_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i]['T'])), FILTER_SANITIZE_STRING);
+					// $FLAG_OLT_PORT = filter_var(html_escape(trim($allDataInSheet[$i]['U'])), FILTER_SANITIZE_STRING);
+					// $CONNECTIVITY_ODP_TO_OLT = filter_var(html_escape(trim($allDataInSheet[$i]['V'])), FILTER_SANITIZE_STRING);
+					// $ODP_ONT = filter_var(html_escape(trim($allDataInSheet[$i]['W'])), FILTER_SANITIZE_STRING);
+					// $RFS = filter_var(html_escape(trim($allDataInSheet[$i]['X'])), FILTER_SANITIZE_STRING);
+					// $NOTE_HD_DAMAN = filter_var(html_escape(trim($allDataInSheet[$i]['Y'])), FILTER_SANITIZE_STRING);
+					// $TANGGAL_UPDATE_UIM = filter_var(html_escape(trim($allDataInSheet[$i]['Z'])), FILTER_SANITIZE_STRING);
+					// $UPDATER_UIM = filter_var(html_escape(trim($allDataInSheet[$i]['AA'])), FILTER_SANITIZE_STRING);
+					// $NOTE_QR_ODP = filter_var(html_escape(trim($allDataInSheet[$i]['AB'])), FILTER_SANITIZE_STRING);
+					// $NOTE_QR_OUT_SPLITTER = filter_var(html_escape(trim($allDataInSheet[$i]['AC'])), FILTER_SANITIZE_STRING);
+					// $NOTE_QR_DROPCORE = filter_var(html_escape(trim($allDataInSheet[$i]['AD'])), FILTER_SANITIZE_STRING);
+					// $UPDATER_DAVA = filter_var(html_escape(trim($allDataInSheet[$i]['AE'])), FILTER_SANITIZE_STRING);
+
 					$newDateA = date("Y-m-d", strtotime($TANGGAL_PELURUSAN));
 					if ($TANGGAL_UPDATE_UIM != "" or $TANGGAL_UPDATE_UIM != null) {
 						$newDateB = date("Y-m-d", strtotime($TANGGAL_UPDATE_UIM));
@@ -1504,7 +1536,7 @@ class Ondesk extends CI_Controller
 				}
 
 
-
+				;
 				$this->Validasi_model->setBatchImportValidasi($fetchData);
 				$this->Validasi_model->importDataValidasi();
 
@@ -1516,6 +1548,7 @@ class Ondesk extends CI_Controller
 				$this->session->set_flashdata('danger', 'Format tidak sesuai, harap download format yang ditentukan');
 			}
 			redirect('Ondesk/viewListValidasi');
+			
 		}
 	}
 
