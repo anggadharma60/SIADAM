@@ -51,11 +51,11 @@
             <div class="col-md-3">
               <div class="form-group <?= form_error('tanggalPelurusan') ? 'has-error' : null ?>">
                 <label>Tanggal Pelurusan *</label>
-                <div class="input-group input-daterange">
+                <div class="input-group">
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" name="tanggalPelurusan" id="tanggalPelurusan" class="form-control pull-right" value="<?= $row->row(0)->tanggalPelurusan ?>" readonly="" />
+                  <input type="text" name="tanggalPelurusan" id="tanggalPelurusan" class="form-control pull-right" value="<?= $row->row(0)->tanggalPelurusan ?>" readonly="" style="text-align:center" />
                 </div>
                 <?= form_error('tanggalPelurusan') ?>
               </div>
@@ -94,6 +94,8 @@
         <div class="col-md-8">
           <fieldset>
             <legend>Data ODP</legend>
+            <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
+ 
             <div class="col-md-4">
               <div class="form-group <?= form_error('namaODP') ? 'has-error' : null ?>">
                 <label>Nama ODP *</label>
@@ -160,6 +162,283 @@
                 </button>
               </div>
             </div>
+            <?php } ?>
+
+            <?php if ($this->fungsi->user_login()->status == 'Dava') { ?>
+              <div class="col-md-4">
+              <div class="form-group <?= form_error('namaODP') ? 'has-error' : null ?>">
+                <label>Nama ODP *</label>
+                <input type="text" id="namaODPedit" name="namaODP" value="<?= $this->input->post('namaODP') ?? $row->row(0)->namaODP ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('namaODP') ?>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group <?= form_error('QRODP') ? 'has-error' : null ?>">
+                <label>QR ODP</label>
+                <input type="text" id="QRODP" name="QRODP" value="<?= $this->input->post('QRODP') ?? $row->row(0)->QRODP ?>" class="form-control" style="text-align:center;">
+                <?= form_error('QRODP') ?>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group <?= form_error('koordinatODP') ? 'has-error' : null ?>">
+                <label>Koordinat</label>
+                <input type="text" id="koordinatODP" name="koordinatODP" value="<?= $this->input->post('koordinatODP') ?? $row->row(0)->koordinatODP ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('koordinatODP') ?>
+              </div>
+            </div>
+            <div class="row"></div>
+            <div class="col-md-6">
+              <div class="form-group <?= form_error('noteODP') ? 'has-error' : null ?>">
+                <label>Note ODP</label>
+                <textarea style="resize:none" name="noteODP" class="form-control" readonly="" rows="3"><?= $this->input->post('noteODP') ?? $row->row(0)->noteODP ?></textarea>
+                <?= form_error('noteODP') ?>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group <?= form_error('noteQRODP') ? 'has-error' : null ?>">
+                <label>Note QR ODP</label>
+                <textarea style="resize:none" name="noteQRODP" class="form-control" rows="3"><?= $this->input->post('noteQRODP') ?? $row->row(0)->noteQRODP ?></textarea>
+                <?= form_error('noteQRODP') ?>
+              </div>
+            </div>
+            <div class="row"></div>
+            <div class="col-md-3">
+              <div class="form-group <?= form_error('totalIN') ? 'has-error' : null ?>">
+                <label>Total IN </label>
+                <input type="text" name="totalIN" value="<?= $this->input->post('totalIN') ?? $row->row(0)->totalIN ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('totalIN') ?>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group <?= form_error('kapasitasODP') ? 'has-error' : null ?>">
+                <label>Kapasitas</label>
+                <input id="kapasitasODP" type="text" name="kapasitasODP" value="<?= $this->input->post('kapasitasODP') ?? $row->row(0)->kapasitasODP ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('kapasitasODP') ?>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group <?= form_error('jumlahPort') ? 'has-error' : null ?>">
+                <label>Jumlah Data</label>
+                <input id="jumlahPort" type="text" name="jumlahPort" value="<?= $row->num_rows() ?>" class="form-control" readonly style="text-align:center;">
+                <?= form_error('jumlahPort') ?>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <br>
+                <button class="btn btn-success btn-flat" id="btn-add" type="submit" style="margin-top:5px;height:33px;width:100%;">
+                  <i class=""></i> Simpan
+                </button>
+              </div>
+            </div>
+              <?php } ?>
+
+              <?php if ($this->fungsi->user_login()->status == 'HD Daman') { ?>
+              <div class="col-md-4">
+              <div class="form-group <?= form_error('namaODP') ? 'has-error' : null ?>">
+                <label>Nama ODP *</label>
+                <input type="text" id="namaODPedit" name="namaODP" value="<?= $this->input->post('namaODP') ?? $row->row(0)->namaODP ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('namaODP') ?>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group <?= form_error('QRODP') ? 'has-error' : null ?>">
+                <label>QR ODP</label>
+                <input type="text" id="QRODP" name="QRODP" value="<?= $this->input->post('QRODP') ?? $row->row(0)->QRODP ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('QRODP') ?>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group <?= form_error('koordinatODP') ? 'has-error' : null ?>">
+                <label>Koordinat</label>
+                <input type="text" id="koordinatODP" name="koordinatODP" value="<?= $this->input->post('koordinatODP') ?? $row->row(0)->koordinatODP ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('koordinatODP') ?>
+              </div>
+            </div>
+            <div class="row"></div>
+            <div class="col-md-6">
+              <div class="form-group <?= form_error('noteODP') ? 'has-error' : null ?>">
+                <label>Note ODP</label>
+                <textarea style="resize:none" name="noteODP" class="form-control" readonly="" rows="3"><?= $this->input->post('noteODP') ?? $row->row(0)->noteODP ?></textarea>
+                <?= form_error('noteODP') ?>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group <?= form_error('noteQRODP') ? 'has-error' : null ?>">
+                <label>Note QR ODP</label>
+                <textarea style="resize:none" name="noteQRODP" class="form-control" readonly="" rows="3"><?= $this->input->post('noteQRODP') ?? $row->row(0)->noteQRODP ?></textarea>
+                <?= form_error('noteQRODP') ?>
+              </div>
+            </div>
+            <div class="row"></div>
+            <div class="col-md-3">
+              <div class="form-group <?= form_error('totalIN') ? 'has-error' : null ?>">
+                <label>Total IN </label>
+                <input type="text" name="totalIN" value="<?= $this->input->post('totalIN') ?? $row->row(0)->totalIN ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('totalIN') ?>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group <?= form_error('kapasitasODP') ? 'has-error' : null ?>">
+                <label>Kapasitas</label>
+                <input id="kapasitasODP" type="text" name="kapasitasODP" value="<?= $this->input->post('kapasitasODP') ?? $row->row(0)->kapasitasODP ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('kapasitasODP') ?>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group <?= form_error('jumlahPort') ? 'has-error' : null ?>">
+                <label>Jumlah Data</label>
+                <input id="jumlahPort" type="text" name="jumlahPort" value="<?= $row->num_rows() ?>" class="form-control" readonly style="text-align:center;">
+                <?= form_error('jumlahPort') ?>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <br>
+                <button class="btn btn-success btn-flat" id="btn-add" type="submit" style="margin-top:5px;height:33px;width:100%;">
+                  <i class=""></i> Simpan
+                </button>
+              </div>
+            </div>
+              <?php } ?>
+
+              <?php if ($this->fungsi->user_login()->status == 'SDI') { ?>
+              <div class="col-md-4">
+              <div class="form-group <?= form_error('namaODP') ? 'has-error' : null ?>">
+                <label>Nama ODP *</label>
+                <input type="text" id="namaODPedit" name="namaODP" value="<?= $this->input->post('namaODP') ?? $row->row(0)->namaODP ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('namaODP') ?>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group <?= form_error('QRODP') ? 'has-error' : null ?>">
+                <label>QR ODP</label>
+                <input type="text" id="QRODP" name="QRODP" value="<?= $this->input->post('QRODP') ?? $row->row(0)->QRODP ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('QRODP') ?>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group <?= form_error('koordinatODP') ? 'has-error' : null ?>">
+                <label>Koordinat</label>
+                <input type="text" id="koordinatODP" name="koordinatODP" value="<?= $this->input->post('koordinatODP') ?? $row->row(0)->koordinatODP ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('koordinatODP') ?>
+              </div>
+            </div>
+            <div class="row"></div>
+            <div class="col-md-6">
+              <div class="form-group <?= form_error('noteODP') ? 'has-error' : null ?>">
+                <label>Note ODP</label>
+                <textarea style="resize:none" name="noteODP" class="form-control" readonly="" rows="3"><?= $this->input->post('noteODP') ?? $row->row(0)->noteODP ?></textarea>
+                <?= form_error('noteODP') ?>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group <?= form_error('noteQRODP') ? 'has-error' : null ?>">
+                <label>Note QR ODP</label>
+                <textarea style="resize:none" name="noteQRODP" class="form-control" readonly="" rows="3"><?= $this->input->post('noteQRODP') ?? $row->row(0)->noteQRODP ?></textarea>
+                <?= form_error('noteQRODP') ?>
+              </div>
+            </div>
+            <div class="row"></div>
+            <div class="col-md-3">
+              <div class="form-group <?= form_error('totalIN') ? 'has-error' : null ?>">
+                <label>Total IN </label>
+                <input type="text" name="totalIN" value="<?= $this->input->post('totalIN') ?? $row->row(0)->totalIN ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('totalIN') ?>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group <?= form_error('kapasitasODP') ? 'has-error' : null ?>">
+                <label>Kapasitas</label>
+                <input id="kapasitasODP" type="text" name="kapasitasODP" value="<?= $this->input->post('kapasitasODP') ?? $row->row(0)->kapasitasODP ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('kapasitasODP') ?>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group <?= form_error('jumlahPort') ? 'has-error' : null ?>">
+                <label>Jumlah Data</label>
+                <input id="jumlahPort" type="text" name="jumlahPort" value="<?= $row->num_rows() ?>" class="form-control" readonly style="text-align:center;">
+                <?= form_error('jumlahPort') ?>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <br>
+                <button class="btn btn-success btn-flat" id="btn-add" type="submit" style="margin-top:5px;height:33px;width:100%;">
+                  <i class=""></i> Simpan
+                </button>
+              </div>
+            </div>
+              <?php } ?>
+
+              <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
+              <div class="col-md-4">
+              <div class="form-group <?= form_error('namaODP') ? 'has-error' : null ?>">
+                <label>Nama ODP *</label>
+                <input type="text" id="namaODPedit" name="namaODP" value="<?= $this->input->post('namaODP') ?? $row->row(0)->namaODP ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('namaODP') ?>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group <?= form_error('QRODP') ? 'has-error' : null ?>">
+                <label>QR ODP</label>
+                <input type="text" id="QRODP" name="QRODP" value="<?= $this->input->post('QRODP') ?? $row->row(0)->QRODP ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('QRODP') ?>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group <?= form_error('koordinatODP') ? 'has-error' : null ?>">
+                <label>Koordinat</label>
+                <input type="text" id="koordinatODP" name="koordinatODP" value="<?= $this->input->post('koordinatODP') ?? $row->row(0)->koordinatODP ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('koordinatODP') ?>
+              </div>
+            </div>
+            <div class="row"></div>
+            <div class="col-md-6">
+              <div class="form-group <?= form_error('noteODP') ? 'has-error' : null ?>">
+                <label>Note ODP</label>
+                <textarea style="resize:none" name="noteODP" class="form-control" readonly="" rows="3"><?= $this->input->post('noteODP') ?? $row->row(0)->noteODP ?></textarea>
+                <?= form_error('noteODP') ?>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group <?= form_error('noteQRODP') ? 'has-error' : null ?>">
+                <label>Note QR ODP</label>
+                <textarea style="resize:none" name="noteQRODP" class="form-control" readonly="" rows="3"><?= $this->input->post('noteQRODP') ?? $row->row(0)->noteQRODP ?></textarea>
+                <?= form_error('noteQRODP') ?>
+              </div>
+            </div>
+            <div class="row"></div>
+            <div class="col-md-3">
+              <div class="form-group <?= form_error('totalIN') ? 'has-error' : null ?>">
+                <label>Total IN </label>
+                <input type="text" name="totalIN" value="<?= $this->input->post('totalIN') ?? $row->row(0)->totalIN ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('totalIN') ?>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group <?= form_error('kapasitasODP') ? 'has-error' : null ?>">
+                <label>Kapasitas</label>
+                <input id="kapasitasODP" type="text" name="kapasitasODP" value="<?= $this->input->post('kapasitasODP') ?? $row->row(0)->kapasitasODP ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('kapasitasODP') ?>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group <?= form_error('jumlahPort') ? 'has-error' : null ?>">
+                <label>Jumlah Data</label>
+                <input id="jumlahPort" type="text" name="jumlahPort" value="<?= $row->num_rows() ?>" class="form-control" readonly style="text-align:center;">
+                <?= form_error('jumlahPort') ?>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <br>
+                <button class="btn btn-success btn-flat" id="btn-add" type="submit" style="margin-top:5px;height:33px;width:100%;">
+                  <i class=""></i> Simpan
+                </button>
+              </div>
+            </div>
+              <?php } ?>
           </fieldset>
         </div>
         <!-- End Input Data ODP -->
@@ -168,6 +447,9 @@
         <div class="col-md-4">
           <fieldset>
             <legend>Data OLT</legend>
+            
+
+              <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
             <div class="col-md-8">
               <div class="form-group <?= form_error('namaOLT') ? 'has-error' : null ?>">
                 <label>Nama OLT *</label>
@@ -188,6 +470,99 @@
                 <?= form_error('portOLT') ?>
               </div>
             </div>
+            <?php } ?>
+
+            <?php if ($this->fungsi->user_login()->status == 'HD Daman') { ?>
+            <div class="col-md-8">
+              <div class="form-group <?= form_error('namaOLT') ? 'has-error' : null ?>">
+                <label>Nama OLT *</label>
+                <!-- <select id="namaOLT" name="namaOLT" class="form-control select2"  data-placeholder="Select OLT"
+                        style="width: 100%;color:black;">
+                       
+                </select> -->
+                <input type="text" id="namaOLTedit" name="namaOLT" value="<?= $this->input->post('namaOLT') ?? $row->row(0)->hostname ?>" class="form-control" readonly="" style="text-align:center;">
+
+                <?= form_error('namaOLT') ?>
+              </div>
+            </div>
+            <div class="row"></div>
+            <div class="col-md-8">
+              <div class="form-group <?= form_error('portOLT') ? 'has-error' : null ?>">
+                <label>Port OLT *</label>
+                <input type="text" name="portOLT" value="<?= $this->input->post('portOLT') ?? $row->row(0)->portOLT ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('portOLT') ?>
+              </div>
+            </div>
+            <?php } ?>
+
+            <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
+            <div class="col-md-8">
+              <div class="form-group <?= form_error('namaOLT') ? 'has-error' : null ?>">
+                <label>Nama OLT *</label>
+                <!-- <select id="namaOLT" name="namaOLT" class="form-control select2"  data-placeholder="Select OLT"
+                        style="width: 100%;color:black;">
+                       
+                </select> -->
+                <input type="text" id="namaOLTedit" name="namaOLT" value="<?= $this->input->post('namaOLT') ?? $row->row(0)->hostname ?>" class="form-control" readonly="" style="text-align:center;">
+
+                <?= form_error('namaOLT') ?>
+              </div>
+            </div>
+            <div class="row"></div>
+            <div class="col-md-8">
+              <div class="form-group <?= form_error('portOLT') ? 'has-error' : null ?>">
+                <label>Port OLT *</label>
+                <input type="text" name="portOLT" value="<?= $this->input->post('portOLT') ?? $row->row(0)->portOLT ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('portOLT') ?>
+              </div>
+            </div>
+            <?php } ?>
+
+            <?php if ($this->fungsi->user_login()->status == 'SDI') { ?>
+            <div class="col-md-8">
+              <div class="form-group <?= form_error('namaOLT') ? 'has-error' : null ?>">
+                <label>Nama OLT *</label>
+                <!-- <select id="namaOLT" name="namaOLT" class="form-control select2"  data-placeholder="Select OLT"
+                        style="width: 100%;color:black;">
+                       
+                </select> -->
+                <input type="text" id="namaOLTedit" name="namaOLT" value="<?= $this->input->post('namaOLT') ?? $row->row(0)->hostname ?>" class="form-control" readonly="" style="text-align:center;">
+
+                <?= form_error('namaOLT') ?>
+              </div>
+            </div>
+            <div class="row"></div>
+            <div class="col-md-8">
+              <div class="form-group <?= form_error('portOLT') ? 'has-error' : null ?>">
+                <label>Port OLT *</label>
+                <input type="text" name="portOLT" value="<?= $this->input->post('portOLT') ?? $row->row(0)->portOLT ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('portOLT') ?>
+              </div>
+            </div>
+            <?php } ?>
+
+            <?php if ($this->fungsi->user_login()->status == 'Dava') { ?>
+            <div class="col-md-8">
+              <div class="form-group <?= form_error('namaOLT') ? 'has-error' : null ?>">
+                <label>Nama OLT *</label>
+                <!-- <select id="namaOLT" name="namaOLT" class="form-control select2"  data-placeholder="Select OLT"
+                        style="width: 100%;color:black;">
+                       
+                </select> -->
+                <input type="text" id="namaOLTedit" name="namaOLT" value="<?= $this->input->post('namaOLT') ?? $row->row(0)->hostname ?>" class="form-control" readonly="" style="text-align:center;">
+
+                <?= form_error('namaOLT') ?>
+              </div>
+            </div>
+            <div class="row"></div>
+            <div class="col-md-8">
+              <div class="form-group <?= form_error('portOLT') ? 'has-error' : null ?>">
+                <label>Port OLT *</label>
+                <input type="text" name="portOLT" value="<?= $this->input->post('portOLT') ?? $row->row(0)->portOLT ?>" class="form-control" readonly="" style="text-align:center;">
+                <?= form_error('portOLT') ?>
+              </div>
+            </div>
+            <?php } ?>
           </fieldset>
 
         </div>

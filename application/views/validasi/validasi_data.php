@@ -60,28 +60,19 @@
             <a href="<?= site_url('HDDaman/exportValidasi') ?>" class="btn btn-info btn-flat">
               <i class="fa fa-upload  "></i> Export
             </a>
-            
-            <a href="<?= site_url('HDDaman/addValidasi') ?>" class="btn btn-primary btn-flat">
-              <i class="fa fa-user-plus"></i> Create
-            </a>
+        
           <?php  } ?>
           <?php if ($this->fungsi->user_login()->status == 'SDI') { ?>
             <a href="<?= site_url('SDI/exportValidasi') ?>" class="btn btn-info btn-flat">
               <i class="fa fa-upload  "></i> Export
             </a>
-            
-            <a href="<?= site_url('SDI/addValidasi') ?>" class="btn btn-primary btn-flat">
-              <i class="fa fa-user-plus"></i> Create
-            </a>
+        
           <?php  } ?>
           <?php if ($this->fungsi->user_login()->status == 'Dava') { ?>
             <a href="<?= site_url('Dava/exportValidasi') ?>" class="btn btn-info btn-flat">
               <i class="fa fa-upload  "></i> Export
             </a>
             
-            <a href="<?= site_url('Dava/addValidasi') ?>" class="btn btn-primary btn-flat">
-              <i class="fa fa-user-plus"></i> Create
-            </a>
           <?php  } ?>
         </div>
       <?php } ?>
