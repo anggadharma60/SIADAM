@@ -242,6 +242,7 @@
                   <th> ODP - ONT </th>
                   <th> RFS </th>
                   <th> Note HD Daman</th>
+                  <th> Tanggal Update UIM </th>
                 </thead>
               <?php } ?>
               <?php if ($this->fungsi->user_login()->status == 'SDI') { ?>
@@ -457,6 +458,7 @@
                     <tr>
                     <td>
                         <div class="form-group <?= form_error('ODPtoONT['.$no.']') ? 'has-error' : null ?>">
+                          <input type="hidden" class="form-control" id="id" name="id[]" value="<?= $data->id ?>" style="text-align:center;" />
                           <input type="text" class="form-control" id="ODPtoONT" name="ODPtoONT[]" value="<?= $this->input->post('ODPtoONT['.$no.']') ?? $data->ODPtoONT ?>" style="width:225px;text-align:center;" maxlength=40 />
                           <?= form_error('ODPtoONT['.$no.']') ?>
                         </div>
@@ -473,12 +475,24 @@
                           <?= form_error('noteHDDaman['.$no.']') ?>
                         </div>
                       </td>
+                      <td>
+                        <div class="form-group <?= form_error('updateDateUIM['.$no.']') ? 'has-error' : null ?>">
+                          <div class="input-group input-daterange">
+                            <div class="input-group-addon">
+                              <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" name="updateDateUIM[]" id="updateDateUIM" class="form-control pull-right" value="<?= $this->input->post('updateDateUIM['.$no.']') ?? $data->updateDateUIM ?>" readonly="" style="width:175px" />
+                          </div>
+                          <?= form_error('updateDateUIM['.$no.']') ?>
+                        </div>
+                      </td>
                     </tr>
                   <?php } ?>
                   <?php if ($this->fungsi->user_login()->status == 'SDI') { ?>
                     <tr>
                       <td>
                         <div class="form-group <?= form_error('ODPtoOLT['.$no.']') ? 'has-error' : null ?>">
+                          <input type="hidden" class="form-control" id="id" name="id[]" value="<?= $data->id ?>" style="text-align:center;" />
                           <input type="text" class="form-control" id="ODPtoOLT" name="ODPtoOLT[]" value="<?= $this->input->post('ODPtoOLT['.$no.']') ?? $data->ODPtoOLT ?>" style="width:225px;text-align:center;" maxlength=40 />
                           <?= form_error('ODPtoOLT['.$no.']') ?>
                         </div>
@@ -489,6 +503,7 @@
                     <tr>
                       <td>
                         <div class="form-group <?= form_error('QROutSplitter['.$no.']') ? 'has-error' : null ?>">
+                          <input type="hidden" class="form-control" id="id" name="id[]" value="<?= $data->id ?>" style="text-align:center;" />
                           <input type="text" class="form-control" id="QROutSplitter" name="QROutSplitter[]" value="<?= $this->input->post('QROutSplitter['.$no.']') ?? $data->QRPortOutSplitter ?>" style="width:225px;text-align:center;" maxlength=16 />
                           <?= form_error('QROutSplitter['.$no.']') ?>
                         </div>
@@ -558,7 +573,8 @@
                 <tfoot style="text-align:center">
                   <th> ODP - ONT </th>
                   <th> RFS </th>
-                  <th> Note HD Daman</th>
+                  <th> Note HD Daman </th>
+                  <th> Tanggal Update UIM </th>
                 </tfoot>
               <?php } ?>
               <?php if ($this->fungsi->user_login()->status == 'SDI') { ?>
