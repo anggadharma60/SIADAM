@@ -25,7 +25,7 @@
          <div class="row">
              <div class="col-md-4 col-md-offset-4">
              
-                <?php echo validation_errors() ?>
+                
                 <form action="" method="post">
                     <div class="form-group <?=form_error('namaSpecOLT') ? 'has-error' : null ?>">
                         <label>Nama Specification OLT *</label>
@@ -34,12 +34,24 @@
                     </div>
                     <div class="form-group <?=form_error('merekOLT') ? 'has-error' : null ?>">
                         <label>Merek OLT</label>
-                        <input type="text" name="merekOLT" value="<?=set_value('merekOLT')?>" class="form-control">
+                        <input type="text" list="merek" name="merekOLT" id="merekOLT" value="<?=set_value('merekOLT')?>" class="form-control">
+                        <datalist id="merek">
+                            <option value="ZTE">
+                            <option value="ALU">
+                            <option value="HUAWEI">
+                        </datalist>
                         <?=form_error('merekOLT')?>
                     </div>
                     <div class="form-group <?=form_error('typeOLT') ? 'has-error' : null ?>">
                         <label>Type OLT</label>
-                        <input type="text" name="typeOLT" value="<?=set_value('typeOLT')?>" class="form-control">
+                        <input type="text" list="type" name="typeOLT" id="typeOLT" value="<?=set_value('typeOLT')?>" class="form-control">
+                        <datalist id="type">
+                            <option value="C300">
+                            <option value="C220v1.2">
+                            <option value="C300v2.0">
+                            <option value="C220v2.0">
+                            <option value="C320v2.0 (Mini OLT)">
+                        </datalist>
                         <?=form_error('typeOLT')?>
                     </div>
                     <div class="form-group <?=form_error('keterangan') ? 'has-error' : null ?>">

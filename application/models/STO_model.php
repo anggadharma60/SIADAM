@@ -32,6 +32,19 @@ class STO_model extends CI_Model {
     return $query;
   }
 
+  public function getDataSTOByRegional($idRegional){
+    $this->db->select('sto.idSTO, sto.namaSTO');
+    $this->db->from('regional');
+    $this->db->join('witel', 'regional.idRegional =witel.idRegional');
+    $this->db->join('datel', 'witel.idWitel = datel.idWitel');
+    $this->db->join('sto', 'datel.idDatel = sto.idDatel');
+    $this->db->where('regional.idRegional', $idRegional);
+    $this->db->order_by('sto.idSTO', 'ASC');
+    $query = $this->db->get();
+    return $query;
+
+  }
+
   public function getIDSTOByKode($kode){
     $this->db->select('idSTO');
     $this->db->from('sto');
@@ -82,11 +95,24 @@ class STO_model extends CI_Model {
         $this->db->where('idSTO', $post['idSTO']);
         $this->db->update('sto', $params);
     }
+  
+   public function foreignKey($id)
+  {
+    $query = $this->db->get_where('rekap_data_olt', array('idSTO' => $id));
+    return $query->result();
+  }
 
-    public function deleteDataSTO($id)
+  public function deleteDataSTO($id)
 	{
-		$this->db->where('idSTO', $id);
-		$this->db->delete('sto');
+    $temp = $this->STO_model->foreignKey($id);
+    if($temp != null){
+      $this->session->set_flashdata('danger', 'Data gagal dihapus karena terkait dengan data lain');
+    }else{
+      $this->db->where('idSTO', $id);
+		  $this->db->delete('sto');
+      $this->session->set_flashdata('danger', 'Data berhasil dihapus');
+    } 
+		
 	}
 
   

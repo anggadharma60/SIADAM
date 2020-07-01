@@ -40,7 +40,7 @@
             </div>
             <div class="form-group <?= form_error('ipOLT') ? 'has-error' : null ?>">
               <label>IP GPON *</label>
-              <input type="text" name="ipOLT" value="<?= $this->input->post('ipOLT') ?? $row->ipOLT ?>" class="form-control">
+              <input type="text" id="ipOLT" name="ipOLT" value="<?= $this->input->post('ipOLT') ?? $row->ipOLT ?>" class="form-control" data-inputmask="'alias': 'ip'" data-mask>
               <?= form_error('ipOLT') ?>
             </div>
             <div class="form-group <?= form_error('idLogicalDevice') ? 'has-error' : null ?>">

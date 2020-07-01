@@ -33,13 +33,25 @@
                     </div>
                     <div class="form-group <?=form_error('merekOLT') ? 'has-error' : null?>">
                         <label>Merk OLT *</label>
-                        <input type="text" name="merekOLT" value="<?=$this->input->post('merekOLT') ?? $row->merekOLT?>" class="form-control">
+                        <input list="merek" type="text" name="merekOLT" id="merekOLT" value="<?=$this->input->post('merekOLT') ?? $row->merekOLT?>" class="form-control">
+                        <datalist id="merek">
+                            <option value="ZTE">
+                            <option value="ALU">
+                            <option value="HUAWEI">
+                        </datalist>
                         <?=form_error('merekOLT')?>
                     </div>
                     <div class="form-group <?=form_error('typeOLT') ? 'has-error' : null?>">
                         <label>Type OLT *</label>
-                        <input type="text" name="typeOLT" value="<?=$this->input->post('typeOLT') ?? $row->typeOLT?>" class="form-control">
+                        <input list="type" type="text" name="typeOLT" id="typeOLT" value="<?=$this->input->post('typeOLT') ?? $row->typeOLT?>" class="form-control">
                         <?=form_error('typeOLT')?>
+                        <datalist id="type">
+                            <option value="C300">
+                            <option value="C220v1.2">
+                            <option value="C300v2.0">
+                            <option value="C220v2.0">
+                            <option value="C320v2.0 (Mini OLT)">
+                        </datalist>
                     </div>
                     <div class="form-group <?=form_error('keterangan') ? 'has-error' : null ?>">
                             <label>Keterangan</label>

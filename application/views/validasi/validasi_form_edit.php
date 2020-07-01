@@ -20,7 +20,7 @@
           </a>
         <?php } ?>
         <?php if ($this->fungsi->user_login()->status == 'Ondesk') { ?>
-          <a `href="<?= site_url('Ondesk/viewListValidasi') ?>" class="btn btn-danger btn-flat">
+          <a href="<?= site_url('Ondesk/viewListValidasi') ?>" class="btn btn-danger btn-flat">
             <i class="fa fa-undo"></i> Back
           </a>
         <?php } ?>

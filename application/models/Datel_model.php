@@ -56,10 +56,23 @@ class Datel_model extends CI_Model {
         $this->db->update('datel', $params);
     }
 
-    public function deleteDataDatel($id)
+  public function foreignKey($id)
+  {
+    $query = $this->db->get_where('sto', array('idDatel' => $id));
+    return $query->result();
+  }
+
+  public function deleteDataDatel($id)
 	{
-		$this->db->where('idDatel', $id);
-		$this->db->delete('datel');
+    $temp = $this->Datel_model->foreignKey($id);
+    if($temp != null){
+      $this->session->set_flashdata('danger', 'Data gagal dihapus karena terkait dengan data lain');
+    }else{
+      $this->db->where('idDatel', $id);
+		  $this->db->delete('datel');
+      $this->session->set_flashdata('danger', 'Data berhasil dihapus');
+    } 
+		
 	}
 
   // ------------------------------------------------------------------------

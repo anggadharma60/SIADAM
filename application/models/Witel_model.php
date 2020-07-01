@@ -47,7 +47,7 @@ class Witel_model extends CI_Model {
     $this->db->insert('witel', $params);
   }
 
-    public function editDataWitel($post)
+  public function editDataWitel($post)
     {
         $params['namaWitel'] = html_escape($post['namaWitel']);
         $params['keterangan'] = html_escape($post['keterangan']);
@@ -55,11 +55,23 @@ class Witel_model extends CI_Model {
         $this->db->where('idWitel', $post['idWitel']);
         $this->db->update('witel', $params);
     }
+  
+  public function foreignKey($id)
+  {
+    $query = $this->db->get_where('datel', array('idWitel' => $id));
+    return $query->result();
+  }
 
-    public function deleteDataWitel($id)
+  public function deleteDataWitel($id)
 	{
-		$this->db->where('idWitel', $id);
-		$this->db->delete('witel');
+      $temp = $this->Witel_model->foreignKey($id);
+      if($temp != null){
+        $this->session->set_flashdata('danger', 'Data gagal dihapus karena terkait dengan data lain');
+      }else{
+        $this->db->where('idWitel', $id);
+        $this->db->delete('witel');
+        $this->session->set_flashdata('danger', 'Data berhasil dihapus');
+    } 
 	}
 
   // ------------------------------------------------------------------------

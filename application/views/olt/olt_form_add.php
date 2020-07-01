@@ -31,8 +31,8 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
-                    <?php //echo validation_errors() 
-                    ?>
+                    <!-- <?php
+                    ?> -->
                     <form action="" method="post">
                         <div class="form-group <?= form_error('hostname') ? 'has-error' : null ?>">
                             <label>Hostname *</label>
@@ -51,10 +51,10 @@
                         </div>
                         <div class="form-group <?= form_error('STO') ? 'has-error' : null ?>">
                             <label>STO *</label>
-                            <select name="STO" class="form-control">
+                            <select id="STO" name="STO" class="form-control">
                                 <option value="" selected="selected">- Pilih STO -</option>
-                                <?php foreach ($sto->result() as $key => $STO) { ?>
-                                    <option value="<?= $STO->idSTO ?>" <?= set_value('STO') == $STO->idSTO ? "selected" : null ?>><?= $STO->namaSTO ?>
+                                <?php foreach ($sto->result() as $key => $sto) { ?>
+                                    <option value="<?= $sto->idSTO ?>" <?= set_value('STO') == $sto->idSTO ? "selected" : null ?>><?= $sto->namaSTO ?>
                                     </option>
                                 <?php } ?>
                             </select>

@@ -287,8 +287,11 @@
  <!-- Select2 -->
 <script src="<?= base_url() ?>assets/bower_components/select2/dist/js/select2.full.min.js"></script>
 
+<!-- Input Mask -->
+<script src="<?= base_url() ?>assets/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="<?= base_url() ?>assets/plugins/input-mask/jquery.inputmask.extensions.js"></script>
 
- <!-- datepicker -->
+<!-- datepicker -->
   <script>
     $(document).ready(function() {
 
@@ -1429,9 +1432,6 @@ $(document).ready(function () {
             }
         
     });       
-         
-    
-   
 });
 </script>
 <!-- auto fill odp -->
@@ -1444,6 +1444,35 @@ $(document).ready(function () {
   el.addEventListener("mousemove", updatetext , false); 
 
 </script>
+<!-- Input mask IP -->
+<script>
+ $('#ipOLT').inputmask()
+</script>
+
+<!-- data STO by ID Regional -->
+<script>
+  $(document).ready(function(){
+    $('#regional').change(function(){
+      var idRegional = $(this).val();
+      console.log(idRegional);
+      $.ajax({
+        url: "<?= base_url() ?>index.php/Admin/getSTOByRegional",
+        method : "POST",
+        data : {id: id}
+        async : true,
+        dataType : 'json',
+        success: function(data){
+          $('select[name="STO"]').empty();
+
+          $.each(data, function(key,value){
+            $('select[name="STO"]').append('<option value="'+ value.id +'">'+ value.namaSTO +'</option>');
+          });
+        }
+      })
+    });
+  });
+</script>
+
 </body>
 
 </html>

@@ -63,11 +63,23 @@ class SpecOLT_model extends CI_Model {
         $this->db->where('idSpecOLT', $post['idSpecOLT']);
         $this->db->update('specification_olt', $params);
     }
+    public function foreignKey($id)
+    {
+      $query = $this->db->get_where('rekap_data_olt', array('idSpecOLT' => $id));
+      return $query->result();
+    }
 
     public function deleteDataSpecOLT($id)
 	{
-		$this->db->where('idSpecOLT', $id);
-		$this->db->delete('specification_olt');
+    $temp = $this->SpecOLT_model->foreignKey($id);
+    if($temp != null){
+      $this->session->set_flashdata('danger', 'Data gagal dihapus karena terkait dengan data lain');
+    }else{
+      $this->db->where('idSpecOLT', $id);
+		  $this->db->delete('specification_olt');
+      $this->session->set_flashdata('danger', 'Data berhasil dihapus');
+    } 
+		
 	}
 
   // ------------------------------------------------------------------------

@@ -55,10 +55,24 @@ class Regional_model extends CI_Model {
       $this->db->update('regional', $params);
     }
 
-    public function deleteDataRegional($id)
+
+    public function foreignKey($id)
     {
-      $this->db->where('idRegional', $id);
-      $this->db->delete('regional');
+      $query = $this->db->get_where('witel', array('idRegional' => $id));
+      return $query->result();
+
+    }
+
+    public function deleteDataRegional($id)
+    { 
+      $temp = $this->Regional_model->foreignKey($id);
+      if($temp != null){
+        $this->session->set_flashdata('danger', 'Data gagal dihapus karena terkait dengan data lain');
+      }else{
+        $this->db->where('idRegional', $id);
+        $this->db->delete('regional');
+        $this->session->set_flashdata('danger', 'Data berhasil dihapus');
+      }      
     }
   // ------------------------------------------------------------------------
 

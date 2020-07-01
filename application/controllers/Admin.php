@@ -387,10 +387,6 @@ class Admin extends CI_Controller
 	{
 		$id = $this->input->post('idRegional');
 		$this->Regional_model->deleteDataRegional($id);
-
-		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
-		}
 		redirect('Admin/getRegional');
 	}
 	// End Menu Regional
@@ -483,10 +479,6 @@ class Admin extends CI_Controller
 	{
 		$id = $this->input->post('idWitel');
 		$this->Witel_model->deleteDataWitel($id);
-
-		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
-		}
 		redirect('Admin/getWitel');
 	}
 	// End Menu Witel
@@ -578,10 +570,6 @@ class Admin extends CI_Controller
 	{
 		$id = $this->input->post('idDatel');
 		$this->Datel_model->deleteDataDatel($id);
-
-		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
-		}
 		redirect('Admin/getDatel');
 	}
 	// End Menu Datel
@@ -675,10 +663,6 @@ class Admin extends CI_Controller
 	{
 		$id = $this->input->post('idSTO');
 		$this->STO_model->deleteDataSTO($id);
-
-		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
-		}
 		redirect('Admin/getSTO');
 	}
 	// End Menu STO
@@ -765,10 +749,6 @@ class Admin extends CI_Controller
 	{
 		$id = $this->input->post('idSpecOLT');
 		$this->SpecOLT_model->deleteDataSpecOLT($id);
-
-		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('danger', 'Data berhasil dihapus');
-		}
 		redirect('Admin/getSpecOLT');
 	}
 	//End Spek OLT
@@ -1200,15 +1180,23 @@ class Admin extends CI_Controller
 		$this->template->load('template/template_Admin', 'olt/olt_form_import');
 	}
 
+	public function getSTOByRegional(){
+		$post = $this->input->post('regional', TRUE);
+		$STO = $this->STO_model->getDataSTOByRegional($post);
+		json_encode($STO);
+	}
 	public function addOLT()
 	{
+
 		$data['sto'] = $this->STO_model->getDataSTO();
+		$data['regional'] = $this->Regional_model->getDataRegional();
 		$data['spec'] = $this->SpecOLT_model->getDataSpecOLT();
 
 		$this->form_validation->set_rules('hostname', 'HOSTNAME', 'required|is_unique[rekap_data_olt.hostname]|trim');
 		$this->form_validation->set_rules('ipOLT', 'IP GPON', 'required|is_unique[rekap_data_olt.ipOLT]|trim');
 		$this->form_validation->set_rules('idLogicalDevice', 'ID Logical Device', 'required|is_unique[rekap_data_olt.idLogicalDevice]|trim');
 		$this->form_validation->set_rules('STO', 'STO', 'required|trim');
+		$this->form_validation->set_rules('regional', 'Regional', 'required|trim');
 		$this->form_validation->set_rules('SpecOLT', 'Specification OLT', 'required|trim');
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');

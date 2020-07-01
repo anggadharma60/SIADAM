@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2020 at 12:12 PM
+-- Generation Time: Jun 30, 2020 at 02:56 AM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -128,7 +128,7 @@ CREATE TABLE `datel` (
 --
 
 INSERT INTO `datel` (`idDatel`, `namaDatel`, `keterangan`, `idWitel`) VALUES
-('D0001', 'Kendal', NULL, 'W0001'),
+('D0001', 'Kendal', '', 'W0001'),
 ('D0002', 'Semarang Kota', NULL, 'W0001'),
 ('D0003', 'Ungaran', NULL, 'W0001');
 
@@ -745,7 +745,7 @@ ALTER TABLE `rekap_data_validasi`
 -- Constraints for table `datel`
 --
 ALTER TABLE `datel`
-  ADD CONSTRAINT `fk_witel` FOREIGN KEY (`idWitel`) REFERENCES `witel` (`idWitel`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_witel` FOREIGN KEY (`idWitel`) REFERENCES `witel` (`idWitel`);
 
 --
 -- Constraints for table `rekap_data_odp`
@@ -757,19 +757,20 @@ ALTER TABLE `rekap_data_odp`
 -- Constraints for table `rekap_data_olt`
 --
 ALTER TABLE `rekap_data_olt`
-  ADD CONSTRAINT `fk_sto` FOREIGN KEY (`idSTO`) REFERENCES `sto` (`idSTO`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_specOLT` FOREIGN KEY (`idSpecOLT`) REFERENCES `specification_olt` (`idSpecOLT`),
+  ADD CONSTRAINT `fk_sto` FOREIGN KEY (`idSTO`) REFERENCES `sto` (`idSTO`);
 
 --
 -- Constraints for table `sto`
 --
 ALTER TABLE `sto`
-  ADD CONSTRAINT `fk_datel` FOREIGN KEY (`idDatel`) REFERENCES `datel` (`idDatel`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_datel` FOREIGN KEY (`idDatel`) REFERENCES `datel` (`idDatel`);
 
 --
 -- Constraints for table `witel`
 --
 ALTER TABLE `witel`
-  ADD CONSTRAINT `fk_regional` FOREIGN KEY (`idRegional`) REFERENCES `regional` (`idRegional`) ON DELETE SET NULL;
+  ADD CONSTRAINT `fk_regional` FOREIGN KEY (`idRegional`) REFERENCES `regional` (`idRegional`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
