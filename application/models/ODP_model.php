@@ -203,7 +203,7 @@ public function count_filter($search){
   }
 
   public function jumlahRekapODP(){
-    $this->db->select('s.idSTO, s.kodeSTO, s.namaSTO, COUNT(r.idSTO) as grand_total');
+    $this->db->select('s.idSTO, s.namaSTO, COUNT(r.idSTO) as grand_total');
     $this->db->from('rekap_data_odp as r');
     $this->db->join('sto as s', 's.idSTO = r.idSTO');
     $this->db->group_by('s.idSTO');

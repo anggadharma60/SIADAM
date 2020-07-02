@@ -25,13 +25,9 @@
       <div class="row">
         <div class="col-md-4 col-md-offset-4">
           <form action="" method="post">
-            <div class="form-group <?= form_error('kodeSTO') ? 'has-error' : null ?>">
-              <label>Kode STO *</label>
-              <input type="hidden" name="idSTO" value="<?= $row->idSTO ?>">
-              <input type="text" name="kodeSTO" value="<?= $this->input->post('kodeSTO') ?? $row->kodeSTO ?>" class="form-control" placeholder="Format ex: SMC">
-              <?= form_error('kodeSTO') ?>
-            </div>
+            
             <div class="form-group <?= form_error('namaSTO') ? 'has-error' : null ?>">
+            <input type="hidden" name="idSTO" value="<?= $row->idSTO ?>">
               <label>Nama STO *</label>
               <input type="text" name="namaSTO" value="<?= $this->input->post('namaSTO') ?? $row->namaSTO ?>" class="form-control">
               <?= form_error('namaSTO') ?>

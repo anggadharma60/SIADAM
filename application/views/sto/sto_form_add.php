@@ -26,9 +26,9 @@
                 <?php //echo validation_errors() ?>
                 <form action="" method="post"> 
                     <div class="form-group <?=form_error('idSTO') ? 'has-error' : null ?>">
-                        <label>Kode STO *</label>
-                        <input type="text" name="kodeSTO" value="<?=set_value('kodeSTO')?>" class="form-control"  placeholder="Format ex: SMC"> 
-                        <?=form_error('kodeSTO')?>
+                        <label>ID STO *</label>
+                        <input type="text" name="idSTO" value="<?=set_value('idSTO')?>" class="form-control"  placeholder="Format ex: SMC"> 
+                        <?=form_error('idSTO')?>
                     </div>
                     <div class="form-group <?=form_error('namaSTO') ? 'has-error' : null ?>">
                         <label>Nama STO *</label>

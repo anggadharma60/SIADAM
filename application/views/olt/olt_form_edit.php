@@ -65,7 +65,7 @@
             </div>
             <div class="form-group <?= form_error('SpecOLT') ? 'has-error' : null ?>">
               <label>Specification OLT </label>
-              <select name="SpecOLT" class="form-control">
+              <select name="SpecOLT" class="form-control" disabled>
                 <option value="<?= $row->idSpecOLT ?>" selected="selected"><?= $row->namaSpecOLT ?></option>
                 <?php
                 if (($spec->num_rows) != 0) { ?>

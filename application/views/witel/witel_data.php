@@ -49,7 +49,6 @@
           foreach ($row->result() as $key => $data) { ?>
             <tr>
               <td><?= $data->idWitel ?></td>
-              <!-- <td><?= $data->NIP ?></td> -->
               <td><?= $data->namaWitel ?></td>
               <td><?= $data->keterangan ?></td>
               <td><?= $data->namaRegional ?></td>

@@ -52,7 +52,16 @@ class OLT_model extends CI_Model
 
   public function addDataOLT($post)
   {
-    $params['hostname'] = html_escape($post['hostname']);
+    $hostname= html_escape($post['hostname']);
+    
+    
+    $namaOLT = html_escape(strtoupper($hostname[0]));
+    $namaOLT .= '-' .(html_escape(strtoupper($hostname[1])));
+    $namaOLT .= '-' .(html_escape(strtoupper($hostname[2])));
+    $namaOLT .= '-' .(html_escape(($hostname[3])));
+
+    $params['hostname'] = html_escape($namaOLT);
+    
     $params['ipOLT'] = html_escape($post['ipOLT']);
     $params['idLogicalDevice'] = html_escape($post['idLogicalDevice']);
     $params['idSTO'] = html_escape($post['STO']);
@@ -65,7 +74,7 @@ class OLT_model extends CI_Model
     $params['ipOLT'] = html_escape($post['ipOLT']);
     $params['idLogicalDevice'] = html_escape($post['idLogicalDevice']);
     // $params['idSTO'] = html_escape($post['STO']);
-    $params['idSpecOLT'] = html_escape($post['SpecOLT']);
+    // $params['idSpecOLT'] = html_escape($post['SpecOLT']);
     $this->db->where('idOLT', $post['idOLT']);
     $this->db->update('rekap_data_olt', $params);
   }

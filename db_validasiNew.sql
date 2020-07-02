@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 30, 2020 at 02:56 AM
+-- Generation Time: Jul 02, 2020 at 04:59 AM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -129,8 +129,9 @@ CREATE TABLE `datel` (
 
 INSERT INTO `datel` (`idDatel`, `namaDatel`, `keterangan`, `idWitel`) VALUES
 ('D0001', 'Kendal', '', 'W0001'),
-('D0002', 'Semarang Kota', NULL, 'W0001'),
-('D0003', 'Ungaran', NULL, 'W0001');
+('D0002', 'Semarang Kota', '', 'W0001'),
+('D0003', 'Ungaran', '', 'W0001'),
+('D0004', 'Batu', '', 'W0002');
 
 --
 -- Triggers `datel`
@@ -252,8 +253,8 @@ DELIMITER ;
 --
 
 CREATE TABLE `regional` (
-  `idRegional` varchar(5) NOT NULL,
-  `namaRegional` varchar(20) NOT NULL,
+  `idRegional` varchar(3) NOT NULL,
+  `namaRegional` varchar(12) NOT NULL,
   `keterangan` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -262,27 +263,8 @@ CREATE TABLE `regional` (
 --
 
 INSERT INTO `regional` (`idRegional`, `namaRegional`, `keterangan`) VALUES
-('R0001', 'Semarang', '');
-
---
--- Triggers `regional`
---
-DELIMITER $$
-CREATE TRIGGER `regionalotomatis` BEFORE INSERT ON `regional` FOR EACH ROW BEGIN
-DECLARE s VARCHAR(5);
-DECLARE i INTEGER;
- 
-SET i = (SELECT SUBSTRING(idRegional,2,5) AS Nomer
-FROM regional ORDER BY Nomer DESC LIMIT 1);
- 
-SET s = (SELECT koderegionalotomatis(i));
- 
-IF(NEW.idRegional IS NULL OR NEW.idRegional = '')
- THEN SET NEW.idRegional =s;
-END IF;
-END
-$$
-DELIMITER ;
+('D4', 'Regional 4', ''),
+('D5', 'Regional 5', '');
 
 -- --------------------------------------------------------
 
@@ -350,84 +332,84 @@ CREATE TABLE `rekap_data_olt` (
 --
 
 INSERT INTO `rekap_data_olt` (`idOLT`, `hostname`, `ipOLT`, `idLogicalDevice`, `idSTO`, `idSpecOLT`) VALUES
-('OLT00001', 'GPON00-D4-ABR-3', '172.22.203.46', '14550154', 'S0001', 'Spec01'),
-('OLT00002', 'GPON01-D4-ABR-5', '172.29.237.132', '14625112', 'S0001', 'Spec02'),
-('OLT00003', 'GPON00-D4-BDN-3', '172.22.203.45', '14625126', 'S0002', 'Spec01'),
-('OLT00004', 'GPON00-D4-BWE-3', '172.22.203.37', '14550153', 'S0005', 'Spec01'),
-('OLT00005', 'GPON01-D4-BWE-5', '172.29.237.139', '14625114', 'S0005', 'Spec02'),
-('OLT00006', 'GPON00-D4-BOJ-3', '172.22.160.40', '15525008', 'S0004', 'Spec01'),
-('OLT00007', 'GPON00-D4-KDL-3', '172.22.203.18', '14775007', 'S0008', 'Spec03'),
-('OLT00008', 'GPON01-D4-KDL-5', '172.29.236.21', '14025012', 'S0008', 'Spec02'),
-('OLT00009', 'GPON02-D4-KDL-3', '172.22.162.121', '28425038', 'S0008', 'Spec01'),
-('OLT00010', 'GPON00-D4-MJE-3', '172.22.160.42', '73200339', 'S0009', 'Spec01'),
-('OLT00011', 'GPON00-D4-WNJ-3', '172.22.203.12', '28200031', 'S0018', 'Spec03'),
-('OLT00012', 'GPON00-D4-BMK-3', '172.22.203.15', '12975109', 'S0003', 'Spec03'),
-('OLT00013', 'GPON01-D4-BMK-3', '172.22.203.201', '12975107', 'S0003', 'Spec01'),
-('OLT00014', 'GPON02-D4-BMK-5', '172.29.236.17', '14025011', 'S0003', 'Spec02'),
-('OLT00015', 'GPON03-D4-BMK-5', '172.29.237.138', '13950008', 'S0003', 'Spec02'),
-('OLT00016', 'GPON04-D4-BMK-3', '172.22.162.110', '25200047', 'S0003', 'Spec01'),
-('OLT00017', 'GPON05-D4-BMK-3', '172.29.237.199', '114075169', 'S0003', 'Spec01'),
-('OLT00018', 'GPON06-D4-BMK-3', '172.22.161.208', '133425163', 'S0003', 'Spec01'),
-('OLT00019', 'GPON00-D4-SMC-3', '172.22.203.16', '14550039', 'S0013', 'Spec03'),
-('OLT00020', 'GPON01-D4-SMC-3', '172.22.203.34', '14400008', 'S0013', 'Spec01'),
-('OLT00021', 'GPON02-D4-SMC-3', '172.29.236.40', '14475029', 'S0013', 'Spec01'),
-('OLT00022', 'GPON03-D4-SMC-3', '172.29.236.44', '132375161', 'S0013', 'Spec07'),
-('OLT00023', 'GPON04-D4-SMC-3', '172.29.236.45', '117375162', 'S0013', 'Spec01'),
-('OLT00024', 'GPON00-D4-GNK-3', '172.22.203.22', '13125019', 'S0006', 'Spec03'),
-('OLT00025', 'GPON01-D4-GNK-3', '172.22.162.107', '25125065', 'S0006', 'Spec01'),
-('OLT00026', 'GPON02-D4-GNK-3', '172.29.236.47', '117375160', 'S0006', 'Spec01'),
-('OLT00027', 'GPON00-D4-JHR-3', '172.22.203.23', '14550047', 'S0007', 'Spec03'),
-('OLT00028', 'GPON01-D4-JHR-2', '172.22.203.49', '12975102', 'S0007', 'Spec05'),
-('OLT00029', 'GPON02-D4-JHR-2', '172.22.203.50', '12975092', 'S0007', 'Spec05'),
-('OLT00030', 'GPON03-D4-JHR-2', '172.22.203.51', '12975093', 'S0007', 'Spec05'),
-('OLT00031', 'GPON04-D4-JHR-2', '172.22.203.52', '12975090', 'S0007', 'Spec05'),
-('OLT00032', 'GPON05-D4-JHR-2', '172.22.203.53', '12975100', 'S0007', 'Spec05'),
-('OLT00033', 'GPON06-D4-JHR-2', '172.22.203.54', '12975089', 'S0007', 'Spec05'),
-('OLT00034', 'GPON07-D4-JHR-3', '172.22.203.202', '12975110', 'S0007', 'Spec01'),
-('OLT00035', 'GPON08-D4-JHR-2', '172.29.236.36', '12975095', 'S0007', 'Spec05'),
-('OLT00036', 'GPON09-D4-JHR-2', '172.29.236.35', '12975103', 'S0007', 'Spec05'),
-('OLT00037', 'GPON10-D4-JHR-3', '172.29.236.38', '12975087', 'S0007', 'Spec01'),
-('OLT00038', 'GPON11-D4-JHR-2', '172.29.236.41', '12975097', 'S0007', 'Spec05'),
-('OLT00039', 'GPON00-D4-MJP-3', '172.22.203.24', '14475007', 'S0010', 'Spec03'),
-('OLT00040', 'GPON01-D4-MJP-3', '172.22.203.35', '12975111', 'S0010', 'Spec01'),
-('OLT00041', 'GPON02-D4-MJP-5', '172.29.236.9', '14025006', 'S0010', 'Spec02'),
-('OLT00042', 'GPON03-D4-MJP-3', '172.29.236.39', '14400007', 'S0010', 'Spec01'),
-('OLT00043', 'GPON04-D4-MJP-5', '', '14025010', 'S0010', 'Spec02'),
-('OLT00044', 'GPON05-D4-MJP-3', '172.22.162.101', '25125064', 'S0010', 'Spec01'),
-('OLT00045', 'GPON06-D4-MJP-3', '172.22.160.43', '73725066', 'S0010', 'Spec01'),
-('OLT00046', 'GPON07-D4-MJP-3', '172.29.236.43', '129300162', 'S0010', 'Spec07'),
-('OLT00047', 'GPON08-D4-MJP-3', '172.29.236.46', '147150163', 'S0010', 'Spec01'),
-('OLT00048', 'GPON09-D4-MJP-3', '172.22.161.209.', '133425161', 'S0010', 'Spec01'),
-('OLT00049', 'GPON00-D4-MKG-3', '172.22.203.20', '12975108', 'S0011', 'Spec03'),
-('OLT00050', 'GPON01-D4-MKG-5', '172.29.236.19', '13950007', 'S0011', 'Spec02'),
-('OLT00051', 'GPON02-D4-MKG-3', '172.22.162.111', 'tidak ditemukan', 'S0011', 'Spec02'),
-('OLT00052', 'GPON00-D4-SSL-3', '172.22.203.17', '14625167', 'S0015', 'Spec03'),
-('OLT00053', 'GPON01-D4-SSL-3', '172.22.203.29', '14700010', 'S0015', 'Spec03'),
-('OLT00054', 'GPON02-D4-SSL-5', '172.29.236.8', '15000006', 'S0015', 'Spec02'),
-('OLT00055', 'GPON03-D4-SSL-3', '172.29.236.30', '14700033', 'S0015', 'Spec01'),
-('OLT00056', 'GPON04-D4-SSL-3', '172.29.236.236', '50550035', 'S0015', 'Spec01'),
-('OLT00057', 'GPON00-D4-SMT-3', '172.22.203.21', '13125018', 'S0014', 'Spec03'),
-('OLT00058', 'GPON01-D4-SMT-3', '172.22.203.36', '12975088', 'S0014', 'Spec01'),
-('OLT00059', 'GPON02-D4-SMT-2', '172.22.203.57', '12975099', 'S0014', 'Spec05'),
-('OLT00060', 'GPON03-D4-SMT-2', '172.22.203.58', '12975106', 'S0014', 'Spec05'),
-('OLT00061', 'GPON04-D4-SMT-2', '172.22.203.59', '12975094', 'S0014', 'Spec05'),
-('OLT00062', 'GPON05-D4-SMT-2', '172.22.203.60', '12975104', 'S0014', 'Spec05'),
-('OLT00063', 'GPON06-D4-SMT-2', '172.22.203.61', '12975105', 'S0014', 'Spec05'),
-('OLT00064', 'GPON07-D4-SMT-2', '172.22.203.62', '12975098', 'S0014', 'Spec05'),
-('OLT00065', 'GPON08-D4-SMT-2', '172.22.203.55', '12975101', 'S0014', 'Spec05'),
-('OLT00066', 'GPON09-D4-SMT-2', '172.22.203.56', '12975091', 'S0014', 'Spec05'),
-('OLT00067', 'GPON10-D4-SMT-2', '172.29.236.42', '12975096', 'S0014', 'Spec05'),
-('OLT00068', 'GPON11-D4-SMT-2', '172.29.237.229', '105150163', 'S0014', 'Spec06'),
-('OLT00069', 'GPON12-D4-SMT-2', '172.22.161.202', '153975164', 'S0014', 'Spec06'),
-('OLT00070', 'GPON00-D4-SKR-5', '172.29.236.7', '14025009', 'S0012', 'Spec02'),
-('OLT00071', 'GPON01-D4-SKR-3', '', 'tidak ditemukan', 'S0012', 'Spec02'),
-('OLT00072', 'GPON00-D4-UNR-3', '172.22.203.14', '14550151', 'S0016', 'Spec03'),
-('OLT00073', 'GPON01-D4-UNR-3', '172.22.203.204', '14550152', 'S0016', 'Spec01'),
-('OLT00074', 'GPON02-D4-UNR-3', '172.22.162.112', '22050053', 'S0016', 'Spec01'),
-('OLT00075', 'GPON03-D4-UNR-3', '172.29.236.253', '117900174', 'S0016', 'Spec07'),
-('OLT00076', 'GPON04-D4-UNR-3', '172.29.236.245', '133425162', 'S0016', 'Spec01'),
-('OLT00077', 'GPON00-D4-WLR-3', '172.22.203.205', '13125020', 'S0017', 'Spec01'),
-('OLT00078', 'GPON02-D4-WLR-5', '172.29.236.18', '14025007', 'S0017', 'Spec02');
+('OLT00001', 'GPON00-D4-ABR-3', '172.22.203.46', '14550154', 'ABR', 'Spec01'),
+('OLT00002', 'GPON01-D4-ABR-5', '172.29.237.132', '14625112', 'ABR', 'Spec02'),
+('OLT00003', 'GPON00-D4-BDN-3', '172.22.203.45', '14625126', 'BDN', 'Spec01'),
+('OLT00004', 'GPON00-D4-BWE-3', '172.22.203.37', '14550153', 'BWE', 'Spec01'),
+('OLT00005', 'GPON01-D4-BWE-5', '172.29.237.139', '14625114', 'BWE', 'Spec02'),
+('OLT00006', 'GPON00-D4-BOJ-3', '172.22.160.40', '15525008', 'BOJ', 'Spec01'),
+('OLT00007', 'GPON00-D4-KDL-3', '172.22.203.18', '14775007', 'KDL', 'Spec03'),
+('OLT00008', 'GPON01-D4-KDL-5', '172.29.236.21', '14025012', 'KDL', 'Spec02'),
+('OLT00009', 'GPON02-D4-KDL-3', '172.22.162.121', '28425038', 'KDL', 'Spec01'),
+('OLT00010', 'GPON00-D4-MJE-3', '172.22.160.42', '73200339', 'MJE', 'Spec01'),
+('OLT00011', 'GPON00-D4-WNJ-3', '172.22.203.12', '28200031', 'WNJ', 'Spec03'),
+('OLT00012', 'GPON00-D4-BMK-3', '172.22.203.15', '12975109', 'BMK', 'Spec03'),
+('OLT00013', 'GPON01-D4-BMK-3', '172.22.203.201', '12975107', 'BMK', 'Spec01'),
+('OLT00014', 'GPON02-D4-BMK-5', '172.29.236.17', '14025011', 'BMK', 'Spec02'),
+('OLT00015', 'GPON03-D4-BMK-5', '172.29.237.138', '13950008', 'BMK', 'Spec02'),
+('OLT00016', 'GPON04-D4-BMK-3', '172.22.162.110', '25200047', 'BMK', 'Spec01'),
+('OLT00017', 'GPON05-D4-BMK-3', '172.29.237.199', '114075169', 'BMK', 'Spec01'),
+('OLT00018', 'GPON06-D4-BMK-3', '172.22.161.208', '133425163', 'BMK', 'Spec01'),
+('OLT00019', 'GPON00-D4-SMC-3', '172.22.203.16', '14550039', 'SMC', 'Spec03'),
+('OLT00020', 'GPON01-D4-SMC-3', '172.22.203.34', '14400008', 'SMC', 'Spec01'),
+('OLT00021', 'GPON02-D4-SMC-3', '172.29.236.40', '14475029', 'SMC', 'Spec01'),
+('OLT00022', 'GPON03-D4-SMC-3', '172.29.236.44', '132375161', 'SMC', 'Spec07'),
+('OLT00023', 'GPON04-D4-SMC-3', '172.29.236.45', '117375162', 'SMC', 'Spec01'),
+('OLT00024', 'GPON00-D4-GNK-3', '172.22.203.22', '13125019', 'GNK', 'Spec03'),
+('OLT00025', 'GPON01-D4-GNK-3', '172.22.162.107', '25125065', 'GNK', 'Spec01'),
+('OLT00026', 'GPON02-D4-GNK-3', '172.29.236.47', '117375160', 'GNK', 'Spec01'),
+('OLT00027', 'GPON00-D4-JHR-3', '172.22.203.23', '14550047', 'JHR', 'Spec03'),
+('OLT00028', 'GPON01-D4-JHR-2', '172.22.203.49', '12975102', 'JHR', 'Spec05'),
+('OLT00029', 'GPON02-D4-JHR-2', '172.22.203.50', '12975092', 'JHR', 'Spec05'),
+('OLT00030', 'GPON03-D4-JHR-2', '172.22.203.51', '12975093', 'JHR', 'Spec05'),
+('OLT00031', 'GPON04-D4-JHR-2', '172.22.203.52', '12975090', 'JHR', 'Spec05'),
+('OLT00032', 'GPON05-D4-JHR-2', '172.22.203.53', '12975100', 'JHR', 'Spec05'),
+('OLT00033', 'GPON06-D4-JHR-2', '172.22.203.54', '12975089', 'JHR', 'Spec05'),
+('OLT00034', 'GPON07-D4-JHR-3', '172.22.203.202', '12975110', 'JHR', 'Spec01'),
+('OLT00035', 'GPON08-D4-JHR-2', '172.29.236.36', '12975095', 'JHR', 'Spec05'),
+('OLT00036', 'GPON09-D4-JHR-2', '172.29.236.35', '12975103', 'JHR', 'Spec05'),
+('OLT00037', 'GPON10-D4-JHR-3', '172.29.236.38', '12975087', 'JHR', 'Spec01'),
+('OLT00038', 'GPON11-D4-JHR-2', '172.29.236.41', '12975097', 'JHR', 'Spec05'),
+('OLT00039', 'GPON00-D4-MJP-3', '172.22.203.24', '14475007', 'MJP', 'Spec03'),
+('OLT00040', 'GPON01-D4-MJP-3', '172.22.203.35', '12975111', 'MJP', 'Spec01'),
+('OLT00041', 'GPON02-D4-MJP-5', '172.29.236.9', '14025006', 'MJP', 'Spec02'),
+('OLT00042', 'GPON03-D4-MJP-3', '172.29.236.39', '14400007', 'MJP', 'Spec01'),
+('OLT00043', 'GPON04-D4-MJP-5', '', '14025010', 'MJP', 'Spec02'),
+('OLT00044', 'GPON05-D4-MJP-3', '172.22.162.101', '25125064', 'MJP', 'Spec01'),
+('OLT00045', 'GPON06-D4-MJP-3', '172.22.160.43', '73725066', 'MJP', 'Spec01'),
+('OLT00046', 'GPON07-D4-MJP-3', '172.29.236.43', '129300162', 'MJP', 'Spec07'),
+('OLT00047', 'GPON08-D4-MJP-3', '172.29.236.46', '147150163', 'MJP', 'Spec01'),
+('OLT00048', 'GPON09-D4-MJP-3', '172.22.161.209.', '133425161', 'MJP', 'Spec01'),
+('OLT00049', 'GPON00-D4-MKG-3', '172.22.203.20', '12975108', 'MKG', 'Spec03'),
+('OLT00050', 'GPON01-D4-MKG-5', '172.29.236.19', '13950007', 'MKG', 'Spec02'),
+('OLT00051', 'GPON02-D4-MKG-3', '172.22.162.111', 'tidak ditemukan', 'MKG', 'Spec02'),
+('OLT00052', 'GPON00-D4-SSL-3', '172.22.203.17', '14625167', 'SSL', 'Spec03'),
+('OLT00053', 'GPON01-D4-SSL-3', '172.22.203.29', '14700010', 'SSL', 'Spec03'),
+('OLT00054', 'GPON02-D4-SSL-5', '172.29.236.8', '15000006', 'SSL', 'Spec02'),
+('OLT00055', 'GPON03-D4-SSL-3', '172.29.236.30', '14700033', 'SSL', 'Spec01'),
+('OLT00056', 'GPON04-D4-SSL-3', '172.29.236.236', '50550035', 'SSL', 'Spec01'),
+('OLT00057', 'GPON00-D4-SMT-3', '172.22.203.21', '13125018', 'SMT', 'Spec03'),
+('OLT00058', 'GPON01-D4-SMT-3', '172.22.203.36', '12975088', 'SMT', 'Spec01'),
+('OLT00059', 'GPON02-D4-SMT-2', '172.22.203.57', '12975099', 'SMT', 'Spec05'),
+('OLT00060', 'GPON03-D4-SMT-2', '172.22.203.58', '12975106', 'SMT', 'Spec05'),
+('OLT00061', 'GPON04-D4-SMT-2', '172.22.203.59', '12975094', 'SMT', 'Spec05'),
+('OLT00062', 'GPON05-D4-SMT-2', '172.22.203.60', '12975104', 'SMT', 'Spec05'),
+('OLT00063', 'GPON06-D4-SMT-2', '172.22.203.61', '12975105', 'SMT', 'Spec05'),
+('OLT00064', 'GPON07-D4-SMT-2', '172.22.203.62', '12975098', 'SMT', 'Spec05'),
+('OLT00065', 'GPON08-D4-SMT-2', '172.22.203.55', '12975101', 'SMT', 'Spec05'),
+('OLT00066', 'GPON09-D4-SMT-2', '172.22.203.56', '12975091', 'SMT', 'Spec05'),
+('OLT00067', 'GPON10-D4-SMT-2', '172.29.236.42', '12975096', 'SMT', 'Spec05'),
+('OLT00068', 'GPON11-D4-SMT-2', '172.29.237.229', '105150163', 'SMT', 'Spec06'),
+('OLT00069', 'GPON12-D4-SMT-2', '172.22.161.202', '153975164', 'SMT', 'Spec06'),
+('OLT00070', 'GPON00-D4-SKR-5', '172.29.236.7', '14025009', 'SKR', 'Spec02'),
+('OLT00071', 'GPON01-D4-SKR-3', '', 'tidak ditemukan', 'SKR', 'Spec02'),
+('OLT00072', 'GPON00-D4-UNR-3', '172.22.203.14', '14550151', 'UNR', 'Spec03'),
+('OLT00073', 'GPON01-D4-UNR-3', '172.22.203.204', '14550152', 'UNR', 'Spec01'),
+('OLT00074', 'GPON02-D4-UNR-3', '172.22.162.112', '22050053', 'UNR', 'Spec01'),
+('OLT00075', 'GPON03-D4-UNR-3', '172.29.236.253', '117900174', 'UNR', 'Spec07'),
+('OLT00076', 'GPON04-D4-UNR-3', '172.29.236.245', '133425162', 'UNR', 'Spec01'),
+('OLT00077', 'GPON00-D4-WLR-3', '172.22.203.205', '13125020', 'WLR', 'Spec01'),
+('OLT00078', 'GPON02-D4-WLR-5', '172.29.236.18', '14025007', 'WLR', 'Spec02');
 
 --
 -- Triggers `rekap_data_olt`
@@ -545,7 +527,6 @@ DELIMITER ;
 
 CREATE TABLE `sto` (
   `idSTO` varchar(5) NOT NULL,
-  `kodeSTO` varchar(5) NOT NULL,
   `namaSTO` varchar(30) NOT NULL,
   `keterangan` varchar(50) DEFAULT NULL,
   `idDatel` varchar(5) DEFAULT NULL
@@ -555,45 +536,26 @@ CREATE TABLE `sto` (
 -- Dumping data for table `sto`
 --
 
-INSERT INTO `sto` (`idSTO`, `kodeSTO`, `namaSTO`, `keterangan`, `idDatel`) VALUES
-('S0001', 'ABR', 'Ambarawa', '', 'D0003'),
-('S0002', 'BDN', 'Bandungan', '', 'D0003'),
-('S0003', 'BMK', 'Semarang Banyumanik', '', 'D0002'),
-('S0004', 'BOJ', 'Boja', '', 'D0001'),
-('S0005', 'BWE', 'Bawen', '', 'D0003'),
-('S0006', 'GNK', 'Semarang Genuk', '', 'D0002'),
-('S0007', 'JHR', 'Semarang Johar', '', 'D0002'),
-('S0008', 'KDL', 'Kendal', '', 'D0001'),
-('S0009', 'MJE', 'Mijen', '', 'D0002'),
-('S0010', 'MJP', 'Semarang Majapahit', '', 'D0002'),
-('S0011', 'MKG', 'Semarang Mangkang', '', 'D0002'),
-('S0012', 'SKR', 'Sukorejo', '', 'D0002'),
-('S0013', 'SMC', 'Semarang Candi', '', 'D0002'),
-('S0014', 'SMT', 'Semarang Tugu', '', 'D0002'),
-('S0015', 'SSL', 'Semarang Simpang Lima', '', 'D0003'),
-('S0016', 'UNR', 'Ungaran', '', 'D0003'),
-('S0017', 'WLR', 'Weleri', '', 'D0002'),
-('S0018', 'WNJ', 'Pringapus', '', 'D0002');
-
---
--- Triggers `sto`
---
-DELIMITER $$
-CREATE TRIGGER `stootomatis` BEFORE INSERT ON `sto` FOR EACH ROW BEGIN
-DECLARE s VARCHAR(5);
-DECLARE i INTEGER;
- 
-SET i = (SELECT SUBSTRING(idSTO,2,5) AS Nomer
-FROM sto ORDER BY Nomer DESC LIMIT 1);
- 
-SET s = (SELECT kodestootomatis(i));
- 
-IF(NEW.idSTO IS NULL OR NEW.idSTO = '')
- THEN SET NEW.idSTO =s;
-END IF;
-END
-$$
-DELIMITER ;
+INSERT INTO `sto` (`idSTO`, `namaSTO`, `keterangan`, `idDatel`) VALUES
+('ABR', 'Ambarawa', '', 'D0003'),
+('BATU', 'Batu', '', 'D0004'),
+('BDN', 'Bandungan', '', 'D0003'),
+('BMK', 'Semarang Banyumanik', '', 'D0002'),
+('BOJ', 'Boja', '', 'D0001'),
+('BWE', 'Bawen', '', 'D0003'),
+('GNK', 'Semarang Genuk', '', 'D0002'),
+('JHR', 'Semarang Johar', '', 'D0002'),
+('KDL', 'Kendal', '', 'D0001'),
+('MJE', 'Mijen', '', 'D0002'),
+('MJP', 'Semarang Majapahit', '', 'D0002'),
+('MKG', 'Semarang Mangkang', '', 'D0002'),
+('SKR', 'Sukorejo', '', 'D0002'),
+('SMC', 'Semarang Candi', '', 'D0002'),
+('SMT', 'Semarang Tugu', '', 'D0002'),
+('SSL', 'Semarang Simpang Lima', '', 'D0003'),
+('UNR', 'Ungaran', '', 'D0003'),
+('WLR', 'Weleri', '', 'D0002'),
+('WNJ', 'Pringapus', '', 'D0002');
 
 -- --------------------------------------------------------
 
@@ -633,7 +595,8 @@ CREATE TABLE `witel` (
 --
 
 INSERT INTO `witel` (`idWitel`, `namaWitel`, `keterangan`, `idRegional`) VALUES
-('W0001', 'Semarang', '', 'R0001');
+('W0001', 'Semarang', '', 'D4'),
+('W0002', 'Malang', '', 'D5');
 
 --
 -- Triggers `witel`
@@ -684,7 +647,9 @@ ALTER TABLE `pegawai`
 -- Indexes for table `regional`
 --
 ALTER TABLE `regional`
-  ADD PRIMARY KEY (`idRegional`);
+  ADD PRIMARY KEY (`idRegional`),
+  ADD UNIQUE KEY `namaRegional` (`namaRegional`),
+  ADD UNIQUE KEY `idRegional` (`idRegional`);
 
 --
 -- Indexes for table `rekap_data_odp`
@@ -698,6 +663,7 @@ ALTER TABLE `rekap_data_odp`
 --
 ALTER TABLE `rekap_data_olt`
   ADD PRIMARY KEY (`idOLT`),
+  ADD UNIQUE KEY `hostname` (`hostname`),
   ADD KEY `fk_sto` (`idSTO`) USING BTREE,
   ADD KEY `fk_spek` (`idSpecOLT`);
 
@@ -718,6 +684,8 @@ ALTER TABLE `specification_olt`
 --
 ALTER TABLE `sto`
   ADD PRIMARY KEY (`idSTO`),
+  ADD UNIQUE KEY `idSTO` (`idSTO`),
+  ADD UNIQUE KEY `namaSTO` (`namaSTO`),
   ADD KEY `fk_datel` (`idDatel`) USING BTREE;
 
 --
@@ -725,6 +693,7 @@ ALTER TABLE `sto`
 --
 ALTER TABLE `witel`
   ADD PRIMARY KEY (`idWitel`),
+  ADD UNIQUE KEY `namaWitel` (`namaWitel`),
   ADD KEY `fk_regional` (`idRegional`);
 
 --
@@ -735,7 +704,7 @@ ALTER TABLE `witel`
 -- AUTO_INCREMENT for table `rekap_data_validasi`
 --
 ALTER TABLE `rekap_data_validasi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4112;
 
 --
 -- Constraints for dumped tables
@@ -751,7 +720,7 @@ ALTER TABLE `datel`
 -- Constraints for table `rekap_data_odp`
 --
 ALTER TABLE `rekap_data_odp`
-  ADD CONSTRAINT `fk_sto2` FOREIGN KEY (`idSTO`) REFERENCES `sto` (`idSTO`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_sto2` FOREIGN KEY (`idSTO`) REFERENCES `sto` (`idSTO`);
 
 --
 -- Constraints for table `rekap_data_olt`
@@ -770,7 +739,7 @@ ALTER TABLE `sto`
 -- Constraints for table `witel`
 --
 ALTER TABLE `witel`
-  ADD CONSTRAINT `fk_regional` FOREIGN KEY (`idRegional`) REFERENCES `regional` (`idRegional`);
+  ADD CONSTRAINT `witel_ibfk_1` FOREIGN KEY (`idRegional`) REFERENCES `regional` (`idRegional`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

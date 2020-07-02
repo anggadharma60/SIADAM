@@ -32,7 +32,7 @@ class STO_model extends CI_Model {
     return $query;
   }
 
-  public function getDataSTOByRegional($idRegional){
+  public function getDataSTOByRegional($idRegional=''){
     $this->db->select('sto.idSTO, sto.namaSTO');
     $this->db->from('regional');
     $this->db->join('witel', 'regional.idRegional =witel.idRegional');
@@ -48,7 +48,7 @@ class STO_model extends CI_Model {
   public function getIDSTOByKode($kode){
     $this->db->select('idSTO');
     $this->db->from('sto');
-    $this->db->where('kodeSTO=', $kode);
+    $this->db->where('idSTO=', $kode);
     $query = $this->db->get();
     return $query->row();
   }
@@ -71,7 +71,7 @@ class STO_model extends CI_Model {
 
   public function addDataSTO($post)
     {
-        $params['kodeSTO'] = html_escape(strtoupper($post['kodeSTO']));
+        $params['idSTO'] = html_escape(strtoupper($post['idSTO']));
         $params['namaSTO'] = html_escape($post['namaSTO']);
         $params['keterangan'] = html_escape($post['keterangan']);
         $params['idDatel']= html_escape($post['datel']);
@@ -80,12 +80,12 @@ class STO_model extends CI_Model {
 
     public function editDataSTO($post)
     {
-      $this->db->select('kodeSTO');
+      $this->db->select('idSTO');
       $this->db->from('sto');
-      $this->db->where('kodeSTO', $post['kodeSTO']);
+      $this->db->where('idSTO', $post['idSTO']);
       $query = $this->db->get();
-      if(($post['kodeSTO']) != $query ) {
-        $params['kodeSTO'] = html_escape(strtoupper($post['kodeSTO']));
+      if(($post['idSTO']) != $query ) {
+        $params['idSTO'] = html_escape(strtoupper($post['idSTO']));
       }
       $params['namaSTO'] = html_escape($post['namaSTO']);
       $params['keterangan'] = html_escape($post['keterangan']);

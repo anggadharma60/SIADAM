@@ -30,18 +30,51 @@
         </div>
         <div class="box-body">
             <div class="row">
-                <div class="col-md-4 col-md-offset-4">
+                <div class="col-md-6 col-md-offset-3">
                     <!-- <?php
                     ?> -->
                     <form action="" method="post">
-                        <div class="form-group <?= form_error('hostname') ? 'has-error' : null ?>">
-                            <label>Hostname *</label>
-                            <input type="text" name="hostname" value="<?= set_value('hostname') ?>" class="form-control">
-                            <?= form_error('hostname') ?>
+                        <div class="form-group <?= form_error('regional') ? 'has-error' : null ?>">
+                            <label>Regional *</label>
+                            <select id="regional" name="regional" class="form-control">
+                                <option value="" selected="selected">- Pilih Regional -</option>
+                                <?php foreach ($regional->result() as $key => $regional) { ?>
+                                    <option value="<?= $regional->idRegional ?>"><?= $regional->namaRegional ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                            <?= form_error('regional') ?>
                         </div>
+                        <div class="form-group <?= form_error('STO') ? 'has-error' : null ?>">
+                            <label>STO *</label>
+                            <select id="STO" name="STO" class="form-control">
+                                <option value="" selected="selected">- Pilih STO -</option>
+                            </select>
+                            <?= form_error('STO') ?>
+                        </div>
+                        <div class="form-group <?= form_error('hostname[]') ? 'has-error' : null ?> <?= form_error('temp') ? 'has-error' : null ?>">
+                            <label>Hostname *</label>
+                            <!-- <input type="text" id="hostname" name="hostname" value="<?= set_value('hostname') ?>" class="form-control"> -->
+                            <div class="input-group">
+                                <input id="hostname0" list="pon" type="text" name="hostname[]" value="<?= set_value('hostname[0]') ?>" class="form-control" style="text-align:center" maxlength=6>
+                                <datalist id="pon">
+                                    <option value="GPON">
+                                </datalist>
+                                <span type="text" class="input-group-addon">-</span>
+                                <input id="hostname1" type="text" name="hostname[]" value="<?= set_value('hostname[1]') ?>" class="form-control" style="text-align:center" maxlength=2 readonly>
+                                <span class="input-group-addon">-</span>
+                                <input id="hostname2" type="text" name="hostname[]" value="<?= set_value('hostname[2]') ?>" class="form-control" style="text-align:center" maxlength=5 readonly>
+                                <span class="input-group-addon">-</span>
+                                <input id="hostname3" type="number" min="1" max="16" name="hostname[]" value="<?= set_value('hostname[3]') ?>" class="form-control" style="text-align:center" maxlength="2" >
+                            </div>
+                            <?= form_error('hostname[]') ?>
+                            <?= form_error('temp') ?>
+                            <input id="hostname" type="hidden" name="temp" value="<?= set_value('temp') ?>" class="form-control" style="text-align:center" readonly>
+                        </div>
+                        
                         <div class="form-group <?= form_error('ipOLT') ? 'has-error' : null ?>">
                             <label>IP GPON *</label>
-                            <input type="text" name="ipOLT" value="<?= set_value('ipOLT') ?>" class="form-control">
+                            <input type="text" id="ipOLT" name="ipOLT" value="<?= set_value('ipOLT') ?>" class="form-control" data-inputmask="'alias': 'ip'" data-mask>
                             <?= form_error('ipOLT') ?>
                         </div>
                         <div class="form-group <?= form_error('idLogicalDevice') ? 'has-error' : null ?>">
@@ -49,17 +82,7 @@
                             <input type="text" name="idLogicalDevice" value="<?= set_value('idLogicalDevice') ?>" class="form-control">
                             <?= form_error('idLogicalDevice') ?>
                         </div>
-                        <div class="form-group <?= form_error('STO') ? 'has-error' : null ?>">
-                            <label>STO *</label>
-                            <select id="STO" name="STO" class="form-control">
-                                <option value="" selected="selected">- Pilih STO -</option>
-                                <?php foreach ($sto->result() as $key => $sto) { ?>
-                                    <option value="<?= $sto->idSTO ?>" <?= set_value('STO') == $sto->idSTO ? "selected" : null ?>><?= $sto->namaSTO ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                            <?= form_error('STO') ?>
-                        </div>
+                        
                         <div class="form-group <?= form_error('SpecOLT') ? 'has-error' : null ?>">
                             <label>Specificaton OLT *</label>
                             <select name="SpecOLT" class="form-control">

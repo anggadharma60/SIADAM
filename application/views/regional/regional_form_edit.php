@@ -28,7 +28,6 @@
                         <div class="form-group <?=form_error('namaRegional') ? 'has-error' : null ?>">
                             <label>Nama Regional *</label>
                             <input type="hidden" name="idRegional" value="<?=$row->idRegional?>">
-                            <input type="hidden" name="idRegional" value="<?=$row->idRegional?>">
                             <input type="text" name="namaRegional" value="<?=$row->namaRegional?>" class="form-control">
                             <?=form_error('namaRegional')?>
                         </div>

@@ -120,7 +120,7 @@ class Admin extends CI_Controller
 		$data['ODP'] = $this->ODP_model->jumlahRekapODP();
 		$ODP = $data['ODP'];
 		$data['idSTO'][] = null;
-		$data['kodeSTO'] = null;
+		// $data['kodeSTO'] = null;
 		$data['namaSTO'] = null;
 		$data['grand_total'] = null;
 		$data['totalODP'] = null;
@@ -131,7 +131,7 @@ class Admin extends CI_Controller
 			foreach ($ODP->result() as $rekapODP) {
 
 				$data['idSTO'][] = $rekapODP->idSTO;
-				$data['kodeSTO'][] = $rekapODP->kodeSTO;
+				// $data['kodeSTO'][] = $rekapODP->kodeSTO;
 				$data['namaSTO'][] = $rekapODP->namaSTO;
 				$data['grand_total'][] = $rekapODP->grand_total;
 				$data['totalODP'] += $rekapODP->grand_total;
@@ -313,8 +313,9 @@ class Admin extends CI_Controller
 
 	public function addRegional()
 	{
-		$this->form_validation->set_rules('namaRegional', 'Nama Regional', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[20]|is_unique[regional.namaRegional]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
+		$this->form_validation->set_rules('idRegional', 'ID Regional', 'required|regex_match[/^[a-zA-Z0-9 ]+$/]|max_length[3]|is_unique[regional.idRegional]|trim');
+		$this->form_validation->set_rules('namaRegional', 'Nama Regional', 'required|regex_match[/^[a-zA-Z0-9 ]+$/]|max_length[12]|is_unique[regional.namaRegional]|trim');
+		$this->form_validation->set_rules('keterangan', 'Keterangan', 'max_length[50]|trim');
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
@@ -338,9 +339,10 @@ class Admin extends CI_Controller
 	}
 
 	public function editRegional($id)
-	{
-		$this->form_validation->set_rules('namaRegional', 'Nama Regional', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[20]|callback_regional_check|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|alpha_dash');
+	{	
+		$this->form_validation->set_rules('idRegional', 'ID Regional', 'required|regex_match[/^[a-zA-Z0-9 ]+$/]|max_length[3]|callback_regional_check|trim');
+		$this->form_validation->set_rules('namaRegional', 'Nama Regional', 'required|regex_match[/^[a-zA-Z0-9 ]+$/]|max_length[12]|callback_regional_check|trim');
+		$this->form_validation->set_rules('keterangan', 'Keterangan', 'max_length[50]|trim');
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
@@ -402,7 +404,7 @@ class Admin extends CI_Controller
 	{
 		$data['row'] = $this->Regional_model->getDataRegional();
 		$this->form_validation->set_rules('namaWitel', 'Nama Witel', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[20]|is_unique[witel.namaWitel]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
+		$this->form_validation->set_rules('keterangan', 'Keterangan', 'max_length[50]|trim');
 		$this->form_validation->set_rules('regional', 'Regional', 'required|trim');
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
@@ -429,7 +431,7 @@ class Admin extends CI_Controller
 	public function editWitel($id)
 	{
 		$this->form_validation->set_rules('namaWitel', 'Nama Witel', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[20]|callback_witel_check|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
+		$this->form_validation->set_rules('keterangan', 'Keterangan', 'max_length[50]|trim');
 		$this->form_validation->set_rules('regional', 'Regional', 'required|trim');
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
@@ -494,7 +496,7 @@ class Admin extends CI_Controller
 	{
 		$data['row'] = $this->Witel_model->getDataWitel();
 		$this->form_validation->set_rules('namaDatel', 'Nama Datel', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[20]|is_unique[datel.namaDatel]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
+		$this->form_validation->set_rules('keterangan', 'Keterangan', 'max_length[50]|trim');
 		$this->form_validation->set_rules('witel', 'Witel', 'required|trim');
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
@@ -520,7 +522,7 @@ class Admin extends CI_Controller
 	public function editDatel($id)
 	{
 		$this->form_validation->set_rules('namaDatel', 'Nama Datel', 'required|regex_match[/^[a-zA-Z ]+$/]|callback_datel_check|max_length[20]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
+		$this->form_validation->set_rules('keterangan', 'Keterangan', 'max_length[50]|trim');
 		$this->form_validation->set_rules('witel', 'Witel', 'required|trim');
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
@@ -584,9 +586,9 @@ class Admin extends CI_Controller
 	public function addSTO()
 	{
 		$data['row'] = $this->Datel_model->getDataDatel();
-		$this->form_validation->set_rules('kodeSTO', 'Kode STO', 'required|min_length[3]|max_length[5]|is_unique[sto.kodeSTO]|regex_match[/^[A-Za-z]+$/]|trim');
-		$this->form_validation->set_rules('namaSTO', 'Nama STO', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[20]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
+		$this->form_validation->set_rules('idSTO', 'ID STO', 'required|min_length[3]|max_length[5]|is_unique[sto.idSTO]|regex_match[/^[A-Za-z]+$/]|trim');
+		$this->form_validation->set_rules('namaSTO', 'Nama STO', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[30]|is_unique[sto.namaSTO]|trim');
+		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|max_length[50]');
 		$this->form_validation->set_rules('datel', 'Datel', 'required|trim');
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
@@ -611,9 +613,9 @@ class Admin extends CI_Controller
 
 	public function editSTO($id)
 	{
-		$this->form_validation->set_rules('kodeSTO', 'Kode STO', 'required|min_length[3]|max_length[5]|regex_match[/^[A-Za-z]+$/]|callback_sto_check|trim');
-		$this->form_validation->set_rules('namaSTO', 'Nama STO', 'required|regex_match[/^[a-zA-Z ]+$/]|max_length[20]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
+		$this->form_validation->set_rules('idSTO', 'ID STO', 'required|min_length[3]|max_length[5]|regex_match[/^[A-Za-z]+$/]|callback_sto_check|trim');
+		$this->form_validation->set_rules('namaSTO', 'Nama STO', 'required|max_length[30]|regex_match[/^[A-Za-z ]+$/]|callback_sto_check|trim');
+		$this->form_validation->set_rules('keterangan', 'Keterangan', 'max_length[50]|trim');
 		$this->form_validation->set_rules('datel', 'Datel', 'required|trim');
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
@@ -650,7 +652,7 @@ class Admin extends CI_Controller
 	function sto_check()
 	{
 		$post = $this->input->post(null, TRUE);
-		$query = $this->db->query("SELECT * FROM sto WHERE kodeSTO = '$post[kodeSTO]' AND idSTO != '$post[idSTO]'");
+		$query = $this->db->query("SELECT * FROM sto WHERE namaSTO = '$post[namaSTO]' AND idSTO != '$post[idSTO]'");
 		if ($query->num_rows() > 0) {
 			$this->form_validation->set_message('sto_check', '{field} ini sudah dipakai, silahkan ganti');
 			return FALSE;
@@ -677,9 +679,9 @@ class Admin extends CI_Controller
 	public function addSpecOLT()
 	{
 		$this->form_validation->set_rules('namaSpecOLT', 'Nama Specification OLT', 'required|max_length[50]|is_unique[specification_olt.namaSpecOLT]|trim');
-		$this->form_validation->set_rules('merekOLT', 'Merek OLT', 'max_length[20]|trim');
-		$this->form_validation->set_rules('typeOLT', 'Type OLT', 'max_length[20]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
+		$this->form_validation->set_rules('merekOLT', 'Merek OLT', 'max_length[6]|trim');
+		$this->form_validation->set_rules('typeOLT', 'Type OLT', 'max_length[10]|trim');
+		$this->form_validation->set_rules('keterangan', 'Keterangan', 'max_length[50]|trim');
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
@@ -703,9 +705,9 @@ class Admin extends CI_Controller
 	public function editSpecOLT($id)
 	{
 		$this->form_validation->set_rules('namaSpecOLT', 'Nama Specification OLT', 'required|max_length[50]|callback_spek_check|trim');
-		$this->form_validation->set_rules('merekOLT', 'Merek OLT', 'max_length[20]|trim');
-		$this->form_validation->set_rules('typeOLT', 'Type OLT', 'max_length[20]|trim');
-		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim');
+		$this->form_validation->set_rules('merekOLT', 'Merek OLT', 'max_length[6]|trim');
+		$this->form_validation->set_rules('typeOLT', 'Type OLT', 'max_length[10]|trim');
+		$this->form_validation->set_rules('keterangan', 'Keterangan', 'max_length[50]|trim');
 
 		$this->form_validation->set_message('required', '%s masih kosong, silahkan isi');
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
@@ -837,7 +839,7 @@ class Admin extends CI_Controller
 			if (empty($dataDiff)) {
 				$flag = 1;
 			}
-			print_r($SheetDataKey);
+			// print_r($SheetDataKey);
 			// match excel sheet column
 			if ($flag == 1) {
 				for ($i = 2; $i <= $arrayCount; $i++) {
@@ -1180,21 +1182,27 @@ class Admin extends CI_Controller
 		$this->template->load('template/template_Admin', 'olt/olt_form_import');
 	}
 
-	public function getSTOByRegional(){
-		$post = $this->input->post('regional', TRUE);
-		$STO = $this->STO_model->getDataSTOByRegional($post);
-		json_encode($STO);
+	public function getSTOByRegional($idRegional){
+		$STO = $this->STO_model->getDataSTOByRegional($idRegional)->result();
+		header('Content-Type: application/json');
+		echo json_encode($STO);
 	}
-	public function addOLT()
-	{
 
-		$data['sto'] = $this->STO_model->getDataSTO();
+	public function addOLT()
+	{	
+		// $data['sto'] = $this->STO_model->getDataSTO();
 		$data['regional'] = $this->Regional_model->getDataRegional();
 		$data['spec'] = $this->SpecOLT_model->getDataSpecOLT();
-
-		$this->form_validation->set_rules('hostname', 'HOSTNAME', 'required|is_unique[rekap_data_olt.hostname]|trim');
-		$this->form_validation->set_rules('ipOLT', 'IP GPON', 'required|is_unique[rekap_data_olt.ipOLT]|trim');
-		$this->form_validation->set_rules('idLogicalDevice', 'ID Logical Device', 'required|is_unique[rekap_data_olt.idLogicalDevice]|trim');
+		
+		// $this->form_validation->set_rules('hostname[]', 'Hostname', 'required|is_unique[rekap_data_olt.hostname]|trim');
+			$i=0;
+		// 	$hostname = $this->input->post('hostname['.$i.']');
+		// 	print_r($hostname);
+		$this->form_validation->set_rules('hostname[]', 'Hostname', 'required|regex_match[/^[A-Za-z0-9]+$/]|trim');	
+		$this->form_validation->set_rules('temp', 'Hostname', 'required|is_unique[rekap_data_olt.hostname]|trim');	
+		
+		$this->form_validation->set_rules('ipOLT', 'IP GPON', 'is_unique[rekap_data_olt.ipOLT]|trim');
+		$this->form_validation->set_rules('idLogicalDevice', 'ID Logical Device', 'is_unique[rekap_data_olt.idLogicalDevice]|regex_match[/^[A-Za-z0-9 ]+$/]|trim');
 		$this->form_validation->set_rules('STO', 'STO', 'required|trim');
 		$this->form_validation->set_rules('regional', 'Regional', 'required|trim');
 		$this->form_validation->set_rules('SpecOLT', 'Specification OLT', 'required|trim');
@@ -1203,11 +1211,13 @@ class Admin extends CI_Controller
 		$this->form_validation->set_message('min_length', '%s minimal %s karakter');
 		$this->form_validation->set_message('max_length', '%s maksimal %s karakter');
 		$this->form_validation->set_message('is_unique', '{field} sudah dipakai, silahkan ganti');
+		$this->form_validation->set_message('regex_match', '{field} tidak sesuai format');
 
 		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->template->load('template/template_Admin', 'olt/olt_form_add', $data);
+			
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->OLT_model->addDataOLT($post);
@@ -1262,6 +1272,17 @@ class Admin extends CI_Controller
 		}
 	}
 
+	
+	function hostname_check(){
+		$hostname = $this->input->post('hostname');
+		$namaOLT = html_escape(strtoupper($hostname[0]));
+		$namaOLT .= '-' .(html_escape(strtoupper($hostname[1])));
+		$namaOLT .= '-' .(html_escape(strtoupper($hostname[2])));
+		$namaOLT .= '-' .(html_escape(($hostname[3])));
+
+		$query = $this->db->query("SELECT * FROM rekap_data_olt WHERE hostname = '$namaOLT'");
+	}
+	
 	function ipolt_check()
 	{
 		$post = $this->input->post(null, TRUE);

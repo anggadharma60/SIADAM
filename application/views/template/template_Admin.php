@@ -1453,25 +1453,44 @@ $(document).ready(function () {
 <script>
   $(document).ready(function(){
     $('#regional').change(function(){
-      var idRegional = $(this).val();
-      console.log(idRegional);
+      var id = $('#regional').val(); 
+      console.log(id);
       $.ajax({
-        url: "<?= base_url() ?>index.php/Admin/getSTOByRegional",
-        method : "POST",
-        data : {id: id}
-        async : true,
-        dataType : 'json',
-        success: function(data){
-          $('select[name="STO"]').empty();
-
-          $.each(data, function(key,value){
-            $('select[name="STO"]').append('<option value="'+ value.id +'">'+ value.namaSTO +'</option>');
-          });
+        type: "get",
+        url: '<?= base_url()?>index.php/Admin/getSTOByRegional/'+id,
+        data: {id:id},
+        dataType: "json",
+        success: function (data) {
+          var html='<option value="" selected="selected">- Pilih STO -</option>';
+          var i;
+          console.log(data);
+          for(i=0;i<data.length;i++){
+            html +='<option value='+data[i].idSTO+'>'+data[i].namaSTO+'</option>';
+          }
+          $('#STO').html(html); 
         }
-      })
+      });
+      $('#hostname1').val(id);
+      
+      
     });
+
+    $('#STO').change(function(){
+      var sto = $('#STO').val();
+      $('#hostname2').val(sto);
+    });
+
+    $('#hostname3').on("input", function() {
+      var satu = $('#hostname0').val();
+      var dua = $('#hostname1').val();
+      var tiga = $('#hostname2').val();
+      var empat = $('#hostname3').val();
+      $('#hostname').val(satu+'-'+dua+'-'+tiga+'-'+empat);
+    });
+    
   });
 </script>
+
 
 </body>
 

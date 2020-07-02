@@ -26,6 +26,11 @@
              <div class="col-md-4 col-md-offset-4">
                 <?php //echo validation_errors() ?>
                 <form action="" method="post"> 
+                    <div class="form-group <?=form_error('idRegional') ? 'has-error' : null ?>">
+                        <label>ID Regional *</label>
+                        <input type="text" name="idRegional" value="<?=set_value('idRegional')?>" class="form-control">
+                        <?=form_error('idRegional')?>
+                    </div>
                     <div class="form-group <?=form_error('namaRegional') ? 'has-error' : null ?>">
                         <label>Nama Regional *</label>
                         <input type="text" name="namaRegional" value="<?=set_value('namaRegional')?>" class="form-control">

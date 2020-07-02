@@ -35,7 +35,6 @@
         <thead>
           <tr>
             <th>ID STO</th>
-            <th>Kode STO</th>
             <th>Nama STO</th>
             <th>Keterangan</th>
             <th>Datel</th>
@@ -46,11 +45,10 @@
           <?php $no = 1;
           foreach ($row->result() as $key => $data) { ?>
             <tr>
-              <td style="width: 10%" ;><?= $data->idSTO ?></td>
-              <td style="width: 10%" ;><?= $data->kodeSTO ?></td>
-              <td style="width: 15%" ;><?= $data->namaSTO ?></td>
+              <td><?= $data->idSTO ?></td>
+              <td ><?= $data->namaSTO ?></td>
               <td><?= $data->keterangan ?></td>
-              <td style="width: 15%" ;><?= $data->namaDatel ?></td>
+              <td><?= $data->namaDatel ?></td>
 
               <td class="text-center" width="10%">
                 <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
@@ -138,7 +136,6 @@
         <tfoot>
           <tr>
             <th>ID STO</th>
-            <th>Kode STO</th>
             <th>Nama STO</th>
             <th>Keterangan</th>
             <th>Datel</th>
