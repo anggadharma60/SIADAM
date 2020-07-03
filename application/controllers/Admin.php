@@ -1152,7 +1152,7 @@ class Admin extends CI_Controller
 			$activeSheet->setCellValue('O' . $i, $row->namaRegional);
 			$activeSheet->setCellValue('P' . $i, $row->namaWitel);
 			$activeSheet->setCellValue('Q' . $i, $row->namaDatel);
-			$activeSheet->setCellValue('R' . $i, $row->kodeSTO);
+			$activeSheet->setCellValue('R' . $i, $row->idSTO);
 			$activeSheet->setCellValue('S' . $i, $row->namaSTO);
 			$activeSheet->setCellValue('T' . $i, $row->infoODP);
 
