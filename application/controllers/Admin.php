@@ -894,11 +894,13 @@ class Admin extends CI_Controller
 					// $ODP_INFO = filter_var(html_escape(trim($allDataInSheet[$i]['T'])), FILTER_SANITIZE_STRING);
 					// $UPDATE_DATE = filter_var(html_escape(trim($allDataInSheet[$i]['U'])), FILTER_SANITIZE_STRING);
 
-					$newSTO = $this->STO_model->getIDSTOByKode($STO);
-					$idSTO = $newSTO->idSTO;
+					// $newSTO = $this->STO_model->getIDSTOByKode($STO);
+					// $idSTO = $newSTO->idSTO;
+					// print_r($newSTO);
+					// print_r($idSTO);
 					$newDate = date("Y-m-d H:i", strtotime($UPDATE_DATE));
 
-					$fetchData[] = array('idNOSS' => $NOSS_ID, 'indexODP' => $ODP_INDEX, 'namaODP' => $ODP_NAME, 'ftp' => $FTP, 'latitude' => $LATITUDE, 'longitude' => $LONGITUDE, 'clusterName' => $CLUSNAME, 'clusterStatus' => $CLUSTERSATATUS, 'avai' => $AVAI, 'used' => $USED, 'rsv' => $RSV, 'rsk' => $RSK, 'total' => $IS_TOTAL, 'idSTO' => $idSTO, 'infoODP' => $ODP_INFO, 'updateDate' => $newDate);
+					$fetchData[] = array('idNOSS' => $NOSS_ID, 'indexODP' => $ODP_INDEX, 'namaODP' => $ODP_NAME, 'ftp' => $FTP, 'latitude' => $LATITUDE, 'longitude' => $LONGITUDE, 'clusterName' => $CLUSNAME, 'clusterStatus' => $CLUSTERSATATUS, 'avai' => $AVAI, 'used' => $USED, 'rsv' => $RSV, 'rsk' => $RSK, 'total' => $IS_TOTAL, 'idSTO' => $STO, 'infoODP' => $ODP_INFO, 'updateDate' => $newDate);
 
 					// print_r($UPDATE_DATE);
 

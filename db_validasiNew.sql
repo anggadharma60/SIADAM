@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 02, 2020 at 04:59 AM
+-- Generation Time: Jul 03, 2020 at 12:20 PM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -120,7 +120,7 @@ CREATE TABLE `datel` (
   `idDatel` varchar(5) NOT NULL,
   `namaDatel` varchar(20) NOT NULL,
   `keterangan` varchar(50) DEFAULT NULL,
-  `idWitel` varchar(5) DEFAULT NULL
+  `idWitel` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -130,8 +130,7 @@ CREATE TABLE `datel` (
 INSERT INTO `datel` (`idDatel`, `namaDatel`, `keterangan`, `idWitel`) VALUES
 ('D0001', 'Kendal', '', 'W0001'),
 ('D0002', 'Semarang Kota', '', 'W0001'),
-('D0003', 'Ungaran', '', 'W0001'),
-('D0004', 'Batu', '', 'W0002');
+('D0003', 'Ungaran', '', 'W0001');
 
 --
 -- Triggers `datel`
@@ -263,8 +262,7 @@ CREATE TABLE `regional` (
 --
 
 INSERT INTO `regional` (`idRegional`, `namaRegional`, `keterangan`) VALUES
-('D4', 'Regional 4', ''),
-('D5', 'Regional 5', '');
+('D4', 'Regional 4', '');
 
 -- --------------------------------------------------------
 
@@ -287,7 +285,7 @@ CREATE TABLE `rekap_data_odp` (
   `rsv` varchar(4) NOT NULL,
   `rsk` varchar(4) NOT NULL,
   `total` varchar(4) NOT NULL,
-  `idSTO` varchar(5) DEFAULT NULL,
+  `idSTO` varchar(5) NOT NULL,
   `infoODP` varchar(50) DEFAULT NULL,
   `updateDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -323,7 +321,7 @@ CREATE TABLE `rekap_data_olt` (
   `hostname` varchar(16) NOT NULL,
   `ipOLT` varchar(15) DEFAULT NULL,
   `idLogicalDevice` varchar(20) NOT NULL,
-  `idSTO` varchar(5) DEFAULT NULL,
+  `idSTO` varchar(5) NOT NULL,
   `idSpecOLT` varchar(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -529,7 +527,7 @@ CREATE TABLE `sto` (
   `idSTO` varchar(5) NOT NULL,
   `namaSTO` varchar(30) NOT NULL,
   `keterangan` varchar(50) DEFAULT NULL,
-  `idDatel` varchar(5) DEFAULT NULL
+  `idDatel` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -538,7 +536,6 @@ CREATE TABLE `sto` (
 
 INSERT INTO `sto` (`idSTO`, `namaSTO`, `keterangan`, `idDatel`) VALUES
 ('ABR', 'Ambarawa', '', 'D0003'),
-('BATU', 'Batu', '', 'D0004'),
 ('BDN', 'Bandungan', '', 'D0003'),
 ('BMK', 'Semarang Banyumanik', '', 'D0002'),
 ('BOJ', 'Boja', '', 'D0001'),
@@ -587,7 +584,7 @@ CREATE TABLE `witel` (
   `idWitel` varchar(5) NOT NULL,
   `namaWitel` varchar(20) NOT NULL,
   `keterangan` varchar(50) DEFAULT NULL,
-  `idRegional` varchar(5) DEFAULT NULL
+  `idRegional` varchar(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -595,8 +592,7 @@ CREATE TABLE `witel` (
 --
 
 INSERT INTO `witel` (`idWitel`, `namaWitel`, `keterangan`, `idRegional`) VALUES
-('W0001', 'Semarang', '', 'D4'),
-('W0002', 'Malang', '', 'D5');
+('W0001', 'Semarang', '', 'D4');
 
 --
 -- Triggers `witel`
@@ -627,6 +623,7 @@ DELIMITER ;
 --
 ALTER TABLE `datel`
   ADD PRIMARY KEY (`idDatel`),
+  ADD UNIQUE KEY `namaDatel` (`namaDatel`),
   ADD KEY `fk_witel` (`idWitel`);
 
 --
@@ -656,7 +653,7 @@ ALTER TABLE `regional`
 --
 ALTER TABLE `rekap_data_odp`
   ADD PRIMARY KEY (`idODP`),
-  ADD KEY `fk_sto` (`idSTO`);
+  ADD KEY `fk_sto2` (`idSTO`) USING BTREE;
 
 --
 -- Indexes for table `rekap_data_olt`
@@ -704,7 +701,7 @@ ALTER TABLE `witel`
 -- AUTO_INCREMENT for table `rekap_data_validasi`
 --
 ALTER TABLE `rekap_data_validasi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4112;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -739,7 +736,7 @@ ALTER TABLE `sto`
 -- Constraints for table `witel`
 --
 ALTER TABLE `witel`
-  ADD CONSTRAINT `witel_ibfk_1` FOREIGN KEY (`idRegional`) REFERENCES `regional` (`idRegional`);
+  ADD CONSTRAINT `fk_regional` FOREIGN KEY (`idRegional`) REFERENCES `regional` (`idRegional`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

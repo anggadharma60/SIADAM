@@ -107,14 +107,14 @@
                                 <hr class="socket">
                                 <div class="text-center">
                                     <p>
-                                        Phone 024 56789
+                                        Phone (024) - 8304040
                                     </p>
-                                    <p>
+                                    <!-- <p>
                                     Email telkom@indonesia
                                     </p>
                                     <p>
                                         Fax 021 3456789
-                                    </p>
+                                    </p> -->
                                 </div>
                             </div>
                         </div>
