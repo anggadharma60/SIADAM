@@ -1082,7 +1082,6 @@ class Admin extends CI_Controller
 
 	public function deleteAllODP()
 	{
-		// $this->exportODP();
 
 		$this->ODP_model->deleteAllDataODP();
 		if ($this->db->affected_rows() > 0) {
@@ -1093,7 +1092,6 @@ class Admin extends CI_Controller
 
 	public function exportODP()
 	{
-
 
 		// Create new Spreadsheet object
 		$spreadsheet = new Spreadsheet();
@@ -1320,7 +1318,6 @@ class Admin extends CI_Controller
 
 	public function deleteAllOLT()
 	{
-		// $this->exportODP();
 
 		$this->OLT_model->deleteAllDataOLT();
 		if ($this->db->affected_rows() > 0) {
@@ -1877,7 +1874,6 @@ class Admin extends CI_Controller
 
 	public function exportValidasi()
 	{
-
 
 		// Create new Spreadsheet object
 		$spreadsheet = new Spreadsheet();
