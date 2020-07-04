@@ -920,7 +920,7 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function checkFileValidation($string)
+	public function checkFileValidation()
 	{
 		$file_mimes = array(
 			'text/x-comma-separated-values',
@@ -937,12 +937,14 @@ class Admin extends CI_Controller
 			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 		);
 		if (isset($_FILES['fileURL']['name'])) {
-			$arr_file = explode('.', $_FILES['fileURL']['name']);
-			$extension = end($arr_file);
+			// $arr_file = explode('.', $_FILES['fileURL']['name']);
+			// $extension = end($arr_file);
+			$extension = pathinfo($_FILES['fileURL']['name'], PATHINFO_EXTENSION);
 			if (($extension == 'xlsx' || $extension == 'xls' || $extension == 'csv') && in_array($_FILES['fileURL']['type'], $file_mimes)) {
 				return true;
 			} else {
 				$this->form_validation->set_message('checkFileValidation', 'Please choose correct file.');
+
 				return false;
 			}
 		} else {
@@ -1335,86 +1337,87 @@ class Admin extends CI_Controller
 		// Load form validation library
 
 		$this->form_validation->set_rules('fileURL', 'Upload File OLT', 'callback_checkFileValidation');
-		// If file uploaded
+		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
+		
+		if ($this->form_validation->run() == FALSE) {
+			$this->template->load('template/template_Admin', 'olt/olt_form_import');
+		}
+		else{
+			// If file uploaded
+			if (!empty($_FILES['fileURL']['name'])) {
 
-		if (!empty($_FILES['fileURL']['name'])) {
-
-			// get file extension
-			$extension = pathinfo($_FILES['fileURL']['name'], PATHINFO_EXTENSION);
-
-			if ($extension == 'csv') {
-				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
-			} elseif ($extension == 'xlsx') {
-				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-			} else {
-				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
-			}
-			// file path
-			$spreadsheet = $reader->load($_FILES['fileURL']['tmp_name']);
-			$allDataInSheet = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
-			// array Count
-			$arrayCount = count($allDataInSheet);
-
-			$flag = 0;
-			$createArray = array('HOSTNAME BARU', 'IP GPON', 'STO', 'ID Logical Device', 'Specification');
-			$makeArray = array('HOSTNAME BARU' => 'HOSTNAME BARU', 'IP GPON' => 'IP GPON', 'STO' => 'STO', 'ID Logical Device' => 'ID Logical Device', 'Specification' => 'Specification');
-			$SheetDataKey = array();
-			foreach ($allDataInSheet as $dataInSheet) {
-				foreach ($dataInSheet as $key => $value) {
-					if (in_array(trim($value), $createArray)) {
-
-						$SheetDataKey[trim($value)] = $key;
-					}
-				}
-			}
-
-			$dataDiff = array_diff_key($makeArray, $SheetDataKey);
-			if (empty($dataDiff)) {
-				$flag = 1;
-			}
-
-			// match excel sheet column
-			if ($flag == 1) {
-				for ($i = 2; $i <= $arrayCount; $i++) {
-					$HOSTNAMEBARU = $SheetDataKey['HOSTNAME BARU'];
-					$IPGPON = $SheetDataKey['IP GPON'];
-					$STO = $SheetDataKey['STO'];
-					$IDLOGICALDEVICE = $SheetDataKey['ID Logical Device'];
-					$SPECIFICATION = $SheetDataKey['Specification'];
-
-					$HOSTNAMEBARU = filter_var(html_escape(trim($allDataInSheet[$i][$HOSTNAMEBARU])), FILTER_SANITIZE_STRING);
-					$IPGPON = filter_var(html_escape(trim($allDataInSheet[$i][$IPGPON])), FILTER_SANITIZE_STRING);
-					$STO  = filter_var(html_escape(trim($allDataInSheet[$i][$STO])), FILTER_SANITIZE_STRING);
-					$IDLOGICALDEVICE = filter_var(html_escape(trim($allDataInSheet[$i][$IDLOGICALDEVICE])), FILTER_SANITIZE_STRING);
-					$SPECIFICATION = filter_var(html_escape(trim($allDataInSheet[$i][$SPECIFICATION])), FILTER_SANITIZE_STRING);
-
-					// $HOSTNAMEBARU = filter_var(html_escape(trim($allDataInSheet[$i]['B'])), FILTER_SANITIZE_STRING);
-					// $IPGPON = filter_var(html_escape(trim($allDataInSheet[$i]['C'])), FILTER_SANITIZE_STRING);
-					// $STO  = filter_var(html_escape(trim($allDataInSheet[$i]['D'])), FILTER_SANITIZE_STRING);
-					// $IDLOGICALDEVICE = filter_var(html_escape(trim($allDataInSheet[$i]['H'])), FILTER_SANITIZE_STRING);
-					// $SPECIFICATION = filter_var(html_escape(trim($allDataInSheet[$i]['I'])), FILTER_SANITIZE_STRING);
-
-					$newSTO = $this->STO_model->getIDSTOByName($STO);
-					$idSTO = $newSTO->idSTO;
-					if (!empty($SPECIFICATION) or $SPECIFICATION != null) {
-						$newSpecOLT = $this->SpecOLT_model->getIDSpecOLTByName($SPECIFICATION);
-						$idSpecOLT = $newSpecOLT->idSpecOLT;
-					}
-
-
-					$fetchData[] = array('hostname' => $HOSTNAMEBARU, 'ipOLT' => $IPGPON, 'idSTO' => $idSTO, 'idLogicalDevice' => $IDLOGICALDEVICE, 'idSpecOLT' => $idSpecOLT);
+				// 	// get file extension
+				$extension = pathinfo($_FILES['fileURL']['name'], PATHINFO_EXTENSION);
+				
+				if ($extension == 'csv') {
+					$reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+				} elseif ($extension == 'xlsx') {
+					$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+				} else {
+					$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
 				}
 
-				$this->OLT_model->setBatchImportOLT($fetchData);
-				$this->OLT_model->importDataOLT();
-			} else {
-				$this->session->set_flashdata('danger', 'Format tidak sesuai, harap download format yang ditentukan');
-			}
+				// file path
+				$spreadsheet = $reader->load($_FILES['fileURL']['tmp_name']);
+				$allDataInSheet = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+				// array Count
+				$arrayCount = count($allDataInSheet);
 
-			// $data['row'] = $this->OLT_model->getDataOLT();
-			redirect('Admin/getOLT');
+				$flag = 0;
+				$createArray = array('HOSTNAME BARU', 'IP GPON', 'STO', 'ID Logical Device', 'Specification');
+				$makeArray = array('HOSTNAME BARU' => 'HOSTNAME BARU', 'IP GPON' => 'IP GPON', 'STO' => 'STO', 'ID Logical Device' => 'ID Logical Device', 'Specification' => 'Specification');
+				$SheetDataKey = array();
+				foreach ($allDataInSheet as $dataInSheet) {
+					foreach ($dataInSheet as $key => $value) {
+						if (in_array(trim($value), $createArray)) {
+
+							$SheetDataKey[trim($value)] = $key;
+						}
+					}
+				}
+
+				$dataDiff = array_diff_key($makeArray, $SheetDataKey);
+				if (empty($dataDiff)) {
+					$flag = 1;
+				}
+
+				// match excel sheet column
+				if ($flag == 1) {
+					for ($i = 2; $i <= $arrayCount; $i++) {
+						$HOSTNAMEBARU = $SheetDataKey['HOSTNAME BARU'];
+						$IPGPON = $SheetDataKey['IP GPON'];
+						$STO = $SheetDataKey['STO'];
+						$IDLOGICALDEVICE = $SheetDataKey['ID Logical Device'];
+						$SPECIFICATION = $SheetDataKey['Specification'];
+
+						$HOSTNAMEBARU = filter_var(html_escape(trim($allDataInSheet[$i][$HOSTNAMEBARU])), FILTER_SANITIZE_STRING);
+						$IPGPON = filter_var(html_escape(trim($allDataInSheet[$i][$IPGPON])), FILTER_SANITIZE_STRING);
+						$STO  = filter_var(html_escape(trim($allDataInSheet[$i][$STO])), FILTER_SANITIZE_STRING);
+						$IDLOGICALDEVICE = filter_var(html_escape(trim($allDataInSheet[$i][$IDLOGICALDEVICE])), FILTER_SANITIZE_STRING);
+						$SPECIFICATION = filter_var(html_escape(trim($allDataInSheet[$i][$SPECIFICATION])), FILTER_SANITIZE_STRING);
+
+						$newSTO = $this->STO_model->getIDSTOByName($STO);
+						$idSTO = $newSTO->idSTO;
+						if (!empty($SPECIFICATION) or $SPECIFICATION != null) {
+							$newSpecOLT = $this->SpecOLT_model->getIDSpecOLTByName($SPECIFICATION);
+							$idSpecOLT = $newSpecOLT->idSpecOLT;
+						}
+
+						$fetchData[] = array('hostname' => $HOSTNAMEBARU, 'ipOLT' => $IPGPON, 'idSTO' => $idSTO, 'idLogicalDevice' => $IDLOGICALDEVICE, 'idSpecOLT' => $idSpecOLT);
+					}
+
+					$this->OLT_model->setBatchImportOLT($fetchData);
+					$this->OLT_model->importDataOLT();
+				} else {
+					$this->session->set_flashdata('danger', 'Format tidak sesuai, harap download format yang ditentukan');
+				}
+
+				redirect('Admin/getOLT');
+			}
+			
 		}
 	}
+
 	public function exportOLT()
 	{
 		// Create new Spreadsheet object
