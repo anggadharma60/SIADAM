@@ -804,8 +804,13 @@ class Admin extends CI_Controller
 		// Load form validation library
 
 		$this->form_validation->set_rules('fileURL', 'Upload File ODP', 'callback_checkFileValidation');
-		// If file uploaded
+		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
+		if ($this->form_validation->run() == FALSE) {
+			$this->template->load('template/template_Admin', 'odp/odp_form_import');
+		}
+		else{
+		// If file uploaded
 		if (!empty($_FILES['fileURL']['name'])) {
 
 			// get file extension
@@ -831,6 +836,7 @@ class Admin extends CI_Controller
 			foreach ($allDataInSheet as $dataInSheet) {
 				foreach ($dataInSheet as $key => $value) {
 					if (in_array(trim($value), $createArray)) {
+
 						$SheetDataKey[trim($value)] = $key;
 					}
 				}
@@ -839,7 +845,7 @@ class Admin extends CI_Controller
 			if (empty($dataDiff)) {
 				$flag = 1;
 			}
-			// print_r($SheetDataKey);
+
 			// match excel sheet column
 			if ($flag == 1) {
 				for ($i = 2; $i <= $arrayCount; $i++) {
@@ -901,24 +907,20 @@ class Admin extends CI_Controller
 					$newDate = date("Y-m-d H:i", strtotime($UPDATE_DATE));
 
 					$fetchData[] = array('idNOSS' => $NOSS_ID, 'indexODP' => $ODP_INDEX, 'namaODP' => $ODP_NAME, 'ftp' => $FTP, 'latitude' => $LATITUDE, 'longitude' => $LONGITUDE, 'clusterName' => $CLUSNAME, 'clusterStatus' => $CLUSTERSATATUS, 'avai' => $AVAI, 'used' => $USED, 'rsv' => $RSV, 'rsk' => $RSK, 'total' => $IS_TOTAL, 'idSTO' => $STO, 'infoODP' => $ODP_INFO, 'updateDate' => $newDate);
-
-					// print_r($UPDATE_DATE);
-
-					// print_r($newDate);
 				}
-
 				// $data['data_odp'] = $fetchData;
 				$this->ODP_model->setBatchImportODP($fetchData);
 				$this->ODP_model->importDataODP();
 
-				redirect('Admin/viewListODP');
+			redirect('Admin/viewListODP');
 			} else {
 
 				$this->session->set_flashdata('danger', 'Format tidak sesuai, harap download format yang ditentukan');
 			}
-			redirect('Admin/viewListODP');
+		redirect('Admin/viewListODP');
 		}
 	}
+}
 
 	public function checkFileValidation()
 	{
@@ -943,7 +945,7 @@ class Admin extends CI_Controller
 			if (($extension == 'xlsx' || $extension == 'xls' || $extension == 'csv') && in_array($_FILES['fileURL']['type'], $file_mimes)) {
 				return true;
 			} else {
-				$this->form_validation->set_message('checkFileValidation', 'Please choose correct file.');
+				$this->form_validation->set_message('checkFileValidation', 'Mohon memilih file yang sesuai dengan format.');
 
 				return false;
 			}
@@ -1515,6 +1517,12 @@ class Admin extends CI_Controller
 		// Load form validation library
 
 		$this->form_validation->set_rules('fileURL', 'Upload File Validasi', 'callback_checkFileValidation');
+		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->template->load('template/template_Admin', 'validasi/validasi_form_import');
+		}
+		else{
 		// If file uploaded
 
 		if (!empty($_FILES['fileURL']['name'])) {
@@ -1684,19 +1692,17 @@ class Admin extends CI_Controller
 				}
 
 
-				;
+				
 				$this->Validasi_model->setBatchImportValidasi($fetchData);
 				$this->Validasi_model->importDataValidasi();
 
-
-
 				redirect('Admin/viewListValidasi');
 			} else {
-
+				
 				$this->session->set_flashdata('danger', 'Format tidak sesuai, harap download format yang ditentukan');
 			}
 			redirect('Admin/viewListValidasi');
-			
+			}
 		}
 	}
 
