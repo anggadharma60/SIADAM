@@ -47,10 +47,10 @@
       <div class="row">
         <div class="col-md-4 col-md-offset-4">
           <?php if (form_error('fileURL')) { ?>
-            <div class="alert alert-danger alert-dismissible">
+            <!-- <div class="alert alert-danger alert-dismissible">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
               <?php print form_error('fileURL'); ?>
-            </div>
+            </div> -->
           <?php } ?>
 
           <form action="<?= site_url('Admin/importValidasi') ?>" method="post" id="excel-upl" enctype="multipart/form-data">
@@ -58,8 +58,10 @@
               <br>
               <a href="<?php echo base_url() . 'excel/SampleValidasi.xlsx' ?>" class="float-right btn-flat btn-xs btn-info">Download Format Data</a></br>
               <p></p>
+              <div class="form-group <?= form_error('fileURL') ? 'has-error' : null ?>">
               <input type="file" name="fileURL" id="validatedCustomFile" required accept=".csv, .xls, .xlsx">
-            </p>
+              <?= form_error('fileURL')?>
+              </div>
             <p>Unggah file dengan tipe *.Xlsx / .Csv</p>
             <button type="submit" name="import" class="float-right btn btn-primary">Import</button>
           </form>
