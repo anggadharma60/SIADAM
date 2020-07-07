@@ -102,7 +102,7 @@ class Admin extends CI_Controller
 				$this->template->load('template/template_Admin', 'template/edit_profile', $data);
 			} else {
 				$this->session->set_flashdata('danger', 'Data tidak ditemukan');
-				redirect('Admin/getPegawai');
+				redirect('Admin');
 			}
 		} else {
 			$post = $this->input->post(null, TRUE);
@@ -110,7 +110,7 @@ class Admin extends CI_Controller
 			if ($this->db->affected_rows() > 0) {
 				$this->session->set_flashdata('danger', 'Data berhasil disimpan');
 			}
-			redirect('Admin/getPegawai');
+			redirect('Admin');
 		}
 	}
 

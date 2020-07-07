@@ -17,7 +17,7 @@
             <h3 class="box-title">Edit Pegawai</h3>
             <div class="pull-right">
                 <?php if ($this->fungsi->user_login()->status == 'Admin') { ?>
-                    <a href="<?= site_url('Admin/getPegawai') ?>" class="btn btn-danger btn-flat">
+                    <a href="<?= site_url('Admin') ?>" class="btn btn-danger btn-flat">
                         <i class="fa fa-undo"></i> Back
                     </a>
                 <?php } ?>
