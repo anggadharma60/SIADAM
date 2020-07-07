@@ -78,7 +78,7 @@
                             <input type="password" name="passconf" value="<?= $this->input->post('passconf') ?>" class="form-control">
                             <?= form_error('passconf') ?>
                         </div>
-                        <!-- <div class="form-group <?= form_error('status') ? 'has-error' : null ?>" hidden>
+                        <div class="form-group <?= form_error('status') ? 'has-error' : null ?>" hidden>
                             <label>Status *</label>
                             <select name="status" class="form-control">
                                 <?php $status = $this->input->post('status') ?? $row->status ?>
@@ -91,7 +91,7 @@
                                 <option value="Onsite" <?= $status == "Onsite" ? 'selected' : null ?>>Onsite</option>
                             </select>
                             <?= form_error('status') ?>
-                        </div> -->
+                        </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-success btn-flat">
                                 <i class="fa fa-paper-plane"></i> Simpan
