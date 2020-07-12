@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-group <?=form_error('keterangan') ? 'has-error' : null ?>">
                         <label>Keterangan</label>
-                        <textarea style="resize:none" name="keterangan" class="form-control" rows="3" value="<?=set_value('keterangan')?>" ></textarea>
+                        <textarea style="resize:none" name="keterangan" class="form-control" rows="3" ><?=set_value('keterangan')?></textarea>
                         <?=form_error('keterangan')?>
                     </div>
                     <div class="form-group">
