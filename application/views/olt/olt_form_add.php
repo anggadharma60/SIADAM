@@ -31,9 +31,9 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <?php $hostname = $this->input->post('STO');
+                    <!-- <?php $hostname = $this->input->post('STO');
                     print_r($hostname);
-                    ?>
+                    ?> -->
                     <form action="" method="post">
                         
                         <div class="form-group <?= form_error('hostname[]') ? 'has-error' : null ?> <?= form_error('temp') ? 'has-error' : null ?>">
@@ -55,7 +55,7 @@
                             </div>
                             <?= form_error('hostname[]') ?>
                             <?= form_error('temp') ?>
-                            <input id="hostname" type="text" name="temp" value="<?= set_value('temp') ?>" class="form-control" style="text-align:center" readonly>
+                            <input id="hostname" type="hidden" name="temp" value="<?= set_value('temp') ?>" class="form-control" style="text-align:center" readonly>
                         </div>
                         <div class="form-group <?= form_error('regional') ? 'has-error' : null ?>">
                             <label>Regional *</label>
