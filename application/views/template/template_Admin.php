@@ -1282,6 +1282,7 @@
       $("#loading").fadeOut();
     }
   </script>
+  
  <!-- auto complete  -->
  <script>
 $(document).ready(function () {
@@ -1434,6 +1435,7 @@ $(document).ready(function () {
     });       
 });
 </script>
+
 <!-- auto fill odp -->
 <script>
   var el = document.getElementById('empat');
@@ -1444,6 +1446,7 @@ $(document).ready(function () {
   el.addEventListener("mousemove", updatetext , false); 
 
 </script>
+
 <!-- Input mask IP -->
 <script>
  $('#ipOLT').inputmask()
@@ -1471,13 +1474,71 @@ $(document).ready(function () {
         }
       });
       $('#hostname1').val(id);
-      
+      var satu = $('#hostname0').val();
+      var dua = $('#hostname1').val();
+      var tiga = $('#hostname2').val();
+      var empat = $('#hostname3').val();
+      var lima = $('#hostname4').val();
+      if(lima.length==1){
+        lima = "0"+lima;
+      }
+      console.log(lima.length);
+      $('#hostname').val(satu+lima+'-'+dua+'-'+tiga+'-'+empat);
       
     });
 
     $('#STO').change(function(){
       var sto = $('#STO').val();
       $('#hostname2').val(sto);
+      var satu = $('#hostname0').val();
+      var dua = $('#hostname1').val();
+      var tiga = $('#hostname2').val();
+      var empat = $('#hostname3').val();
+      var lima = $('#hostname4').val();
+      if(lima.length==1){
+        lima = "0"+lima;
+      }
+      console.log(lima.length);
+      $('#hostname').val(satu+lima+'-'+dua+'-'+tiga+'-'+empat);
+    });
+
+    $('#hostname0').on("input", function() {
+      var satu = $('#hostname0').val();
+      var dua = $('#hostname1').val();
+      var tiga = $('#hostname2').val();
+      var empat = $('#hostname3').val();
+      var lima = $('#hostname4').val();
+      if(lima.length==1){
+        lima = "0"+lima;
+      }
+      console.log(lima.length);
+      $('#hostname').val(satu+lima+'-'+dua+'-'+tiga+'-'+empat);
+    });
+
+    $('#hostname1').on("input", function() {
+      var satu = $('#hostname0').val();
+      var dua = $('#hostname1').val();
+      var tiga = $('#hostname2').val();
+      var empat = $('#hostname3').val();
+      var lima = $('#hostname4').val();
+      if(lima.length==1){
+        lima = "0"+lima;
+      }
+      console.log(lima.length);
+      $('#hostname').val(satu+lima+'-'+dua+'-'+tiga+'-'+empat);
+    });
+    
+    $('#hostname2').on("input", function() {
+      var satu = $('#hostname0').val();
+      var dua = $('#hostname1').val();
+      var tiga = $('#hostname2').val();
+      var empat = $('#hostname3').val();
+      var lima = $('#hostname4').val();
+      if(lima.length==1){
+        lima = "0"+lima;
+      }
+      console.log(lima.length);
+      $('#hostname').val(satu+lima+'-'+dua+'-'+tiga+'-'+empat);
     });
 
     $('#hostname3').on("input", function() {
@@ -1485,12 +1546,40 @@ $(document).ready(function () {
       var dua = $('#hostname1').val();
       var tiga = $('#hostname2').val();
       var empat = $('#hostname3').val();
-      $('#hostname').val(satu+'-'+dua+'-'+tiga+'-'+empat);
+      var lima = $('#hostname4').val();
+      if(lima.length==1){
+        lima = "0"+lima;
+      }
+      console.log(lima.length);
+      $('#hostname').val(satu+lima+'-'+dua+'-'+tiga+'-'+empat);
+    });
+
+    $('#hostname4').on("input", function() {
+      var satu = $('#hostname0').val();
+      var dua = $('#hostname1').val();
+      var tiga = $('#hostname2').val();
+      var empat = $('#hostname3').val();
+      var lima = $('#hostname4').val();
+      if(lima.length==1){
+        lima = "0"+lima;
+      }
+      console.log(lima.length);
+      $('#hostname').val(satu+lima+'-'+dua+'-'+tiga+'-'+empat);
     });
     
   });
 </script>
 
+<!-- auto fill oly -->
+<script>
+  var ed = document.getElementById('hostname4');
+  var updatetext = function(){
+  ed.value = ('00' + ed.value).slice(-2);
+    }
+  
+  ed.addEventListener("click", updatetext , false); 
+
+</script>
 
 </body>
 

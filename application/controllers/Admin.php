@@ -1280,9 +1280,10 @@ class Admin extends CI_Controller
 	function hostname_check(){
 		$hostname = $this->input->post('hostname');
 		$namaOLT = html_escape(strtoupper($hostname[0]));
-		$namaOLT .= '-' .(html_escape(strtoupper($hostname[1])));
+		$namaOLT .= '-' .(html_escape($hostname[1]));
 		$namaOLT .= '-' .(html_escape(strtoupper($hostname[2])));
-		$namaOLT .= '-' .(html_escape(($hostname[3])));
+		$namaOLT .= '-' .(html_escape(strtoupper($hostname[3])));
+		$namaOLT .= '-' .(html_escape(($hostname[4])));
 
 		$query = $this->db->query("SELECT * FROM rekap_data_olt WHERE hostname = '$namaOLT'");
 	}
