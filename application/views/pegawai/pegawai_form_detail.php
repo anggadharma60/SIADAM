@@ -35,7 +35,7 @@
           </tr>
           <tr>
             <th>Password</th>
-            <td><?php echo $detailPegawai->password ?></td>
+            <td><?php echo base64_decode($detailPegawai->password) ?></td>
           </tr>
           <tr>
             <th>Status</th>
