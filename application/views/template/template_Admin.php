@@ -1390,7 +1390,7 @@ $(document).ready(function () {
               };
             },
             
-            processResults: function (response) { 
+            processResults: function (response) {  
               return {
                   results: $.map(response, function(obj) {
                       return { id: obj.hostname, text: obj.hostname };
