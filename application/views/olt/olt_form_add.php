@@ -53,7 +53,7 @@
                                 <span class="input-group-addon">-</span>
                                 <input id="hostname3" type="number" min="1" max="16" name="hostname[]" value="<?= set_value('hostname[4]') ?>" class="form-control" style="text-align:center" maxlength="2" >
                             </div>
-                            <?= form_error('hostname[]') ?>
+                            <!-- <?= form_error('hostname[]') ?> -->
                             <?= form_error('temp') ?>
                             <input id="hostname" type="hidden" name="temp" value="<?= set_value('temp') ?>" class="form-control" style="text-align:center" readonly>
                         </div>
@@ -63,9 +63,9 @@
                                 <option value="" selected="selected">- Pilih Regional -</option>
                                 <?php foreach ($regional->result() as $key => $regional) { ?>
                                     
-                                    <!-- <option value="<?= $regional->idRegional ?>"><?= $regional->namaRegional ?> -->
-                                    <option value="<?= $regional->idRegional ?>" <?= set_value('regional') == $regional->idRegional ? "selected" : null ?>><?= $regional->namaRegional ?>
-                                    </option>
+                                    <option value="<?= $regional->idRegional ?>"><?= $regional->namaRegional ?>
+                                    <!-- <option value="<?= $regional->idRegional ?>" <?= set_value('regional') == $regional->idRegional ? "selected" : null ?>><?= $regional->namaRegional ?>
+                                    </option> -->
                                 <?php } ?>
                             </select>
                             <?= form_error('regional') ?>
@@ -74,7 +74,7 @@
                             <label>STO *</label>
                             <select id="STO" name="STO" class="form-control">
                                 <option value="" selected="selected">- Pilih STO -</option>
-                                <option value="<?=set_value('STO')?>" selected="selected"><?=set_value('STO')?></option>
+                                <!-- <option value="<?=set_value('STO')?>" selected="selected"><?=set_value('STO')?></option> -->
                             </select>
                             <?= form_error('STO') ?>
                         </div>
