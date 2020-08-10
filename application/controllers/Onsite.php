@@ -120,7 +120,7 @@ class Onsite extends CI_Controller
 		$data['ODP'] = $this->ODP_model->jumlahRekapODP();
 		$ODP = $data['ODP'];
 		$data['idSTO'][] = null;
-		$data['kodeSTO'] = null;
+		// $data['kodeSTO'] = null;
 		$data['namaSTO'] = null;
 		$data['grand_total'] = null;
 		$data['totalODP'] = null;
@@ -131,7 +131,7 @@ class Onsite extends CI_Controller
 			foreach ($ODP->result() as $rekapODP) {
 
 				$data['idSTO'][] = $rekapODP->idSTO;
-				$data['kodeSTO'][] = $rekapODP->kodeSTO;
+				// $data['kodeSTO'][] = $rekapODP->kodeSTO;
 				$data['namaSTO'][] = $rekapODP->namaSTO;
 				$data['grand_total'][] = $rekapODP->grand_total;
 				$data['totalODP'] += $rekapODP->grand_total;

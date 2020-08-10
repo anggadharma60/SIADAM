@@ -34,7 +34,9 @@
                     <?php //echo validation_errors() 
                    
                     ?>
-                    
+                     <!-- <?php $hostname = $this->input->post('STO');
+                    print_r($hostname);
+                    ?> -->
                     <form action="" method="post">
                         <div class="form-group <?= form_error('idNOSS') ? 'has-error' : null ?>">
                             <label>ID NOSS *</label>
@@ -50,13 +52,37 @@
                             <label>Nama ODP *</label>
                             <!-- <input type="text" name="namaODP" value="<?= set_value('namaODP') ?>" class="form-control"> -->
                             <div class="input-group">
-                                <input type="text" name="namaODP[]" value="<?= set_value('namaODP[0]') ?>" class="form-control" style="text-align:center" maxlength=3>
+                                <input  id="namaODP0" list="odp" type="text" name="namaODP[]" value="<?= set_value('namaODP[0]') ?>" class="form-control" style="text-align:center" maxlength=3>
+                                <datalist id="odp">
+                                    <option value="ODP">
+                                </datalist>
                                 <span type="text" class="input-group-addon">-</span>
-                                <input type="text" name="namaODP[]" value="<?= set_value('namaODP[1]') ?>" class="form-control" style="text-align:center" maxlength=3>
+                                <input id="namaODP1" list="sto" type="text" name="namaODP[]" value="<?= set_value('namaODP[1]') ?>" class="form-control" style="text-align:center" maxlength=3>
+                                <datalist id="sto">
+                                    <option value="ABR">
+                                    <option value="BDN">
+                                    <option value="BMK">
+                                    <option value="BOJ">
+                                    <option value="BWE">
+                                    <option value="GNK">
+                                    <option value="JHR">
+                                    <option value="KDL">
+                                    <option value="MJE">
+                                    <option value="MJP">
+                                    <option value="MKG">
+                                    <option value="SKR">
+                                    <option value="SMC">
+                                    <option value="SMT">
+                                    <option value="SSL">
+                                    <option value="UNR">
+                                    <option value="WLR">
+                                    <option value="WNJ">
+                                </datalist>
+                                <?= form_error('namaODP[]') ?>     -->
                                 <span class="input-group-addon">-</span>
                                 <input type="text" name="namaODP[]" value="<?= set_value('namaODP[2]') ?>" class="form-control" style="text-align:center" maxlength=3>
                                 <span class="input-group-addon">/</span>
-                                <input id="empat" type="text" name="namaODP[]" value="<?= set_value('namaODP[3]') ?>" class="form-control" style="text-align:center" maxlength=3 >
+                                <input id="empat" type="number" min="0" name="namaODP[]" value="<?= set_value('namaODP[3]') ?>" class="form-control" style="text-align:center" maxlength=3 >
                             </div>
                             <?= form_error('namaODP[]') ?>
                         </div>
@@ -107,7 +133,7 @@
                         </div>
                         <div class="form-group <?= form_error('STO') ? 'has-error' : null ?>">
                             <label>STO *</label>
-                            <select name="STO" class="form-control">
+                            <select id="STO" name="STO" class="form-control">
                                 <option value="" selected="selected">- Pilih STO -</option>
                                 <?php foreach ($row->result() as $key => $STO) { ?>
                                     <option value="<?= $STO->idSTO ?>" <?= set_value('STO') == $STO->idSTO ? "selected" : null ?>><?= $STO->namaSTO ?>
